@@ -1,0 +1,22 @@
+<% academics_order = @school_profile.toc.academics.values.flatten %>
+
+<% academics_order.each do |academic| %>
+  <div class="profile-section-slot">
+    <%= 
+      case academic[:label]
+      when SchoolProfiles::Toc::STUDENT_PROGRESS
+        render 'student_progress', student_progress: @school_profile.student_progress
+      when SchoolProfiles::Toc::ACADEMIC_PROGRESS
+        render 'academic_progress', academic_progress: @school_profile.academic_progress
+      when SchoolProfiles::Toc::COLLEGE_READINESS
+        render 'college_readiness', college_readiness: @school_profile.college_readiness
+      when SchoolProfiles::Toc::COLLEGE_SUCCESS
+        render 'college_success', college_success: @school_profile.college_success
+      when SchoolProfiles::Toc::ADVANCED_COURSES
+        render 'stem_courses', stem_courses: @school_profile.stem_courses
+      when SchoolProfiles::Toc::TEST_SCORES
+        render 'test_scores', test_scores: @school_profile.test_scores
+      end
+    %>
+  </div>
+<% end %>

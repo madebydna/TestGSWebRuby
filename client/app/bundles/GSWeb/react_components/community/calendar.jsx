@@ -171,11 +171,10 @@ class Calendar extends React.Component {
 
   renderCalendarHeader() {
     return (
-      <div className="row bar-graph-display">
+      <div className="ts-row ts-row-no-padding bar-graph-display">
         <div className="test-score-container clearfix calendar-header">
-          <div className="col-sm-2">{ t('calendar.date') }</div>
-          <div className="col-sm-1"></div>
-          <div className="col-sm-9">
+          <div className="ts-row-full-xs ts-row-one-quarter-sm">{ t('calendar.date') }</div>
+          <div className="ts-row-full-xs ts-row-three-quarters-sm">
             {t('calendar.event')}
             { this.state.verified &&
               <span className="verified">
@@ -192,11 +191,10 @@ class Calendar extends React.Component {
 
   renderCalendarEvent(event) {
     return (
-      <div className="row bar-graph-display" key={`${event.startDate}-${event.name}`}>
+      <div className="ts-row bar-graph-display" key={`${event.startDate}-${event.name}`}>
         <div className="test-score-container clearfix">
-          <div className="col-sm-2 calendar-event-date">{ event.startDate }</div>
-          <div className="col-sm-1"></div>
-          <div className="col-sm-9 calendar-event-name">{ event.name }</div>
+          <div className="ts-row-full-xs ts-row-one-quarter-sm calendar-event-date">{ event.startDate }</div>
+          <div className="ts-row-full-xs ts-row-three-quarters-sm calendar-event-name">{ event.name }</div>
         </div>
       </div>
     )

@@ -85,6 +85,27 @@
       border-radius: 4px;
     }
 
+    // overwrite standard hr
+    hr {
+      margin: 10px 0 10px 12px;
+    }
+
+    .api-text-field {
+      font-family: 'opensans-regular';
+      margin-left: 12px;
+      color: #707070;
+
+      span {
+        margin-right: 10px;
+      }
+    }
+
+    .api-box-container {
+      border: 1px solid #C1D2D9;
+      border-radius: 3px;
+      padding: 15px;
+    }
+
     .field_with_errors {
       position: relative;
 
@@ -146,15 +167,16 @@
       color: #ffffff;
       border-radius: 4px;
       border: none;
-    }
 
-    .api-registration-back-button {
-      padding: 15px 40px;
-      margin-right: 10px;
-      background-color: white;
-      color: #71787E;
-      border-radius: 4px;
-      border: 1px solid #C1D2D9;
+      &:hover{
+        opacity: 0.75;
+        transition: 0.3s;
+      }
+
+      &:disabled{
+        background-color: #d3d3d3;
+        transition: 0.3s;
+      }
     }
 
     .api-registration-hidden-input-field{
@@ -185,6 +207,7 @@
       img, span {
         margin-right: 5px;
       }
+      border: none;
     }
 
   }
@@ -204,7 +227,7 @@
         float: right;
         padding: 5px;
         border-radius: 3px;
-        background: #f3f3f3;
+        background: #473f3f;
       }
       label:not('.api_tou') {
         line-height: 30px;
@@ -272,5 +295,167 @@
 @media (min-width: 1200px) {
   .container {
     width: 92%;
+  }
+
+  .api-plans-container-carousel {
+    visibility: hidden;
+  }
+}
+
+.api-plan-selection {
+  h3 {
+    font-family: RobotoSlab-Bold, sans-serif;
+    font-style: normal;
+    font-size: 26px;
+    line-height: 34px;
+  }
+
+  .api-plan-description {
+    font-family: opensans-regular;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 22px;
+    margin-bottom: 20px;
+  }
+
+  .api-plans-container {
+    display: flex;
+    justify-content: center;
+  }
+
+  .api-plan-best-value {
+    font-family: opensans-semibold;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 19px;
+    color: #2BA3DC;
+  }
+
+  .api-plan-col {
+    flex: 1 0;
+    padding: 10px;
+  }
+
+  .api-plan-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    height: 50px;
+    padding-bottom: 10px;
+  }
+
+  .api-plan-name {
+    text-transform: uppercase;
+    font-family: RobotoSlab-Bold, sans-serif;
+    font-size: 20px;
+    line-height: 26px;
+    text-align: center;
+  }
+
+  .api-plan-details {
+    border: 1px solid $form-field-border-color;
+    border-radius: 10px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .api-plan-details.premium {
+    border: 3px solid #5B82EC;
+  }
+
+  .api-plan-subdetails {
+    padding: 20px;
+    text-align: center;
+  }
+
+  .api-plan-datasets {
+    border-top: 1px solid $form-field-border-color;
+    border-bottom: 1px solid $form-field-border-color;
+    padding: 25px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .api-plan-start {
+    padding: 20px;
+    text-align: center;
+    min-height: 76px;
+    button {
+      background: #FFFFFF;
+      border: 1px solid #71787E;
+      box-sizing: border-box;
+      border-radius: 5px;
+      width: 136px;
+      height: 40px;
+      left: 1170px;
+      top: 660px;
+      font-family: opensans-regular;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 16px;
+      color: #71787E;
+    }
+    button.premium {
+      width: 136px;
+      height: 40px;
+      left: 906px;
+      top: 660px;
+
+      background: #2BA3DC;
+      border-radius: 5px;
+      font-family: opensans-regular;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 16px;
+
+      color: #FFFFFF;
+    }
+  }
+
+  .api-price {
+    font-family: RobotoSlab-Bold, sans-serif;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    .currency_sign {
+      font-size: 20px;
+      position: absolute;
+      left: -12px;
+      top: 12px;
+    }
+    .price-primary{
+      font-size: 48px;
+    }
+    .price-secondary{
+      position: absolute;
+      text-align: left;
+      top: 14px;
+      max-width: 50px;
+    }
+  }
+
+  img {
+    vertical-align: middle;
+  }
+
+}
+
+@media only screen and (max-width: 550px) {
+  .api-plans-container {
+    display: none;
+    visibility: hidden;
+  }
+
+  .api-plans-container-carousel {
+    display: block;
+    visibility: visible;
+  }
+  body {
+    background-color: lightblue;
   }
 }

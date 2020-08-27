@@ -73,12 +73,6 @@ LocalizedProfiles::Application.configure do
   # a domain of .greatschools.org (so that they're shared across subdomains) then uncomment out the below line
   # config.session_store :cookie_store, key: '_LocalizedProfiles_session', :domain => :all, :tld_length => 2
 
-
-  # Move sql logging into separate file in development
-  sql_logger = Logger.new Rails.root.join('log', 'development_sql.log')
-  # sql_logger.formatter = Logger::Formatter.new
-  config.active_record.logger = sql_logger
-
   config.hub_mapping_cache_time = 60 * 24
   config.hub_config_cache_time = 10
 

@@ -8,10 +8,12 @@ module SchoolProfiles
       @school_cache_data_reader = school_cache_data_reader
       @test_source_data = test_source_data
 
+      @growth_data = ::Components::ComponentGroups::GrowthDataComponentGroup.new(cache_data_reader: school_cache_data_reader)
       @graduation_rate = ::Components::ComponentGroups::GraduationRateComponentGroup.new(cache_data_reader: school_cache_data_reader)
       @test_scores = ::Components::ComponentGroups::TestScoresComponentGroup.new(cache_data_reader: school_cache_data_reader)
       @advanced_coursework = ::Components::ComponentGroups::AdvancedCourseworkComponentGroup.new(cache_data_reader: school_cache_data_reader)
       @discipline_and_attendance = ::Components::ComponentGroups::DisciplineAndAttendanceComponentGroup.new(cache_data_reader: school_cache_data_reader)
+      @low_income_growth_data = ::Components::ComponentGroups::LowIncomeGrowthDataComponentGroup.new(cache_data_reader: school_cache_data_reader)
       @low_income_test_scores = ::Components::ComponentGroups::LowIncomeTestScoresComponentGroup.new(cache_data_reader: school_cache_data_reader)
       @low_income_graduation_rate = ::Components::ComponentGroups::LowIncomeGraduationRateComponentGroup.new(cache_data_reader: school_cache_data_reader)
 
@@ -95,9 +97,9 @@ module SchoolProfiles
     def race_ethnicity_props
       @_race_ethnicity_props ||= [
         {
-          title: I18n.t('Test scores', scope:'lib.equity_gsdata'),
-          anchor: 'Test_scores',
-          data: race_ethnicity_test_scores_array
+          title: I18n.t(@school_cache_data_reader.growth_type, scope: 'lib.equity_gsdata'),
+          anchor: @school_cache_data_reader.growth_type,
+          data: @growth_data.to_hash
         },
         {
           title: I18n.t('College readiness', scope:'lib.equity_gsdata'),
@@ -108,6 +110,11 @@ module SchoolProfiles
           title: I18n.t('Advanced coursework', scope:'lib.equity_gsdata'),
           anchor: 'Advanced_coursework',
           data: @advanced_coursework.to_hash
+        },
+        {
+          title: I18n.t('Test scores', scope:'lib.equity_gsdata'),
+          anchor: 'Test_scores',
+          data: race_ethnicity_test_scores_array
         },
         {
           title: I18n.t('Discipline & attendance', scope:'lib.equity_gsdata'),
@@ -121,14 +128,19 @@ module SchoolProfiles
     def low_income_section_props
       @_low_income_section_props ||= [
         {
+          title: I18n.t(@school_cache_data_reader.growth_type, scope: 'lib.equity_gsdata'),
+          anchor: @school_cache_data_reader.growth_type,
+          data: @low_income_growth_data.to_hash
+        },
+        {
+          title: I18n.t('College readiness', scope:'lib.equity_gsdata'),
+          anchor: 'College_readiness',
+          data: @low_income_graduation_rate.to_hash
+        },
+        {
           title: I18n.t('Test scores', scope:'lib.equity_gsdata'),
           anchor: 'Test_scores',
           data: low_income_test_scores_array
-        },
-        {
-          title: I18n.t('Graduation rates', scope:'lib.equity_gsdata'),
-          anchor: 'Graduation_rates',
-          data: @low_income_graduation_rate.to_hash
         }
       ]
     end
@@ -288,6 +300,16 @@ module SchoolProfiles
       content = ''
       content << discipline_attendance_flag_sources if discipline_attendance_flag?
 
+      if ethnicity_growth_data_visible? || low_income_growth_data_visible?
+        content << '<div class="sourcing">'
+        if growth_data_rating_description || growth_data_rating_methodology
+          content << '<div>'
+          content << growth_data_sources_html
+          content << '</div>'
+        end
+        content << '</div>'
+      end
+
       if metrics_low_income_visible?
         content << '<div class="sourcing">'
         content << metrics_sources_low_income.reduce('') do |string, (key, hash)|
@@ -299,6 +321,12 @@ module SchoolProfiles
         content << metrics_sources_ethnicity.reduce('') do |string, (key, hash)|
           string << sources_text(hash)
         end
+        content << '</div>'
+      end
+
+      if @advanced_coursework.sources.present?
+        content << '<div class="sourcing">'
+        content << gsdata_sources_text(@advanced_coursework.sources)
         content << '</div>'
       end
 
@@ -397,6 +425,10 @@ module SchoolProfiles
 
     def metrics
       @school_cache_data_reader.metrics.slice(
+        'Average SAT score',
+        'Average ACT score',
+        'SAT percent college ready',
+        'ACT percent college ready',
         '4-year high school graduation rate',
         'Percent of students who meet UC/CSU entrance requirements'
       )
@@ -415,6 +447,58 @@ module SchoolProfiles
         end
       end
       visible
+    end
+
+    def ethnicity_growth_data_visible?
+      @growth_data.to_hash.present?
+    end
+
+    def low_income_growth_data_visible?
+      @low_income_growth_data.to_hash.present?
+    end
+
+    def growth_data_sources_html
+      source = "#{@school_cache_data_reader.school.state_name.titleize} #{static_label('Dept of Education')}, #{growth_data_rating_year}"
+
+      content = ''
+      content << '<h4>' + I18n.t('label', scope: 'lib.equity.data_point_info_texts.' + @school_cache_data_reader.growth_type) + '</h4>'
+      content << '<p>'
+      content << growth_data_label(growth_data_rating_description) if growth_data_rating_description
+      content << ' ' if growth_data_rating_description && growth_data_rating_methodology
+      content << growth_data_label(growth_data_rating_methodology) if growth_data_rating_methodology
+      content << '</p>'
+      content << '<p><span class="emphasis">' + static_label('source') + '</span>: ' + source + ' | ' + static_label('see more') + '</p>'
+      content
+    end
+
+    def growth_data_struct
+      @_growth_data_struct ||=begin
+        if @school_cache_data_reader.growth_type == 'Student Progress Rating'        
+          @school_cache_data_reader.student_progress_rating_hash
+        else
+          @school_cache_data_reader.academic_progress_rating_hash
+        end
+      end
+    end
+
+    def growth_data_rating_description
+      growth_data_struct.try(:description) 
+    end
+
+    def growth_data_rating_methodology
+      growth_data_struct.try(:methodology)
+    end
+
+    def growth_data_rating_year
+      @school_cache_data_reader.growth_type == 'Student Progress Rating' ? @school_cache_data_reader.student_progress_rating_year : @school_cache_data_reader.academic_progress_rating_year
+    end
+
+    def growth_data_label(key)
+      if @school_cache_data_reader.growth_type == 'Student Progress Rating'
+        I18n.t(key, scope: 'lib.student_progress', default: I18n.db_t(key, default: key))
+      else
+        I18n.t(key, scope: 'lib.academic_progress', default: I18n.db_t(key, default: key))
+      end
     end
 
     def rating_low_income

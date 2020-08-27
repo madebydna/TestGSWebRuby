@@ -90,9 +90,11 @@ def process_args(args)
   args.try(:last).try(:has_key?, :js) ? args.pop : nil
 end
 
+DEFAULT_SIZE = [1280, 960]
+
 #method to help run both mobile and desktop tests
 #actual width capybara sets seems to be -15, ie: 320 => 305 and 1280 => 1265. height is the same
-def describe_mobile_and_desktop(mobile_size=[320,568], desktop_size=[1280,960], &block)
+def describe_mobile_and_desktop(mobile_size=[320,568], desktop_size=DEFAULT_SIZE, &block)
   describe_mobile(mobile_size, &block)
   describe_desktop(desktop_size, &block)
 end
@@ -101,7 +103,7 @@ def describe_mobile(mobile_size=[320,568], &block)
   describe_block_with_page_resize('mobile', mobile_size, &block)
 end
 
-def describe_desktop(desktop_size=[1280,960], &block)
+def describe_desktop(desktop_size=DEFAULT_SIZE, &block)
   describe_block_with_page_resize('desktop', desktop_size, &block)
 end
 
@@ -109,6 +111,7 @@ def describe_block_with_page_resize(describe_block_name, screen_size, &block)
   describe describe_block_name, js: true do
     before { page.current_window.resize_to(*screen_size) }
     instance_eval &block
+    after { page.current_window.resize_to(*DEFAULT_SIZE) }
   end
 end
 

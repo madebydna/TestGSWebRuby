@@ -18,7 +18,7 @@ class DirectoryLoading::Loader < Loader
       elsif entity.is_a?(School)
         school = School.on_db(directory_update.shard).find(directory_update.entity_id)
 
-        if school.active
+        if school.active?
           SchoolRecord.update_from_school(school, directory_update.shard)
         else
           SchoolRecord.find_by_unique_id("#{directory_update.shard}-#{school.id}")&.destroy

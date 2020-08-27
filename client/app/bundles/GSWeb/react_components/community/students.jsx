@@ -34,7 +34,7 @@ const Students = ({ ethnicityData, subgroupsData, genderData, translations, sour
   }, [])
 
   return (
-    <React.Fragment>
+    <div className="profile-module">
       <div className="module-header">
         <div className="circle-rating--equity-blue">
           <span className="icon-users"/>
@@ -59,7 +59,7 @@ const Students = ({ ethnicityData, subgroupsData, genderData, translations, sour
         <div className="gender" />
       </section>
       <InfoBox content={sources} element_type="sources" pageType={pageType}>{t('See notes')}</InfoBox>
-    </React.Fragment>
+    </div>
   )
 }
 

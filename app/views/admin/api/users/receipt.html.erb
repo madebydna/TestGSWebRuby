@@ -1,0 +1,17 @@
+<%= render 'admin/admin/developer_nav' %>
+
+<div class="col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
+  <div class="new-api-account-form">
+    <div class="api-box-container">
+      <h3 class="api-form-header">Thank You!</h3>
+      <p class="api-text-field">
+        We are working on reviewing your information. You will be billed pending approval.
+        One of our Business Development team members will be reaching out to you within 5-10 business days at
+        <%= @user.email %>.
+      </p>
+    </div>
+    <div class="api-registration-submit col-xs-12">
+      <%= button_tag 'Return to Homepage', class: 'api-registration-button', onclick: "window.location.href='/'" %>
+    </div>
+  </div>
+</div>

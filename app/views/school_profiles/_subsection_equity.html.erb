@@ -1,0 +1,18 @@
+<% equity_order = @school_profile.toc.equity.values.flatten %>
+
+<% equity_order.each do |display| %>
+  <div class="profile-section-slot">
+    <%= 
+      case display[:label]
+      when SchoolProfiles::Toc::EQUITY_OVERVIEW
+        render 'equity_overview', equity_overview: equity_overview
+      when SchoolProfiles::Toc::RACE_ETHNICITY
+        render 'race_ethnicity', equity: equity
+      when SchoolProfiles::Toc::LOW_INCOME
+        render 'low_income', equity: equity
+      when SchoolProfiles::Toc::DISABILITIES
+        render 'disabilities', equity: equity
+      end
+    %>
+  </div>
+<% end %>

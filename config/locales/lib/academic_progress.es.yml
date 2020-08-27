@@ -127,3 +127,130 @@ es:
           even_distribution_html: >
             <span class="emphasis" style="color:#8a720a;">Vale la pena una mirada más profunda:</span>
             <p>Este distrito tiene un historial mixto de ayudar a los estudiantes a mejorar con el tiempo. Mira por abajo para ver qué porcentaje de escuelas en este distrito están haciendo <span class="emphasis">más, menos o aproximadamente el mismo</span> progreso que.</p>
+    academic_progress_alt:
+      'title': 'Progreso académico'
+      'subtitle': '¿Cuánto ayudó esta escuela a los estudiantes a mejorar de un año al siguiente? Esta calificación compara las escuelas con similares niveles de conocimiento para medir el progreso del estudiante a lo largo del tiempo.'
+      'sources_title': 'Las fuentes de datos y informacion de los perfiles de GreatSchools'
+      'source': 'Fuente'
+      'Greatschools rating': 'La Calificación de Progreso Académico de GreatSchools'
+      info_text: >
+        <p style='text-align:left'>¿Cuánto ayudan las escuelas y los maestros a los estudiantes crecer cada año?</p>
+        <p style='text-align:left'>Muchos estados publican datos del crecimiento del estudiante para reflejar cuánto progreso estudiantes están
+        haciendo durante el año escolar. Este estado no publica datos del crecimiento del estudiante. En cambio, estimamos con
+        nuestra Calificación del Progreso Académico el progreso del estudiante comparando año con año en las
+        calificaciones de grado y sujeto en esta escuela frente a todas las escuelas del estado que comenzaron con
+        similares niveles de conocimiento. Es una manera útil de medir qué tan bien una escuela está ayudando a los niños a aprender y avanzar.</p>
+        <p style='text-align:left'><a href="/gk/ratings-ca-mi/?lang=es#academicprogressrating" target="_blank">Aprende más sobre esta calificación.</a></p>
+      narrative:
+        1_low_html: >
+          <p class="side-bar"><span class="emphasis">Muy poco progreso con bajas calificaciones en los exámenes</span>
+          significa que los estudiantes empiezan en un punto bajo y caerán aún más lejos detrás de sus compañeros en
+          otras escuelas en el estado.</p>
+        1_high_html: >
+          <p class="side-bar"><span class="emphasis">Muy poco progreso con altas calificaciones en los exámenes<span>
+          significa que los estudiantes tienen fuertes capacidades académicas pero están haciendo menos aumentos
+          similares que de los estudiantes en otras escuelas en el estado.</p>
+        1_html: >
+          <h3 class="negative">Muy preocupante:</h3>
+          <p>Los estudiantes de esta escuela están progresando <span class="emphasis">mucho menos</span>
+          académicamente en comparación a otros estudiantes en el estado.</p>
+          %{test_score_dependent_content}
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos
+          para padres:</span></p>
+          <p class="footnote">Pregúntele a la escuela cómo interpreta esta clasificación y cómo podría utilizar esta
+          información para mejorar sus programas.</p>
+        2_low_html: >
+          <p class="side-bar"><span class="emphasis">Poco progreso con bajas calificaciones en los exámenes</span>
+          significa que los estudiantes empiezan en un punto bajo y caerán aún más lejos detrás de sus compañeros de
+          otras escuelas en el estado.</p>
+        2_high_html: >
+          <p class="side-bar"><span class="emphasis">Poco progreso con altas calificaciones en los exámenes</span>
+          significa que los estudiantes tienen fuertes capacidades académicas pero están haciendo menos aumentos
+          similares que de los estudiantes en otras escuelas en el estado.</p>
+        2_html: >
+          <h3 class="negative">Un signo preocupante:</h3>
+          <p>Los estudiantes de esta escuela están progresando <span class="emphasis">menos</span> académicamente de un
+          grado a otro en comparación con estudiantes en otras escuelas en el estado.</p>
+          %{test_score_dependent_content}
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos
+          para padres:</span></p>
+          <p class="footnote">Pregúntele a la escuela cómo interpreta esta clasificación y cómo podría utilizar esta
+          información para ayudar a los estudiantes a crecer y alcanzar su máximo potencial.</p>
+        3_low_html: >
+          <p class="side-bar"><span class="emphasis">Progreso promedio con bajas calificaciones en los exámenes</span>
+          significa que los estudiantes están comenzando en un punto bajo pero manteniendo el ritmo con sus compañeros
+          de otras escuelas en el estado.</p>
+        3_high_html: >
+          <p class="side-bar"><span class="emphasis">Progreso promedio con altas calificaciones en los exámenes</span>
+          significa que los estudiantes tienen fuertes capacidades académicas y están avanzando aproximadamente al
+          mismo ritmo que sus compañeros de otras escuelas en el estado.</p>
+        3_html: >
+          <h3 class="neutral">Vale la pena una mirada más profunda:</h3>
+          <p>Los estudiantes de esta escuela están <span class="emphasis">en promedio</span> logrando un progreso
+          académico de un grado a otro en comparación con estudiantes en otras escuelas en el estado.</p>
+          %{test_score_dependent_content}
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos
+          para padres:</span></p>
+          <p class="footnote">Pregúntele a la escuela cómo interpreta esta clasificación y cómo podría utilizar esta
+          información para ayudar a los estudiantes a crecer y alcanzar su máximo potencial.</p>
+        4_low_html: >
+          <p class="side-bar"><span class="emphasis">Grande progreso con bajas calificaciones en los exámenes </span>
+          significa que los estudiantes están comenzando en un punto bajo pero están haciendo mayores ganancias que sus
+          compañeros en otras escuelas en el estado.</p>
+        4_high_html: >
+          <p class="side-bar"><span class="emphasis">Grande progreso con altas calificaciones en los exámenes</span>
+          significa que los estudiantes tienen fuertes capacidades académicas y están haciendo ganancias más grandes
+          que sus compañeros en otras escuelas en el estado.</p>
+        4_html: >
+          <h3 class="positive">Un signo prometedor:</h3>
+          <p>Los estudiantes de esta escuela están haciendo <span class="emphasis">más</span> progreso académico de un
+          grado a otro en comparación con estudiantes en otras escuelas en el estado.</p>
+          %{test_score_dependent_content}
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos
+          para padres:</span></p>
+          <p class="footnote">Pregúntele a la escuela cómo interpreta esta clasificación y qué puedes hacer para
+          apoyar el éxito continuo de la escuela.</p>
+        5_low_html: >
+          <p class="side-bar"><span class="emphasis">Alto progreso con bajas calificaciones en los exámenes</span>
+          significa que los estudiantes
+          están comenzando en un punto bajo pero la escuela está haciendo un buen trabajo en apoyar su crecimiento
+          académico comparado con la mayoría de las otras escuelas.</p>
+        5_high_html: >
+          <p class="side-bar"><span class="emphasis">Alto progreso con altas calificaciones en los exámenes</span>
+          significa que los estudiantes tienen fuertes capacidades académicas y están haciendo ganancias más grandes
+          que sus compañeros en otras escuelas en el estado.</p>
+        5_html: >
+          <h3 class="positive">¡Buenas noticias!:</h3>
+          <p>Los estudiantes de esta escuela están haciendo <span class="emphasis">mucho</span> más progreso académico
+          de un grado a otro en comparación con estudiantes en otras escuelas en el estado.</p>
+          %{test_score_dependent_content}
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos
+          para padres:</span></p>
+          <p class="footnote">Pregúntele a la escuela cómo interpreta esta clasificación y qué puedes hacer para apoyar
+          el éxito continuo de la escuela.</p>
+      javascript:
+        toc_item: 'Progreso académico'
+      district_scope:
+        title: 'Progreso académico'
+        source_title: Las fuentes de datos y informacion de los perfiles de distritos de GreatSchools
+        subtext: '¿Cuánto aprenden los estudiantes en este distrito en comparación con el resto del estado?'
+        data_point_label: "Distrito"
+        tooltip_html: >
+          <p>¿Cuánto ayudan las escuelas a los estudiantes crecer cada año?</p>
+          <p>Muchos estados publican datos del crecimiento del estudiante para reflejar cuánto progreso estudiantes están haciendo año tras año. Este estado no publica datos del crecimiento del estudiante. En cambio, estimamos con nuestra Calificación del Progreso Académico el progreso del estudiante comparando año tras año en las calificaciones de grado y sujeto en cada escuela frente a todas las escuelas del estado que comenzaron con similares niveles de conocimiento. En esta sección puedes ver un resumen del porcentaje de escuelas en este distrito con Calificaciones de Progreso Académico que están por encima del promedio, por debajo del promedio o aproximadamente el promedio.</p>
+          <a href='/gk/ratings-ca-mi/?lang=es#academicprogressrating'>Aprende más sobre esta clasificación.</a>
+        graphic_header: ¿Cómo se compara este distrito con el resto del estado?
+        graphic_header_tooltip: Este cuadro muestra el porcentaje de escuelas en este distrito con Calificaciones del Progreso Académico que están por encima del promedio (7-10), promedio (5-6) o por debajo del promedio (1-4) en comparación con los promedios estatales.
+        narrative:
+          below_average_html: >
+            <span class="emphasis" style="color:#CB5C35;">Un signo preocupante:</span>
+            <p>Los estudiantes de esta escuela están progresando <span class="emphasis">menos</span> académicamente en comparación al año anterior, y a otros estudiantes similares en el estado. Un mayor número de escuelas en este distrito tiene estudiantes que están haciendo <span class="emphasis">menos</span> progreso académico que el promedio estatal.</p>
+          average_html: >
+            <span class="emphasis" style="color:#8a720a;">Vale la pena una mirada más profunda:</span>
+            <p>Los estudiantes de esta escuela están <span class="emphasis">en promedio</span> logrando un progreso académico en comparación al año anterior, y a otros estudiantes similares en el estado. Los estudiantes en la mayoría de las escuelas en este distrito están haciendo un progreso académico <span class="emphasis">promedio</span> en comparación con otras escuelas en el estado.</p>
+          above_average_html: >
+            <span class="emphasis" style="color:#367A1E;">Un signo prometedor:</span>
+            <p>Los estudiantes de esta escuela están haciendo <span class="emphasis">más</span> progreso académico en comparación al año anterior, y a otros estudiantes similares en el estado. Un mayor número de escuelas en este distrito tiene estudiantes que están progresando <span class="emphasis">más</span> académicamente que el promedio estatal.</p>
+          even_distribution_html: >
+            <span class="emphasis" style="color:#8a720a;">Vale la pena una mirada más profunda:</span>
+            <p>Este distrito tiene un historial mixto de ayudar a los estudiantes a mejorar con el tiempo. Mira por abajo para ver qué porcentaje de escuelas en este distrito están haciendo <span class="emphasis">más, menos o aproximadamente el mismo</span> progreso que.</p>

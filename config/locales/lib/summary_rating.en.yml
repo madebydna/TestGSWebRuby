@@ -29,3 +29,14 @@ en:
             <p>Summary Ratings for schools in this district were last updated on %{date_in_words}.</p>
             <a href="/gk/ratings/">Learn more about GreatSchools Ratings.</a>
           </div>
+      district_scope_alt:
+        tooltip_html: >
+          <p>GreatSchools’ Summary Rating provides an overall snapshot of school quality based on multiple measures, like academics, equity, and the school environment, compared to other public schools in the state. In this section you can see a summary of the percentage of schools in this district with above, below, or about average Summary Ratings.</p>
+          <a href="/gk/ratings-ca-mi/">Learn more about GreatSchools Ratings.</a>
+        source_html: >
+          <div class="sourcing">
+            <h1>GreatSchools district data sources & information</h1>
+            <p>The GreatSchools Summary Rating provides a multi-measured reflection of school quality based on the ratings components available for each school. To see how the Summary Rating was calculated for a school in this district, visit the school’s profile and click on the tooltip question mark next to the Summary Rating at the top of the page.</p>
+            <p>Summary Ratings for schools in this district were last updated on %{date_in_words}.</p>
+            <a href="/gk/ratings-ca-mi/">Learn more about GreatSchools Ratings.</a>
+          </div>

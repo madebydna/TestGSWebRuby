@@ -697,6 +697,35 @@ describe SigninController do
         controller.facebook_auth
       end
     end
+
+    describe '#google_auth' do
+      before do
+        request.env['omniauth.auth'] = OmniAuth.config.mock_auth[:google]
+      end
+
+      after(:each) do
+        clean_dbs :gs_schooldb
+      end
+
+      it 'should successfully create a user if none existed' do
+        expect { get :google_auth, provider: :google }.to change{ User.count }.by(1)
+        expect(response).to redirect_to(manage_account_url)
+      end
+
+      it 'should return existing user' do
+        User.create(email: OmniAuth.config.mock_auth[:google].info.email, password: "fillerbarn")
+        expect { get :google_auth, provider: :google }.to change{ User.count }.by(0)
+        expect(response).to redirect_to(manage_account_url)
+        expect(subject).not_to receive(:send_verification_email)
+      end
+
+      it "should successfully create a session" do
+        expect(session[:user_id]).to be_nil
+        get :google_auth, provider: :google
+        expect(session[:user_id]).not_to be_falsey
+        expect(response).to redirect_to(manage_account_url)
+      end
+    end
   end
 
   describe '#authenticate_token_and_redirect' do
