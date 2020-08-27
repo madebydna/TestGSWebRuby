@@ -376,6 +376,44 @@ class SchoolProfilesController < ApplicationController
 
   def data_layer_through_gon
     data_layer_gon_hash.merge!(page_view_metadata)
+
+    underserved_indicators = []
+    underserved_indicators << 'lInd' if student_li_indicator
+    underserved_indicators << 'eInd' if student_ethnicity_indicator
+    data_layer_gon_hash.merge!({'uInd' => underserved_indicators.join(',')})
+  end
+
+  def student_li_indicator
+    li_datatype = 'Students participating in free or reduced-price lunch program'
+    return false unless students&.subgroups_data && students.subgroups_data[li_datatype]
+
+    value = students.subgroups_data[li_datatype].for_all_students.having_school_value.first
+
+    return false unless value&.school_value && value.state_average
+
+    value.school_value > value.state_average
+  end
+
+  def student_ethnicity_indicator
+    return false unless students&.ethnicity_data
+
+    underserved_ethnicities = ['African American', 'Black', 'Hispanic', 'Native American']
+
+    value = students.ethnicity_data.
+        select { |h| underserved_ethnicities.include?(h[:breakdown]) }.
+        map { |h| h[:school_value] }.
+        reduce(:+)
+    return false unless value && value > 0
+
+    state_data = StateCacheDataReader.new(school.state.downcase, state_cache_keys: 'metrics')
+    return false unless state_data&.ethnicity_data
+    state_value = state_data.ethnicity_data.
+        select { |h| underserved_ethnicities.include?(h['breakdown']) }.
+        map { |h| h['state_value'] }.
+        reduce(:+)
+    return false unless state_value
+
+    value > state_value
   end
 
   def add_gon_ad_set_targeting
