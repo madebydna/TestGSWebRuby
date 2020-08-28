@@ -11,14 +11,24 @@ def reportRubocopOffenses() {
 }
 
 def runCommonSteps() {
-  def res = sh(script: 'sudo /sbin/route add default gw 192.168.111.81', returnStatus: true)
-  if (res !=0 ) {
-    println("Default gateway not added ... returnStatus ${res}")
+  def res1 = sh(script: 'sudo /sbin/route add default gw 192.168.111.81', returnStatus: true)
+  if (res1 !=0 ) {
+    println("Default gateway not added ... returnStatus ${res1}")
   } else {
-    println("Default gateway added ... returnStatus ${res}")
+    println("Default gateway added ... returnStatus ${res1}")
   }
-  sh 'sudo /sbin/route add -net 172.16.0.0 netmask 255.240.0.0 gw 192.168.111.187'
-  sh 'sudo /sbin/route add -net 192.168.121.0 netmask 255.255.255.0  gw 192.168.111.187'
+  def res2 = sh(script: 'sudo /sbin/route add -net 172.16.0.0 netmask 255.240.0.0 gw 192.168.111.187', returnStatus: true)
+  if (res2 !=0 ) {
+    println("Did not add route to 172.16.0.0 ... returnStatus ${res2}")
+  } else {
+    println("Added route to 172.16.0.0 ... returnStatus ${res2}")
+  }
+  def res3 = sh(script: 'sudo /sbin/route add -net 192.168.121.0 netmask 255.255.255.0  gw 192.168.111.187', returnStatus: true)
+  if (res3 !=0 ) {
+    println("Did not add route to 192.168.121.0 ... returnStatus ${res3}")
+  } else {
+    println("Added route to 192.168.121.0 ... returnStatus ${res3}")
+  }
   checkout scm
   sh 'script/ci/build_env.sh'
   sh 'mkdir -p vendor/cache'
@@ -61,7 +71,7 @@ pipeline {
         sh 'script/ci/build_env.sh'
         withEnv(['PATH+EXTRA=/home/admin/.rbenv/bin:/home/admin/.rbenv/shims:/home/admin/.rbenv/plugins/ruby-build/bin:/usr/local/sbin']) {
           sh 'rm -rf vendor/cache'
-          retry(15) {
+          retry(25) {
             sh 'bundle install --deployment --without development'
           }
           sh 'bundle package > /dev/null'
