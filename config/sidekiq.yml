@@ -1,0 +1,9 @@
+:concurrency: 5
+:logfile: log/sidekiq.log
+staging:
+  :concurrency: 5
+production:
+  :concurrency: 10
+  :logfile: /var/log/gswebruby/sidekiq.log
+:queues:
+  - default
