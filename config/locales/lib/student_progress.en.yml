@@ -7,13 +7,13 @@ en:
         full potential, compared to students with similar proficiency levels at other schools in the state.</p>
         <p style='text-align:left'>The GreatSchools Student Progress Rating compares the academic progress over time for this school to all
         schools in the state, using student growth data provided by the state Department of Education.
-        <a href='/gk/ratings/#studentprogressrating' target='_blank'>Learn more about this rating</a>.</p>
+        <a href='/gk/ratings/#studentprogressrating' target='_blank' rel="noopener noreferrer">Learn more about this rating</a>.</p>
       'title': 'GreatSchools profile data sources &amp; information'
       'GreatSchools Rating': 'GreatSchools Student Progress Rating'
       'Rating text': 'The student progress rating measures whether students at this school are making academic progress over time based on student growth data provided by the Department of Education. Specifically, this rating looks at how much progress individual students have made on state assessments during the past year or more, how this performance aligns with expected progress based on a student growth model established by the state Department of Education, and how this school''s growth data compares to other schools in the state.'
       'source': 'Source'
       'Dept of Education': 'Dept. of Education'
-      'see more': 'See more: <a href="/gk/ratings/#studentprogressrating" target="_blank">About this rating</a>'
+      'see more': 'See more: <a href="/gk/ratings/#studentprogressrating" target="_blank" rel="noopener noreferrer">About this rating</a>'
       narrative:
         1_low_html: >
           <p><span class="emphasis">Very low progress with low test scores</span> means students are starting
@@ -28,7 +28,7 @@ en:
           %{test_score_dependent_content}
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
-          <p class="footnote">One key way the best schools help all students learn is by <a href="/gk/videos/why-student-centered-education-should-be-the-norm/">giving them voice and choice</a>.</p>
+          <p class="footnote">One key way the best schools help all students learn is by <a href="/gk/videos/why-student-centered-education-should-be-the-norm/" target="_blank" rel="noopener noreferrer">giving them voice and choice</a>.</p>
         2_low_html: >
           <p><span class="emphasis">Low progress with low test scores</span> means... that students are starting at a
           low point and falling farther behind their peers.</p>
@@ -42,7 +42,7 @@ en:
           %{test_score_dependent_content}
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
-          <p class="footnote">One key way the best schools help all students learn is by <a href="/gk/videos/why-student-centered-education-should-be-the-norm/">giving them voice and choice</a>.</p>
+          <p class="footnote">One key way the best schools help all students learn is by <a href="/gk/videos/why-student-centered-education-should-be-the-norm/" target="_blank" rel="noopener noreferrer">giving them voice and choice</a>.</p>
         3_low_html: >
           <p><span class="emphasis">Average progress with low test scores</span> means... that students are starting at
           a low point but keeping up with their peers.</p>
@@ -56,7 +56,7 @@ en:
           %{test_score_dependent_content}
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
-          <p class="footnote">One key way the best schools help all students learn is by <a href="/gk/videos/why-student-centered-education-should-be-the-norm/">giving them voice and choice</a>.</p>
+          <p class="footnote">One key way the best schools help all students learn is by <a href="/gk/videos/why-student-centered-education-should-be-the-norm/" target="_blank" rel="noopener noreferrer">giving them voice and choice</a>.</p>
         4_low_html: >
           <p><span class="emphasis">Strong progress with low test scores</span> means... that students are starting at a
           low point but the school is doing a better job at supporting their academic growth than most other schools.</p>
@@ -70,7 +70,7 @@ en:
           %{test_score_dependent_content}
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
-          <p class="footnote">One key way the best schools help all students learn is by <a href="/gk/videos/why-student-centered-education-should-be-the-norm/">giving them voice and choice</a>.</p>
+          <p class="footnote">One key way the best schools help all students learn is by <a href="/gk/videos/why-student-centered-education-should-be-the-norm/" target="_blank" rel="noopener noreferrer">giving them voice and choice</a>.</p>
         5_low_html: >
           <p><span class="emphasis">High progress with low test scores</span> means... that students are starting at a
           low point but the school is doing a great job at supporting their academic growth compared to most other schools.</p>
@@ -84,7 +84,7 @@ en:
           %{test_score_dependent_content}
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
-          <p class="footnote">One key way the best schools help all students learn is by <a href="/gk/videos/why-student-centered-education-should-be-the-norm/">giving them voice and choice</a>.</p>
+          <p class="footnote">One key way the best schools help all students learn is by <a href="/gk/videos/why-student-centered-education-should-be-the-norm/" target="_blank" rel="noopener noreferrer">giving them voice and choice</a>.</p>
       javascript:
         toc_item: Student progress
       district_scope:
@@ -97,7 +97,7 @@ en:
           <p>How much do schools help students grow each year?</p>
           <p>Student progress (also known as “student growth”) is a way of understanding how well schools are helping individual students grow academically year-over-year, and whether these students are on track to meet their full potential, compared to students with similar proficiency levels at other schools in the state.</p>
           <p>The GreatSchools Student Progress Rating compares the academic progress over time for each school to all schools in the state, using student growth data provided by the state Department of Education. In this section you can see a summary of the percentage of schools in this district with above, below, or about average Student Progress Ratings.</p>
-          <a href='/gk/ratings/#studentprogressrating'>Learn more about this rating.</a>
+          <a href='/gk/ratings/#studentprogressrating' target="_blank" rel="noopener noreferrer">Learn more about this rating.</a>
         graphic_header: How does this district compare with the rest of the state?
         graphic_header_tooltip: This pie chart shows the percentage of schools in this district with Student Progress Ratings that are above average (7-10), average (5-6), or below average (1-4) compared to state averages.
         narrative:
@@ -117,14 +117,14 @@ en:
       info_text: >
         <p style='text-align:left'>Student progress (also known as “student growth”) is a way to measure how well individual students grow academically year over year at a given school compared to students with similar proficiency levels at other schools in the state.</p>
         <p style='text-align:left'>The Student Progress Rating compares progress made by students at this school to other schools in the state, using student growth data provided by the state Department of Education. It’s a helpful way to measure how well a school is helping kids learn and advance.
-        <a href='/gk/ratings-ca-mi/#studentprogressrating' target='_blank'>Learn more about this rating</a>.</p>
+        <a href='/gk/ratings-ca-mi/#studentprogressrating' target="_blank" rel="noopener noreferrer">Learn more about this rating</a>.</p>
       'title': 'GreatSchools profile data sources &amp; information'
       'GreatSchools Rating': 'GreatSchools Student Progress Rating'
       'Rating text': The Student Progress Rating measures whether students at this school are making academic progress over time based on student growth data provided by the state’s Department of Education. Specifically, this rating looks at how much progress individual students have made on state assessments during the past year or more, how this performance aligns with expected progress based on a student growth model established by the state Department of Education, and how this school's growth data compares to other schools in the state.
       'source': 'Source'
       source_calculation: this rating was calculated in
       'Dept of Education': 'Dept. of Education'
-      'see more': 'See more: <a href="/gk/ratings-ca-mi/#studentprogressrating" target="_blank">About this rating</a>'
+      'see more': 'See more: <a href="/gk/ratings-ca-mi/#studentprogressrating" target="_blank" rel="noopener noreferrer">About this rating</a>'
       narrative:
         1_low_html: >
           <p><span class="emphasis">Very low progress with low test scores</span> means students are starting
@@ -139,7 +139,7 @@ en:
           %{test_score_dependent_content}
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
-          <p class="footnote">One key way the best schools help all students learn is by <a href="/gk/videos/why-student-centered-education-should-be-the-norm/">giving them voice and choice</a>.</p>
+          <p class="footnote">One key way the best schools help all students learn is by <a href="/gk/videos/why-student-centered-education-should-be-the-norm/" target="_blank" rel="noopener noreferrer">giving them voice and choice</a>.</p>
         2_low_html: >
           <p><span class="emphasis">Low progress with low test scores</span> means... that students are starting at a
           low point and falling farther behind their peers.</p>
@@ -153,7 +153,7 @@ en:
           %{test_score_dependent_content}
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
-          <p class="footnote">One key way the best schools help all students learn is by <a href="/gk/videos/why-student-centered-education-should-be-the-norm/">giving them voice and choice</a>.</p>
+          <p class="footnote">One key way the best schools help all students learn is by <a href="/gk/videos/why-student-centered-education-should-be-the-norm/" target="_blank" rel="noopener noreferrer">giving them voice and choice</a>.</p>
         3_low_html: >
           <p><span class="emphasis">Average progress with low test scores</span> means... that students are starting at
           a low point but keeping up with their peers.</p>
@@ -167,7 +167,7 @@ en:
           %{test_score_dependent_content}
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
-          <p class="footnote">One key way the best schools help all students learn is by <a href="/gk/videos/why-student-centered-education-should-be-the-norm/">giving them voice and choice</a>.</p>
+          <p class="footnote">One key way the best schools help all students learn is by <a href="/gk/videos/why-student-centered-education-should-be-the-norm/" target="_blank" rel="noopener noreferrer">giving them voice and choice</a>.</p>
         4_low_html: >
           <p><span class="emphasis">Strong progress with low test scores</span> means... that students are starting at a
           low point but the school is doing a better job at supporting their academic growth than most other schools.</p>
@@ -181,7 +181,7 @@ en:
           %{test_score_dependent_content}
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
-          <p class="footnote">One key way the best schools help all students learn is by <a href="/gk/videos/why-student-centered-education-should-be-the-norm/">giving them voice and choice</a>.</p>
+          <p class="footnote">One key way the best schools help all students learn is by <a href="/gk/videos/why-student-centered-education-should-be-the-norm/" target="_blank" rel="noopener noreferrer">giving them voice and choice</a>.</p>
         5_low_html: >
           <p><span class="emphasis">High progress with low test scores</span> means... that students are starting at a
           low point but the school is doing a great job at supporting their academic growth compared to most other schools.</p>
@@ -195,7 +195,7 @@ en:
           %{test_score_dependent_content}
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
-          <p class="footnote">One key way the best schools help all students learn is by <a href="/gk/videos/why-student-centered-education-should-be-the-norm/">giving them voice and choice</a>.</p>
+          <p class="footnote">One key way the best schools help all students learn is by <a href="/gk/videos/why-student-centered-education-should-be-the-norm/" target="_blank" rel="noopener noreferrer">giving them voice and choice</a>.</p>
       javascript:
         toc_item: Student progress
       district_scope:
@@ -208,7 +208,7 @@ en:
           <p>How much do schools help students grow each year?</p>
           <p>Student progress (also known as “student growth”) is a way of understanding how well schools are helping individual students grow academically year-over-year, and whether these students are on track to meet their full potential, compared to students with similar proficiency levels at other schools in the state.</p>
           <p>The GreatSchools Student Progress Rating compares the academic progress over time for each school to all schools in the state, using student growth data provided by the state Department of Education. In this section you can see a summary of the percentage of schools in this district with above, below, or about average Student Progress Ratings.</p>
-          <a href='/gk/ratings-ca-mi/#studentprogressrating'>Learn more about this rating.</a>
+          <a href='/gk/ratings-ca-mi/#studentprogressrating' target="_blank" rel="noopener noreferrer">Learn more about this rating.</a>
         graphic_header: How does this district compare with the rest of the state?
         graphic_header_tooltip: This pie chart shows the percentage of schools in this district with Student Progress Ratings that are above average (7-10), average (5-6), or below average (1-4) compared to state averages.
         narrative:

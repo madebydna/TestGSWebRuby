@@ -12,7 +12,7 @@ es:
       'source': 'Fuente'
       note: Note
       Test scores: Resultados de exámenes
-      info_text: "<p>La calificación de los exámenes refleja los resultados de los exámenes anuales del estado para esta escuela en comparación con los puntajes a nivel estatal.</p><p><a href='/gk/como-clasificamos/?lang=es#testscorerating' target='_blank'>Infórmese más sobre esta calificación.</a></p>"
+      info_text: "<p>La calificación de los exámenes refleja los resultados de los exámenes anuales del estado para esta escuela en comparación con los puntajes a nivel estatal.</p><p><a href='/gk/como-clasificamos/?lang=es#testscorerating' target='_blank' rel='noopener noreferrer'>Infórmese más sobre esta calificación.</a></p>"
       'Math': Matemáticas
       Science: Ciencia
       Source: Fuente
@@ -37,7 +37,7 @@ es:
           grado/materia si el número de estudiantes tomando el examen es demasiado bajo. Esto puede significar que
           algunos resultados de grados que son parte del resultado general no se pueden mostrar individualmente.</p>
           %{standardized_tests_note}
-          <p><a href="/gk/como-clasificamos/?lang=es#testscorerating” target="_blank">Infórmese más sobre esta calificación.</a></p>
+          <p><a href="/gk/como-clasificamos/?lang=es#testscorerating” target="_blank" rel="noopener noreferrer">Infórmese más sobre esta calificación.</a></p>
           <p><a href="https://greatschools.zendesk.com/hc/en-us" target="_blank">Todavía tiene preguntas? Visite nuestra página de
           preguntas frecuentes.</a></p>
       narration:
@@ -48,7 +48,7 @@ es:
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
           <p class="footnote">Pregúntele a la escuela lo que está haciendo para ayudar a los estudiantes que no están logrando por lo menos%{more}los resultados promedio.
-          <a href="/gk/milestones/?lang=es">Entienda lo que se espera que tu hijo aprenda en cada grado</a>,
+          <a href="/gk/milestones/?lang=es" target="_blank" rel="noopener noreferrer">Entienda lo que se espera que tu hijo aprenda en cada grado</a>,
           y explora las escuelas de mejor rendimiento en tu área para encontrar las mejores oportunidades para que tu hijo tenga éxito.%{end_more}</p>
           <hr />
         _2_html: >
@@ -58,7 +58,7 @@ es:
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
           <p class="footnote">Pregúntele a la escuela lo que está haciendo para ayudar a los estudiantes que no están logrando por lo menos%{more}los resultados promedio.
-          <a href="/gk/milestones/?lang=es">Entienda lo que se espera que tu hijo aprenda en cada grado</a>,
+          <a href="/gk/milestones/?lang=es" target="_blank" rel="noopener noreferrer">Entienda lo que se espera que tu hijo aprenda en cada grado</a>,
           y explora las escuelas de mejor rendimiento en tu área para encontrar las mejores oportunidades para que tu hijo tenga éxito.%{end_more}</p>
           <hr />
         _3_html: >
@@ -67,7 +67,7 @@ es:
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
           <p class="footnote">Pregúntele a la escuela lo que está haciendo para ayudar a los estudiantes que no están logrando por lo menos%{more}los resultados promedio.
-          <a href="/gk/milestones/?lang=es">Entienda lo que se espera que tu hijo aprenda en cada grado</a>,
+          <a href="/gk/milestones/?lang=es" target="_blank" rel="noopener noreferrer">Entienda lo que se espera que tu hijo aprenda en cada grado</a>,
           y explora las escuelas de mejor rendimiento en tu área para encontrar las mejores oportunidades para que tu hijo tenga éxito.%{end_more}</p>
           <hr />
         _4_html: >
@@ -77,7 +77,7 @@ es:
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
           <p class="footnote">Incluso las escuelas de alto rendimiento pueden tener diferencias entre grupos de estudiantes.
           Para comprender%{more}cómo esta escuela educa a todos sus estudiantes, <a href="#Equity">revisa la siguiente información en la sección de Equidad</a>.
-          Entienda lo que se espera <a href="/gk/milestones/?lang=es">que tu hijo aprenda en cada grado</a> y cómo puedes ayudar en el hogar.%{end_more}</p>
+          Entienda lo que se espera <a href="/gk/milestones/?lang=es" target="_blank" rel="noopener noreferrer">que tu hijo aprenda en cada grado</a> y cómo puedes ayudar en el hogar.%{end_more}</p>
           <hr />
         _5_html: >
           <h3 class="positive">¡Buenas noticias!:</h3>
@@ -86,7 +86,7 @@ es:
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
           <p class="footnote">Incluso las escuelas de alto rendimiento pueden tener diferencias entre grupos de estudiantes.
           Para comprender%{more}cómo esta escuela educa a todos sus estudiantes, <a href="#Equity">revisa la siguiente información en la sección de Equidad</a>.
-          Entienda lo que se espera <a href="/gk/milestones/?lang=es">que tu hijo aprenda en cada grado</a> y cómo puedes ayudar en el hogar.%{end_more}</p>
+          Entienda lo que se espera <a href="/gk/milestones/?lang=es" target="_blank" rel="noopener noreferrer">que tu hijo aprenda en cada grado</a> y cómo puedes ayudar en el hogar.%{end_more}</p>
           <hr />
       narrative:
         subject:
@@ -169,25 +169,25 @@ es:
             <p class="footnote">Los índices de graduación no cuentan toda
             la historia. Averigua si la escuela está preparando a los
             estudiantes para el éxito universitario.</p>
-            <p class="footnote"><a href="/gk/articles/por-que-tantos-estudiantes-destacados-terminan-en-clases-de-recuperacion/?lang=es">Obtenga más información.</a></p>
+            <p class="footnote"><a href="/gk/articles/por-que-tantos-estudiantes-destacados-terminan-en-clases-de-recuperacion/?lang=es" target="_blank" rel="noopener noreferrer">Obtenga más información.</a></p>
           '3_html': >
             <p class="title positive">Un signo positivo:</p>
             <p class="narrative-content">En esta escuela, los índices de graduación de los estudiantes de bajos ingresos <span class='emphasis'>están más altas</span> que el promedio estatal para los estudiantes de bajos ingresos, pero <span class='emphasis'>por debajo</span> del promedio de <span class="italicized">todos</span> los estudiantes.</p>
             <hr />
             <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
             <p class="footnote">Los índices de graduación no cuentan toda la historia. Averigua si la escuela está preparando a los estudiantes para el éxito universitario.</p>
-            <p class="footnote"><a href="/gk/articles/por-que-tantos-estudiantes-destacados-terminan-en-clases-de-recuperacion/?lang=es">Obtenga más información.</a></p>
+            <p class="footnote"><a href="/gk/articles/por-que-tantos-estudiantes-destacados-terminan-en-clases-de-recuperacion/?lang=es" target="_blank" rel="noopener noreferrer">Obtenga más información.</a></p>
           '4_html': >
             <p class="title positive">¡Buenas noticias!</p>
             <p class="narrative-content">En esta escuela, los estudiantes de bajos ingresos se están graduando <span class='emphasis'>en o por encima</span> del promedio estatal para <span class="italicized">todos</span> los estudiantes.</p>
             <hr />
             <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
             <p class="footnote">Los índices de graduación no cuentan toda la historia. Averigua si la escuela está preparando a los estudiantes para el éxito universitario.</p>
-            <p class="footnote"><a href="/gk/articles/por-que-tantos-estudiantes-destacados-terminan-en-clases-de-recuperacion/?lang=es">Obtenga más información.</a></p>
+            <p class="footnote"><a href="/gk/articles/por-que-tantos-estudiantes-destacados-terminan-en-clases-de-recuperacion/?lang=es" target="_blank" rel="noopener noreferrer">Obtenga más información.</a></p>
         'Percent of students who meet UC/CSU entrance requirements':
           '0_html': >
             Esto muestra los porcentajes de graduados que han tomado el A-G clases requeridas necesarias para ser elegible para la Universidad de CA y colegios de CA State.
-            <a href="/gk/articles/no-pierda-de-vista-estos-requisitos-para-entrar-a-la-universidad/?lang=es">Obtenga más información acerca de estos requisitos.</a>
+            <a href="/gk/articles/no-pierda-de-vista-estos-requisitos-para-entrar-a-la-universidad/?lang=es" target="_blank" rel="noopener noreferrer">Obtenga más información acerca de estos requisitos.</a>
           '1_html': >
             <p class="title negative">Muy preocupante:</p>
             <p class="narrative-content">En esta escuela, <span class="emphasis">pocos</span> estudiantes
@@ -197,7 +197,7 @@ es:
             <hr />
             <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
             <p class="footnote">¿Su hijo está preparado para ir a la universidad? Los índices de graduación no son el mejor indicador. Asegúrese de que su niño esté tomando las clases adecuadas para ser elegible para las universidades estatales.</p>
-            <p class="footnote"><a href="/gk/articles/no-pierda-de-vista-estos-requisitos-para-entrar-a-la-universidad/?lang=es">Obtenga más información.</a></p>
+            <p class="footnote"><a href="/gk/articles/no-pierda-de-vista-estos-requisitos-para-entrar-a-la-universidad/?lang=es" target="_blank" rel="noopener noreferrer">Obtenga más información.</a></p>
           '2_html': >
             <p class="title negative">Un signo preocupante:</p>
             <p class="narrative-content">En esta escuela, aproximadamente
@@ -210,21 +210,21 @@ es:
             <hr />
             <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
             <p class="footnote">¿Su hijo está preparado para ir a la universidad? Los índices de graduación no son el mejor indicador. Asegúrese de que su niño esté tomando las clases adecuadas para ser elegible para las universidades estatales.</p>
-            <p class="footnote"><a href="/gk/articles/no-pierda-de-vista-estos-requisitos-para-entrar-a-la-universidad/?lang=es">Obtenga más información.</a></p>
+            <p class="footnote"><a href="/gk/articles/no-pierda-de-vista-estos-requisitos-para-entrar-a-la-universidad/?lang=es" target="_blank" rel="noopener noreferrer">Obtenga más información.</a></p>
           '3_html': >
             <p class="title positive">Un signo positivo:</p>
             <p class="narrative-content">En esta escuela, más estudiantes de bajos ingresos se gradúan elegibles para la universidades o universidades estatales comparado con el promedio estatal para los estudiantes de bajos ingresos, pero todavía están <span class='emphasis'>por debajo</span> del promedio estatal de <span class="italicized">todos</span> los estudiantes.</p>
             <hr />
             <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
             <p class="footnote">¿Su hijo está preparado para ir a la universidad? Los índices de graduación no son el mejor indicador. Asegúrese de que su niño esté tomando las clases adecuadas para ser elegible para las universidades estatales.</p>
-            <p class="footnote"><a href="/gk/articles/no-pierda-de-vista-estos-requisitos-para-entrar-a-la-universidad/?lang=es">Obtenga más información.</a></p>
+            <p class="footnote"><a href="/gk/articles/no-pierda-de-vista-estos-requisitos-para-entrar-a-la-universidad/?lang=es" target="_blank" rel="noopener noreferrer">Obtenga más información.</a></p>
           '4_html': >
             <p class="title positive">¡Buenas noticias!</p>
             <p class="narrative-content">En esta escuela, más estudiantes de bajos ingresos se gradúan elegibles para la universidades o universidades estatales comparado con el promedio estatal para <span class="italicized">todos</span> los estudiantes</p>
             <hr />
             <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
             <p class="footnote">¿Su hijo está preparado para ir a la universidad? Los índices de graduación no son el mejor indicador. Asegúrese de que su niño esté tomando las clases adecuadas para ser elegible para las universidades estatales.</p>
-            <p class="footnote"><a href="/gk/articles/no-pierda-de-vista-estos-requisitos-para-entrar-a-la-universidad/?lang=es">Obtenga más información.</a></p>
+            <p class="footnote"><a href="/gk/articles/no-pierda-de-vista-estos-requisitos-para-entrar-a-la-universidad/?lang=es" target="_blank" rel="noopener noreferrer">Obtenga más información.</a></p>
     test_scores_alt:
       'English Language Arts': Inglés
       'English': Inglés
@@ -237,7 +237,7 @@ es:
       'source': 'Fuente'
       note: Note
       Test scores: Resultados de exámenes
-      info_text: "<p>Las Calificaciones de los Resultados de Exámenes reflejan los resultados de los exámenes anuales del estado para esta escuela en comparación con los puntajes a nivel estatal.</p><p><a href='/gk/ratings-ca-mi/?lang=es#testscorerating' target='_blank'>Aprende más sobre esta calificación.</a></p>"
+      info_text: "<p>Las Calificaciones de los Resultados de Exámenes reflejan los resultados de los exámenes anuales del estado para esta escuela en comparación con los puntajes a nivel estatal.</p><p><a href='/gk/ratings-ca-mi/?lang=es#testscorerating' target='_blank' rel='noopener noreferrer'>Aprende más sobre esta calificación.</a></p>"
       'Math': Matemáticas
       Science: Ciencia
       Source: Fuente
@@ -259,7 +259,7 @@ es:
           estaba incluida en los datos que recibimos del DE.</p>
           <p>¿Por qué los resultados de los exámenes de grado a veces son distintos al resultado general en una materia? Es muy probable que esto se deba a la supresión. A los estados se les requiere que supriman información de grado/materia si el número de estudiantes tomando el examen es demasiado bajo. Esto ayuda a proteger la privacidad de los estudiantes, y puede significar que algunos resultados de grados que son parte del resultado general no se pueden mostrar individualmente.</p>
           %{standardized_tests_note}
-          <p><a href="/gk/ratings-ca-mi/?lang=es#testscorerating” target="_blank">Aprende más sobre esta calificación.</a></p>
+          <p><a href="/gk/ratings-ca-mi/?lang=es#testscorerating” target="_blank" rel="noopener noreferrer">Aprende más sobre esta calificación.</a></p>
           <p><a href="https://greatschools.zendesk.com/hc/en-us" target="_blank">Todavía tiene preguntas? Visita nuestra página de
           preguntas frecuentes.</a></p>
       narration:
@@ -270,7 +270,7 @@ es:
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
           <p class="footnote">Pregúntele a la escuela lo que está haciendo para ayudar a los estudiantes que no están logrando por lo menos%{more}los resultados promedio.
-          <a href="/gk/milestones/?lang=es">Entienda lo que se espera que tu hijo aprenda en cada grado</a>,
+          <a href="/gk/milestones/?lang=es" target="_blank" rel="noopener noreferrer">Entienda lo que se espera que tu hijo aprenda en cada grado</a>,
           y explora las escuelas de mejor rendimiento en tu área para encontrar las mejores oportunidades para que tu hijo tenga éxito.%{end_more}</p>
           <hr />
         _2_html: >
@@ -280,7 +280,7 @@ es:
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
           <p class="footnote">Pregúntele a la escuela lo que está haciendo para ayudar a los estudiantes que no están logrando por lo menos%{more}los resultados promedio.
-          <a href="/gk/milestones/?lang=es">Entienda lo que se espera que tu hijo aprenda en cada grado</a>,
+          <a href="/gk/milestones/?lang=es" target="_blank" rel="noopener noreferrer">Entienda lo que se espera que tu hijo aprenda en cada grado</a>,
           y explora las escuelas de mejor rendimiento en tu área para encontrar las mejores oportunidades para que tu hijo tenga éxito.%{end_more}</p>
           <hr />
         _3_html: >
@@ -289,7 +289,7 @@ es:
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
           <p class="footnote">Pregúntele a la escuela lo que está haciendo para ayudar a los estudiantes que no están logrando por lo menos%{more}los resultados promedio.
-          <a href="/gk/milestones/?lang=es">Entienda lo que se espera que tu hijo aprenda en cada grado</a>,
+          <a href="/gk/milestones/?lang=es" target="_blank" rel="noopener noreferrer">Entienda lo que se espera que tu hijo aprenda en cada grado</a>,
           y explora las escuelas de mejor rendimiento en tu área para encontrar las mejores oportunidades para que tu hijo tenga éxito.%{end_more}</p>
           <hr />
         _4_html: >
@@ -299,7 +299,7 @@ es:
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
           <p class="footnote">Incluso las escuelas de alto rendimiento pueden tener diferencias entre grupos de estudiantes.
           Para comprender%{more}cómo esta escuela educa a todos sus estudiantes, <a href="#Equity">revisa la siguiente información en la sección de Equidad</a>.
-          Entienda lo que se espera <a href="/gk/milestones/?lang=es">que tu hijo aprenda en cada grado</a> y cómo puedes ayudar en el hogar.%{end_more}</p>
+          Entienda lo que se espera <a href="/gk/milestones/?lang=es" target="_blank" rel="noopener noreferrer">que tu hijo aprenda en cada grado</a> y cómo puedes ayudar en el hogar.%{end_more}</p>
           <hr />
         _5_html: >
           <h3 class="positive">¡Buenas noticias!:</h3>
@@ -308,7 +308,7 @@ es:
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
           <p class="footnote">Incluso las escuelas de alto rendimiento pueden tener diferencias entre grupos de estudiantes.
           Para comprender%{more}cómo esta escuela educa a todos sus estudiantes, <a href="#Equity">revisa la siguiente información en la sección de Equidad</a>.
-          Entienda lo que se espera <a href="/gk/milestones/?lang=es">que tu hijo aprenda en cada grado</a> y cómo puedes ayudar en el hogar.%{end_more}</p>
+          Entienda lo que se espera <a href="/gk/milestones/?lang=es" target="_blank" rel="noopener noreferrer">que tu hijo aprenda en cada grado</a> y cómo puedes ayudar en el hogar.%{end_more}</p>
           <hr />
       narrative:
         subject:
@@ -391,25 +391,25 @@ es:
             <p class="footnote">Los índices de graduación no cuentan toda
             la historia. Averigua si la escuela está preparando a los
             estudiantes para el éxito universitario.</p>
-            <p class="footnote"><a href="/gk/articles/por-que-tantos-estudiantes-destacados-terminan-en-clases-de-recuperacion/?lang=es">Obtenga más información.</a></p>
+            <p class="footnote"><a href="/gk/articles/por-que-tantos-estudiantes-destacados-terminan-en-clases-de-recuperacion/?lang=es" target="_blank" rel="noopener noreferrer">Obtenga más información.</a></p>
           '3_html': >
             <p class="title positive">Un signo positivo:</p>
             <p class="narrative-content">En esta escuela, los índices de graduación de los estudiantes de bajos ingresos <span class='emphasis'>están más altas</span> que el promedio estatal para los estudiantes de bajos ingresos, pero <span class='emphasis'>por debajo</span> del promedio de <span class="italicized">todos</span> los estudiantes.</p>
             <hr />
             <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
             <p class="footnote">Los índices de graduación no cuentan toda la historia. Averigua si la escuela está preparando a los estudiantes para el éxito universitario.</p>
-            <p class="footnote"><a href="/gk/articles/por-que-tantos-estudiantes-destacados-terminan-en-clases-de-recuperacion/?lang=es">Obtenga más información.</a></p>
+            <p class="footnote"><a href="/gk/articles/por-que-tantos-estudiantes-destacados-terminan-en-clases-de-recuperacion/?lang=es" target="_blank" rel="noopener noreferrer">Obtenga más información.</a></p>
           '4_html': >
             <p class="title positive">¡Buenas noticias!</p>
             <p class="narrative-content">En esta escuela, los estudiantes de bajos ingresos se están graduando <span class='emphasis'>en o por encima</span> del promedio estatal para <span class="italicized">todos</span> los estudiantes.</p>
             <hr />
             <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
             <p class="footnote">Los índices de graduación no cuentan toda la historia. Averigua si la escuela está preparando a los estudiantes para el éxito universitario.</p>
-            <p class="footnote"><a href="/gk/articles/por-que-tantos-estudiantes-destacados-terminan-en-clases-de-recuperacion/?lang=es">Obtenga más información.</a></p>
+            <p class="footnote"><a href="/gk/articles/por-que-tantos-estudiantes-destacados-terminan-en-clases-de-recuperacion/?lang=es" target="_blank" rel="noopener noreferrer">Obtenga más información.</a></p>
         'Percent of students who meet UC/CSU entrance requirements':
           '0_html': >
             Esto muestra los porcentajes de graduados que han tomado el A-G clases requeridas necesarias para ser elegible para la Universidad de CA y colegios de CA State.
-            <a href="/gk/articles/no-pierda-de-vista-estos-requisitos-para-entrar-a-la-universidad/?lang=es">Obtenga más información acerca de estos requisitos.</a>
+            <a href="/gk/articles/no-pierda-de-vista-estos-requisitos-para-entrar-a-la-universidad/?lang=es" target="_blank" rel="noopener noreferrer">Obtenga más información acerca de estos requisitos.</a>
           '1_html': >
             <p class="title negative">Muy preocupante:</p>
             <p class="narrative-content">En esta escuela, <span class="emphasis">pocos</span> estudiantes
@@ -419,7 +419,7 @@ es:
             <hr />
             <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
             <p class="footnote">¿Su hijo está preparado para ir a la universidad? Los índices de graduación no son el mejor indicador. Asegúrese de que su niño esté tomando las clases adecuadas para ser elegible para las universidades estatales.</p>
-            <p class="footnote"><a href="/gk/articles/no-pierda-de-vista-estos-requisitos-para-entrar-a-la-universidad/?lang=es">Obtenga más información.</a></p>
+            <p class="footnote"><a href="/gk/articles/no-pierda-de-vista-estos-requisitos-para-entrar-a-la-universidad/?lang=es" target="_blank" rel="noopener noreferrer">Obtenga más información.</a></p>
           '2_html': >
             <p class="title negative">Un signo preocupante:</p>
             <p class="narrative-content">En esta escuela, aproximadamente
@@ -432,18 +432,18 @@ es:
             <hr />
             <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
             <p class="footnote">¿Su hijo está preparado para ir a la universidad? Los índices de graduación no son el mejor indicador. Asegúrese de que su niño esté tomando las clases adecuadas para ser elegible para las universidades estatales.</p>
-            <p class="footnote"><a href="/gk/articles/no-pierda-de-vista-estos-requisitos-para-entrar-a-la-universidad/?lang=es">Obtenga más información.</a></p>
+            <p class="footnote"><a href="/gk/articles/no-pierda-de-vista-estos-requisitos-para-entrar-a-la-universidad/?lang=es" target="_blank" rel="noopener noreferrer">Obtenga más información.</a></p>
           '3_html': >
             <p class="title positive">Un signo positivo:</p>
             <p class="narrative-content">En esta escuela, más estudiantes de bajos ingresos se gradúan elegibles para la universidades o universidades estatales comparado con el promedio estatal para los estudiantes de bajos ingresos, pero todavía están <span class='emphasis'>por debajo</span> del promedio estatal de <span class="italicized">todos</span> los estudiantes.</p>
             <hr />
             <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
             <p class="footnote">¿Su hijo está preparado para ir a la universidad? Los índices de graduación no son el mejor indicador. Asegúrese de que su niño esté tomando las clases adecuadas para ser elegible para las universidades estatales.</p>
-            <p class="footnote"><a href="/gk/articles/no-pierda-de-vista-estos-requisitos-para-entrar-a-la-universidad/?lang=es">Obtenga más información.</a></p>
+            <p class="footnote"><a href="/gk/articles/no-pierda-de-vista-estos-requisitos-para-entrar-a-la-universidad/?lang=es" target="_blank" rel="noopener noreferrer">Obtenga más información.</a></p>
           '4_html': >
             <p class="title positive">¡Buenas noticias!</p>
             <p class="narrative-content">En esta escuela, más estudiantes de bajos ingresos se gradúan elegibles para la universidades o universidades estatales comparado con el promedio estatal para <span class="italicized">todos</span> los estudiantes</p>
             <hr />
             <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
             <p class="footnote">¿Su hijo está preparado para ir a la universidad? Los índices de graduación no son el mejor indicador. Asegúrese de que su niño esté tomando las clases adecuadas para ser elegible para las universidades estatales.</p>
-            <p class="footnote"><a href="/gk/articles/no-pierda-de-vista-estos-requisitos-para-entrar-a-la-universidad/?lang=es">Obtenga más información.</a></p>
+            <p class="footnote"><a href="/gk/articles/no-pierda-de-vista-estos-requisitos-para-entrar-a-la-universidad/?lang=es" target="_blank" rel="noopener noreferrer">Obtenga más información.</a></p>

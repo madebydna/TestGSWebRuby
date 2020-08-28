@@ -12,7 +12,7 @@ en:
       'source': 'Source'
       note: Note
       Test scores: Test scores
-      info_text: "<p>The GreatSchools Test Score Rating reflects annual state test results for this school compared with scores statewide.</p><p><a href='/gk/ratings/#testscorerating' target='_blank'>Learn more about this rating.</a></p>"
+      info_text: "<p>The GreatSchools Test Score Rating reflects annual state test results for this school compared with scores statewide.</p><p><a href='/gk/ratings/#testscorerating' target='_blank' rel='noopener noreferrer'>Learn more about this rating.</a></p>"
       'Math': Math
       Science: Science
       Source: Source
@@ -36,7 +36,7 @@ en:
           is too small. This can mean that some grade-level scores that are part of the overall score cannot be
           displayed individually.</p>
           %{standardized_tests_note}
-          <p><a href="/gk/ratings/#testscorerating" target="_blank">Learn more about this rating.</a></p>
+          <p><a href="/gk/ratings/#testscorerating" target="_blank" rel="noopener noreferrer">Learn more about this rating.</a></p>
           <p>Still have questions? <a href="https://greatschools.zendesk.com/hc/en-us" target="_blank">Visit our FAQ page</a>.</p>
       narration:
         _1_html: >
@@ -47,7 +47,7 @@ en:
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
           <p class="footnote">Test scores are important to look at because they indicate where students are performing compared to
           grade-level standards. Ask the school what%{more}it's doing to help students who are behind. Understand what
-          <a href="/gk/milestones/">on-track learning looks like</a>, and explore higher-performing
+          <a href="/gk/milestones/" target="_blank" rel="noopener noreferrer">on-track learning looks like</a>, and explore higher-performing
           schools in your area to find the best opportunities for your child to succeed.%{end_more}</p>
           <hr />
         _2_html: >
@@ -57,7 +57,7 @@ en:
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
           <p class="footnote">Ask the school what it’s doing to help students who are behind. Understand what
-          <a href="/gk/milestones/">on-track learning looks like</a>,%{more}and explore higher-performing
+          <a href="/gk/milestones/" target="_blank" rel="noopener noreferrer">on-track learning looks like</a>,%{more}and explore higher-performing
           schools in your area to find the best opportunities for your child to succeed.%{end_more}</p>
           <hr />
         _3_html: >
@@ -66,7 +66,7 @@ en:
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
           <p class="footnote">Ask the school what it’s doing to help students who are behind. Understand what
-          <a href="/gk/milestones/">on-track learning looks like</a>, and ask the school what it’s doing to accelerate
+          <a href="/gk/milestones/" target="_blank" rel="noopener noreferrer">on-track learning looks like</a>, and ask the school what it’s doing to accelerate
           progress for students.</p>
           <hr />
         _4_html: >
@@ -77,7 +77,7 @@ en:
           <p class="footnote">Even high-performing schools can have disparities between student groups.
           To understand how well this school%{more}serves all its students, <a href="#Equity">review the information below in the Equity section</a>.
           Understand what
-          <a href="/gk/milestones/">on-track learning looks like</a> for your child and how you can help at home.%{end_more}</p>
+          <a href="/gk/milestones/" target="_blank" rel="noopener noreferrer">on-track learning looks like</a> for your child and how you can help at home.%{end_more}</p>
           <hr />
         _5_html: >
           <h3 class="positive">Good news!</h3>
@@ -88,7 +88,7 @@ en:
           To understand how well this school%{more}serves all its students,
           <a href="#Equity">review the information below in the Equity section</a>.
           Understand what
-          <a href="/gk/milestones/">on-track learning looks like</a> for your child and how you can help at home.%{end_more}</p>
+          <a href="/gk/milestones/" target="_blank" rel="noopener noreferrer">on-track learning looks like</a> for your child and how you can help at home.%{end_more}</p>
           <hr />
       narrative:
         subject:
@@ -143,53 +143,53 @@ en:
             <hr />
             <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
             <p class="footnote">Graduation rates don’t tell the whole story. Find out if this school is preparing students for success in college.</p>
-            <p class="footnote"><a href="/gk/articles/high-achiever-remedial-college/">Learn more.</a></p>
+            <p class="footnote"><a href="/gk/articles/high-achiever-remedial-college/" target="_blank" rel="noopener noreferrer">Learn more.</a></p>
           '3_html': >
             <p class="title positive">A positive sign:</p>
             <p class="narrative-content">At this school, low-income students are graduating at <span class="emphasis">higher</span> rates than the state average for low-income students, but <span class="emphasis">below</span> the average for <span class="italicized">all</span> students.</p>
             <hr />
             <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
             <p class="footnote">Graduation rates don’t tell the whole story. Find out if this school is preparing students for success in college.</p>
-            <p class="footnote"><a href="/gk/articles/high-achiever-remedial-college/">Learn more.</a></p>
+            <p class="footnote"><a href="/gk/articles/high-achiever-remedial-college/" target="_blank" rel="noopener noreferrer">Learn more.</a></p>
           '4_html': >
             <p class="title positive">Great news!</p>
             <p class="narrative-content">At this school, low-income students are graduating <span class="emphasis">at or above</span> the state average for <span class="italicized">all</span> students.</p>
             <hr />
             <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
             <p class="footnote">Graduation rates don’t tell the whole story. Find out if this school is preparing students for success in college.</p>
-            <p class="footnote"><a href="/gk/articles/high-achiever-remedial-college/">Learn more.</a></p>
+            <p class="footnote"><a href="/gk/articles/high-achiever-remedial-college/" target="_blank" rel="noopener noreferrer">Learn more.</a></p>
         'Percent of students who meet UC/CSU entrance requirements':
           '0_html': >
             <p class="narrative-content">This shows the percentages of graduates, by family income level, who have taken the A-G required classes needed
-            to be eligible for University of CA and CA state schools. <a href="/gk/articles/dont-miss-these-requirements-to-get-into-college/">Find out more</a> about these requirements.</p>
+            to be eligible for University of CA and CA state schools. <a href="/gk/articles/dont-miss-these-requirements-to-get-into-college/" target="_blank" rel="noopener noreferrer">Find out more</a> about these requirements.</p>
           '1_html': >
             <p class="title negative">Very concerning:</p>
             <p class="narrative-content">At this school, <span class="emphasis">fewer</span> low-income students are graduating eligible for state college or university compared to the state average for low-income students.</p>
             <hr />
             <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
             <p class="footnote">Graduation rates can be misleading. Find out if your child is taking the right classes to be eligible for state universities.</p>
-            <p class="footnote"><a href="/gk/articles/dont-miss-these-requirements-to-get-into-college/">Learn more.</a></p>
+            <p class="footnote"><a href="/gk/articles/dont-miss-these-requirements-to-get-into-college/" target="_blank" rel="noopener noreferrer">Learn more.</a></p>
           '2_html': >
            <p class="title negative">A worrisome sign:</p>
            <p class="narrative-content">At this school, low-income students are graduating eligible for state college or university at <span class="emphasis">about the same rate</span> as the state average for low-income students, but they're still <span class="emphasis">below</span> the state average for <span class="italicized">all</span> kids.</p>
            <hr />
            <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
            <p class="footnote">Graduation rates can be misleading. Find out if your child is taking the right classes to be eligible for state universities.</p>
-           <p class="footnote"><a href="/gk/articles/dont-miss-these-requirements-to-get-into-college/">Learn more.</a></p>
+           <p class="footnote"><a href="/gk/articles/dont-miss-these-requirements-to-get-into-college/" target="_blank" rel="noopener noreferrer">Learn more.</a></p>
           '3_html': >
             <p class="title positive">A positive sign:</p>
             <p class="narrative-content">At this school, <span class="emphasis">more</span> low-income students are graduating eligible for state college or university than the state average for low-income students, but they're still <span class="emphasis">below</span> the state average for <span class="italicized">all</span> kids. </p>
             <hr />
             <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
             <p class="footnote">Graduation rates can be misleading. Find out if your child is taking the right classes to be eligible for state universities.</p>
-            <p class="footnote"><a href="/gk/articles/dont-miss-these-requirements-to-get-into-college/">Learn more.</a></p>
+            <p class="footnote"><a href="/gk/articles/dont-miss-these-requirements-to-get-into-college/" target="_blank" rel="noopener noreferrer">Learn more.</a></p>
           '4_html': >
             <p class="title positive">Great news!</p>
             <p class="narrative-content">At this school, <span class="emphasis">more</span> low-income students are graduating eligible for state college or university compared to the state average for <span class="italicized">all</span> students.</p>
             <hr />
             <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
             <p class="footnote">Graduation rates can be misleading. Find out if your child is taking the right classes to be eligible for state universities.</p>
-            <p class="footnote"><a href="/gk/articles/dont-miss-these-requirements-to-get-into-college/">Learn more.</a></p>
+            <p class="footnote"><a href="/gk/articles/dont-miss-these-requirements-to-get-into-college/" target="_blank" rel="noopener noreferrer">Learn more.</a></p>
     test_scores_alt:
       'English Language Arts': English
       English: English
@@ -202,7 +202,7 @@ en:
       'source': 'Source'
       note: Note
       Test scores: Test scores
-      info_text: "<p>The Test Score Rating reflects annual state test results for this school compared with scores statewide.</p><p><a href='/gk/ratings-ca-mi/#testscorerating' target='_blank'>Learn more about this rating.</a></p>"
+      info_text: "<p>The Test Score Rating reflects annual state test results for this school compared with scores statewide.</p><p><a href='/gk/ratings-ca-mi/#testscorerating' target='_blank' rel='noopener noreferrer'>Learn more about this rating.</a></p>"
       'Math': Math
       Science: Science
       Source: Source
@@ -223,7 +223,7 @@ en:
           received from the DOE.</p>
           <p>Why are grade-level scores sometimes different from the overall score for a subject? Most likely this is due to suppression. States are required to suppress grade/subject data if the number of test-taking students is too small. This helps protect student privacy, and can mean that some grade-level scores that are part of the overall score cannot be displayed individually.</p>
           %{standardized_tests_note}
-          <p><a href="/gk/ratings-ca-mi/#testscoresrating" target="_blank">Learn more about this rating.</a></p>
+          <p><a href="/gk/ratings-ca-mi/#testscoresrating" target="_blank" rel="noopener noreferrer">Learn more about this rating.</a></p>
           <p>Still have questions? <a href="https://greatschools.zendesk.com/hc/en-us" target="_blank">Visit our FAQ page</a>.</p>
       narration:
         _1_html: >
@@ -234,7 +234,7 @@ en:
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
           <p class="footnote">Test scores are important to look at because they indicate where students are performing compared to
           grade-level standards. Ask the school what%{more}it's doing to help students who are behind. Understand what
-          <a href="/gk/milestones/">on-track learning looks like</a>, and explore higher-performing
+          <a href="/gk/milestones/" target="_blank" rel="noopener noreferrer">on-track learning looks like</a>, and explore higher-performing
           schools in your area to find the best opportunities for your child to succeed.%{end_more}</p>
           <hr />
         _2_html: >
@@ -244,7 +244,7 @@ en:
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
           <p class="footnote">Ask the school what it’s doing to help students who are behind. Understand what
-          <a href="/gk/milestones/">on-track learning looks like</a>,%{more}and explore higher-performing
+          <a href="/gk/milestones/" target="_blank" rel="noopener noreferrer">on-track learning looks like</a>,%{more}and explore higher-performing
           schools in your area to find the best opportunities for your child to succeed.%{end_more}</p>
           <hr />
         _3_html: >
@@ -253,7 +253,7 @@ en:
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
           <p class="footnote">Ask the school what it’s doing to help students who are behind. Understand what
-          <a href="/gk/milestones/">on-track learning looks like</a>, and ask the school what it’s doing to accelerate
+          <a href="/gk/milestones/" target="_blank" rel="noopener noreferrer">on-track learning looks like</a>, and ask the school what it’s doing to accelerate
           progress for students.</p>
           <hr />
         _4_html: >
@@ -264,7 +264,7 @@ en:
           <p class="footnote">Even high-performing schools can have disparities between student groups.
           To understand how well this school%{more}serves all its students, <a href="#Equity">review the information below in the Equity section</a>.
           Understand what
-          <a href="/gk/milestones/">on-track learning looks like</a> for your child and how you can help at home.%{end_more}</p>
+          <a href="/gk/milestones/" target="_blank" rel="noopener noreferrer">on-track learning looks like</a> for your child and how you can help at home.%{end_more}</p>
           <hr />
         _5_html: >
           <h3 class="positive">Good news!</h3>
@@ -275,7 +275,7 @@ en:
           To understand how well this school%{more}serves all its students,
           <a href="#Equity">review the information below in the Equity section</a>.
           Understand what
-          <a href="/gk/milestones/">on-track learning looks like</a> for your child and how you can help at home.%{end_more}</p>
+          <a href="/gk/milestones/" target="_blank" rel="noopener noreferrer">on-track learning looks like</a> for your child and how you can help at home.%{end_more}</p>
           <hr />
       narrative:
         subject:
@@ -330,50 +330,50 @@ en:
             <hr />
             <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
             <p class="footnote">Graduation rates don’t tell the whole story. Find out if this school is preparing students for success in college.</p>
-            <p class="footnote"><a href="/gk/articles/high-achiever-remedial-college/">Learn more.</a></p>
+            <p class="footnote"><a href="/gk/articles/high-achiever-remedial-college/" target="_blank" rel="noopener noreferrer">Learn more.</a></p>
           '3_html': >
             <p class="title positive">A positive sign:</p>
             <p class="narrative-content">At this school, low-income students are graduating at <span class="emphasis">higher</span> rates than the state average for low-income students, but <span class="emphasis">below</span> the average for <span class="italicized">all</span> students.</p>
             <hr />
             <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
             <p class="footnote">Graduation rates don’t tell the whole story. Find out if this school is preparing students for success in college.</p>
-            <p class="footnote"><a href="/gk/articles/high-achiever-remedial-college/">Learn more.</a></p>
+            <p class="footnote"><a href="/gk/articles/high-achiever-remedial-college/" target="_blank" rel="noopener noreferrer">Learn more.</a></p>
           '4_html': >
             <p class="title positive">Great news!</p>
             <p class="narrative-content">At this school, low-income students are graduating <span class="emphasis">at or above</span> the state average for <span class="italicized">all</span> students.</p>
             <hr />
             <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
             <p class="footnote">Graduation rates don’t tell the whole story. Find out if this school is preparing students for success in college.</p>
-            <p class="footnote"><a href="/gk/articles/high-achiever-remedial-college/">Learn more.</a></p>
+            <p class="footnote"><a href="/gk/articles/high-achiever-remedial-college/" target="_blank" rel="noopener noreferrer">Learn more.</a></p>
         'Percent of students who meet UC/CSU entrance requirements':
           '0_html': >
             <p class="narrative-content">This shows the percentages of graduates, by family income level, who have taken the A-G required classes needed
-            to be eligible for University of CA and CA state schools. <a href="/gk/articles/dont-miss-these-requirements-to-get-into-college/">Find out more</a> about these requirements.</p>
+            to be eligible for University of CA and CA state schools. <a href="/gk/articles/dont-miss-these-requirements-to-get-into-college/" target="_blank" rel="noopener noreferrer">Find out more</a> about these requirements.</p>
           '1_html': >
             <p class="title negative">Very concerning:</p>
             <p class="narrative-content">At this school, <span class="emphasis">fewer</span> low-income students are graduating eligible for state college or university compared to the state average for low-income students.</p>
             <hr />
             <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
             <p class="footnote">Graduation rates can be misleading. Find out if your child is taking the right classes to be eligible for state universities.</p>
-            <p class="footnote"><a href="/gk/articles/dont-miss-these-requirements-to-get-into-college/">Learn more.</a></p>
+            <p class="footnote"><a href="/gk/articles/dont-miss-these-requirements-to-get-into-college/" target="_blank" rel="noopener noreferrer">Learn more.</a></p>
           '2_html': >
            <p class="title negative">A worrisome sign:</p>
            <p class="narrative-content">At this school, low-income students are graduating eligible for state college or university at <span class="emphasis">about the same rate</span> as the state average for low-income students, but they're still <span class="emphasis">below</span> the state average for <span class="italicized">all</span> kids.</p>
            <hr />
            <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
            <p class="footnote">Graduation rates can be misleading. Find out if your child is taking the right classes to be eligible for state universities.</p>
-           <p class="footnote"><a href="/gk/articles/dont-miss-these-requirements-to-get-into-college/">Learn more.</a></p>
+           <p class="footnote"><a href="/gk/articles/dont-miss-these-requirements-to-get-into-college/" target="_blank" rel="noopener noreferrer">Learn more.</a></p>
           '3_html': >
             <p class="title positive">A positive sign:</p>
             <p class="narrative-content">At this school, <span class="emphasis">more</span> low-income students are graduating eligible for state college or university than the state average for low-income students, but they're still <span class="emphasis">below</span> the state average for <span class="italicized">all</span> kids. </p>
             <hr />
             <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
             <p class="footnote">Graduation rates can be misleading. Find out if your child is taking the right classes to be eligible for state universities.</p>
-            <p class="footnote"><a href="/gk/articles/dont-miss-these-requirements-to-get-into-college/">Learn more.</a></p>
+            <p class="footnote"><a href="/gk/articles/dont-miss-these-requirements-to-get-into-college/" target="_blank" rel="noopener noreferrer">Learn more.</a></p>
           '4_html': >
             <p class="title positive">Great news!</p>
             <p class="narrative-content">At this school, <span class="emphasis">more</span> low-income students are graduating eligible for state college or university compared to the state average for <span class="italicized">all</span> students.</p>
             <hr />
             <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
             <p class="footnote">Graduation rates can be misleading. Find out if your child is taking the right classes to be eligible for state universities.</p>
-            <p class="footnote"><a href="/gk/articles/dont-miss-these-requirements-to-get-into-college/">Learn more.</a></p>
+            <p class="footnote"><a href="/gk/articles/dont-miss-these-requirements-to-get-into-college/" target="_blank" rel="noopener noreferrer">Learn more.</a></p>
