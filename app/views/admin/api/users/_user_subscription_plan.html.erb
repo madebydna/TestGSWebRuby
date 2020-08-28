@@ -9,9 +9,15 @@
 
 <script>
   const dropdown = document.querySelector('.api-registration-select-container');
+  const subscriptionField = document.querySelector('.api-text-field.subscription');
 
-  document.querySelector('.api-text-field.subscription').addEventListener('click', (e)=> {
+  subscriptionField.addEventListener('click', (e)=> {
     e.target.classList.add('dn');
+    dropdown.classList.remove('dn');
+  })
+
+  document.querySelector('.js-edit-btn').addEventListener('click', (e)=>{
+    subscriptionField.classList.add('dn')
     dropdown.classList.remove('dn');
   })
 
