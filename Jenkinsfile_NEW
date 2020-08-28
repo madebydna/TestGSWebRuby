@@ -67,9 +67,9 @@ pipeline {
         sh 'script/ci/build_env.sh'
         withEnv(['PATH+EXTRA=/home/admin/.rbenv/bin:/home/admin/.rbenv/shims:/home/admin/.rbenv/plugins/ruby-build/bin:/usr/local/sbin']) {
           sh 'rm -rf vendor/cache'
-          retry(7) {
-                     sh 'bundle install --deployment --without development'
-                   }
+          retry(25) {
+            sh 'bundle install --deployment --without development'
+          }
           sh 'bundle package > /dev/null'
           stash includes: 'vendor/cache/*', name: 'bundle'
           sh 'rm -rf app/assets/webpack'
