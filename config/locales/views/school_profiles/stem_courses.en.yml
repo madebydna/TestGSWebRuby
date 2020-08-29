@@ -5,7 +5,7 @@ en:
       title_tooltip_text_html: STEM stands for science, technology, engineering, and math. <a href="/gk/articles/stem-in-the-classroom/" target="_blank" rel="noopener noreferrer">Find out</a> more about why STEM coursework is so important for today's students.
       m:
         title: Advanced courses
-        subtitle_html: Advanced STEM coursework in middle school can help set your student up for success in high school. <a href="/gk/articles/stem-in-the-classroom/" target="_blank" rel="noopener noreferrer">Find out more</a>.
+        subtitle_html: Advanced STEM coursework in middle school can help set your student up for success in high school. <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="Find out more" href="/gk/articles/stem-in-the-classroom/" target="_blank" rel="noopener noreferrer">Find out more</a>.
         parent_tip_html: When will your child take Algebra? <a href="/gk/articles/algebra-middle-school-math-track/" target="_blank" rel="noopener noreferrer">Here's what you need to understand</a> about math tracking.
         faq_content_html: >
           <p><a href="/gk/articles/why-algebra/" target="_blank" rel="noopener noreferrer">Algebra 1</a> is typically offered as an advanced math course for
@@ -16,7 +16,7 @@ en:
           <p>Still have questions? <a href="https://greatschools.zendesk.com/hc/en-us" target="_blank">Visit our FAQ page</a>.</p>
       h:
         title: Advanced courses
-        subtitle_html: Rigorous courses can help students prepare for and get into college, including coursework in STEM subjects. <a href="/gk/articles/stem-in-the-classroom/" target="_blank" rel="noopener noreferrer">Find out more.</a>
+        subtitle_html: Rigorous courses can help students prepare for and get into college, including coursework in STEM subjects. <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="Find out more" href="/gk/articles/stem-in-the-classroom/" target="_blank" rel="noopener noreferrer">Find out more.</a>
         parent_tip_html: Many successful high school students end up in remedial math courses in college. <a href="/gk/articles/ready-for-college-math/" target="_blank" rel="noopener noreferrer">Is your student prepared</a> for college-level math? Ask this school how they ensure that students are well prepared.
         faq_content_html: >
           <div class="emphasis">What are AP classes?</div>
@@ -37,7 +37,7 @@ en:
           <p>Still have questions? <a href="https://greatschools.zendesk.com/hc/en-us" target="_blank">Visit our FAQ page</a>.</p>
       mixed:
         title: Advanced courses
-        subtitle_html: STEM stands for science, technology, engineering, and math. <a href="/gk/articles/stem-in-the-classroom/" target="_blank" rel="noopener noreferrer">Find out</a> more about why STEM coursework is so important for today's students.
+        subtitle_html: STEM stands for science, technology, engineering, and math. <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="Find out" href="/gk/articles/stem-in-the-classroom/" target="_blank" rel="noopener noreferrer">Find out</a> more about why STEM coursework is so important for today's students.
         parent_tip_html: Many successful high school students end up in remedial math courses in college. <a href="/gk/articles/ready-for-college-math/" target="_blank" rel="noopener noreferrer">Is your student prepared</a> for college-level math? Ask this school how they ensure students are well-prepared.
         faq_content_html: >
           <div class="emphasis">Advanced math in middle school:</div>

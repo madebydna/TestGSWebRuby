@@ -9,7 +9,7 @@ en:
         schools in this state, based on key measures, like graduation rates, college entrance tests and advanced coursework
         when available.</p><p><a href="/gk/ratings/#collegereadinessrating" target="_blank" rel="noopener noreferrer">Learn more about this
         rating.</a></p>
-      subtitle_html: <a href="/gk/videos/why-college-counseling-matters/" target="_blank" rel="noopener noreferrer">One key thing</a> all successful schools do to help students enroll in college.
+      subtitle_html: <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="One key thing" href="/gk/videos/why-college-counseling-matters/" target="_blank" rel="noopener noreferrer">One key thing</a> all successful schools do to help students enroll in college.
       source: Source
       sources: Sources
       feedback_cta: Did you find the information about college success useful? What can we do better?
@@ -240,7 +240,7 @@ en:
     college_success:
       title: College success
       subtitle_html: >
-        What does it take for a high school to stand out in terms of helping all students succeed in college? Learn about the <a href="/gk/csa-winners/" target="_blank" rel="noopener noreferrer">best practices of award-winning schools.</a>
+        What does it take for a high school to stand out in terms of helping all students succeed in college? Learn about the <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="best practices of award-winning schools" href="/gk/csa-winners/" target="_blank" rel="noopener noreferrer">best practices of award-winning schools.</a>
     college_readiness_alt:
       no_data: >
         This section includes information about this school’s graduation rates, SAT/ACT tests, and AP coursework.
@@ -248,7 +248,7 @@ en:
       tooltip_html: >
         <p>This rating shows how well students at this school are prepared for college compared to students at other schools in this state, based on graduation rates, college entrance tests, and other available data such as advanced coursework.</p><p><a href="/gk/ratings-ca-mi/#collegereadinessrating" target="_blank" rel="noopener noreferrer">Learn more about this
         rating.</a></p>
-      subtitle_html: <a href="/gk/videos/why-college-counseling-matters/" target="_blank" rel="noopener noreferrer">One key thing</a> all successful schools do to help students enroll in college.
+      subtitle_html: <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="One key thing" href="/gk/videos/why-college-counseling-matters/" target="_blank" rel="noopener noreferrer">One key thing</a> all successful schools do to help students enroll in college.
       source: Source
       sources: Sources
       feedback_cta: Did you find the information about college success useful? What can we do better?
@@ -479,4 +479,4 @@ en:
     college_success_alt:
       title: College success
       subtitle_html: >
-        What does it take for a high school to stand out in terms of helping all students succeed in college? Learn about the <a href="/gk/csa-winners/" target="_blank" rel="noopener noreferrer">best practices of award-winning schools.</a>
+        What does it take for a high school to stand out in terms of helping all students succeed in college? Learn about the <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="best practices of award-winning schools" href="/gk/csa-winners/" target="_blank" rel="noopener noreferrer">best practices of award-winning schools.</a>

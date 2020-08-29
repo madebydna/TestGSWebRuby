@@ -9,7 +9,7 @@ es:
         comparados a los estudiantes en otras escuelas en este estado, sobre medidas como los índices de graduación,
         pruebas de ingreso universitario y los cursos avanzados cuando están disponibles.</p>
         <p><a href="/gk/como-clasificamos/?lang=es#collegereadinessrating" target="_blank" rel="noopener noreferrer">Infórmese más sobre esta calificación.</a></p>
-      subtitle_html: <a href="/gk/videos/why-college-counseling-matters/" target="_blank" rel="noopener noreferrer">Una clave cosa</a> que todas las escuelas exitosas hacen para ayudar a los estudiantes a inscribirse en la universidad.
+      subtitle_html: <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="Una clave cosa" href="/gk/videos/why-college-counseling-matters/" target="_blank" rel="noopener noreferrer">Una clave cosa</a> que todas las escuelas exitosas hacen para ayudar a los estudiantes a inscribirse en la universidad.
       source: Fuente
       sources: Fuentes
       feedback_cta: ¿Encontraste la información sobre el éxito universitario útil? Qué podemos hacer mejor?
@@ -239,7 +239,7 @@ es:
     college_success:
       title: Éxito universitario
       subtitle_html: >
-        ¿Qué se necesita para que una escuela secundaria se destaque en términos de ayudar a todos los estudiantes a que tengan éxito en la universidad? Aprenda sobre <a href="/gk/csa-winners/" target="_blank" rel="noopener noreferrer">las mejores prácticas de escuelas premiadas.</a>
+        ¿Qué se necesita para que una escuela secundaria se destaque en términos de ayudar a todos los estudiantes a que tengan éxito en la universidad? Aprenda sobre <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="las mejores prácticas de escuelas premiadas" href="/gk/csa-winners/" target="_blank" rel="noopener noreferrer">las mejores prácticas de escuelas premiadas.</a>
     college_readiness_alt:
       no_data: >
         Esta sección incluye información sobre los índices de graduación, los exámenes SAT/ACT y los cursos AP de esta escuela.
@@ -247,7 +247,7 @@ es:
       tooltip_html: >
         <p>Esta calificación muestra lo bien que los estudiantes de esta escuela están preparados para la universidad en comparación con los estudiantes de otras escuelas en este estado, basados en medidas como los índices de graduación, las pruebas de ingreso a la universidad y otros datos disponibles como cursos avanzados.</p>
         <p><a href='/gk/ratings-ca-mi/?lang=es#collegereadinessrating'  target="_blank" rel="noopener noreferrer">Aprende más sobre esta calificación.</a></p>
-      subtitle_html: <a href="/gk/videos/why-college-counseling-matters/" target="_blank" rel="noopener noreferrer">Una clave cosa</a> que todas las escuelas exitosas hacen para ayudar a los estudiantes a inscribirse en la universidad.
+      subtitle_html: <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="Una clave cosa" href="/gk/videos/why-college-counseling-matters/" target="_blank" rel="noopener noreferrer">Una clave cosa</a> que todas las escuelas exitosas hacen para ayudar a los estudiantes a inscribirse en la universidad.
       source: Fuente
       sources: Fuentes
       feedback_cta: ¿Encontraste la información sobre el éxito universitario útil? Qué podemos hacer mejor?
@@ -474,4 +474,4 @@ es:
     college_success_alt:
       title: Éxito universitario
       subtitle_html: >
-        ¿Qué se necesita para que una escuela secundaria se destaque en términos de ayudar a todos los estudiantes a que tengan éxito en la universidad? Aprenda sobre <a href="/gk/csa-winners/" target="_blank" rel="noopener noreferrer">las mejores prácticas de escuelas premiadas.</a>
+        ¿Qué se necesita para que una escuela secundaria se destaque en términos de ayudar a todos los estudiantes a que tengan éxito en la universidad? Aprenda sobre <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="las mejores prácticas de escuelas premiadas" href="/gk/csa-winners/" target="_blank" rel="noopener noreferrer">las mejores prácticas de escuelas premiadas.</a>
