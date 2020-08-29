@@ -15,14 +15,14 @@ es:
       claimed_tooltip_html: >
         Los administradores de esta escuela han reclamado este perfil de escuela para editar y compartir más
         información general acerca de los programas escolares y la cultura.
-        <a href='/gk/schools/' target="_blank" rel="noopener noreferrer">Obtenga más información</a>.
+        <a href='/gk/schools/' target='_blank' rel='noopener noreferrer'>Obtenga más información</a>.
       unclaimed: Sin reclamar
       unclaimed_tooltip_html: >
         Esta escuela todavía no ha reclamado su perfil.
         <br /><br />
         Líderes de la escuela - <a href='%{osp_path}' rel='nofollow' class='js-gaClick' data-ga-click-category='Profile' data-ga-click-action='Claim school' data-ga-click-label='Private'>reclame el perfil de tu escuela</a>
         para editar información general y compartir qué hace tu escuela única.
-        <a href='/gk/schools/' target="_blank" rel="noopener noreferrer">Obtenga más información</a>.
+        <a href='/gk/schools/' target='_blank' rel='noopener noreferrer'>Obtenga más información</a>.
       contact_info: Datos de contacto
       reviews: OPINIONES
       school_type: TIPO

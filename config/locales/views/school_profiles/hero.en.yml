@@ -15,14 +15,14 @@ en:
       claimed_tooltip_html: >
         Administrators at this school have claimed this school's profile in order to edit general
         information and share more about school programs and culture.
-        <a href='/gk/schools/' target="_blank" rel="noopener noreferrer">Learn more</a>.
+        <a href='/gk/schools/' target='_blank' rel='noopener noreferrer'>Learn more</a>.
       unclaimed: Unclaimed
       unclaimed_tooltip_html: >
         This school has not yet claimed its profile.<br /><br />
         School leaders -
         <a href='%{osp_path}' rel='nofollow' class='js-gaClick' data-ga-click-category='Profile' data-ga-click-action='Claim school' data-ga-click-label='Private'>claim your school's profile</a>
         to edit general information and share what makes your school unique.
-        <a href='/gk/schools/' target="_blank" rel="noopener noreferrer">Learn more</a>.
+        <a href='/gk/schools/' target='_blank' rel='noopener noreferrer'>Learn more</a>.
       contact_info: Contact info
       reviews: Reviews
       school_type: Type
