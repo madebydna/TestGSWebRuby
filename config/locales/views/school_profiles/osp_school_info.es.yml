@@ -8,7 +8,7 @@ es:
         ¿Eres un administrador de esta escuela?<br />
         <a href="/school-accounts/">Reclame el perfil de tu escuela</a>
         para editar información general y compartir qué hace tu escuela única.<br />
-        <a href="/gk/schools/">Obtenga más información.</a><br /><br />
+        <a href="/gk/schools/" target="_blank" rel="noopener noreferrer">Obtenga más información.</a><br /><br />
       bullet_2_html: >
         ¿Es usted un padre o estudiante en esta escuela?<br />
         %{mailto_start}Alienta a los líderes escolares%{mailto_end} para que reclamen este perfil de escuela.
