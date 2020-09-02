@@ -256,6 +256,7 @@ LocalizedProfiles::Application.routes.draw do
   get '/api/billing/', to: 'admin/api/users#billing', as: :api_billing
   get '/api/confirmation/', to: 'admin/api/users#confirmation'
   get '/api/receipt/', to: 'admin/api/users#receipt'
+  post '/api/plan_update', to: 'admin/api/users#plan_update'
 
 
   namespace :api, controller: 'api', path:'/gsr/api' do

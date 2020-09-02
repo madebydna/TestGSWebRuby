@@ -6,9 +6,8 @@ module Api
       text.split(' ').map(&:capitalize).join(' ')
     end
 
-    def format_plan(subscription)
-      return 'No Plan Selected' if subscription.nil?
-      plan = subscription.plan
+    def format_plan(plan)
+      return 'No Plan Selected' if plan.nil?
 
       "#{plan.name.split('_').map(&:capitalize).join(' ')} #{number_to_currency(plan.price)}/month"
     end
