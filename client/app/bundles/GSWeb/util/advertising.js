@@ -124,7 +124,32 @@ const slotRenderedHandler = function(event) {
     $(`.js-${slotId}-wrapper .advertisement-text`)
       .removeClass('dn')
       .show();
+    // Remove prerender height if they exist to help with Google WebVital CLS scores
+    removeCssClasses(slotId);
   }
+}
+
+const removeCssClasses = (slotId) => {
+  const slotArray = slotId.split('_');
+  slotArray.splice(slotArray.length - 1);
+  const targetedSelector = slotArray.join('_');
+  // target selector for erb template
+  const wrapper = document.querySelector(`.js-${slotId}-wrapper`);
+  // target selector for react components
+  const reactComponent = document.querySelector(`#${slotId}`);
+  
+
+  if (wrapper && wrapper.classList.contains(`js-${targetedSelector}-height`)){
+    console.log(`Removed prerender height class ${targetedSelector}`)
+    $(`.js-${slotId}-wrapper`).removeClass(`js-${targetedSelector}-height`)
+  }
+
+  if (reactComponent && reactComponent.closest(`.js-${targetedSelector}-height`)){
+    console.log(`Removed prerender height class ${targetedSelector}`)
+    $(reactComponent.closest(`.js-${targetedSelector}-height`)).removeClass(`js-${targetedSelector}-height`)
+  }
+
+  return;
 }
 
 const _defineHtmlSlot = function($adSlot) {

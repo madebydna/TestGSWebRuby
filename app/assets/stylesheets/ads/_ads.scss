@@ -1,0 +1,36 @@
+// Rules to help prerender ad space to help with Google WebVital CLS scores
+
+.js-greatschools_districtpagemobile_first-height{
+  min-height: 100px;
+}
+
+.js-greatschools_districtpage_second-height,
+.js-greatschools_citypagemobile_first-height,
+.js-greatschools_citypage_second-height {
+  min-height: 250px;
+}
+
+.js-greatschools_Profiles_First-height {
+  min-height: 600px;
+  @include media-breakpoint-down(sm) {
+  min-height: 250px;
+  }
+}
+
+.js-greatschools_Profiles_Second-height,
+.js-greatschools_Profiles_Third-height,
+.js-greatschools_Profiles_Fourth-height,
+.js-greatschools_statepagemobile_first-height {
+  min-height: 250px;
+  @include media-breakpoint-down(sm) {
+  min-height: 100px;
+  }
+}
+
+.js-greatschools_statepage_second-height {
+  min-height: 600px;
+  @include media-breakpoint-down(sm) {
+  min-height: 100px;
+  }
+}
+
