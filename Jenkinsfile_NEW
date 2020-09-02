@@ -30,7 +30,9 @@ def runCommonSteps() {
     println("Added route to 192.168.121.0 ... returnStatus ${res3}")
   }
   checkout scm
-  sh 'script/ci/setup_dbs.sh'
+  unstash "mysqldumps"
+  sh 'mysql -f -uroot < /home/admin/jenkins_mysqldump_db'
+  sh 'mysql -f -uroot < /home/admin/jenkins_mysqldump_gsdata'
   sh 'mkdir -p vendor/cache'
   unstash 'bundle'
   sh 'bundle install --local --without development'
@@ -69,6 +71,7 @@ pipeline {
       }
       steps {
         sh 'script/ci/setup_dbs.sh'
+        stash includes: '/home/admin/jenkins_mysqldump*', name: 'mysqldumps'
         withEnv(['PATH+EXTRA=/home/admin/.rbenv/bin:/home/admin/.rbenv/shims:/home/admin/.rbenv/plugins/ruby-build/bin:/usr/local/sbin']) {
           sh 'rm -rf vendor/cache'
           retry(25) {
