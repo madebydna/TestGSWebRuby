@@ -11,10 +11,10 @@ module Feeds
       DIRECTORY_FEED_SCHOOL_CACHE_KEYS = %w(directory feed_metrics)
 
       # array of methods used by the data reader to output data
-      SCHOOL_ATTRIBUTES_DATA_READER_METHODS = %w(universal_id level universal_district_id web_site zip id)
+      SCHOOL_ATTRIBUTES_DATA_READER_METHODS = %w(universal_id level universal_district_id web_site zip id url)
 
       # array of cache keys used to retrieve data from the caches
-      SCHOOL_ATTRIBUTES_CACHE_METHODS = %w(description FIPScounty level_code district_name url school_summary)
+      SCHOOL_ATTRIBUTES_CACHE_METHODS = %w(description FIPScounty level_code district_name school_summary)
 
       attr_reader :state, :school
 
@@ -77,6 +77,10 @@ module Feeds
 
       def zip
         @_zip ||= school.zipcode
+      end
+
+      def url
+        @_url ||= school.canonical_url ? ('https://www.greatschools.org' + school.canonical_url) : data_value('url')
       end
 
       def universal_district_id
