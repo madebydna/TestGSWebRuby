@@ -11,6 +11,47 @@
   //padding: 1%;
 }
 
+.api-progress {
+  text-align: center;
+  margin-bottom: 30px;
+
+  .blue {
+    background: #2BA3DC;
+  }
+
+  .gray {
+    background: #707070;
+  }
+
+  .progress-bar-circle-container{
+    display: inline-block;
+    position: relative;
+
+    div:first-child {
+      margin-left: -5px;
+      height: 12px;
+      width: 12px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    div:last-child {
+      position: absolute;
+      width: 75px;
+      left: -35px;
+    }
+  }
+
+  .progress-bar-line {
+    width: 175px;
+    height: 4px;
+    display: inline-block;
+    vertical-align: super;
+    margin-left: -5px;
+    margin-bottom: -2px;
+  }
+}
+
 .dn {
   display: none;
 }

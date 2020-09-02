@@ -1,0 +1,7 @@
+<% labels = ["Select Plan", "Registration", "Billing", "Confirmation", "Complete"] %>
+
+<div class="api-progress">
+  <% labels.each_with_index do |label, idx| %>
+    <%= render 'admin/api/components/progress_circle_line', step: step, step_label: label, progress_index: idx, end_of_progress_bar: labels.length - 1 == idx %>
+  <% end %>
+</div>
