@@ -94,6 +94,10 @@ class Search extends React.Component {
   };
 
   componentDidMount() {
+    const loader = document.querySelector(".fixed-loader-container");
+    if(loader){
+      loader.classList.add('dn');
+    }
     setTimeout(() => {
       initAdvertising();
     }, 1000);
