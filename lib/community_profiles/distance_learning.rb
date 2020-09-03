@@ -228,13 +228,36 @@ module CommunityProfiles
 
     def format_overview
       # JT-10443: If no SUMMER_SUMMARY, fall back to SUMMARY
-      first_paragraph = fetch_value(SUMMER_SUMMARY)&.strip || fetch_value(SUMMARY)&.strip
-      if first_paragraph
-        translated = I18n.db_t(first_paragraph, default: first_paragraph)
-        cta_link = fetch_value(SUMMER_URL) ? I18n.t('see_district_summer_page_html', scope: 'community.distance_learning', url: fetch_value(SUMMER_URL)) : ""
+      # first_paragraph = fetch_value(SUMMER_SUMMARY)&.strip || fetch_value(SUMMARY)&.strip
+      # if first_paragraph
+      #   translated = I18n.db_t(first_paragraph, default: first_paragraph)
+      #   cta_link = fetch_value(SUMMER_URL) ? I18n.t('see_district_summer_page_html', scope: 'community.distance_learning', url: fetch_value(SUMMER_URL)) : ""
 
-        "#{translated} #{cta_link}"
+      #   "#{translated} #{cta_link}"
+      # end
+
+      summary = fetch_value(SUMMARY)&.strip
+      learning_model = fetch_value(LEARNING_MODEL)&.strip
+      remote_learning_plan = fetch_value(REMOTE_LEARNING_PLAN)&.strip
+      technology_and_wifi_access = fetch_value(TECHNOLOGY_AND_WIFI_ACCESS)&.strip
+      noteworthy_practices = fetch_value(NOTEWORTHY_PRACTICES)&.strip
+      cta_link = fetch_value(URL) ? I18n.t('see_district_page_html', scope: 'community.distance_learning', url: fetch_value(URL)) : ""
+
+      translated_summary = I18n.db_t(summary, default: summary)
+      translated_learning_model = I18n.db_t(learning_model, default: learning_model)
+      translated_remote_learning_plan = I18n.db_t(remote_learning_plan, default: remote_learning_plan)
+      translated_technology_and_wifi_access = I18n.db_t(technology_and_wifi_access, default: technology_and_wifi_access)
+      translated_noteworthy_practices = I18n.db_t(noteworthy_practices, default: noteworthy_practices)
+
+      str = '<div>' + translated_summary + '</div>'
+      str += '<ul>'
+      overview_list = [translated_learning_model, translated_remote_learning_plan, translated_technology_and_wifi_access, translated_noteworthy_practices].compact.map do |data_type|
+        str += '<li>'
+        str += data_type
+        str += '</li>'
       end
+      str += '</ul>'
+      str
     end
 
     def date_valid
