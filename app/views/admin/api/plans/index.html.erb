@@ -37,7 +37,7 @@
               <div style="position:relative;">
                 <div class="price-secondary">
                   <% if plan.name == 'free_trial' %>
-                    /mo for 6 months
+                    <%= price_secondary(plan.price) %> for 6 months
                   <% else %>
                     <%= price_secondary(plan.price) %> /mo
                   <% end %>
