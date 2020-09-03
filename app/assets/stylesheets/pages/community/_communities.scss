@@ -709,6 +709,18 @@ svg {
 #distance-learning {
   margin-bottom: 20px;
 
+  .more-reveal-link {
+    font-size: 16px;
+  }
+
+  .more-reveal {
+    display: none;
+  }
+
+  .overview-list {
+    margin-bottom: 10px;
+  }
+
   .speech-bubble, .speech-bubble.left {
     background: #747C83;
     color: white;

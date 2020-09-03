@@ -82,6 +82,11 @@ $(() => {
     setBottom: true
   });
 
+  $('body').on('click', '.js-moreRevealLink', function() {
+    $(this).hide();
+    $(this).siblings('.js-moreReveal').removeClass('more-reveal');
+  });
+
   const tocLinks = document.querySelectorAll(".toc li");
   tocLinks.forEach((link) => {
     link.addEventListener('click', (e) => {

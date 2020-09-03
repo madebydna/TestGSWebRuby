@@ -11,6 +11,7 @@ en:
         <a href="%{url}" style="font-family:'opensans-semibold';" target="_blank">See district page for more information ></a>
       see_district_summer_page_html: See <a href="%{url}" style="font-family:'opensans-semibold';font-size:16px;" target="_blank">district summer program page</a> for details.
       see_more: See more
+      more: more
       sources_html: <div class="sourcing"><h1>District distance learning data sources & information</h1> <div>Information in this module was compiled by the <a href="https://www.crpe.org/" target="_blank">Center on Reinventing Public Education (CRPE)</a>, which sourced data primarily from publicly posted plans on school district websites. If you work for this district and have distance learning updates to share, please email <a href="mailto:crpedatabase@uw.edu">crpedatabase@uw.edu</a></div></div>
       tab:
         overview: Overview

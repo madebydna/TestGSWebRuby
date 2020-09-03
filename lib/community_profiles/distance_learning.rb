@@ -248,15 +248,23 @@ module CommunityProfiles
       translated_remote_learning_plan = I18n.db_t(remote_learning_plan, default: remote_learning_plan)
       translated_technology_and_wifi_access = I18n.db_t(technology_and_wifi_access, default: technology_and_wifi_access)
       translated_noteworthy_practices = I18n.db_t(noteworthy_practices, default: noteworthy_practices)
+      more = I18n.t('more', scope: 'community.distance_learning')
 
-      str = '<div>' + translated_summary + '</div>'
+      str = '<div>' + translated_summary
+      str += '<a class="js-gaClick js-moreRevealLink more-reveal-link" href="javascript:void(0)">...'
+      str += more
+      str += '.</a>'
+      str += '</div>'
+      str += '<div class="js-moreReveal more-reveal">'
       str += '<ul>'
-      overview_list = [translated_learning_model, translated_remote_learning_plan, translated_technology_and_wifi_access, translated_noteworthy_practices].compact.map do |data_type|
-        str += '<li>'
+      [translated_learning_model, translated_remote_learning_plan, translated_technology_and_wifi_access, translated_noteworthy_practices].compact.map do |data_type|
+        str += '<li class="overview-list">'
         str += data_type
         str += '</li>'
       end
       str += '</ul>'
+      str += cta_link
+      str += '</div>'
       str
     end
 
