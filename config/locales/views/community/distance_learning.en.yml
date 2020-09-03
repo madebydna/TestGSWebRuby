@@ -12,109 +12,216 @@ en:
       sources_html: <div class="sourcing"><h1>District distance learning data sources & information</h1> <div>Information in this module was compiled by the <a href="https://www.crpe.org/" target="_blank">Center on Reinventing Public Education (CRPE)</a>, which sourced data primarily from publicly posted plans on school district websites. If you work for this district and have distance learning updates to share, please email <a href="mailto:crpedatabase@uw.edu">crpedatabase@uw.edu</a></div></div>
       tab:
         overview: Overview
+        health & safety: Health & safety
         teaching: Teaching
-        resources: Resources
+        instruction: Instruction
+        support: Support
         policies: Policies
-        learning: Learning
-        planning: Back to school
-        summer learning: Summer learning
-        k-8: K-8
-        high school: High school
+        learning model: Learning model
+        academics: Academics
+        learning loss: Learning loss
+        student support: Student support
+        resources: Resources
+        special needs: Special needs
+        # learning: Learning
+        # planning: Back to school
+        # summer learning: Summer learning
+        # k-8: K-8
+        # high school: High school
       data_types:
-        RESOURCES PROVIDED BY THE DISTRICT:
-          specific:
-            label: District/schools provide grade-level curriculum
-          general:
-            label: District provides links to general learning resources
-        RESOURCE COVERAGE:
-          specific:
-            label: District/schools provide grade-level curriculum
-          general:
-            label: District provides links to general learning resources
-        INSTRUCTION FROM TEACHERS:
-          label: Teachers provide regular lessons and assignments
-        SYNCHRONOUS TEACHING FLAG:
-          label: Teaching is done in real-time (e.g. live video)
-        SYNCHRONOUS STUDENT ENGAGEMENT FLAG:
-          label: Classmates interact in real-time
-        RESOURCES FOR STUDENTS WITH DISABILITIES:
-          label: Support provided for students with disabilities
-        FEEDBACK ON STUDENT WORK:
+        # RESOURCES PROVIDED BY THE DISTRICT:
+        #   specific:
+        #     label: District/schools provide grade-level curriculum
+        #   general:
+        #     label: District provides links to general learning resources
+        # RESOURCE COVERAGE:
+        #   specific:
+        #     label: District/schools provide grade-level curriculum
+        #   general:
+        #     label: District provides links to general learning resources
+        # INSTRUCTION FROM TEACHERS:
+        #   label: Teachers provide regular lessons and assignments
+        # SYNCHRONOUS TEACHING FLAG:
+        #   label: Teaching is done in real-time (e.g. live video)
+        # SYNCHRONOUS STUDENT ENGAGEMENT FLAG:
+        #   label: Classmates interact in real-time
+        # RESOURCES FOR STUDENTS WITH DISABILITIES:
+        #   label: Support provided for students with disabilities
+        # FEEDBACK ON STUDENT WORK:
+        #   label: Teachers provide feedback on student work
+        # FORMAL GRADING FLAG:
+        #   label: Students receive grades (letter or pass/fail)
+        # TEACHER CHECK-INS:
+        #   label: Teachers connect with students individually outside of class
+        # ATTENDANCE TRACKING:
+        #   label: Schools track attendance
+        # INSTRUCTIONAL MINUTES RECOMMENDED:
+        #   label: Districts offer learning guidelines to parents
+        # DEVICE DISTRIBUTION:
+        #   label: Computers/devices provided to students who need them
+        # HOTSPOT ACCESS:
+        #   label: Wi-fi hotspots provided
+        # DISTRICT DELEGATES DISTANCE LEARNING PLAN DECISION-MAKING:
+        #   label: District has delegated distance/remote learning to schools
+        #   tooltip_html: In districts that have delegated distance learning, schools are responsible for designing their own plans, which means approaches could vary across schools within the district.
+        # 20-21 CONTINGENCY PLAN:
+        #   label: Flexible plans for 2020-21 school year to offer remote and/or in-person learning
+        #   tooltip_html: The district has plans to address different learning scenarios for the new school year, including remote or in-person learning, or a combination of both.
+        # LEARNING LOSS PLAN:
+        #   label: Plans to remedy student learning loss during the summer or fall
+        #   tooltip_html: District will offer credit recovery, remedial instruction, and/or extra support for students with high absenteeism or low grades.
+        # SUMMER LEARNING PLAN:
+        #   label: Plans to offer summer school options
+        #   tooltip_html: District will offer summer school directly or through an outside partner.
+        # LEARNING LOSS DIAGNOSTIC IDENTIFIED:
+        #   label: Tools to measure student learning loss in the fall of 2020
+        #   tooltip_html: District will evaluate each student for learning loss to guide decisions about grade level and credits.
+        # ES MS SUMMER PROGRAM:
+        #   label: Summer program offered
+        #   tooltip_html: District offers at least one summer program taught by district teachers. See <a href="%{url}" style="font-family:'opensans-semibold';" target="_blank">district site</a> for details.
+        #   tooltip_no_link_html: District offers at least one summer program taught by district teachers.
+        # "ES MS CONTENT: MAKE-UP":
+        #   label: Learning loss program offered
+        #   tooltip_html: District is offering a summer program to help students catch up on material they may have missed due to school closure.
+        # "ES MS CONTENT: REVIEW":
+        #   label: Learning loss program offered
+        #   tooltip_html: District is offering a summer program to help students catch up on material they may have missed due to school closure.
+        # "ES MS CONTENT: ENRICHMENT":
+        #   label: Enrichment program offered
+        #   tooltip_html: Program focus is on material not typically covered during the school year. These programs are not intended to help catch up students who are behind.
+        # HS SUMMER PROGRAM:
+        #   label: Summer program offered
+        #   tooltip_html: District offers at least one summer program taught by district teachers. See <a href="%{url}" style="font-family:'opensans-semibold';" target="_blank">district site</a> for details.
+        #   tooltip_no_link_html: District offers at least one summer program taught by district teachers.
+        # "HS CONTENT: LEARNING LOSS":
+        #   label: Learning loss program offered
+        #   tooltip_html: Program addresses learning loss due to school closure but does not offer course credit.
+        # "HS CONTENT: CREDIT RECOVERY":
+        #   label: Credit recovery offered
+        #   tooltip_html: Program helps high school students retake failed classes or make up missing credits.
+        # "HS CONTENT: CREDIT ACCELERATION":
+        #   label: Credit acceleration offered
+        #   tooltip_html: Program allows students who wish to get ahead to take courses for credit during summer.
+        # "HS CONTENT: ENRICHMENT":
+        #   label: Enrichment program offered
+        #   tooltip_html: Program offers enrichment activities like test prep or college/career planning.
+        # SUMMER MEAL PLAN:
+        #   label: Free student meals available
+        #   tooltip_html: Meals are available to any student, regardless of enrollment in summer school.
+        # Fall 2020 data types
+        DISTRICT REQUIRES FACE MASKS:
+          data_type_1:
+            label: Face masks required for staff
+          data_type_2:
+            label: Face masks required for students
+        DISTRICT COMMUNICATES CHANGES TO BUILDING HEALTH SANITATION AND PROTOCOLS:
+          label: District has updated school facilities to make them safer
+          tooltip_html: Examples may include installing no-touch faucets and trash cans, adding hand-sanitizing stations, and discontinuing vending machines.
+        DISTRICT COMMUNICATES CHANGES TO BUILDING PRACTICES FOR ALL SCHOOLS TO ENSURE PHYSICAL DISTANCING:
+          label: District has adopted new safety practices for in-person learning
+          tooltip_html: Examples may include monitoring entrances/exits, managing traffic flow in hallways, and separating students in common areas.
+        DISTRICT COMMUNICATES EXPECTATION THAT HEALTH AND SAFETY DATA WILL BE SHARED WITH FAMILIES:
+          label: 'District will share # cases/school and progress on health & safety monitoring'
+        DISTRICT HAS A PLAN OR POLICY FOR DETERMINING FUTURE ROLLING CLOSURES IF CONFIRMED INFECTION OF STAFF OR STUDENTS:
+          label: District has a plan to close schools in response to future outbreaks
+        TYPE OF REMOTE INSTRUCTION OFFERED TO STUDENTS:
+          data_type_1:
+            label: Teaching is done in real-time (e.g. live video)
+          data_type_2:
+            label: Teachers provide lessons for students to do on their own
+        DISTRICT REQUIRES TEACHER-FAMILY CHECK-INS WHEN ENGAGED IN REMOTE LEARNING:
+          label: Teachers are required to check-in with parents
+        DISTRICT REQUIRES TEACHER-STUDENT CHECK-INS WHEN ENGAGED IN REMOTE LEARNING:
+          label: Teachers are required to check-in with students
+        DISTRICT EXPECTS TEACHERS TO PROVIDE FEEDBACK ON STUDENT WORK FOR STUDENTS ENGAGED IN REMOTE LEARNING:
           label: Teachers provide feedback on student work
-        FORMAL GRADING FLAG:
-          label: Students receive grades (letter or pass/fail)
-        TEACHER CHECK-INS:
-          label: Teachers connect with students individually outside of class
-        ATTENDANCE TRACKING:
+        DISTRICT OFFERED SUMMER PROFESSIONAL DEVELOPMENT:
+          label: Teachers received training during the summer to prepare for fall back-to-school scenarios
+        DISTRICT INCREASES TIME DEDICATED TO TEACHER PD OR COLLABORATION:
+          label: Teacher training & collaboration hours have been increased
+        DISTRICT HAS PLAN TO PROVIDE COACHING AND SUPPORT TO TEACHERS DURING THE YEAR IN REMOTE LEARNING SETTING:
+          label: Teachers will receive coaching and support throughout the year
+        START-OF-YEAR ANTICIPATED LEARNING MODEL:
+          data_type_1:
+            label: Students return to school for in-person learning
+          data_type_2:
+            label: Students begin school online (remote learning)
+          data_type_3:
+            label: 'Hybrid: schools combine in-person and online learning'
+          data_type_4:
+            label: 'Varies: different schools within the district are opening with different models'
+        DISTRICT MENTIONS RACIAL EQUITY AS A PRIORITY OR CONSIDERS RACIAL EQUITY IN WHICH STUDENTS TO PRIORITIZE FOR SERVICES AND IN-PERSON INSTRUCTION:
+          label: District has made racial equity a priority in learning plans
+        DISTRICT WILL PROVIDE REMOTE CURRICULUM FOR ALL GRADE LEVELS:
+          label: District/schools provide grade-level curriculum
+        DISTRICT REQUIRES SCHOOLS TO PROVIDE STUDENT GRADES:
+          label: Students receive grades
+        DISTRICT REQUIRES SCHOOLS TO TAKE ATTENDANCE:
           label: Schools track attendance
-        INSTRUCTIONAL MINUTES RECOMMENDED:
-          label: Districts offer learning guidelines to parents
-        DEVICE DISTRIBUTION:
+        PLAN NAMES REQUIRED MINIMUM NUMBER OF INSTRUCTIONAL MINUTES:
+          label: District has a minimum number of instructional minutes that students are required to receive
+        DISTRICT HAS A PLAN FOR SUPPORTING HIGH SCHOOL STUDENTS WITH COLLEGE AND CAREER PREPARATION:
+          label: High school students receive college/career support
+        DISTRICT EXPECTS SCHOOLS TO DIAGNOSE ENTERING STUDENT LEARNING LOSS:
+          label: Schools will assess student learning loss at the start of the year
+          tooltip_html: District has a plan to assess where students are at the beginning of the year, like measuring learning loss and student mastery of core skills.
+        DISTRICT HAS A PLAN TO PROVIDE INTERVENTIONS OR INCREASED SUPPORTS BASED ON STUDENT LEARNING LOSS DIAGNOSTIC:
+          label: District has strategies in place to help students catch up
+        DISTRICT HAS A PLAN TO MONITOR STUDENTS' ACADEMIC PROGRESS THROUGHOUT THE YEAR:
+          label: District has a plan to monitor student progress during the year
+        PLAN COMMITS TO PROVIDE DEVICES FOR ALL STUDENTS IN NEED:
           label: Computers/devices provided to students who need them
-        HOTSPOT ACCESS:
-          label: Wi-fi hotspots provided
-        DISTRICT DELEGATES DISTANCE LEARNING PLAN DECISION-MAKING:
-          label: District has delegated distance/remote learning to schools
-          tooltip_html: In districts that have delegated distance learning, schools are responsible for designing their own plans, which means approaches could vary across schools within the district.
-        20-21 CONTINGENCY PLAN:
-          label: Flexible plans for 2020-21 school year to offer remote and/or in-person learning
-          tooltip_html: The district has plans to address different learning scenarios for the new school year, including remote or in-person learning, or a combination of both.
-        LEARNING LOSS PLAN:
-          label: Plans to remedy student learning loss during the summer or fall
-          tooltip_html: District will offer credit recovery, remedial instruction, and/or extra support for students with high absenteeism or low grades.
-        SUMMER LEARNING PLAN:
-          label: Plans to offer summer school options
-          tooltip_html: District will offer summer school directly or through an outside partner.
-        LEARNING LOSS DIAGNOSTIC IDENTIFIED:
-          label: Tools to measure student learning loss in the fall of 2020
-          tooltip_html: District will evaluate each student for learning loss to guide decisions about grade level and credits.
-        ES MS SUMMER PROGRAM:
-          label: Summer program offered
-          tooltip_html: District offers at least one summer program taught by district teachers. See <a href="%{url}" style="font-family:'opensans-semibold';" target="_blank">district site</a> for details.
-          tooltip_no_link_html: District offers at least one summer program taught by district teachers.
-        "ES MS CONTENT: MAKE-UP":
-          label: Learning loss program offered
-          tooltip_html: District is offering a summer program to help students catch up on material they may have missed due to school closure.
-        "ES MS CONTENT: REVIEW":
-          label: Learning loss program offered
-          tooltip_html: District is offering a summer program to help students catch up on material they may have missed due to school closure.
-        "ES MS CONTENT: ENRICHMENT":
-          label: Enrichment program offered
-          tooltip_html: Program focus is on material not typically covered during the school year. These programs are not intended to help catch up students who are behind.
-        HS SUMMER PROGRAM:
-          label: Summer program offered
-          tooltip_html: District offers at least one summer program taught by district teachers. See <a href="%{url}" style="font-family:'opensans-semibold';" target="_blank">district site</a> for details.
-          tooltip_no_link_html: District offers at least one summer program taught by district teachers.
-        "HS CONTENT: LEARNING LOSS":
-          label: Learning loss program offered
-          tooltip_html: Program addresses learning loss due to school closure but does not offer course credit.
-        "HS CONTENT: CREDIT RECOVERY":
-          label: Credit recovery offered
-          tooltip_html: Program helps high school students retake failed classes or make up missing credits.
-        "HS CONTENT: CREDIT ACCELERATION":
-          label: Credit acceleration offered
-          tooltip_html: Program allows students who wish to get ahead to take courses for credit during summer.
-        "HS CONTENT: ENRICHMENT":
-          label: Enrichment program offered
-          tooltip_html: Program offers enrichment activities like test prep or college/career planning.
-        SUMMER MEAL PLAN:
-          label: Free student meals available
-          tooltip_html: Meals are available to any student, regardless of enrollment in summer school.
-      summer learning:
-        k-8:
-          narration: How is this district addressing learning loss over summer for elementary/middle school students?
-        high school:
-          narration: How is this district addressing learning loss over summer for high school students?
-      resources:
+        PLAN COMMITS TO PROVIDE HOTSPOT/WIFI ACCESS FOR ALL STUDENTS IN NEED:
+          label: Wi-fi hotspots provided to students who need them
+        DISTRICT OFFERS GUIDANCE OR TRAINING TO PARENTS IN HOW TO HELP STUDENTS LEARN AT HOME:
+          label: Parents provided with guidelines to support learning at home
+          tooltip_html: District offers parent training on supporting students academically, socially, managing screen time, etc.
+        DISTRICT EXPECTS ALL SCHOOLS TO PROVIDE ACCESS TO COUNSELORS OR SOCIAL WORKERS:
+          label: District requires schools to provide student access to a counselor or social worker
+        DISTRICT HAS A PLAN TO PROVIDE SOCIAL. EMOTIONAL. AND MENTAL HEALTH SERVICES:
+          label: District provides social-emotional learning / mental health services for students
+        DISTRICT HAS A PLAN TO PROVIDE SPECIFIC SUPPORT TO STUDENTS WITH DISABILITIES:
+          label: Schools must provide support for students with disabilities
+        DISTRICT HAS A PLAN TO PROVIDE SPECIFIC SUPPORT TO STUDENTS WITH LANGUAGE BARRIERS:
+          label: Schools must offer support for English Language Learner students
+        DISTRICT HAS A PLAN TO PROVIDE SPECIFIC SUPPORT TO STUDENTS EXPERIENCING HOMELESSNESS OR TRANSITIONAL STUDENTS:
+          label: Schools must offer support for homeless students
+      health & safety:
         main:
-          narration: What support does this district offer students and families?
+          narration: What has the district done to prepare for safe in-person learning when the time comes?
+      teaching:
+        instruction:
+          narration: How are teachers providing remote instruction?
+        support:
+          narration: How is this district helping teachers provide remote instruction?
       policies:
-        learning:
-          narration: What are this district’s distance learning policies?
-        planning:
-          narration: What are the district’s plans for supporting student learning?
-        teaching:
-          narration: How is this district providing instruction to students?
+        learning model:
+          narration: How does this district plan to begin the school year?
+        academics:
+          narration: What academic policies are in place for the 2020-2021 school year?
+        learning loss:
+          narration: How does the district plan to remedy student learning loss?
+      student support:
+        resources:
+          narration: How is the district supporting students and families?
+        special needs:
+          narration: How is the district ensuring support for more vulnerable students?
+          tooltip_html: Is this district requiring schools to prioritize access to in-person instruction for vulnerable populations, including students with disabilities, homeless students and English language learners?
+      # summer learning:
+      #   k-8:
+      #     narration: How is this district addressing learning loss over summer for elementary/middle school students?
+      #   high school:
+      #     narration: How is this district addressing learning loss over summer for high school students?
+      # resources:
+      #   main:
+      #     narration: What support does this district offer students and families?
+      # policies:
+      #   learning:
+      #     narration: What are this district’s distance learning policies?
+      #   planning:
+      #     narration: What are the district’s plans for supporting student learning?
+      #   teaching:
+      #     narration: How is this district providing instruction to students?
       ratings:
         all_students: all students
         some_students: some students
