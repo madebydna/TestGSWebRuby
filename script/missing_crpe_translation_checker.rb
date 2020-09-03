@@ -32,8 +32,32 @@ class MissingCrpeTranslationChecker
         table:  :'omni.covid_responses',
         column: :value,
         key_column: :data_type,
-        key_value: 'SUMMER SUMMARY'
-      }
+        key_value: 'SUMMARY'
+      },
+      {
+        table:  :'omni.covid_responses',
+        column: :value,
+        key_column: :data_type,
+        key_value: 'LEARNING MODEL'
+      },
+      {
+        table:  :'omni.covid_responses',
+        column: :value,
+        key_column: :data_type,
+        key_value: 'REMOTE LEARNING PLAN'
+      },
+      {
+        table:  :'omni.covid_responses',
+        column: :value,
+        key_column: :data_type,
+        key_value: 'TECHNOLOGY AND WIFI ACCESS'
+      },
+      {
+        table:  :'omni.covid_responses',
+        column: :value,
+        key_column: :data_type,
+        key_value: 'NOTEWORTHY PRACTICES'
+      },
     ]
     @missing_translation_messages = []
   end
