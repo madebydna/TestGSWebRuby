@@ -38,3 +38,12 @@ document.addEventListener("DOMContentLoaded", () => {
     select.addEventListener('change', (e) => e.currentTarget.style.color = 'black')
   });
 });
+
+tns({
+  "container": ".plans-slider",
+  "items": 2,
+  "center": true,
+  "loop": false,
+  "swipeAngle": false,
+  "speed": 400
+});
