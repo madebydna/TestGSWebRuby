@@ -2,9 +2,9 @@ en:
   community:
     distance_learning:
       title: COVID-19 Response
-      subtitle: How has this district supported distance learning and other student needs?
-      parent_tip: School closures have negative impacts on children's learning, but district policies can help reduce learning loss. Use this information to understand how this district plans to help students regain lost ground.
-      tooltip_html: <div>This shows how the district is supporting student needs during school closure due to COVID-19. If you work for this district and have distance learning updates to share, please email <a href="mailto:crpedatabase@uw.edu">crpedatabase@uw.edu</a><div style="padding-top:10px;font-family:'opensans-italic';">Last updated %{date_valid}</div></div>
+      subtitle: How is this district responding to COVID-19 for the 2020-2021 school year?
+      parent_tip: School closures have negative impacts on children's learning, but district policies can help reduce learning loss. Use this information to understand how this district is adapting to keep students learning safely.
+      tooltip_html: <div>This section contains information about how this district is adapting to COVID-19. If you work for this district and have distance learning updates to share, please email <a href="mailto:crpedatabase@uw.edu">crpedatabase@uw.edu</a><div style="padding-top:10px;font-family:'opensans-italic';">Last updated %{date_valid}</div></div>
       district_overview: District overview
       district_website_cta_html: <a href="%{url}" style="font-family:'opensans-semibold';" target="_blank">Visit district's COVID-19 page</a>
       see_district_summer_page_html: See <a href="%{url}" style="font-family:'opensans-semibold';font-size:16px;" target="_blank">district summer program page</a> for details.
@@ -227,3 +227,5 @@ en:
         some_students: some students
         no_students: no students
         not_all_grades: not all grades
+        somewhat: somewhat
+

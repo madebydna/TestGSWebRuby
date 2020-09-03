@@ -2,9 +2,9 @@ es:
   community:
     distance_learning:
       title: Respuesta de COVID-19
-      subtitle: ¿Cómo ha apoyado este distrito el aprendizaje a distancia y otras necesidades de los estudiantes?
-      parent_tip: Los cierres de escuelas tienen impactos negativos en el aprendizaje de los niños, pero los principios del distrito pueden ayudar a reducir la pérdida de aprendizaje. Utiliza esta información para entender cómo este distrito planea ayudar a los estudiantes a recuperar el terreno perdido.
-      tooltip_html: <div>Esto muestra como el distrito está apoyando las necesidades de los estudiantes durante el cierre de escuelas debido a COVID-19. Si trabajas para este distrito y tienes actualizaciones sobre el aprendizaje a distancia, por favor envía un correo electrónico a <a href="mailto:crpedatabase@uw.edu">crpedatabase@uw.edu</a><div style="padding-top:10px;font-family:'opensans-italic';">Última actualización %{date_valid}</div></div>
+      subtitle: ¿Cómo está respondiendo este distrito a COVID-19 para el año escolar 2020-2021?
+      parent_tip: Los cierres de escuelas tienen impactos negativos en el aprendizaje de los niños, pero las políticas del distrito pueden ayudar a reducir la pérdida de aprendizaje. Utilice esta información para entender cómo se está adaptando este distrito para mantener a los estudiantes aprendiendo de manera segura.
+      tooltip_html: <div>Esta sección contiene información sobre cómo este distrito se está adaptando a COVID-19. Si trabajas para este distrito y tienes actualizaciones sobre el aprendizaje a distancia, por favor envía un correo electrónico a <a href="mailto:crpedatabase@uw.edu">crpedatabase@uw.edu</a><div style="padding-top:10px;font-family:'opensans-italic';">Última actualización %{date_valid}</div></div>
       district_overview: Resumen del distrito
       district_website_cta_html: <a href="%{url}" style="font-family:'opensans-semibold';" target="_blank">Visita la página de COVID-19 de tu distrito</a>
       see_district_summer_page_html: Ve <a href="%{url}" style="font-family:'opensans-semibold';font-size:16px;" target="_blank">la página del programa de verano del distrito</a> para más detalles.
@@ -227,3 +227,4 @@ es:
         some_students: algunos de los estudiantes
         no_students: ninguno de los estudiantes
         not_all_grades: no todos los grados
+        somewhat: mas o menos
