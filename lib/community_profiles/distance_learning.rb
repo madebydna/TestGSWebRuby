@@ -124,19 +124,22 @@ module CommunityProfiles
       # end
 
       data_types.map do |data_type|
-        next unless crpe_data.fetch(data_type, nil)
-        datum = crpe_data.fetch(data_type, nil)
+        if [DISTRICT_REQUIRES_FACE_MASKS, TYPE_OF_REMOTE_INSTRUCTION_OFFERED_TO_STUDENTS].include?(data_type)
+          multiple_labels_data_value(data_type, 2)
+        elsif START_OF_YEAR_ANTICIPATED_LEARNING_MODEL == data_type
+          multiple_labels_data_value(data_type, 4)
+        else
+          next unless crpe_data.fetch(data_type, nil)
+          datum = crpe_data.fetch(data_type, nil)
 
-        return multiple_labels_data_value(data_type, 2) if [DISTRICT_REQUIRES_FACE_MASKS, TYPE_OF_REMOTE_INSTRUCTION_OFFERED_TO_STUDENTS].include?(data_type)
-        return multiple_labels_data_value(data_type, 4) if START_OF_YEAR_ANTICIPATED_LEARNING_MODEL == data_type
-
-        {}.tap do |h|
-          h[:breakdown] = label(data_type)
-          h[:tooltip_html] = tooltip(data_type)
-          h[:data_type] = datum["data_type"]
-          h[:value] = datum["value"]
-          h[:date_valid] = datum["date_valid"]
-          h[:source] = datum["source"]
+          {}.tap do |h|
+            h[:breakdown] = label(data_type)
+            h[:tooltip_html] = tooltip(data_type)
+            h[:data_type] = datum["data_type"]
+            h[:value] = datum["value"]
+            h[:date_valid] = datum["date_valid"]
+            h[:source] = datum["source"]
+          end
         end
       end.flatten.compact
     end
