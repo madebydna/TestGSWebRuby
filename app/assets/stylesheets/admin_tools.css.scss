@@ -292,7 +292,7 @@
   }
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 1000px) {
   .container {
     width: 92%;
   }
@@ -307,14 +307,31 @@
   }
 }
 
-@media only screen and (max-width: 550px) {
+@media only screen and (max-width: 1000px) {
+  .container {
+    width: 80%;
+  }
   .api-plans-container {
     display: none;
   }
 
   .api-plans-container-carousel {
-    display: flex;
+    display: block;
   }
+
+  .plans-slider {
+    height: 500px;
+  }
+
+  .glider-next, .glider-prev {
+    top: 50%;
+  }
+
+  .api-plan-col {
+    flex: 0;
+    padding: 0px;
+  }
+
 }
 
 

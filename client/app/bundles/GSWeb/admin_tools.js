@@ -39,11 +39,14 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-tns({
-  "container": ".plans-slider",
-  "items": 2,
-  "center": true,
-  "loop": false,
-  "swipeAngle": false,
-  "speed": 400
+window.addEventListener('load', function () {
+  new Glider(document.querySelector('.plans-slider'), {
+    slidesToShow: 1,
+    dots: '.dots',
+    draggable: true,
+    arrows: {
+      prev: '.glider-prev',
+      next: '.glider-next'
+    }
+  });
 });
