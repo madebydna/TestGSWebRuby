@@ -250,11 +250,10 @@ module CommunityProfiles
       translated_noteworthy_practices = I18n.db_t(noteworthy_practices, default: noteworthy_practices)
       more = I18n.t('more', scope: 'community.distance_learning')
 
-      str = '<div>' + translated_summary
+      str = translated_summary
       str += '<a class="js-gaClick js-moreRevealLink more-reveal-link" href="javascript:void(0)">...'
       str += more
       str += '.</a>'
-      str += '</div>'
       str += '<div class="js-moreReveal more-reveal">'
       str += '<ul>'
       [translated_learning_model, translated_remote_learning_plan, translated_technology_and_wifi_access, translated_noteworthy_practices].compact.map do |data_type|
