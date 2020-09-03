@@ -16,6 +16,31 @@ module CommunityProfiles
       crpe_data.fetch(data_type, {})&.fetch('value', nil)
     end
 
+    def fetch_data_type_variation_override(data_type, value, index)
+      if data_type == DISTRICT_REQUIRES_FACE_MASKS
+        options = {
+          1 => { 'Staff' => 'Yes', 'Both' => 'Yes', 'Students' => 'No', 'Neither' => 'No' },
+          2 => { 'Staff' => 'No', 'Both' => 'Yes', 'Students' => 'Yes', 'Neither' => 'No' }
+        }
+        override_value = options[index][value]
+      elsif data_type == TYPE_OF_REMOTE_INSTRUCTION_OFFERED_TO_STUDENTS
+        options = {
+          1 => { "Synchronous" => 'Yes', 'Both' => 'Yes', 'Asynchronous' => 'No', 'None' => 'No', 'N/A, no info' => 'N/A' },
+          2 => { 'Synchronous' => 'No', 'Both' => 'Yes', 'Asynchronous' => 'Yes', 'None' => 'No', 'N/A, no info' => 'N/A' }
+        }
+        override_value = options[index][value]
+      elsif (data_type == START_OF_YEAR_ANTICIPATED_LEARNING_MODEL)
+        options = {
+          1 => { 'In-person' => 'Yes', 'Remote' => 'No', 'Hybrid' => 'No', 'No information' => 'N/A', 'Varies' => 'N/A' },
+          2 => { 'In-person' => 'No', 'Remote' => 'Yes', 'Hybrid' => 'No', 'No information' => 'N/A', 'Varies' => 'N/A' },
+          3 => { 'In-person' => 'No', 'Remote' => 'No', 'Hybrid' => 'Yes', 'No information' => 'N/A', 'Varies' => 'N/A' },
+          4 => { 'In-person' => 'No', 'Remote' => 'No', 'Hybrid' => 'No', 'No information' => 'N/A', 'Varies' => 'Yes' }
+        }
+        override_value = options[index][value]
+      end
+      override_value
+    end
+
     def fetch_date(data_type)
       crpe_data.fetch(data_type, {})&.fetch('date_valid', nil)
     end
@@ -72,6 +97,7 @@ module CommunityProfiles
           h[:anchor] = subtab
           h[:narration] = narration
           h[:title] = I18n.t(subtab.downcase, scope: 'community.distance_learning.tab', default: nil)
+          h[:tooltip] = I18n.t("tooltip_html", scope: "community.distance_learning.#{tab.downcase}.#{subtab.downcase}", default: nil)
           h[:type] = 'circle'
           h[:values] = data_value(data_types)
         end
@@ -89,17 +115,20 @@ module CommunityProfiles
     #     ES_MS_SUMMER_PROGRAM == "No" AND HS_SUMMER_PROGRAM == "No",
     #     only display the Summer Learning data types for which we have data.
     def data_value(data_types)
-      if [SUMMER_LEARNING_K8_SUBTAB_ACCESSORS, SUMMER_LEARNING_HIGH_SCHOOL_SUBTAB_ACCESSORS].include?(data_types)
-        es_ms_tab_data = crpe_data.fetch(ES_MS_SUMMER_PROGRAM, nil)
-        hs_tab_data = crpe_data.fetch(HS_SUMMER_PROGRAM, nil)
-        if (es_ms_tab_data.present? && es_ms_tab_data["value"] == "Yes") || (hs_tab_data.present? && hs_tab_data["value"] == "Yes")
-          return summer_learning_data_value(data_types)
-        end
-      end
+      # if [SUMMER_LEARNING_K8_SUBTAB_ACCESSORS, SUMMER_LEARNING_HIGH_SCHOOL_SUBTAB_ACCESSORS].include?(data_types)
+      #   es_ms_tab_data = crpe_data.fetch(ES_MS_SUMMER_PROGRAM, nil)
+      #   hs_tab_data = crpe_data.fetch(HS_SUMMER_PROGRAM, nil)
+      #   if (es_ms_tab_data.present? && es_ms_tab_data["value"] == "Yes") || (hs_tab_data.present? && hs_tab_data["value"] == "Yes")
+      #     return summer_learning_data_value(data_types)
+      #   end
+      # end
 
       data_types.map do |data_type|
         next unless crpe_data.fetch(data_type, nil)
         datum = crpe_data.fetch(data_type, nil)
+
+        return multiple_labels_data_value(data_type, 2) if [DISTRICT_REQUIRES_FACE_MASKS, TYPE_OF_REMOTE_INSTRUCTION_OFFERED_TO_STUDENTS].include?(data_type)
+        return multiple_labels_data_value(data_type, 4) if START_OF_YEAR_ANTICIPATED_LEARNING_MODEL == data_type
 
         {}.tap do |h|
           h[:breakdown] = label(data_type)
@@ -109,7 +138,34 @@ module CommunityProfiles
           h[:date_valid] = datum["date_valid"]
           h[:source] = datum["source"]
         end
-      end.compact
+      end.flatten.compact
+    end
+
+    def multiple_labels_data_value(data_type, count)
+      variations = []
+      (1..count).each do |variation|
+        next unless crpe_data.fetch(data_type, nil)
+        datum = crpe_data.fetch(data_type, nil)
+
+        variation_details = {}.tap do |h|
+          h[:breakdown] = label_count_variation(data_type, variation)
+          h[:tooltip_html] = tooltip_count_variation(data_type, variation)
+          h[:data_type] = datum["data_type"]
+          h[:value] = fetch_data_type_variation_override(data_type, datum["value"], variation)
+          h[:date_valid] = datum["date_valid"]
+          h[:source] = datum["source"]
+        end
+        variations << variation_details
+      end
+      variations
+    end
+
+    def label_count_variation(data_type, index)
+      I18n.t("#{data_type}.data_type_#{index}.label", scope: 'community.distance_learning.data_types')
+    end
+
+    def tooltip_count_variation(data_type, index)
+      I18n.t("#{data_type}.data_type_#{index}.tooltip_html", scope: 'community.distance_learning.data_types', default: nil)
     end
 
     def summer_learning_data_value(data_types)
