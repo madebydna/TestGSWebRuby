@@ -140,12 +140,10 @@ const removeCssClasses = (slotId) => {
   
 
   if (wrapper && wrapper.classList.contains(`js-${targetedSelector}-height`)){
-    console.log(`Removed prerender height class ${targetedSelector}`)
     $(`.js-${slotId}-wrapper`).removeClass(`js-${targetedSelector}-height`)
   }
 
   if (reactComponent && reactComponent.closest(`.js-${targetedSelector}-height`)){
-    console.log(`Removed prerender height class ${targetedSelector}`)
     $(reactComponent.closest(`.js-${targetedSelector}-height`)).removeClass(`js-${targetedSelector}-height`)
   }
 
