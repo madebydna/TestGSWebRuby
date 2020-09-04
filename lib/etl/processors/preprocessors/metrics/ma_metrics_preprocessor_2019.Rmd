@@ -1,0 +1,443 @@
+---
+title: "QA"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(RMariaDB)
+library(readxl)
+library(zoo)
+library(janitor)
+```
+
+```{r}
+
+ma_grad_school_2019 <- read_csv("MA_2019_school_graduation_processed.csv") %>% 
+  clean_names() 
+
+ma_grad_district_state_2019 <- read_csv("MA_2019_district_state_graduation_processed.csv") %>% 
+  clean_names() 
+
+ma_sat_school_2019 <- read_csv("MA_2019_school_sat_processed.csv") %>% 
+  clean_names() 
+
+ma_sat_district_state_2019 <- read_csv("MA_2019_district_state_sat_processed.csv") %>% 
+  clean_names() 
+
+ma_college_2018 <- read_xlsx("MA_ps_processed.xlsx", sheet = "Enrolled in College", na = "NA") %>% 
+  clean_names()
+
+ma_remediation_2018 <- read_xlsx("MA_ps_processed.xlsx", sheet = "Enrolled in Dev Courses", na = c("NA", "*")) %>% 
+  clean_names()
+
+```
+
+```{r}
+skipped_breakdowns <- c(
+  "Homeless Students",
+  "Students in Foster Care",
+  "Military-Connected Students",
+  "Migrant Students"
+  )
+
+data_type_map = c(
+"pct_ps_enr" = 414,	
+"pct_ps_enr2yr" = 425,
+"pct_ps_enr4yr" = 429,
+"pct_ps_pers_any2nd" = 409
+)
+
+tidy_ma_grad_school_2019 <- ma_grad_school_2019 %>% 
+  mutate(entity_type = "school") %>% 
+  rename(name = "school_name",
+         state_id = "school_code")
+
+tidy_ma_grad_district_state_2019 <- ma_grad_district_state_2019 %>% 
+  mutate(entity_type = if_else(district_code == "00000000",
+                               "state",
+                               "district")
+         ) %>% 
+  rename(name = "district_name",
+         state_id = "district_code")
+
+tidy_ma_grad_2019 <- bind_rows(tidy_ma_grad_school_2019,
+                               tidy_ma_grad_district_state_2019) %>%
+  mutate(date_valid = "2019-01-01 00:00:00",
+         year = 2019) %>% 
+  rename(value = "percent_graduated",
+         breakdown = "subgroup",
+         cohort_count = "number_in_cohort") %>% 
+  mutate(state_id = if_else(entity_type == "district",
+                            str_sub(state_id, 1, -5),
+                            state_id)
+         )
+
+
+
+#######
+
+tidy_ma_sat_school_2019 <- ma_sat_school_2019 %>% 
+  mutate(entity_type = "school") %>% 
+  rename(name = "school_name",
+         state_id = "school_code")
+
+tidy_ma_sat_district_state_2019 <- ma_sat_district_state_2019 %>% 
+  mutate(entity_type = if_else(district_code == "00000000",
+                               "state",
+                               "district")
+         ) %>% 
+  rename(name = "district_name",
+         state_id = "district_code")
+
+
+tidy_ma_sat_2019 <- bind_rows(tidy_ma_sat_school_2019,
+                               tidy_ma_sat_district_state_2019) %>% 
+  mutate(composite = reading_writing + math,
+         date_valid = "2019-01-01 00:00:00",
+         year = 2019) %>%
+  select(-writing) %>% 
+  gather(key = "subject", 
+         value = "value", 
+         reading_writing,
+         math,
+         composite) %>% 
+  rename(breakdown = "subgroup",
+         cohort_count = "tests_taken") %>% 
+  filter(!is.na(value)) %>% 
+  mutate(state_id = if_else(entity_type == "district",
+                            str_sub(state_id, 1, -5),
+                            state_id)
+         )
+
+#######
+
+tidy_ma_college_2018 <- ma_college_2018 %>% 
+  gather(key = "data_type", value = "value", matches("pct")) %>% 
+  mutate(entity_type = case_when(code == "00000000" ~ "state",
+                                 str_sub(code, -4, -1) == "0000" ~ "district",
+                                 str_sub(code, -4, -1) != "0000" ~ "school",
+                                 TRUE ~ "unmapped"),
+         cohort_count = if_else(data_type == "pct_ps_pers_any2nd",
+                                ps_enr,
+                                grad),
+         year = as.numeric(year),
+         data_type_id = data_type_map[data_type]
+         ) %>% 
+  filter((data_type_id %in% c(414, 425, 429) & year == 2018) | 
+         (data_type_id == 409 & year == 2017),
+         !is.na(value)
+  ) %>% 
+  mutate(year = if_else(data_type_id == 409, 
+                        2018,
+                        year),
+         date_valid = "2018-01-01 00:00:00",
+         year = 2018,
+         notes = case_when(data_type_id == 414 ~ "DXT-3409 MA Percent enrolled in any institution of higher learning in the last 0-16 months",
+                           data_type_id == 425 ~ "DXT-3409 MA Percent enrolled in a 2-year institution of higher learning in the last 0-16 months",
+                           data_type_id == 429 ~ "DXT-3409 MA Percent enrolled in a 4-year institution of higher learning in the last 0-16 months",
+                           data_type_id == 409 ~ "DXT-3409 MA Percent Enrolled in College and Returned for a Second Year")
+         ) %>% 
+  rename(breakdown = "subgroup",
+         state_id = "code") %>% 
+  mutate(state_id = if_else(entity_type == "district",
+                            str_sub(state_id, 1, -5),
+                            state_id)
+         )
+
+
+
+######
+
+tidy_ma_remediation_2018 <- ma_remediation_2018  %>% 
+  mutate(entity_type = case_when(code == "00000000" ~ "state",
+                                 str_sub(code, -4, -1) == "0000" ~ "district",
+                                 str_sub(code, -4, -1) != "0000" ~ "school",
+                                 TRUE ~ "unmapped"),
+         year = as.numeric(year)
+         ) %>% 
+  rename(cohort_count = "ps_enr",
+         value = "pct_dev_enr") %>% 
+  filter(!is.na(value),
+         year == 2017) %>% 
+  mutate(date_valid = "2018-01-01 00:00:00",
+         year = 2018) %>% 
+  rename(breakdown = "subgroup",
+         state_id = "code") %>% 
+  mutate(state_id = if_else(entity_type == "district",
+                            str_sub(state_id, 1, -5),
+                            state_id)
+         )
+
+
+
+tidy_ma_college_2018 %>% 
+  group_by(breakdown) %>% 
+  summarize()
+```
+Write tidied df to file
+```{r}
+write_delim(tidy_ma_grad_2019, "ma_grad_2019.txt", delim = "\t", na = "")
+write_delim(tidy_ma_sat_2019, "ma_sat_2019.txt", delim = "\t", na = "")
+write_delim(tidy_ma_college_2018, "ma_college_2018.txt", delim = "\t", na = "")
+write_delim(tidy_ma_remediation_2018, "ma_remediation_2018.txt", delim = "\t", na = "")
+
+```
+
+Read in metrics output
+```{r}
+state_abbrev <- "ma"
+ticket_number <- "DXT-3409"
+year <- 2019
+
+state <- read_delim(str_c("/Users/shernandez/Documents/Metrics_Load/Metrics_Output/",
+                          ticket_number,
+                          "_",
+                          state_abbrev, 
+                          "_metrics_",
+                          year,
+                          "_state.txt"), "\t", col_types = cols(.default = "c"))
+district <- read_delim(str_c("/Users/shernandez/Documents/Metrics_Load/Metrics_Output/",
+                          ticket_number,
+                          "_",
+                          state_abbrev, 
+                          "_metrics_",
+                          year,
+                          "_district.txt"), "\t", col_types = cols(.default = "c"))
+school <- read_delim(str_c("/Users/shernandez/Documents/Metrics_Load/Metrics_Output/",
+                          ticket_number,
+                          "_",
+                          state_abbrev, 
+                          "_metrics_",
+                          year,
+                          "_school.txt"), "\t", col_types = cols(.default = "c"))
+
+
+combo_output <- bind_rows(state, district, school) 
+  
+
+```
+Create new basic raw version to compare counts
+```{r}
+
+
+
+
+raw_ma_grad_school_2019 <- ma_grad_school_2019 %>% 
+  mutate(entity_type = "school") 
+
+raw_ma_grad_district_state_2019 <- ma_grad_district_state_2019 %>% 
+  mutate(entity_type = if_else(district_code == "00000000",
+                               "state",
+                               "district")
+         )
+
+raw_ma_grad_2019 <- bind_rows(tidy_ma_grad_school_2019,
+                               tidy_ma_grad_district_state_2019) %>%
+  mutate(year = 2019) %>% 
+  rename(value = "percent_graduated",
+         breakdown = "subgroup",
+         cohort_count = "number_in_cohort") 
+
+
+#######
+
+raw_ma_sat_school_2019 <- ma_sat_school_2019 %>% 
+  mutate(entity_type = "school")
+
+raw_ma_sat_district_state_2019 <- ma_sat_district_state_2019 %>% 
+  mutate(entity_type = if_else(district_code == "00000000",
+                               "state",
+                               "district")
+         ) 
+
+raw_ma_sat_2019 <- bind_rows(raw_ma_sat_school_2019,
+                               raw_ma_sat_district_state_2019) %>% 
+  mutate(composite = reading_writing + math,
+         date_valid = "2019-01-01 00:00:00",
+         year = 2019) %>%
+  select(-writing) %>% 
+  gather(key = "subject", 
+         value = "value", 
+         reading_writing,
+         math,
+         composite) %>% 
+  rename(breakdown = "subgroup",
+         cohort_count = "tests_taken") %>% 
+  filter(!is.na(value)) 
+
+#######
+
+raw_ma_college_2018 <- ma_college_2018 %>% 
+  gather(key = "data_type", value = "value", matches("pct")) %>% 
+  mutate(entity_type = case_when(code == "00000000" ~ "state",
+                                 str_sub(code, -4, -1) == "0000" ~ "district",
+                                 str_sub(code, -4, -1) != "0000" ~ "school",
+                                 TRUE ~ "unmapped"),
+         cohort_count = if_else(data_type == "pct_ps_pers_any2nd",
+                                ps_enr,
+                                grad),
+         year = as.numeric(year),
+         data_type_id = data_type_map[data_type]
+         ) %>% 
+  filter((data_type_id %in% c(414, 425, 429) & year == 2018) | 
+         (data_type_id == 409 & year == 2017),
+         !is.na(value)
+  ) %>% 
+  mutate(year = if_else(data_type_id == 409, 
+                        2018,
+                        year),
+         year = 2018
+         ) %>% 
+  rename(breakdown = "subgroup",
+         state_id = "code") 
+
+
+
+######
+
+raw_ma_remediation_2018 <- ma_remediation_2018  %>% 
+  mutate(entity_type = case_when(code == "00000000" ~ "state",
+                                 str_sub(code, -4, -1) == "0000" ~ "district",
+                                 str_sub(code, -4, -1) != "0000" ~ "school",
+                                 TRUE ~ "unmapped"),
+         year = as.numeric(year)
+         ) %>% 
+  rename(cohort_count = "ps_enr",
+         value = "pct_dev_enr") %>% 
+  filter(!is.na(value),
+         year == 2017) %>% 
+  mutate(date_valid = "2018-01-01 00:00:00",
+         year = 2018) %>% 
+  rename(breakdown = "subgroup",
+         state_id = "code") 
+
+csa_df_raw <- raw_ma_remediation_2018
+    
+```
+
+Check entity counts
+```{r}
+
+
+csa_df_raw_count <- csa_df_raw %>% 
+  group_by(entity_type) %>% 
+  summarize(count = n())
+
+csa_df_output_count <- combo_output %>% 
+  filter(data_type_id == 413) %>% 
+  group_by(entity_type) %>% 
+  summarize(count = n())
+
+```
+
+Check data_type counts
+```{r}
+
+
+csa_df_raw_count <- csa_df_raw %>% 
+  group_by(data_type_id) %>% 
+  summarize(count = n())
+
+csa_df_output_count <- combo_output %>% 
+  filter(data_type_id == 413) %>% 
+  group_by(data_type_id) %>% 
+  summarize(count = n())
+
+```
+
+Check breakdown_id and counts
+```{r}
+csa_df_raw_count <- csa_df_raw %>% 
+  group_by(breakdown) %>% 
+  summarize(count = n())
+
+csa_df_output_count <- combo_output %>% 
+  filter(data_type_id == 413) %>% 
+  mutate(breakdown_id = as.numeric(breakdown_id)) %>% 
+  group_by(breakdown_id, breakdown) %>% 
+  summarize(count = n()) %>% 
+  left_join(breakdowns, by = c("breakdown_id" = "id"))
+
+```
+
+Check grade counts (not used in this one)
+```{r}
+csa_df_raw_count <- csa_df_raw %>% 
+  group_by(grade) %>% 
+  summarize(count = n())
+
+growth_df_output_count <- combo_output %>% 
+  group_by(grade) %>% 
+  summarize(count = n())
+
+```
+
+Check subject counts
+```{r}
+csa_df_raw_count <- csa_df_raw %>% 
+  group_by(subject) %>% 
+  summarize(count = n())
+
+csa_df_output_count <- combo_output %>% 
+  filter(data_type_id == 413) %>% 
+  mutate(subject_id = as.numeric(subject_id)) %>% 
+  group_by(subject, subject_id) %>% 
+  summarize(count = n()) %>% 
+  left_join(subjects, by = c("subject_id" = "id"))
+
+```
+
+
+Check for dupes
+```{r}
+combo_output %>% 
+  group_by(year, entity_type, data_type_id, gs_id, breakdown_id, subject_id, grade) %>% 
+  summarize(count = n()) %>% 
+  filter(count > 1)
+
+```
+
+
+Check that data was inserted correctly
+```{r}
+ 
+con <- dbConnect(RMariaDB::MariaDB(), 
+                 host = "datadev3-gsdata.greatschools.org",
+                 username = "developer",
+                 password = "devsare2cool",
+                 port = 3306,
+                 dbname = "omni")
+
+#point to tables on mysql db
+data_sets_tbl <- tbl(con, "data_sets")
+loaded_data_sets <- data_sets_tbl %>% 
+  filter(str_detect(notes, ticket_number)) %>% 
+  collect()
+
+metrics_tbl <- tbl(con, "metrics")
+
+metrics <- metrics_tbl %>% 
+  filter(active == 1,
+         data_set_id %in% !!loaded_data_sets$id) %>% 
+  collect()
+
+breakdowns_tbl <- tbl(con, "breakdowns")
+breakdowns <- breakdowns_tbl %>% 
+  collect()
+
+subjects_tbl <- tbl(con, "subjects")
+subjects <- subjects_tbl %>% 
+  collect()
+
+dbDisconnect(con)
+
+metrics %>% 
+  group_by(entity_type) %>% 
+  summarize(count = n())
+
+combo_output %>% 
+  group_by(entity_type) %>% 
+  summarize(count = n())
+```
