@@ -1,0 +1,583 @@
+---
+title: "QA"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(RMariaDB)
+library(readxl)
+library(zoo)
+library(janitor)
+```
+
+```{r}
+
+fl_state_grad_2019 <- read_xlsx("FL_state_grad_processed.xlsx", skip = 4, na = c(".", "**", "**.*")) %>% 
+  clean_names() %>% 
+  mutate(entity_type = "state",
+         name = "state",
+         state_id = "state") %>% 
+  select(entity_type,
+         name,
+         state_id,
+         breakdown = "subgroup",
+         cohort_count = "x2018_19_number_cohort",
+         value = "x2018_19_percent_graduates")
+
+fl_district_grad_2019 <- read_xlsx("FL_district_grad_processed.xlsx", skip = 4, na = c(".", "**", "**.*")) %>% 
+  clean_names() %>% 
+  mutate(state_id = str_extract(district, "\\d+"),
+         entity_type = "district") %>% 
+  select(entity_type,
+         name = "district",
+         state_id,
+         breakdown = "subgroup",
+         cohort_count = "x2018_19_number_cohort",
+         value = "x2018_19_percent_graduates")
+
+fl_school_grad_2019 <- read_xlsx("FL_school_grad_processed.xlsx", skip = 4, na = c(".", "**", "**.*")) %>% 
+  clean_names() %>% 
+  mutate(district_id = str_extract(district, "\\d+"),
+         state_id = str_c(district_id, school_number),
+         entity_type = "school") %>% 
+  select(entity_type,
+         name = "school_name",
+         state_id,
+         breakdown = "subgroup",
+         cohort_count = "x2018_19_number_cohort",
+         value = "x2018_19_percent_graduates")
+
+tidy_fl_grad_2019 <- bind_rows(fl_state_grad_2019,
+                          fl_district_grad_2019,
+                          fl_school_grad_2019) %>% 
+  filter(!is.na(value)) %>% 
+  mutate(value = 100*value) %>% 
+  mutate(value = floor(as.numeric(value) * 10^6) / 10^6)
+
+write_delim(tidy_fl_grad_2019, "fl_grad_2019.txt", delim = "\t")
+```
+
+
+```{r}
+
+fl_sat_2019 <- read_csv("tabula-2019 College Board Florida Public Schools and Districts_FIXED.csv") %>% 
+  clean_names() %>% 
+  mutate(
+   # district_code = if_else(name == "School District of Hamilton County", as.character(24), district_code),
+   #      district_code = if_else(name == "Leon County Public Schools", as.character(37), district_code),
+   #      district_code = if_else(name == "School District of Lee County", as.character(36), district_code),
+   #      district_code = if_else(name == "School District of Manatee County", as.character(41), district_code),
+   #      district_code = if_else(name == "School District of Osceola County", as.character(49), district_code),
+   #      district_code = if_else(name == "School District of Palm Beach County", as.character(50), district_code),
+         entity_type = case_when(is.na(act_code) ~ "district",
+                                 !is.na(act_code) ~ "school"),
+         state_id = if_else(entity_type == "district",
+                            district_code,
+                            str_c(district_code, school_code)),
+         grade = "All",
+         breakdown = "All Students"
+         ) %>% 
+  gather(key = "subject", value = "value", contains("mean")) %>% 
+  rename(cohort_count = "sat_test_takers") %>% 
+  filter(subject %in% c("erw_mean",
+                        "math_mean",
+                        "total_score_mean"),
+         !(entity_type == "district" & is.na(district_code)),
+         !(entity_type == "school" & is.na(school_code)),
+         !is.na(value),
+         cohort_count >= 10) 
+
+tidy_fl_sat_2019 <- fl_sat_2019 %>% 
+  select(entity_type,
+         state_id,
+         name,
+         breakdown,
+         grade,
+         subject,
+         cohort_count,
+         value) %>% 
+  mutate(value = floor(as.numeric(value) * 10^6) / 10^6)
+
+write_delim(tidy_fl_sat_2019, "fl_sat_2019.txt", delim = "\t")
+
+
+
+fl_sat_2019 %>% 
+  group_by(subject) %>% 
+  summarize()
+```
+
+
+```{r}
+fl_act_2018 <- read_xlsx("2018 ACT Inc. Florida Public Schools and Districts_processed.xlsx", skip = 2) %>% 
+  clean_names() %>% 
+  gather(key = "temp", value = "value", contains("avg"), contains("crb")) %>% 
+  mutate(temp = str_remove(temp, "percent_")) %>% 
+  separate(temp, into = c("data_type", "subject"), sep = "_", extra = "merge") %>% 
+  mutate(data_type_id = case_when(data_type == "avg" ~ 448,
+                                  data_type == "crb" ~ 454),
+         entity_type = str_to_lower(analysis_level),
+         district_code = if_else(is.na(district_code),
+                                 "",
+                                 district_code),
+         state_id = if_else(entity_type == "district",
+                            district_code,
+                            str_c(district_code, institution_code)
+                            ),
+          name = if_else(entity_type == "district",
+                            district_name,
+                            hs_name
+                            ),
+         grade = "All",
+         breakdown = "All Students"
+         ) %>% 
+  filter(institution_code != "SKIP") 
+
+tidy_fl_act_2018 <- fl_act_2018 %>% 
+  rename(cohort_count = "n") %>% 
+  select(entity_type,
+         state_id,
+         name,
+         data_type_id,
+         breakdown,
+         grade,
+         subject,
+         cohort_count,
+         value
+         ) %>% 
+  mutate(value = floor(as.numeric(value) * 10^6) / 10^6)
+
+
+write_delim(tidy_fl_act_2018, "fl_act_2018.txt", delim = "\t", na = "")
+
+
+fl_act_2018 %>% 
+  group_by(institution_code) %>% 
+  summarize()
+
+```
+
+
+```{r}
+fl_college_enrollment_2018 <- read_xlsx("PERA N160a - 1718v2_masked.xlsx", skip = 2, na = "*") %>% 
+  clean_names() %>% 
+  rename(cohort_count = "grads",
+         value = "percent",
+         breakdown = "demographic") %>% 
+  mutate(entity_type = case_when(school_name == "FLORIDA TOTALS" ~ "state",
+                                 school_name == "DISTRICT TOTALS" ~ "district",
+                                 school_name != "FLORIDA TOTALS" & school_name != "DISTRICT TOTALS" ~ "school",
+                                 TRUE ~ "unmapped"),
+          name = if_else(entity_type == "district",
+                            district_name,
+                            school_name
+                            ),
+         state_id = if_else(entity_type == "district",
+                            district_number,
+                            str_c(district_number, school_number)
+                            ),
+         value = 100*value) %>% 
+  filter(!is.na(value),
+         cohort_count > 0)
+
+tidy_fl_college_enrollment_2018 <- fl_college_enrollment_2018 %>% 
+  select(entity_type,
+         state_id,
+         name,
+         breakdown,
+         cohort_count,
+         value) %>% 
+  mutate(value = floor(as.numeric(value) * 10^6) / 10^6)
+
+write_delim(tidy_fl_college_enrollment_2018, "fl_college_enrollment_2018.txt", delim = "\t", na = "")
+
+
+```
+
+```{r}
+fl_college_remediation_2017 <- read_csv("tabula-Consolidated_fixed.csv",
+                                        na = "**") %>% 
+  clean_names() %>% 
+  mutate(entity_type = case_when(institution_code == "STATE" ~ "state",
+                                 institution_code == "DISTRICT" ~ "district",
+                                 institution_code != "STATE" & institution_code != "DISTRICT" ~ "school",
+                                 TRUE ~ "unmapped")) %>% 
+  gather(key = "subject", value = "value", contains("percent")) %>% 
+  filter(!is.na(value),
+         institution_code != "NA") %>% 
+  mutate(subject = str_remove(subject, "percent_scoring_at_or_above_cutoff_score_in_"),
+         value = str_remove(value, "%"),
+         value = 100 - as.numeric(value),
+         state_id = if_else(entity_type == "district",
+                            district_code,
+                            str_c(district_code, institution_code)
+                            ),
+         
+          name = if_else(entity_type == "district",
+                            district,
+                            institution_name
+                            ),
+         breakdown = "All Students"
+         )
+
+tidy_fl_college_remediation_2017 <- fl_college_remediation_2017 %>% 
+  rename(cohort_count = "number_of_degree_seeking_students") %>% 
+  select(entity_type,
+         state_id,
+         #name,
+         subject,
+         breakdown,
+         cohort_count,
+         value) %>% 
+  mutate(value = floor(as.numeric(value) * 10^6) / 10^6)
+
+write_delim(tidy_fl_college_remediation_2017, "fl_college_remediation_2017.txt", delim = "\t", na = "")
+
+```
+
+Read in metrics output
+```{r}
+state_abbrev <- "fl"
+ticket_number <- "DXT-3466"
+year <- 2019
+
+state <- read_delim(str_c("/Users/shernandez/Documents/Metrics_Load/Metrics_Output/",
+                          ticket_number,
+                          "_",
+                          state_abbrev, 
+                          "_metrics_",
+                          year,
+                          "_state.txt"), 
+                    "\t", 
+                    col_types = cols(.default = "c"),
+                     na = "")
+district <- read_delim(str_c("/Users/shernandez/Documents/Metrics_Load/Metrics_Output/",
+                          ticket_number,
+                          "_",
+                          state_abbrev, 
+                          "_metrics_",
+                          year,
+                          "_district.txt"), 
+                       "\t", 
+                       col_types = cols(.default = "c"),
+                     na = "")
+school <- read_delim(str_c("/Users/shernandez/Documents/Metrics_Load/Metrics_Output/",
+                          ticket_number,
+                          "_",
+                          state_abbrev, 
+                          "_metrics_",
+                          year,
+                          "_school.txt"), 
+                     "\t", 
+                     col_types = cols(.default = "c"),
+                     na = "")
+
+
+combo_output <- bind_rows(state, district, school) 
+  
+
+combo_output %>%
+  mutate(
+    data_type_id = as.numeric(data_type_id),
+    grade = as.numeric(grade),
+    subject_id = as.numeric(subject_id),
+    breakdown_id = as.numeric(breakdown_id),
+    value = as.numeric(value),
+    cohort_count = as.numeric(cohort_count)
+  ) %>%
+  summary()
+
+
+combo_output %>% 
+  group_by(data_type_id,
+           subject_id) %>% 
+  summarize()
+```
+Create new basic raw version to compare counts
+```{r}
+
+
+
+fl_state_grad_2019 <- read_xlsx("FL_state_grad_processed.xlsx", skip = 4, na = c(".", "**", "**.*")) %>% 
+  clean_names() %>% 
+  mutate(entity_type = "state",
+         name = "state",
+         state_id = "state") %>% 
+  select(entity_type,
+         name,
+         state_id,
+         breakdown = "subgroup",
+         cohort_count = "x2018_19_number_graduates",
+         value = "x2018_19_percent_graduates")
+
+fl_district_grad_2019 <- read_xlsx("FL_district_grad_processed.xlsx", skip = 4, na = c(".", "**", "**.*")) %>% 
+  clean_names() %>% 
+  mutate(state_id = str_extract(district, "\\d+"),
+         entity_type = "district") %>% 
+  select(entity_type,
+         name = "district",
+         state_id,
+         breakdown = "subgroup",
+         cohort_count = "x2018_19_number_graduates",
+         value = "x2018_19_percent_graduates")
+
+fl_school_grad_2019 <- read_xlsx("FL_school_grad_processed.xlsx", skip = 4, na = c(".", "**", "**.*")) %>% 
+  clean_names() %>% 
+  mutate(district_id = str_extract(district, "\\d+"),
+         state_id = str_c(district_id, school_number),
+         entity_type = "school") %>% 
+  select(entity_type,
+         name = "school_name",
+         state_id,
+         breakdown = "subgroup",
+         cohort_count = "x2018_19_number_graduates",
+         value = "x2018_19_percent_graduates")
+
+raw_fl_grad_2019 <- bind_rows(fl_state_grad_2019,
+                          fl_district_grad_2019,
+                          fl_school_grad_2019) %>% 
+  filter(!is.na(value)) %>% 
+  mutate(value = 100*value)
+
+#======================================
+
+raw_fl_sat_2019 <- read_csv("2019 College Board Florida Public Schools and Districts_processed.csv") %>% 
+  clean_names() %>% 
+  mutate(entity_type = case_when(is.na(act_code) ~ "district",
+                                 !is.na(act_code) ~ "school"),
+         state_id = if_else(entity_type == "district",
+                            district_code,
+                            str_c(district_code, school_code)),
+         grade = "All",
+         breakdown = "All Students"
+         ) %>% 
+  gather(key = "subject", value = "value", contains("mean")) %>% 
+  rename(cohort_count = "sat_test_takers") %>% 
+  filter(subject %in% c("erw_mean",
+                        "math_mean",
+                        "total_score_mean"),
+         !(entity_type == "district" & is.na(district_code)),
+         !(entity_type == "school" & is.na(school_code)),
+         !is.na(value),
+         cohort_count >= 10) 
+
+#======================================
+
+raw_fl_act_2018 <- read_xlsx("2018 ACT Inc. Florida Public Schools and Districts_processed.xlsx", skip = 2) %>% 
+  clean_names() %>%
+  filter(institution_code != "SKIP") %>% 
+  gather(key = "temp", value = "value", contains("avg"), contains("crb")) %>% 
+  mutate(temp = str_remove(temp, "percent_")) %>% 
+  separate(temp, into = c("data_type", "subject"), sep = "_", extra = "merge") %>% 
+  mutate(data_type_id = case_when(data_type == "avg" ~ 448,
+                                  data_type == "crb" ~ 454),
+         notes = case_when(data_type_id == 448 ~ "DXT-3466 FL ACT average score",
+                           data_type_id == 454 ~ "DXT-3466 FL ACT percent college ready"), #########
+         entity_type = str_to_lower(analysis_level),
+         district_code = if_else(is.na(district_code),
+                                 "",
+                                 district_code),
+         state_id = if_else(entity_type == "district",
+                            district_code,
+                            str_c(district_code, institution_code)
+                            ),
+          name = if_else(entity_type == "district",
+                            district_name,
+                            hs_name
+                            ),
+         grade = "All",
+         breakdown = "All Students"
+         ) %>% 
+  rename(cohort_count = "n") 
+
+#======================================
+
+
+
+raw_fl_college_enrollment_2018 <- read_xlsx("PERA N160a - 1718v2_masked.xlsx", skip = 2, na = "*") %>% 
+  clean_names() %>% 
+  rename(cohort_count = "grads",
+         value = "percent",
+         breakdown = "demographic") %>% 
+  mutate(entity_type = case_when(school_name == "FLORIDA TOTALS" ~ "state",
+                                 school_name == "DISTRICT TOTALS" ~ "district",
+                                 school_name != "FLORIDA TOTALS" & school_name != "DISTRICT TOTALS" ~ "school",
+                                 TRUE ~ "unmapped"),
+          name = if_else(entity_type == "district",
+                            district_name,
+                            school_name
+                            ),
+         state_id = if_else(entity_type == "district",
+                            district_number,
+                            str_c(district_number, school_number)
+                            ),
+         value = 100*value) %>% 
+  filter(!is.na(value),
+         cohort_count > 0)
+
+#======================================
+
+
+raw_fl_college_remediation_2017 <- read_csv("tabula-Consolidated.csv",
+                                        na = "**") %>% 
+  clean_names() %>% 
+  mutate(entity_type = case_when(institution_code == "STATE" ~ "state",
+                                 institution_code == "DISTRICT" ~ "district",
+                                 institution_code != "STATE" & institution_code != "DISTRICT" ~ "school",
+                                 TRUE ~ "unmapped")) %>% 
+  gather(key = "subject", value = "value", contains("percent")) %>% 
+  filter(!is.na(value),
+         !is.na(number_of_degree_seeking_students),
+         institution_code != "NA") %>% 
+  mutate(subject = str_remove(subject, "percent_scoring_at_or_above_cutoff_score_in_"),
+         value = str_remove(value, "%"),
+         value = 100 - as.numeric(value),
+         state_id = if_else(entity_type == "district",
+                            district_code,
+                            str_c(district_code, institution_code)
+                            ),
+         
+          name = if_else(entity_type == "district",
+                            district,
+                            institution_name
+                            ),
+         breakdown = "All Students"
+         ) %>% 
+  rename(cohort_count = "number_of_degree_seeking_students") 
+
+
+
+```
+
+```{r}
+csa_df_raw <- raw_fl_college_remediation_2017
+chosen_data_type_id <- 413
+```
+
+Check entity counts
+```{r}
+
+
+csa_df_raw_count <- csa_df_raw %>% 
+  group_by(entity_type) %>% 
+  summarize(count = n())
+
+csa_df_output_count <- combo_output %>% 
+  filter(data_type_id %in% chosen_data_type_id) %>% 
+  group_by(entity_type) %>% 
+  summarize(count = n())
+
+```
+
+Check data_type counts
+```{r}
+
+
+csa_df_raw_count <- csa_df_raw %>% 
+  group_by(data_type_id) %>% 
+  summarize(count = n())
+
+csa_df_output_count <- combo_output %>% 
+  filter(data_type_id %in% chosen_data_type_id) %>% 
+  group_by(data_type_id) %>% 
+  summarize(count = n())
+
+```
+
+Check breakdown_id and counts
+```{r}
+csa_df_raw_count <- csa_df_raw %>% 
+  group_by(breakdown) %>% 
+  summarize(count = n())
+
+csa_df_output_count <- combo_output %>% 
+  filter(data_type_id %in% chosen_data_type_id) %>% 
+  mutate(breakdown_id = as.numeric(breakdown_id)) %>% 
+  group_by(breakdown_id, breakdown) %>% 
+  summarize(count = n()) %>% 
+  left_join(breakdowns, by = c("breakdown_id" = "id"))
+
+```
+
+Check grade counts
+```{r}
+csa_df_raw_count <- csa_df_raw %>% 
+  group_by(grade) %>% 
+  summarize(count = n())
+
+csa_df_output_count <- combo_output %>% 
+  filter(data_type_id %in% chosen_data_type_id) %>% 
+  group_by(grade) %>% 
+  summarize(count = n())
+
+```
+
+Check subject counts
+```{r}
+csa_df_raw_count <- csa_df_raw %>% 
+  group_by(subject) %>% 
+  summarize(count = n())
+
+csa_df_output_count <- combo_output %>% 
+  filter(data_type_id == chosen_data_type_id) %>% 
+  mutate(subject_id = as.numeric(subject_id)) %>% 
+  group_by(subject, subject_id) %>% 
+  summarize(count = n()) %>% 
+  left_join(subjects, by = c("subject_id" = "id"))
+
+```
+
+
+Check for dupes
+```{r}
+combo_output %>% 
+  group_by(year, entity_type, data_type_id, gs_id, breakdown_id, subject_id, grade) %>% 
+  summarize(count = n()) %>% 
+  filter(count > 1)
+
+```
+
+
+Check that data was inserted correctly
+```{r}
+ 
+con <- dbConnect(RMariaDB::MariaDB(), 
+                 host = "datadev3-gsdata.greatschools.org",
+                 username = "developer",
+                 password = "devsare2cool",
+                 port = 3306,
+                 dbname = "omni")
+
+#point to tables on mysql db
+data_sets_tbl <- tbl(con, "data_sets")
+loaded_data_sets <- data_sets_tbl %>% 
+  filter(str_detect(notes, ticket_number)) %>% 
+  collect()
+
+metrics_tbl <- tbl(con, "metrics")
+
+metrics <- metrics_tbl %>% 
+  filter(active == 1,
+         data_set_id %in% !!loaded_data_sets$id) %>% 
+  collect()
+
+breakdowns_tbl <- tbl(con, "breakdowns")
+breakdowns <- breakdowns_tbl %>% 
+  collect()
+
+subjects_tbl <- tbl(con, "subjects")
+subjects <- subjects_tbl %>% 
+  collect()
+
+dbDisconnect(con)
+
+metrics %>% 
+  group_by(entity_type) %>% 
+  summarize(count = n())
+
+combo_output %>% 
+  group_by(entity_type) %>% 
+  summarize(count = n())
+```
