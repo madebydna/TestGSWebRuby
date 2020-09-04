@@ -1,0 +1,590 @@
+---
+title: "QA"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(RMariaDB)
+library(readxl)
+library(zoo)
+library(janitor)
+```
+
+
+```{r}
+
+nj_sat_act_2019 <- read_xlsx("NJ_ACTPerfSATPerf_statedistrictschool.xlsx") 
+
+tidy_nj_sat_act_2019 <- nj_sat_act_2019 %>%  
+  clean_names() %>% 
+  filter(!is.na(value)) %>%
+  mutate(entity_type = case_when(is.na(school_code) & district_code == "State" ~ "state",
+                                 is.na(school_code) & district_code != "State" ~ "district",
+                                 !is.na(school_code) ~ "school",
+                                 TRUE ~ "unmapped"),
+         state_id = if_else(entity_type == "district",
+                            str_c(county_code, district_code),
+                            str_c(county_code, district_code, school_code)
+                            ),
+         name = if_else(entity_type == "district",
+                        district_name,
+                        school_name), 
+         grade = "All",
+         data_type_id = if_else(test == "sat", 446, 448),
+         value = floor(as.numeric(value) * 10^6) / 10^6
+         ) %>% 
+  select(entity_type,
+         state_id,
+         name,
+         data_type_id,
+         grade,
+         subject,
+         value) 
+
+write_delim(tidy_nj_sat_act_2019, "nj_sat_act_2019.txt", delim = "\t")
+
+
+```
+
+```{r}
+nj_sat_act_participation_2019_state_district <- read_xlsx("DistrictPerformanceReports.xlsx", sheet = "PSAT-SAT-ACTParticipation")
+
+tidy_nj_sat_act_participation_2019_state_district <- nj_sat_act_participation_2019_state_district %>%  
+  clean_names() %>% 
+  mutate(entity_type = case_when(county_code == "State" ~ "state",
+                                 county_code != "State" ~ "district",
+                                 TRUE ~ "unmapped"),
+         sat = if_else(entity_type == "state",
+                       state_sat,
+                       sat),
+         act = if_else(entity_type == "state",
+                       state_act,
+                       act),
+         psat = if_else(entity_type == "state",
+                        state_psat,
+                        psat),
+         state_id = str_c(county_code, district_code)) %>% 
+  select(entity_type,
+         state_id,
+         name = "district_name",
+         sat,
+         act,
+         psat)
+
+nj_sat_act_participation_2019_school <- read_xlsx("PerformanceReports.xlsx", sheet = "PSAT-SAT-ACTParticipation")
+
+tidy_nj_sat_act_participation_2019_school <- nj_sat_act_participation_2019_school %>%  
+  clean_names() %>% 
+  mutate(entity_type = "school",
+         state_id = str_c(county_code, district_code, school_code)) %>% 
+  select(entity_type,
+         state_id,
+         name = "school_name",
+         act,
+         psat)
+
+tidy_nj_sat_act_participation_2019 <- bind_rows(tidy_nj_sat_act_participation_2019_state_district,
+                                                tidy_nj_sat_act_participation_2019_school) %>% 
+  gather(key = "test",
+         value = "value",
+         sat,
+         act,
+         psat) %>%
+  mutate(grade = "All",
+         data_type_id = case_when(test == "sat" ~ 439,
+                                  test == "act" ~ 396,
+                                  TRUE ~ 0),
+         value = floor(as.numeric(value) * 10^6) / 10^6
+         ) %>% 
+  filter(test != "psat",
+         !is.na(value))
+  
+
+write_delim(tidy_nj_sat_act_participation_2019, "nj_sat_act_participation_2019.txt", delim = "\t")
+
+
+```
+
+```{r}
+
+nj_grad_state_district_2019 <- read_xlsx("DistrictPerformanceReports.xlsx", sheet = "GraduationRates", na = c("*", "N")) 
+
+tidy_nj_grad_state_district_2019 <- nj_grad_state_district_2019 %>% 
+  clean_names() %>% 
+  mutate(entity_type = case_when(county_code == "State" ~ "state",
+                                 county_code != "State" ~ "district",
+                                 TRUE ~ "unmapped"),
+         state_id = str_c(county_code, district_code),
+         value = if_else(entity_type == "state",
+                         class2019_4yr_state,
+                         class2019_4yr_school)
+         ) %>% 
+  select(entity_type,
+         name = "district_name",
+         state_id,
+         breakdown = "student_group",
+         value)
+
+nj_grad_school_2019 <- read_xlsx("PerformanceReports.xlsx", sheet = "GraduationRates", na = c("*", "N"))
+
+tidy_nj_grad_school_2019 <- nj_grad_school_2019 %>% 
+  clean_names() %>% 
+  mutate(entity_type = "school",
+         state_id = str_c(county_code, district_code, school_code)) %>%  
+  select(entity_type,
+         name = "school_name",
+         state_id,
+         breakdown = "student_group",
+         value = "class2019_4yr_school")
+
+tidy_nj_grad_2019 <- bind_rows(tidy_nj_grad_state_district_2019,
+                               tidy_nj_grad_school_2019) %>%
+  filter(!is.na(value)) %>%
+  mutate(value = floor(as.numeric(value) * 10 ^ 6) / 10 ^ 6) %>%
+  filter(
+    !(breakdown %in% c(
+      "Homeless Students",
+      "Migrant Students" ,
+      "Students in Foster Care"
+      )
+      )
+    )
+
+write_delim(tidy_nj_grad_2019 , "nj_grad_2019.txt", delim = "\t")
+```
+
+
+```{r}
+nj_college_enrollment_state_district_2019 <- read_xlsx("DistrictPerformanceReports.xlsx", sheet = "PostsecondaryEnrRates16mos", na = c("*", "N")) 
+
+
+tidy_nj_college_enrollment_state_district_2019 <- nj_college_enrollment_state_district_2019 %>% 
+  clean_names() %>% 
+  mutate(entity_type = case_when(county_code == "State" ~ "state",
+                                 county_code != "State" ~ "district",
+                                 TRUE ~ "unmapped"),
+         state_id = str_c(county_code, district_code)
+         ) %>% 
+  select(entity_type,
+         name = "district_name",
+         state_id,
+         breakdown = "student_group",
+         enrolled_percent,
+         enrolled2yr,
+         enrolled4yr)
+
+nj_college_enrollment_school_2019 <- read_xlsx("PerformanceReports.xlsx", sheet = "PostsecondaryEnrRates16mos", na = c("*", "N")) 
+
+
+tidy_nj_college_enrollment_school_2019 <- nj_college_enrollment_school_2019 %>% 
+  clean_names() %>% 
+  mutate(entity_type = "school",
+         state_id = str_c(county_code, district_code, school_code)
+         ) %>% 
+  select(entity_type,
+         name = "school_name",
+         state_id,
+         breakdown = "student_group",
+         enrolled_percent,
+         enrolled2yr,
+         enrolled4yr)
+  
+tidy_nj_college_enrollment_2019 <- bind_rows(tidy_nj_college_enrollment_state_district_2019,
+                                             tidy_nj_college_enrollment_school_2019) %>% 
+  gather(key = "type",
+         value = "value",
+         enrolled_percent,
+         enrolled2yr,
+         enrolled4yr) %>% 
+  mutate(data_type_id = case_when(type == "enrolled_percent" ~ 414,
+                                  type == "enrolled2yr" ~ 425,
+                                  type == "enrolled4yr"  ~ 429,
+                                  TRUE ~ 0)) %>% 
+  filter(!((entity_type == "school" | entity_type == "district") & breakdown == "Statewide"),
+         !is.na(value)) %>% 
+  select(entity_type,
+         name,
+         state_id,
+         data_type_id,
+         breakdown,
+         type,
+         value)  
+  
+write_delim(tidy_nj_college_enrollment_2019, "nj_college_enrollment_2019.txt", delim = "\t")
+
+
+```
+
+```{r}
+nj_college_persistence_2019 <- read_xlsx("OPRA W156445 - College Success Award Postsecondary Persistence.xlsx", skip = 8, na = c("*", "N"))
+
+tidy_nj_college_persistence_2019 <- nj_college_persistence_2019 %>% 
+  clean_names() %>% 
+  mutate(entity_type = case_when(school_id == 999 ~ "state",
+                                        school_id == 888 ~ "district",
+                                        TRUE ~ "school"),
+         state_id = if_else(entity_type == "district",
+                            str_c(county_id, district_id),
+                            str_c(county_id, district_id, school_id)),
+         name = if_else(entity_type == "district",
+                        district_name,
+                        school_name)
+         ) %>% 
+  gather(key = "breakdown", value = "value", 
+         schoolwide_persistence_rate, 
+         economically_disadvantaged_students_persistence_rate) %>% 
+  filter(!is.na(value)) %>% 
+  select(entity_type,
+         state_id,
+         name,
+         breakdown,
+         value) 
+
+write_delim(tidy_nj_college_persistence_2019, "nj_college_persistence_2019.txt", delim = "\t")
+
+```
+
+```{r}
+tidy_nj_sat_act_2019 %>% 
+  group_by(subject) %>% 
+  summarize()
+tidy_nj_sat_act_participation_2019 %>% 
+  summary()
+tidy_nj_college_enrollment_2019 %>% 
+  summary()
+tidy_nj_grad_2019 %>% 
+  group_by(breakdown) %>% 
+  summarize()
+tidy_nj_college_persistence_2019 %>% 
+  summary()
+```
+
+Read in metrics output
+```{r}
+state_abbrev <- "nj"
+ticket_number <- "DXT-3617"
+year <- 2019
+
+state <- read_delim(str_c("/Users/shernandez/Documents/Metrics_Load/Metrics_Output/",
+                          ticket_number,
+                          "_",
+                          state_abbrev, 
+                          "_metrics_",
+                          year,
+                          "_state.txt"), 
+                    "\t", 
+                    col_types = cols(.default = "c"),
+                     na = "")
+district <- read_delim(str_c("/Users/shernandez/Documents/Metrics_Load/Metrics_Output/",
+                          ticket_number,
+                          "_",
+                          state_abbrev, 
+                          "_metrics_",
+                          year,
+                          "_district.txt"), 
+                       "\t", 
+                       col_types = cols(.default = "c"),
+                     na = "")
+school <- read_delim(str_c("/Users/shernandez/Documents/Metrics_Load/Metrics_Output/",
+                          ticket_number,
+                          "_",
+                          state_abbrev, 
+                          "_metrics_",
+                          year,
+                          "_school.txt"), 
+                     "\t", 
+                     col_types = cols(.default = "c"),
+                     na = "")
+
+
+combo_output <- bind_rows(state, district, school) 
+  
+
+combo_output <- combo_output %>%
+  mutate(
+    data_type_id = as.numeric(data_type_id),
+    subject_id = as.numeric(subject_id),
+    breakdown_id = as.numeric(breakdown_id),
+    value = as.numeric(value),
+    cohort_count = as.numeric(cohort_count)
+  ) 
+
+combo_output %>%
+  mutate(
+    grade = as.numeric(grade),
+  ) %>%
+  summary()
+
+combo_output %>% 
+  group_by(data_type_id,
+           subject_id) %>% 
+  summarize()
+```
+Create new basic raw version to compare counts
+```{r}
+
+raw_nj_sat_act_2019 <- nj_sat_act_2019 %>%  
+  clean_names() %>% 
+  filter(!is.na(value)) %>%
+  mutate(entity_type = case_when(is.na(school_code) & district_code == "State" ~ "state",
+                                 is.na(school_code) & district_code != "State" ~ "district",
+                                 !is.na(school_code) ~ "school",
+                                 TRUE ~ "unmapped"),
+         grade = "All",
+         data_type_id = if_else(test == "sat", 446, 448),
+         value = floor(as.numeric(value) * 10^6) / 10^6
+         )
+
+raw_nj_sat_act_participation_2019_state_district <- nj_sat_act_participation_2019_state_district %>%  
+  clean_names() %>% 
+  mutate(entity_type = case_when(county_code == "State" ~ "state",
+                                 county_code != "State" ~ "district",
+                                 TRUE ~ "unmapped"),
+         sat = if_else(entity_type == "state",
+                       state_sat,
+                       sat),
+         act = if_else(entity_type == "state",
+                       state_act,
+                       act),
+         psat = if_else(entity_type == "state",
+                        state_psat,
+                        psat)) 
+
+
+raw_nj_sat_act_participation_2019_school <- nj_sat_act_participation_2019_school %>%  
+  clean_names() %>% 
+  mutate(entity_type = "school")
+
+raw_nj_sat_act_participation_2019 <- bind_rows(raw_nj_sat_act_participation_2019_state_district,
+                                               raw_nj_sat_act_participation_2019_school) %>% 
+  gather(key = "test",
+         value = "value",
+         sat,
+         act,
+         psat) %>%
+  mutate(grade = "All",
+         data_type_id = case_when(test == "sat" ~ 439,
+                                  test == "act" ~ 396,
+                                  TRUE ~ 0),
+         value = floor(as.numeric(value) * 10^6) / 10^6
+         ) %>% 
+  filter(test != "psat",
+         !is.na(value))
+  
+
+raw_nj_grad_state_district_2019 <- nj_grad_state_district_2019 %>% 
+  clean_names() %>% 
+  mutate(entity_type = case_when(county_code == "State" ~ "state",
+                                 county_code != "State" ~ "district",
+                                 TRUE ~ "unmapped"),
+         value = if_else(entity_type == "state",
+                         class2019_4yr_state,
+                         class2019_4yr_school)
+         ) 
+
+raw_nj_grad_school_2019 <- nj_grad_school_2019 %>% 
+  clean_names() %>% 
+  mutate(entity_type = "school") %>%  
+  rename(value = "class2019_4yr_school")
+
+raw_nj_grad_2019 <- bind_rows(tidy_nj_grad_state_district_2019,
+                               tidy_nj_grad_school_2019) %>%
+  filter(!is.na(value)) %>%
+  mutate(value = floor(as.numeric(value) * 10 ^ 6) / 10 ^ 6) %>%
+  filter(
+    !(breakdown %in% c(
+      "Homeless Students",
+      "Migrant Students" ,
+      "Students in Foster Care"
+      )
+      )
+    )
+
+
+raw_nj_college_enrollment_state_district_2019 <- nj_college_enrollment_state_district_2019 %>% 
+  clean_names() %>% 
+  mutate(entity_type = case_when(county_code == "State" ~ "state",
+                                 county_code != "State" ~ "district",
+                                 TRUE ~ "unmapped")
+         ) 
+
+raw_nj_college_enrollment_school_2019 <- nj_college_enrollment_school_2019 %>% 
+  clean_names() %>% 
+  mutate(entity_type = "school",
+         )
+  
+raw_nj_college_enrollment_2019 <- bind_rows(raw_nj_college_enrollment_state_district_2019,
+                                            raw_nj_college_enrollment_school_2019) %>% 
+  gather(key = "type",
+         value = "value",
+         enrolled_percent,
+         enrolled2yr,
+         enrolled4yr) %>% 
+  mutate(data_type_id = case_when(type == "enrolled_percent" ~ 414,
+                                  type == "enrolled2yr" ~ 425,
+                                  type == "enrolled4yr"  ~ 429,
+                                  TRUE ~ 0)) %>% 
+  filter(!((entity_type == "school" | entity_type == "district") & student_group == "Statewide"),
+         !is.na(value)) 
+  
+raw_nj_college_persistence_2019 <- nj_college_persistence_2019 %>% 
+  clean_names() %>% 
+  mutate(entity_type = case_when(school_id == 999 ~ "state",
+                                        school_id == 888 ~ "district",
+                                        TRUE ~ "school")
+         ) %>% 
+  gather(key = "breakdown", value = "value", 
+         schoolwide_persistence_rate, 
+         economically_disadvantaged_students_persistence_rate) %>% 
+  filter(!is.na(value)) 
+
+
+```
+
+```{r}
+csa_df_raw <- raw_nj_college_persistence_2019
+chosen_data_type_id <- 409
+```
+
+Check entity counts
+```{r}
+csa_df_raw_count <- csa_df_raw %>% 
+  group_by(entity_type) %>% 
+  summarize(count = n())
+
+csa_df_output_count <- combo_output %>% 
+  filter(data_type_id %in% chosen_data_type_id) %>% 
+  group_by(entity_type) %>% 
+  summarize(count = n())
+
+diff <- anti_join(csa_df_output_count,
+                  csa_df_raw_count)
+
+```
+
+Check data_type counts
+```{r}
+
+
+csa_df_raw_count <- csa_df_raw %>% 
+  group_by(data_type_id) %>% 
+  summarize(count = n())
+
+csa_df_output_count <- combo_output %>% 
+  filter(data_type_id %in% chosen_data_type_id) %>% 
+  group_by(data_type_id) %>% 
+  summarize(count = n())
+
+
+diff <- anti_join(csa_df_output_count,
+                  csa_df_raw_count)
+
+```
+
+Check breakdown_id and counts
+```{r}
+csa_df_raw_count <- csa_df_raw %>% 
+ # rename(breakdown = "student_group") %>% 
+  group_by(breakdown) %>% 
+  summarize(count = n())
+
+csa_df_output_count <- combo_output %>% 
+  #filter(data_type_id %in% chosen_data_type_id) %>% 
+  mutate(breakdown_id = as.numeric(breakdown_id)) %>% 
+  group_by(breakdown_id, breakdown) %>% 
+  summarize(count = n()) %>% 
+  left_join(breakdowns, by = c("breakdown_id" = "id"))
+
+diff <- anti_join(csa_df_output_count,
+                  csa_df_raw_count)
+```
+
+Check grade counts
+```{r}
+csa_df_raw_count <- csa_df_raw %>% 
+  group_by(grade) %>% 
+  summarize(count = n())
+
+csa_df_output_count <- combo_output %>% 
+  filter(data_type_id %in% chosen_data_type_id) %>% 
+  group_by(grade) %>% 
+  summarize(count = n())
+
+diff <- anti_join(csa_df_output_count,
+                  csa_df_raw_count)
+```
+
+Check subject counts
+```{r}
+csa_df_raw_count <- csa_df_raw %>% 
+  group_by(test, subject) %>% 
+  summarize(count = n())
+
+csa_df_output_count <- combo_output %>% 
+  filter(data_type_id %in% chosen_data_type_id) %>% 
+  mutate(subject_id = as.numeric(subject_id)) %>% 
+  group_by(subject, subject_id) %>% 
+  summarize(count = n()) %>% 
+  left_join(subjects, by = c("subject_id" = "id"))
+
+diff <- anti_join(csa_df_output_count,
+                  csa_df_raw_count,
+                  by = c("subject",
+                         "count"))
+```
+
+
+Check for dupes
+```{r}
+combo_output %>% 
+  group_by(year, entity_type, data_type_id, gs_id, breakdown_id, subject_id, grade) %>% 
+  summarize(count = n()) %>% 
+  filter(count > 1)
+
+```
+
+
+Check that data was inserted correctly
+```{r}
+ 
+con <- dbConnect(RMariaDB::MariaDB(), 
+                 host = "datadev3-gsdata.greatschools.org",
+                 username = "developer",
+                 password = "devsare2cool",
+                 port = 3306,
+                 dbname = "omni")
+
+#point to tables on mysql db
+data_sets_tbl <- tbl(con, "data_sets")
+loaded_data_sets <- data_sets_tbl %>% 
+  filter(str_detect(notes, ticket_number)) %>% 
+  collect()
+
+metrics_tbl <- tbl(con, "metrics")
+
+metrics <- metrics_tbl %>% 
+  filter(active == 1,
+         data_set_id %in% !!loaded_data_sets$id) %>% 
+  collect()
+
+breakdowns_tbl <- tbl(con, "breakdowns")
+breakdowns <- breakdowns_tbl %>% 
+  collect()
+
+subjects_tbl <- tbl(con, "subjects")
+subjects <- subjects_tbl %>% 
+  collect()
+
+dbDisconnect(con)
+
+metrics %>% 
+  group_by(entity_type) %>% 
+  summarize(count = n())
+
+combo_output %>% 
+  filter(breakdown_id == 15) %>% 
+  group_by(data_type_id, breakdown_id) %>% 
+  summarize(count = n())
+```
