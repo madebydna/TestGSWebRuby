@@ -25,7 +25,7 @@ en:
         content_html: >
           <p><span class="emphasis">Why are some subjects missing a rating?</span> We offer advanced coursework information in seven subject areas, but only four of these (English, STEM, Social sciences and Foreign language) are offered in enough schools across the state to assign a rating that can be summarized in our overall Advanced Courses Rating. (Click on the "?" symbols next to "Advanced courses" and "Rating" labels for more information).</p>
           <p>Ratings are based on a 1 (low) -10 (high) scale. If a school does not offer any advanced courses in one of the four subject areas with ratings that subject will receive a "1" rating.</p>
-          <p><a href="/gk/ratings/#advancedcoursesrating” target="_blank">Learn more about this rating.</a></p>
+          <p><a href="/gk/ratings/#advancedcoursesrating" target="_blank">Learn more about this rating.</a></p>
           <p>Still have questions? <a href="https://greatschools.zendesk.com/hc/en-us" target="_blank">Visit our FAQ page.</a></p>
       narration:
         _1_html: >

@@ -5,6 +5,6 @@ en:
       no_data_html: >
         This section includes information about student demographics at this school.
         <br></br>
-      subtitle_html: How do you know if a <a href="/gk/videos/the-power-of-positive-school-culture/" target="_blank">school’s community is right for your child</a>?
+      subtitle_html: How do you know if a <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="school’s community is right for your child" href="/gk/videos/the-power-of-positive-school-culture/" target="_blank">school’s community is right for your child</a>?
       source: Source
       sources: Sources

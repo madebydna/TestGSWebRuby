@@ -8,8 +8,8 @@ es:
         <p>Esta clasificación muestra que bien los estudiantes de esta escuela están preparados para la universidad
         comparados a los estudiantes en otras escuelas en este estado, sobre medidas como los índices de graduación,
         pruebas de ingreso universitario y los cursos avanzados cuando están disponibles.</p>
-        <p><a href='/gk/como-clasificamos/?lang=es#collegereadinessrating' target='_blank'>Infórmese más sobre esta calificación.</a></p>
-      subtitle_html: <a href="/gk/videos/why-college-counseling-matters/" target="_blank">Una clave cosa</a> que todas las escuelas exitosas hacen para ayudar a los estudiantes a inscribirse en la universidad.
+        <p><a href="/gk/como-clasificamos/?lang=es#collegereadinessrating" target="_blank">Infórmese más sobre esta calificación.</a></p>
+      subtitle_html: <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="Una clave cosa" href="/gk/videos/why-college-counseling-matters/" target="_blank">Una clave cosa</a> que todas las escuelas exitosas hacen para ayudar a los estudiantes a inscribirse en la universidad.
       source: Fuente
       sources: Fuentes
       feedback_cta: ¿Encontraste la información sobre el éxito universitario útil? Qué podemos hacer mejor?
@@ -95,7 +95,7 @@ es:
           Este es el porcentaje de estudiantes graduados de esta escuela que recibieron una "C" o superior en los cursos
           A-G requeridos para ser elegibles para atender a alguna de las escuelas de la
           Universidad de California y Universidad del Estado de California.
-          <a href="/gk/articles/dont-miss-these-requirements-to-get-into-college/">Obtén más información</a>.
+          <a href="/gk/articles/dont-miss-these-requirements-to-get-into-college/" target="_blank">Obtén más información</a>.
         Average SAT score: 'El SAT es una prueba de admisión universitaria, que en 2015 tenía un total de 2400 puntos posibles. Esta calificación refleja el puntaje promedio en el SAT entre los estudiantes de esta escuela. En 2016, el SAT cambió a una escala de 1600 puntos. Regrese pronto para obtener información actualizada para esta escuela.'
         Average SAT score_new: 'El SAT es una examen de admisión universitaria, cuyo puntaje más alto es de 1600 puntos. Esta calificación refleja el puntaje promedio en el SAT entre los estudiantes de esta escuela.'
         SAT percent participation: 'El índice de participación en el SAT refleja el porcentaje de estudiantes elegibles de esta escuela que tomaron el SAT.'
@@ -116,7 +116,7 @@ es:
           el pensamiento creativo y crítico. Una escuela secundaria puede tener clases específicas de IB que
           los estudiantes pueden tomar, o un programa IB para toda la escuela que afecta a todas las clases.
           Algunas universidades dan créditos universitarios para los cursos del IB.
-          <a href='/gk/articles/que-es-el-bachillerato-internacional-escuela-de-ib/?lang=es' target='_blank'>Más acerca de IB</a>
+          <a href='/gk/articles/que-es-el-bachillerato-internacional-escuela-de-ib/?lang=es' target="_blank">Más acerca de IB</a>
         'Graduating seniors pursuing 4 year college/university': 'Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en un colegio o universidad de 4 años inmediatamente después de la escuela secundaria.'
         'Graduating seniors pursuing 2 year college/university': 'Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en un colegio o universidad de 2 años inmediatamente después de la escuela secundaria.'
         'Graduating seniors pursuing other college': 'Esto refleja el porcentaje de graduados de esta escuela secundaria que se inscribieron en programas universitarios distintos de una universidad de 2 o 4 años inmediatamente después de la escuela secundaria.'
@@ -188,7 +188,7 @@ es:
           <p>(Recuerde: <span class="emphasis">altas índices de graduación no significan mucho</span> si los estudiantes se gradúan sin los cursos y las calificaciones de los exámenes que necesitan para tener éxito.)</p>
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
-          <p class="footnote">Las mejores escuelas secundarias <a href="/gk/videos/advanced-classes-academics-for-everyone/">ofrecen cursos avanzados a todos los estudiantes</a>, no solo a unos pocos.</p>
+          <p class="footnote">Las mejores escuelas secundarias <a href="/gk/videos/advanced-classes-academics-for-everyone/" target="_blank">ofrecen cursos avanzados a todos los estudiantes</a>, no solo a unos pocos.</p>
           </div>
         _2_html: >
           <div class="auto-narration">
@@ -197,7 +197,7 @@ es:
           <p>(Recuerde: <span class="emphasis">altas índices de graduación no significan mucho</span> si los estudiantes se gradúan sin los cursos y las calificaciones de los exámenes que necesitan para tener éxito.)</p>
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
-          <p class="footnote">Las mejores escuelas secundarias <a href="/gk/videos/advanced-classes-academics-for-everyone/">ofrecen cursos avanzados a todos los estudiantes</a>, no solo a unos pocos.</p>
+          <p class="footnote">Las mejores escuelas secundarias <a href="/gk/videos/advanced-classes-academics-for-everyone/" target="_blank">ofrecen cursos avanzados a todos los estudiantes</a>, no solo a unos pocos.</p>
           </div>
         _3_html: >
           <div class="auto-narration">
@@ -206,7 +206,7 @@ es:
           <p>(Recuerde: <span class="emphasis">altas índices de graduación no significan mucho</span> si los estudiantes se gradúan sin los cursos y las calificaciones de los exámenes que necesitan para tener éxito.)</p>
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
-          <p class="footnote">Las mejores escuelas secundarias <a href="/gk/videos/advanced-classes-academics-for-everyone/">ofrecen cursos avanzados a todos los estudiantes</a>, no solo a unos pocos.</p>
+          <p class="footnote">Las mejores escuelas secundarias <a href="/gk/videos/advanced-classes-academics-for-everyone/" target="_blank">ofrecen cursos avanzados a todos los estudiantes</a>, no solo a unos pocos.</p>
           </div>
         _4_html: >
           <div class="auto-narration">
@@ -214,7 +214,7 @@ es:
           <p>Esta escuela está <span class="emphasis">por encima</span> del promedio estatal en medidas de preparación universitario y de la preparación (o carrera) profesional</p>
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
-          <p class="footnote">Las mejores escuelas secundarias <a href="/gk/videos/advanced-classes-academics-for-everyone/">ofrecen cursos avanzados a todos los estudiantes</a>, no solo a unos pocos.</p>
+          <p class="footnote">Las mejores escuelas secundarias <a href="/gk/videos/advanced-classes-academics-for-everyone/" target="_blank">ofrecen cursos avanzados a todos los estudiantes</a>, no solo a unos pocos.</p>
           </div>
         _5_html: >
           <div class="auto-narration">
@@ -223,7 +223,7 @@ es:
           preparación universitario y de la preparación (o carrera) profesional</p>
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
-          <p class="footnote">Las mejores escuelas secundarias <a href="/gk/videos/advanced-classes-academics-for-everyone/">ofrecen cursos avanzados a todos los estudiantes</a>, no solo a unos pocos.</p>
+          <p class="footnote">Las mejores escuelas secundarias <a href="/gk/videos/advanced-classes-academics-for-everyone/" target="_blank">ofrecen cursos avanzados a todos los estudiantes</a>, no solo a unos pocos.</p>
           </div>
         _college_success: >
           <div class="auto-narration">
@@ -231,23 +231,23 @@ es:
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
           <p class="footnote">Los estudiantes que no están preparados para el material de nivel universitario pueden encontrarse en
-          <a href="/gk/articles/por-que-tantos-estudiantes-destacados-terminan-en-clases-de-recuperacion/?lang=es">clases costosas de recuperación</a> y es más probable que <a href="/gk/articles/por-que-tantos-estudiantes-universitarios-abandonar-la-universidad/?lang=es">abandonen la universidad</a>. Las escuelas secundarias exitosas <a href="/gk/videos/the-importance-of-real-life-learning-career-pathways/">ayudan a los niños a encontrar sus pasiones</a> y tener éxito después de graduarse.</p>
+          <a href="/gk/articles/por-que-tantos-estudiantes-destacados-terminan-en-clases-de-recuperacion/?lang=es" target="_blank">clases costosas de recuperación</a> y es más probable que <a href="/gk/articles/por-que-tantos-estudiantes-universitarios-abandonar-la-universidad/?lang=es" target="_blank">abandonen la universidad</a>. Las escuelas secundarias exitosas <a href="/gk/videos/the-importance-of-real-life-learning-career-pathways/" target="_blank">ayudan a los niños a encontrar sus pasiones</a> y tener éxito después de graduarse.</p>
           </div>
         _parent_tip_html: >
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
-          <p class="footnote">Las mejores escuelas secundarias <a href="/gk/videos/advanced-classes-academics-for-everyone/">ofrecen cursos avanzados a todos los estudiantes</a>, no solo a unos pocos.</p>
+          <p class="footnote">Las mejores escuelas secundarias <a href="/gk/videos/advanced-classes-academics-for-everyone/" target="_blank">ofrecen cursos avanzados a todos los estudiantes</a>, no solo a unos pocos.</p>
     college_success:
       title: Éxito universitario
       subtitle_html: >
-        ¿Qué se necesita para que una escuela secundaria se destaque en términos de ayudar a todos los estudiantes a que tengan éxito en la universidad? Aprenda sobre <a href="/gk/csa-winners/" target="_blank">las mejores prácticas de escuelas premiadas.</a>
+        ¿Qué se necesita para que una escuela secundaria se destaque en términos de ayudar a todos los estudiantes a que tengan éxito en la universidad? Aprenda sobre <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="las mejores prácticas de escuelas premiadas" href="/gk/csa-winners/" target="_blank">las mejores prácticas de escuelas premiadas.</a>
     college_readiness_alt:
       no_data: >
         Esta sección incluye información sobre los índices de graduación, los exámenes SAT/ACT y los cursos AP de esta escuela.
       title: Preparación universitaria
       tooltip_html: >
         <p>Esta calificación muestra lo bien que los estudiantes de esta escuela están preparados para la universidad en comparación con los estudiantes de otras escuelas en este estado, basados en medidas como los índices de graduación, las pruebas de ingreso a la universidad y otros datos disponibles como cursos avanzados.</p>
-        <p><a href='/gk/ratings-ca-mi/?lang=es#collegereadinessrating' target='_blank'>Aprende más sobre esta calificación.</a></p>
-      subtitle_html: <a href="/gk/videos/why-college-counseling-matters/" target="_blank">Una clave cosa</a> que todas las escuelas exitosas hacen para ayudar a los estudiantes a inscribirse en la universidad.
+        <p><a href='/gk/ratings-ca-mi/?lang=es#collegereadinessrating'  target="_blank">Aprende más sobre esta calificación.</a></p>
+      subtitle_html: <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="Una clave cosa" href="/gk/videos/why-college-counseling-matters/" target="_blank">Una clave cosa</a> que todas las escuelas exitosas hacen para ayudar a los estudiantes a inscribirse en la universidad.
       source: Fuente
       sources: Fuentes
       feedback_cta: ¿Encontraste la información sobre el éxito universitario útil? Qué podemos hacer mejor?
@@ -258,7 +258,7 @@ es:
       and: y
       state: estado
       district: distrito
-      info_text: "<p>Esta calificación muestra lo bien que los estudiantes de esta escuela están preparados para la universidad en comparación con los estudiantes de otras escuelas en este estado, basados en medidas como los índices de graduación, las pruebas de ingreso a la universidad y otros datos disponibles como cursos avanzados.</p><p><a href='/gk/ratings-ca-mi/#collegereadinessrating' target='_blank'>Aprende más sobre esta calificación</a></p>"
+      info_text: "<p>Esta calificación muestra lo bien que los estudiantes de esta escuela están preparados para la universidad en comparación con los estudiantes de otras escuelas en este estado, basados en medidas como los índices de graduación, las pruebas de ingreso a la universidad y otros datos disponibles como cursos avanzados.</p><p><a href='/gk/ratings-ca-mi/#collegereadinessrating' target='_blank'>Aprende más sobre esta calificación.</a></p>"
       sources_title: 'Las fuentes de datos y informacion de los perfiles de GreatSchools'
       'GreatSchools Rating': 'Calificaciones de GreatSchools de la Preparación Universitaria'
       'Rating text': 'Esta clasificación muestra que bien los estudiantes de esta escuela están preparados para la universidad comparados a los estudiantes en otras escuelas en este estado, sobre medidas como las tasas de graduación, pruebas de ingreso universitario y los cursos de AP cuando están disponibles.'
@@ -330,7 +330,7 @@ es:
           Este es el porcentaje de estudiantes graduados de esta escuela que recibieron una "C" o superior en los cursos
           A-G requeridos para ser elegibles para atender a alguna de las escuelas de la
           Universidad de California y Universidad del Estado de California.
-          <a href="/gk/articles/dont-miss-these-requirements-to-get-into-college/">Obtén más información</a>.
+          <a href="/gk/articles/dont-miss-these-requirements-to-get-into-college/" target="_blank">Obtén más información</a>.
         Average SAT score: 'El SAT es una prueba de admisión universitaria, que en 2015 tenía un total de 2400 puntos posibles. Esta calificación refleja el puntaje promedio en el SAT entre los estudiantes de esta escuela. En 2016, el SAT cambió a una escala de 1600 puntos. Regrese pronto para obtener información actualizada para esta escuela.'
         Average SAT score_new: 'El SAT es una examen de admisión universitaria, cuyo puntaje más alto es de 1600 puntos. Esta calificación refleja el puntaje promedio en el SAT entre los estudiantes de esta escuela.'
         SAT percent participation: 'El índice de participación en el SAT refleja el porcentaje de estudiantes elegibles de esta escuela que tomaron el SAT.'
@@ -351,7 +351,7 @@ es:
           el pensamiento creativo y crítico. Una escuela secundaria puede tener clases específicas de IB que
           los estudiantes pueden tomar, o un programa IB para toda la escuela que afecta a todas las clases.
           Algunas universidades dan créditos universitarios para los cursos del IB.
-          <a href='/gk/articles/que-es-el-bachillerato-internacional-escuela-de-ib/?lang=es' target='_blank'>Más acerca de IB</a>
+          <a href='/gk/articles/que-es-el-bachillerato-internacional-escuela-de-ib/?lang=es' target="_blank">Más acerca de IB</a>
         'Graduating seniors pursuing 4 year college/university': 'Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en un colegio o universidad de 4 años inmediatamente después de la escuela secundaria.'
         'Graduating seniors pursuing 2 year college/university': 'Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en un colegio o universidad de 2 años inmediatamente después de la escuela secundaria.'
         'Graduating seniors pursuing other college': 'Esto refleja el porcentaje de graduados de esta escuela secundaria que se inscribieron en programas universitarios distintos de una universidad de 2 o 4 años inmediatamente después de la escuela secundaria.'
@@ -423,7 +423,7 @@ es:
           <p>(Recuerde: <span class="emphasis">altas índices de graduación no significan mucho</span> si los estudiantes se gradúan sin los cursos y las calificaciones de los exámenes que necesitan para tener éxito.)</p>
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
-          <p class="footnote">Las mejores escuelas secundarias <a href="/gk/videos/advanced-classes-academics-for-everyone/">ofrecen cursos avanzados a todos los estudiantes</a>, no solo a unos pocos.</p>
+          <p class="footnote">Las mejores escuelas secundarias <a href="/gk/videos/advanced-classes-academics-for-everyone/" target="_blank">ofrecen cursos avanzados a todos los estudiantes</a>, no solo a unos pocos.</p>
           </div>
         _2_html: >
           <div class="auto-narration">
@@ -432,7 +432,7 @@ es:
           <p>(Recuerde: <span class="emphasis">altas índices de graduación no significan mucho</span> si los estudiantes se gradúan sin los cursos y las calificaciones de los exámenes que necesitan para tener éxito.)</p>
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
-          <p class="footnote">Las mejores escuelas secundarias <a href="/gk/videos/advanced-classes-academics-for-everyone/">ofrecen cursos avanzados a todos los estudiantes</a>, no solo a unos pocos.</p>
+          <p class="footnote">Las mejores escuelas secundarias <a href="/gk/videos/advanced-classes-academics-for-everyone/" target="_blank">ofrecen cursos avanzados a todos los estudiantes</a>, no solo a unos pocos.</p>
           </div>
         _3_html: >
           <div class="auto-narration">
@@ -441,7 +441,7 @@ es:
           <p>(Recuerde: <span class="emphasis">altas índices de graduación no significan mucho</span> si los estudiantes se gradúan sin los cursos y las calificaciones de los exámenes que necesitan para tener éxito.)</p>
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
-          <p class="footnote">Las mejores escuelas secundarias <a href="/gk/videos/advanced-classes-academics-for-everyone/">ofrecen cursos avanzados a todos los estudiantes</a>, no solo a unos pocos.</p>
+          <p class="footnote">Las mejores escuelas secundarias <a href="/gk/videos/advanced-classes-academics-for-everyone/" target="_blank">ofrecen cursos avanzados a todos los estudiantes</a>, no solo a unos pocos.</p>
           </div>
         _4_html: >
           <div class="auto-narration">
@@ -449,7 +449,7 @@ es:
           <p>Esta escuela está <span class="emphasis">por encima</span> del promedio estatal en medidas de preparación universitario y de la preparación (o carrera) profesional</p>
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
-          <p class="footnote">Las mejores escuelas secundarias <a href="/gk/videos/advanced-classes-academics-for-everyone/">ofrecen cursos avanzados a todos los estudiantes</a>, no solo a unos pocos.</p>
+          <p class="footnote">Las mejores escuelas secundarias <a href="/gk/videos/advanced-classes-academics-for-everyone/" target="_blank">ofrecen cursos avanzados a todos los estudiantes</a>, no solo a unos pocos.</p>
           </div>
         _5_html: >
           <div class="auto-narration">
@@ -458,7 +458,7 @@ es:
           preparación universitario y de la preparación (o carrera) profesional</p>
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
-          <p class="footnote">Las mejores escuelas secundarias <a href="/gk/videos/advanced-classes-academics-for-everyone/">ofrecen cursos avanzados a todos los estudiantes</a>, no solo a unos pocos.</p>
+          <p class="footnote">Las mejores escuelas secundarias <a href="/gk/videos/advanced-classes-academics-for-everyone/" target="_blank">ofrecen cursos avanzados a todos los estudiantes</a>, no solo a unos pocos.</p>
           </div>
         _college_success: >
           <div class="auto-narration">
@@ -466,12 +466,12 @@ es:
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
           <p class="footnote">Los estudiantes que no están preparados para el material de nivel universitario pueden encontrarse en
-          <a href="/gk/articles/por-que-tantos-estudiantes-destacados-terminan-en-clases-de-recuperacion/?lang=es">clases costosas de recuperación</a> y es más probable que <a href="/gk/articles/por-que-tantos-estudiantes-universitarios-abandonar-la-universidad/?lang=es">abandonen la universidad</a>. Las escuelas secundarias exitosas <a href="/gk/videos/the-importance-of-real-life-learning-career-pathways/">ayudan a los niños a encontrar sus pasiones</a> y tener éxito después de graduarse.</p>
+          <a href="/gk/articles/por-que-tantos-estudiantes-destacados-terminan-en-clases-de-recuperacion/?lang=es" target="_blank">clases costosas de recuperación</a> y es más probable que <a href="/gk/articles/por-que-tantos-estudiantes-universitarios-abandonar-la-universidad/?lang=es" target="_blank">abandonen la universidad</a>. Las escuelas secundarias exitosas <a href="/gk/videos/the-importance-of-real-life-learning-career-pathways/" target="_blank">ayudan a los niños a encontrar sus pasiones</a> y tener éxito después de graduarse.</p>
           </div>
         _parent_tip_html: >
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
-          <p class="footnote">Las mejores escuelas secundarias <a href="/gk/videos/advanced-classes-academics-for-everyone/">ofrecen cursos avanzados a todos los estudiantes</a>, no solo a unos pocos.</p>
+          <p class="footnote">Las mejores escuelas secundarias <a href="/gk/videos/advanced-classes-academics-for-everyone/" target="_blank">ofrecen cursos avanzados a todos los estudiantes</a>, no solo a unos pocos.</p>
     college_success_alt:
       title: Éxito universitario
       subtitle_html: >
-        ¿Qué se necesita para que una escuela secundaria se destaque en términos de ayudar a todos los estudiantes a que tengan éxito en la universidad? Aprenda sobre <a href="/gk/csa-winners/" target="_blank">las mejores prácticas de escuelas premiadas.</a>
+        ¿Qué se necesita para que una escuela secundaria se destaque en términos de ayudar a todos los estudiantes a que tengan éxito en la universidad? Aprenda sobre <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="las mejores prácticas de escuelas premiadas" href="/gk/csa-winners/" target="_blank">las mejores prácticas de escuelas premiadas.</a>
