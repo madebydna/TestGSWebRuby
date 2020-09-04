@@ -306,13 +306,14 @@ export default class DataModule extends React.Component {
       </SectionSubNavigation>
     }
 
-    let subPanes = dataForActiveTab.data.map(({anchor, type, values, narration} = {}) => {
+    let subPanes = dataForActiveTab.data.map(({anchor, type, values, narration, tooltip} = {}) => {
       let explanation = <div dangerouslySetInnerHTML={{__html: narration}} />
         return (
           <EquityContentPane
             anchor={anchor}
             graph={this.createDataComponent(type, values)}
             text={explanation}
+            tooltip={tooltip}
           />
         );
     })
