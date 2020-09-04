@@ -7,9 +7,9 @@ en:
       tooltip_html: >
         <p>This rating shows how well students at this school are prepared for college compared to students at other
         schools in this state, based on key measures, like graduation rates, college entrance tests and advanced coursework
-        when available.</p><p><a href="/gk/ratings/#collegereadinessrating" target="_blank" rel="noopener noreferrer">Learn more about this
+        when available.</p><p><a href="/gk/ratings/#collegereadinessrating" target="_blank">Learn more about this
         rating.</a></p>
-      subtitle_html: <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="One key thing" href="/gk/videos/why-college-counseling-matters/" target="_blank" rel="noopener noreferrer">One key thing</a> all successful schools do to help students enroll in college.
+      subtitle_html: <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="One key thing" href="/gk/videos/why-college-counseling-matters/" target="_blank">One key thing</a> all successful schools do to help students enroll in college.
       source: Source
       sources: Sources
       feedback_cta: Did you find the information about college success useful? What can we do better?
@@ -20,12 +20,12 @@ en:
       and: and
       state: state
       district: district
-      info_text: "<p>This rating shows how well students at this school are prepared for college compared to students at other schools in this state, based on key measures, like graduation rates, college entrance tests and advanced coursework when available.</p><p><a href='/gk/ratings/#collegereadinessrating' target='_blank' rel='noopener noreferrer'>Learn more about this rating.</a></p>"
+      info_text: "<p>This rating shows how well students at this school are prepared for college compared to students at other schools in this state, based on key measures, like graduation rates, college entrance tests and advanced coursework when available.</p><p><a href='/gk/ratings/#collegereadinessrating' target='_blank'>Learn more about this rating.</a></p>"
       sources_title: 'GreatSchools profile data sources &amp; information'
       'GreatSchools Rating': 'GreatSchools College Readiness Rating'
       'Rating text': 'The college readiness rating reflects high school graduation rates, SAT or ACT participation/performance, and AP exam participation and performance (where available) for this school compared to the state average.'
       scoped_info_text: "<p style='font-family:opensans-semibold'>Are graduates from this %{entity} prepared to succeed in college? This section looks at important signs of college readiness.</p>
-      <p>See the schools in this state that won a <a href='/gk/csa-winners/' target='_blank' rel='noopener noreferrer'>College Success Award</a> for excellence in preparing students for college.</p>"
+      <p>See the schools in this state that won a <a href='/gk/csa-winners/' target='_blank'>College Success Award</a> for excellence in preparing students for college.</p>"
       # DATA TYPE LABELS
       4-year high school graduation rate: '4-year high school graduation rate'
       Percent of students who meet UC/CSU entrance requirements: 'Percentage of graduates who meet UC/CSU entrance requirements'
@@ -91,7 +91,7 @@ en:
         Percent of students who meet UC/CSU entrance requirements: >
           This is the percentage of graduates from this school who got a "C" or higher in the A-G courses required for
           eligibility at University of California and California State University schools.
-          <a href="/gk/articles/dont-miss-these-requirements-to-get-into-college/" target="_blank" rel="noopener noreferrer">Find out more</a>.
+          <a href="/gk/articles/dont-miss-these-requirements-to-get-into-college/" target="_blank">Find out more</a>.
         Average SAT score: 'The SAT is a college admissions test which in 2015 had a total of 2400 possible points. This score reflects the average SAT score for students at this school. In 2016 the SAT changed to a 1600 point scale. Check back soon for updated information for this school.'
         Average SAT score_new: 'The SAT is a college admissions test which has a total of 1600 possible points. This score reflects the average SAT score for students at this school.'
         SAT percent participation: 'The SAT participation rate reflects the percentage of eligible students at this school who took the SAT.'
@@ -111,7 +111,7 @@ en:
           International Baccalaureate (IB) is an internationally recognized, high-standards program that emphasizes creative
           and critical thinking. A high school may have specific IB classes students can take, or a school-wide IB program
           that affects all classes. Some colleges give college credit for IB courses.
-          <a href='/gk/articles/what-is-ib-international-baccalaureate/' target='_blank' rel="noopener noreferrer">More about IB</a>
+          <a href='/gk/articles/what-is-ib-international-baccalaureate/' target='_blank'>More about IB</a>
         'Graduating seniors pursuing 4 year college/university': 'This reflects the percentage of graduates from this school who enrolled in a 4-year college or university immediately following high school.'
         'Graduating seniors pursuing 2 year college/university': 'This reflects the percentage of graduates from this school who enrolled in a 2-year college or university immediately following high school.'
         'Graduating seniors pursuing other college': 'This reflects the percentage of graduates from this high school who enrolled in college programs other than a 2-or-4-year college or university immediately following high school.'
@@ -183,7 +183,7 @@ en:
           <p>(Remember: <span class="emphasis">high graduation rates don't mean much</span> if students are graduating without the coursework and test scores they need to succeed.)</p>
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
-          <p class="footnote">The best high schools <a href="/gk/videos/advanced-classes-academics-for-everyone/" target="_blank" rel="noopener noreferrer">offer advanced courses to all students</a>, not a select few.</p>
+          <p class="footnote">The best high schools <a href="/gk/videos/advanced-classes-academics-for-everyone/" target="_blank">offer advanced courses to all students</a>, not a select few.</p>
           </div>
         _2_html: >
           <div class="auto-narration">
@@ -192,7 +192,7 @@ en:
           <p>(Remember: <span class="emphasis">high graduation rates don't mean much</span> if students are graduating without the coursework and test scores they need to succeed.)</p>
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
-          <p class="footnote">The best high schools <a href="/gk/videos/advanced-classes-academics-for-everyone/" target="_blank" rel="noopener noreferrer">offer advanced courses to all students</a>, not a select few.</p>
+          <p class="footnote">The best high schools <a href="/gk/videos/advanced-classes-academics-for-everyone/" target="_blank">offer advanced courses to all students</a>, not a select few.</p>
           </div>
         _3_html: >
           <div class="auto-narration">
@@ -203,7 +203,7 @@ en:
           without the coursework and test scores they need to succeed.)</p>
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
-          <p class="footnote">The best high schools <a href="/gk/videos/advanced-classes-academics-for-everyone/" target="_blank" rel="noopener noreferrer">offer advanced courses to all students</a>, not a select few.</p>
+          <p class="footnote">The best high schools <a href="/gk/videos/advanced-classes-academics-for-everyone/" target="_blank">offer advanced courses to all students</a>, not a select few.</p>
           </div>
         _4_html: >
           <div class="auto-narration">
@@ -213,7 +213,7 @@ en:
           the opportunities they need to succeed.</p>
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
-          <p class="footnote">The best high schools <a href="/gk/videos/advanced-classes-academics-for-everyone/" target="_blank" rel="noopener noreferrer">offer advanced courses to all students</a>, not a select few.</p>
+          <p class="footnote">The best high schools <a href="/gk/videos/advanced-classes-academics-for-everyone/" target="_blank">offer advanced courses to all students</a>, not a select few.</p>
           </div>
         _5_html: >
           <div class="auto-narration">
@@ -223,32 +223,32 @@ en:
           the opportunities they need to succeed.</p>
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
-          <p class="footnote">The best high schools <a href="/gk/videos/advanced-classes-academics-for-everyone/" target="_blank" rel="noopener noreferrer">offer advanced courses to all students</a>, not a select few.</p>
+          <p class="footnote">The best high schools <a href="/gk/videos/advanced-classes-academics-for-everyone/" target="_blank">offer advanced courses to all students</a>, not a select few.</p>
           </div>
         _college_success: >
           <div class="auto-narration">
           <p>Are graduates from this school prepared to succeed in college? This section looks at important signs of college readiness.</p>
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
-          <p class="footnote">Students who are unprepared for college-level work may find themselves in <a href="/gk/articles/high-achiever-remedial-college/" target="_blank" rel="noopener noreferrer">costly remedial classes</a>
-          and are more likely to <a href="/gk/articles/dropping-out-of-college-record-numbers/" target="_blank" rel="noopener noreferrer">drop out of college</a>.
-          Successful high schools <a href="/gk/videos/the-importance-of-real-life-learning-career-pathways/" target="_blank" rel="noopener noreferrer">help kids find their passions</a> and succeed after graduation.</p>
+          <p class="footnote">Students who are unprepared for college-level work may find themselves in <a href="/gk/articles/high-achiever-remedial-college/" target="_blank">costly remedial classes</a>
+          and are more likely to <a href="/gk/articles/dropping-out-of-college-record-numbers/" target="_blank">drop out of college</a>.
+          Successful high schools <a href="/gk/videos/the-importance-of-real-life-learning-career-pathways/" target="_blank">help kids find their passions</a> and succeed after graduation.</p>
           </div>
         _parent_tip_html: >
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
-          <p class="footnote">The best high schools <a href="/gk/videos/advanced-classes-academics-for-everyone/" target="_blank" rel="noopener noreferrer">offer advanced courses to all students</a>, not a select few.</p>
+          <p class="footnote">The best high schools <a href="/gk/videos/advanced-classes-academics-for-everyone/" target="_blank">offer advanced courses to all students</a>, not a select few.</p>
     college_success:
       title: College success
       subtitle_html: >
-        What does it take for a high school to stand out in terms of helping all students succeed in college? Learn about the <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="best practices of award-winning schools" href="/gk/csa-winners/" target="_blank" rel="noopener noreferrer">best practices of award-winning schools.</a>
+        What does it take for a high school to stand out in terms of helping all students succeed in college? Learn about the <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="best practices of award-winning schools" href="/gk/csa-winners/" target="_blank">best practices of award-winning schools.</a>
     college_readiness_alt:
       no_data: >
         This section includes information about this school’s graduation rates, SAT/ACT tests, and AP coursework.
       title: College readiness
       tooltip_html: >
-        <p>This rating shows how well students at this school are prepared for college compared to students at other schools in this state, based on graduation rates, college entrance tests, and other available data such as advanced coursework.</p><p><a href="/gk/ratings-ca-mi/#collegereadinessrating" target="_blank" rel="noopener noreferrer">Learn more about this
+        <p>This rating shows how well students at this school are prepared for college compared to students at other schools in this state, based on graduation rates, college entrance tests, and other available data such as advanced coursework.</p><p><a href="/gk/ratings-ca-mi/#collegereadinessrating" target="_blank">Learn more about this
         rating.</a></p>
-      subtitle_html: <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="One key thing" href="/gk/videos/why-college-counseling-matters/" target="_blank" rel="noopener noreferrer">One key thing</a> all successful schools do to help students enroll in college.
+      subtitle_html: <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="One key thing" href="/gk/videos/why-college-counseling-matters/" target="_blank">One key thing</a> all successful schools do to help students enroll in college.
       source: Source
       sources: Sources
       feedback_cta: Did you find the information about college success useful? What can we do better?
@@ -259,12 +259,12 @@ en:
       and: and
       state: state
       district: district
-      info_text: "<p>This rating shows how well students at this school are prepared for college compared to students at other schools in this state, based on graduation rates, college entrance tests, and other available data such as advanced coursework.</p><p><a href='/gk/ratings-ca-mi/#collegereadinessrating' target='_blank' rel='noopener noreferrer'>Learn more about this rating.</a></p>"
+      info_text: "<p>This rating shows how well students at this school are prepared for college compared to students at other schools in this state, based on graduation rates, college entrance tests, and other available data such as advanced coursework.</p><p><a href='/gk/ratings-ca-mi/#collegereadinessrating' target='_blank'>Learn more about this rating.</a></p>"
       sources_title: 'GreatSchools profile data sources &amp; information'
       'GreatSchools Rating': 'GreatSchools College Readiness Rating'
       'Rating text': 'The college readiness rating reflects high school graduation rates, SAT or ACT participation/performance, and AP exam participation and performance (where available) for this school compared to the state average.'
       scoped_info_text: "<p style='font-family:opensans-semibold'>Are graduates from this %{entity} prepared to succeed in college? This section looks at important signs of college readiness.</p>
-      <p>See the schools in this state that won a <a href='/gk/csa-winners/' target='_blank' rel='noopener noreferrer'>College Success Award</a> for excellence in preparing students for college.</p>"
+      <p>See the schools in this state that won a <a href='/gk/csa-winners/' target='_blank'>College Success Award</a> for excellence in preparing students for college.</p>"
       # DATA TYPE LABELS
       4-year high school graduation rate: '4-year high school graduation rate'
       Percent of students who meet UC/CSU entrance requirements: 'Percentage of graduates who meet UC/CSU entrance requirements'
@@ -288,7 +288,7 @@ en:
           <p>College readiness information comes from state or national education agencies (click on the "Sources" link for details).</p>
           <p>When information is missing in our display, it’s most likely because this school did not offer an AP course, IB or dual enrollment classes, or participate in one of the two college readiness tests, the ACT or SAT. It’s also possible that the state did not make the missing data available.</p>
           <p>Did you find the information about college readiness useful? What can we do better? <a href="https://s.qualaroo.com/45194/34aea707-ec71-4130-b6bb-2864e0528c64" target="_blank">Share your feedback.</a></p>
-          <p><a href="/gk/ratings-ca-mi/#collegereadinessrating" target="_blank" rel="noopener noreferrer">Learn more about this rating.</a></p>
+          <p><a href="/gk/ratings-ca-mi/#collegereadinessrating" target="_blank">Learn more about this rating.</a></p>
           <p>Still have questions? <a href="https://greatschools.zendesk.com/hc/en-us" target="_blank">Visit our FAQ page.</a></p>
       'Graduating seniors pursuing 4 year college/university': 'Graduates pursuing 4-year college'
       'Graduating seniors pursuing 2 year college/university': 'Graduates pursuing 2-year college'
@@ -330,7 +330,7 @@ en:
         Percent of students who meet UC/CSU entrance requirements: >
           This is the percentage of graduates from this school who got a "C" or higher in the A-G courses required for
           eligibility at University of California and California State University schools.
-          <a href="/gk/articles/dont-miss-these-requirements-to-get-into-college/" target="_blank" rel="noopener noreferrer">Find out more</a>.
+          <a href="/gk/articles/dont-miss-these-requirements-to-get-into-college/" target="_blank">Find out more</a>.
         Average SAT score: 'The SAT is a college admissions test which in 2015 had a total of 2400 possible points. This score reflects the average SAT score for students at this school. In 2016 the SAT changed to a 1600 point scale. Check back soon for updated information for this school.'
         Average SAT score_new: 'The SAT is a college admissions test which has a total of 1600 possible points. This score reflects the average SAT score for students at this school.'
         SAT percent participation: 'The SAT participation rate reflects the percentage of eligible students at this school who took the SAT.'
@@ -350,7 +350,7 @@ en:
           International Baccalaureate (IB) is an internationally recognized, high-standards program that emphasizes creative
           and critical thinking. A high school may have specific IB classes students can take, or a school-wide IB program
           that affects all classes. Some colleges give college credit for IB courses.
-          <a href='/gk/articles/what-is-ib-international-baccalaureate/' target='_blank' rel="noopener noreferrer">More about IB</a>
+          <a href='/gk/articles/what-is-ib-international-baccalaureate/' target='_blank'>More about IB</a>
         'Graduating seniors pursuing 4 year college/university': 'This reflects the percentage of graduates from this school who enrolled in a 4-year college or university immediately following high school.'
         'Graduating seniors pursuing 2 year college/university': 'This reflects the percentage of graduates from this school who enrolled in a 2-year college or university immediately following high school.'
         'Graduating seniors pursuing other college': 'This reflects the percentage of graduates from this high school who enrolled in college programs other than a 2-or-4-year college or university immediately following high school.'
@@ -422,7 +422,7 @@ en:
           <p>(Remember: <span class="emphasis">high graduation rates don't mean much</span> if students are graduating without the coursework and test scores they need to succeed.)</p>
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
-          <p class="footnote">The best high schools <a href="/gk/videos/advanced-classes-academics-for-everyone/" target="_blank" rel="noopener noreferrer">offer advanced courses to all students</a>, not a select few.</p>
+          <p class="footnote">The best high schools <a href="/gk/videos/advanced-classes-academics-for-everyone/" target="_blank">offer advanced courses to all students</a>, not a select few.</p>
           </div>
         _2_html: >
           <div class="auto-narration">
@@ -431,7 +431,7 @@ en:
           <p>(Remember: <span class="emphasis">high graduation rates don't mean much</span> if students are graduating without the coursework and test scores they need to succeed.)</p>
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
-          <p class="footnote">The best high schools <a href="/gk/videos/advanced-classes-academics-for-everyone/" target="_blank" rel="noopener noreferrer">offer advanced courses to all students</a>, not a select few.</p>
+          <p class="footnote">The best high schools <a href="/gk/videos/advanced-classes-academics-for-everyone/" target="_blank">offer advanced courses to all students</a>, not a select few.</p>
           </div>
         _3_html: >
           <div class="auto-narration">
@@ -442,7 +442,7 @@ en:
           without the coursework and test scores they need to succeed.)</p>
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
-          <p class="footnote">The best high schools <a href="/gk/videos/advanced-classes-academics-for-everyone/" target="_blank" rel="noopener noreferrer">offer advanced courses to all students</a>, not a select few.</p>
+          <p class="footnote">The best high schools <a href="/gk/videos/advanced-classes-academics-for-everyone/" target="_blank">offer advanced courses to all students</a>, not a select few.</p>
           </div>
         _4_html: >
           <div class="auto-narration">
@@ -452,7 +452,7 @@ en:
           the opportunities they need to succeed.</p>
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
-          <p class="footnote">The best high schools <a href="/gk/videos/advanced-classes-academics-for-everyone/" target="_blank" rel="noopener noreferrer">offer advanced courses to all students</a>, not a select few.</p>
+          <p class="footnote">The best high schools <a href="/gk/videos/advanced-classes-academics-for-everyone/" target="_blank">offer advanced courses to all students</a>, not a select few.</p>
           </div>
         _5_html: >
           <div class="auto-narration">
@@ -462,21 +462,21 @@ en:
           the opportunities they need to succeed.</p>
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
-          <p class="footnote">The best high schools <a href="/gk/videos/advanced-classes-academics-for-everyone/" target="_blank" rel="noopener noreferrer">offer advanced courses to all students</a>, not a select few.</p>
+          <p class="footnote">The best high schools <a href="/gk/videos/advanced-classes-academics-for-everyone/" target="_blank">offer advanced courses to all students</a>, not a select few.</p>
           </div>
         _college_success: >
           <div class="auto-narration">
           <p>Are graduates from this school prepared to succeed in college? This section looks at important signs of college readiness.</p>
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
-          <p class="footnote">Students who are unprepared for college-level work may find themselves in <a href="/gk/articles/high-achiever-remedial-college/" target="_blank" rel="noopener noreferrer">costly remedial classes</a>
-          and are more likely to <a href="/gk/articles/dropping-out-of-college-record-numbers/" target="_blank" rel="noopener noreferrer">drop out of college</a>.
-          Successful high schools <a href="/gk/videos/the-importance-of-real-life-learning-career-pathways/" target="_blank" rel="noopener noreferrer">help kids find their passions</a> and succeed after graduation.</p>
+          <p class="footnote">Students who are unprepared for college-level work may find themselves in <a href="/gk/articles/high-achiever-remedial-college/" target="_blank">costly remedial classes</a>
+          and are more likely to <a href="/gk/articles/dropping-out-of-college-record-numbers/" target="_blank">drop out of college</a>.
+          Successful high schools <a href="/gk/videos/the-importance-of-real-life-learning-career-pathways/" target="_blank">help kids find their passions</a> and succeed after graduation.</p>
           </div>
         _parent_tip_html: >
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
-          <p class="footnote">The best high schools <a href="/gk/videos/advanced-classes-academics-for-everyone/" target="_blank" rel="noopener noreferrer">offer advanced courses to all students</a>, not a select few.</p>
+          <p class="footnote">The best high schools <a href="/gk/videos/advanced-classes-academics-for-everyone/" target="_blank">offer advanced courses to all students</a>, not a select few.</p>
     college_success_alt:
       title: College success
       subtitle_html: >
-        What does it take for a high school to stand out in terms of helping all students succeed in college? Learn about the <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="best practices of award-winning schools" href="/gk/csa-winners/" target="_blank" rel="noopener noreferrer">best practices of award-winning schools.</a>
+        What does it take for a high school to stand out in terms of helping all students succeed in college? Learn about the <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="best practices of award-winning schools" href="/gk/csa-winners/" target="_blank">best practices of award-winning schools.</a>

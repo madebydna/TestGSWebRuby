@@ -15,14 +15,14 @@ es:
       claimed_tooltip_html: >
         Los administradores de esta escuela han reclamado este perfil de escuela para editar y compartir más
         información general acerca de los programas escolares y la cultura.
-        <a href='/gk/schools/' target='_blank' rel='noopener noreferrer'>Obtenga más información</a>.
+        <a href='/gk/schools/' target='_blank'>Obtenga más información</a>.
       unclaimed: Sin reclamar
       unclaimed_tooltip_html: >
         Esta escuela todavía no ha reclamado su perfil.
         <br /><br />
         Líderes de la escuela - <a href='%{osp_path}' rel='nofollow' class='js-gaClick' data-ga-click-category='Profile' data-ga-click-action='Claim school' data-ga-click-label='Private'>reclame el perfil de tu escuela</a>
         para editar información general y compartir qué hace tu escuela única.
-        <a href='/gk/schools/' target='_blank' rel='noopener noreferrer'>Obtenga más información</a>.
+        <a href='/gk/schools/' target='_blank'>Obtenga más información</a>.
       contact_info: Datos de contacto
       reviews: OPINIONES
       school_type: TIPO
@@ -35,31 +35,31 @@ es:
           puntajes de los exámenes y otros datos disponibles, como el progreso académico del estudiante y la
           preparación universitaria. Agencias estatales y nacionales de educación no reportan todos o algunos
           de estos datos para las escuelas privadas como ésta, así que no somos capaces de ofrecer una calificación.</p>
-          <p><a href='/gk/como-clasificamos/?lang=es' target="_blank" rel="noopener noreferrer">Mas acerca de la calificación de GreatSchools.</a></p>
+          <p><a href='/gk/como-clasificamos/?lang=es' target="_blank">Mas acerca de la calificación de GreatSchools.</a></p>
         unrated_public: >
           <p>GreatSchools es una organización nacional sin fines de lucro. Nuestra Calificación General es una
           sencilla herramienta que le ayuda a los padres comparar escuelas dentro de un estado basado en los
           puntajes de los exámenes y otros datos disponibles, como el progreso académico del estudiante y la
           preparación universitaria. Para algunas escuelas no tenemos suficientes datos de las agencias estatales
           o nacionales de educación para proporcionar una calificación.</p>
-          <p><a href='/gk/como-clasificamos/?lang=es' target="_blank" rel="noopener noreferrer">Mas acerca de la calificación de GreatSchools.</a></p>
+          <p><a href='/gk/como-clasificamos/?lang=es' target="_blank">Mas acerca de la calificación de GreatSchools.</a></p>
         rated: >
           <p>GreatSchools es una organización nacional sin fines de lucro. Nuestro nuevo Resumen de 
           Calificaciones es una reflexión de múltiples medidas sobre la calidad de la escuela en base a 
           los componentes de calificación que ve aquí.</p>
-          <p><a href='/gk/como-clasificamos/?lang=es' target="_blank" rel="noopener noreferrer">Infórmese más sobre las Calificaciones de GreatSchools.</a></p>
+          <p><a href='/gk/como-clasificamos/?lang=es' target="_blank">Infórmese más sobre las Calificaciones de GreatSchools.</a></p>
       alt_new_summary_rating_info:
         unrated_private: >
-          <p>GreatSchools es una organización nacional sin fines de lucro. Nuestra Calificación General ayuda a los padres comparar escuelas dentro de un estado basado en los puntajes de los exámenes y otros datos disponibles, como <a href='/gk/ratings-ca-mi/#studentprogressrating?lang=es' target="_blank" rel="noopener noreferrer">el progreso académico del estudiante</a> y <a href='/gk/ratings-ca-mi/#collegereadinessrating?lang=es' target="_blank" rel="noopener noreferrer">la preparación universitaria</a>. Pocas escuelas privadas publican resultados de exámenes estandarizado. Debido a la falta de datos, no somos capaces de ofrecer una calificación.</p>
-          <p><a href='/gk/ratings-ca-mi/?lang=es' target="_blank" rel="noopener noreferrer">Mas acerca de la calificación de GreatSchools.</a></p>
+          <p>GreatSchools es una organización nacional sin fines de lucro. Nuestra Calificación General ayuda a los padres comparar escuelas dentro de un estado basado en los puntajes de los exámenes y otros datos disponibles, como <a href='/gk/ratings-ca-mi/#studentprogressrating?lang=es' target="_blank">el progreso académico del estudiante</a> y <a href='/gk/ratings-ca-mi/#collegereadinessrating?lang=es' target="_blank">la preparación universitaria</a>. Pocas escuelas privadas publican resultados de exámenes estandarizado. Debido a la falta de datos, no somos capaces de ofrecer una calificación.</p>
+          <p><a href='/gk/ratings-ca-mi/?lang=es' target="_blank">Mas acerca de la calificación de GreatSchools.</a></p>
         unrated_public: >
-          <p>GreatSchools es una organización nacional sin fines de lucro. Nuestra Calificación General ayuda a los padres comparar escuelas dentro de un estado basado en los puntajes de los exámenes y otros datos disponibles, como <a href='/gk/ratings-ca-mi/#studentprogressrating?lang=es' target="_blank" rel="noopener noreferrer">el progreso académico del estudiante</a> y <a href='/gk/ratings-ca-mi/#collegereadinessrating?lang=es' target="_blank" rel="noopener noreferrer">la preparación universitaria</a>. Para algunas escuelas no tenemos suficientes datos de las agencias estatales o nacionales de educación para proporcionar una calificación.</p>
-          <p><a href='/gk/ratings-ca-mi/?lang=es' target="_blank" rel="noopener noreferrer">Mas acerca de la calificación de GreatSchools.</a></p>
+          <p>GreatSchools es una organización nacional sin fines de lucro. Nuestra Calificación General ayuda a los padres comparar escuelas dentro de un estado basado en los puntajes de los exámenes y otros datos disponibles, como <a href='/gk/ratings-ca-mi/#studentprogressrating?lang=es' target="_blank">el progreso académico del estudiante</a> y <a href='/gk/ratings-ca-mi/#collegereadinessrating?lang=es' target="_blank">la preparación universitaria</a>. Para algunas escuelas no tenemos suficientes datos de las agencias estatales o nacionales de educación para proporcionar una calificación.</p>
+          <p><a href='/gk/ratings-ca-mi/?lang=es' target="_blank">Mas acerca de la calificación de GreatSchools.</a></p>
         rated: >
           <p>GreatSchools es una organización nacional sin fines de lucro. Nuestro nuevo Resumen de 
           Calificaciones es una reflexión de múltiples medidas sobre la calidad de la escuela en base a 
           los componentes de calificación que ve aquí.</p>
-          <p><a href='/gk/como-clasificamos/?lang=es' target="_blank" rel="noopener noreferrer">Infórmese más sobre las Calificaciones de GreatSchools.</a></p>
+          <p><a href='/gk/como-clasificamos/?lang=es' target="_blank">Infórmese más sobre las Calificaciones de GreatSchools.</a></p>
       summary_rating_info:
         unrated_private: >
           <p>GreatSchools es una organización nacional sin fines de lucro. Nuestra Calificación General es una
@@ -67,14 +67,14 @@ es:
           puntajes de los exámenes y otros datos disponibles, como el progreso académico del estudiante y la
           preparación universitaria. Agencias estatales y nacionales de educación no reportan todos o algunos
           de estos datos para las escuelas privadas como ésta, así que no somos capaces de ofrecer una calificación.</p>
-          <p><a href='/gk/como-clasificamos/?lang=es' target="_blank" rel="noopener noreferrer">Mas acerca de la calificación de GreatSchools.</a></p>
+          <p><a href='/gk/como-clasificamos/?lang=es' target="_blank">Mas acerca de la calificación de GreatSchools.</a></p>
         unrated_public: >
           <p>GreatSchools es una organización nacional sin fines de lucro. Nuestra Calificación General es una
           sencilla herramienta que le ayuda a los padres comparar escuelas dentro de un estado basado en los
           puntajes de los exámenes y otros datos disponibles, como el progreso académico del estudiante y la
           preparación universitaria. Para algunas escuelas no tenemos suficientes datos de las agencias estatales
           o nacionales de educación para proporcionar una calificación.</p>
-          <p><a href='/gk/como-clasificamos/?lang=es' target="_blank" rel="noopener noreferrer">Mas acerca de la calificación de GreatSchools.</a></p>
+          <p><a href='/gk/como-clasificamos/?lang=es' target="_blank">Mas acerca de la calificación de GreatSchools.</a></p>
         rated: >
           <p>GreatSchools es una organización sin fines de lucro a nivel nacional. Nuestra Calificación General le
           ayuda a comparar las escuelas de su estado. Actualmente, nuestra calificación la obtenemos en base a los
@@ -82,6 +82,6 @@ es:
           atender una universidad.</p>
           <p>Pronto, GreatSchools ofrecerá una nueva calificación incorporando muchas de las medidas de calidad que
           ya tenemos en los perfiles de las escuelas. Cheque pronto....</p>
-          <p><a href='/gk/como-clasificamos/?lang=es' target="_blank" rel="noopener noreferrer">Mas acerca de la calificación de GreatSchools.</a></p>
+          <p><a href='/gk/como-clasificamos/?lang=es' target="_blank">Mas acerca de la calificación de GreatSchools.</a></p>
       public: pública
       edit: Editar

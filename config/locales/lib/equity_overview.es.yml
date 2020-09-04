@@ -3,7 +3,7 @@ es:
     equity_overview:
       'title': 'Perspectiva de la equidad'
       subtitle_html: >
-        Estudios muestran que la diversidad en la escuela beneficia a largo plazo a los estudiantes. <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="Descubre por qué" href="/gk/articles/la-importancia-de-la-diversidad-dentro-del-aula-de-clases/?lang=es" target="_blank" rel="noopener noreferrer">¡Descubre por qué!</a>
+        Estudios muestran que la diversidad en la escuela beneficia a largo plazo a los estudiantes. <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="Descubre por qué" href="/gk/articles/la-importancia-de-la-diversidad-dentro-del-aula-de-clases/?lang=es" target="_blank">¡Descubre por qué!</a>
       no_data_summary_html: >
         <p>En esta sección, publicamos una calificación que refleja qué tan bien esta escuela satisface las necesidades de sus estudiantes en desventaja, incluidos los de familias de bajos ingresos y razas/etnias desatendidas, en relación con todos sus estudiantes y en comparación con otras escuelas del estado.</p>
         <p>Este estado no proporciona suficientes datos para calcular La Calificación General de Equidad de GreatSchools.</p>
@@ -25,7 +25,7 @@ es:
         estudiantes en desventaja con relación a todos sus estudiantes, en comparación a otras escuelas en el estado,
         basado en los resultados de los exámenes del Departamento de Educación del estado.
         <br>
-        <a href="/gk/como-clasificamos/?lang=es#equityrating" style="cursor: pointer;" target="_blank" rel="noopener noreferrer">Aprenda más acerca de esta clasificación.</a>
+        <a href="/gk/como-clasificamos/?lang=es#equityrating" style="cursor: pointer;" target="_blank">Aprenda más acerca de esta clasificación.</a>
       narrative_1_html: >
         <h3 class="negative">Muy preocupante:</h3>
         <p>En esta escuela los estudiantes de las comunidades más desfavorecidas pueden estar quedándose atrás en
@@ -33,7 +33,7 @@ es:
         <hr>
         <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" />
         <span class="speech-bubble left">Consejos para padres</span></p>
-        <p class="footnote">¿Ofrece esta escuela oportunidades para todos sus estudiantes o deja algunos atrás? Las escuelas exitosas entienden cómo <a href="/gk/articles/la-brecha-en-el-rendimiento-academico-esta-tu-escuela-ayudando-a-todos-los-estudiantes-a-alcanzar-el-exito/?lang=es" target="_blank" rel="noopener noreferrer">cerrar la brecha de rendimiento académico</a>.</p>
+        <p class="footnote">¿Ofrece esta escuela oportunidades para todos sus estudiantes o deja algunos atrás? Las escuelas exitosas entienden cómo <a href="/gk/articles/la-brecha-en-el-rendimiento-academico-esta-tu-escuela-ayudando-a-todos-los-estudiantes-a-alcanzar-el-exito/?lang=es" target="_blank">cerrar la brecha de rendimiento académico</a>.</p>
       narrative_2_html: >
         <h3 class="negative">Un signo preocupante:</h3>
         <p>En esta escuela los estudiantes de las comunidades más desfavorecidas pueden estar quedándose atrás en
@@ -42,7 +42,7 @@ es:
         <hr>
         <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" />
         <span class="speech-bubble left">Consejos para padres</span></p>
-        <p class="footnote">¿Ofrece esta escuela oportunidades para todos sus estudiantes o deja algunos atrás? Las escuelas exitosas entienden cómo <a href="/gk/articles/la-brecha-en-el-rendimiento-academico-esta-tu-escuela-ayudando-a-todos-los-estudiantes-a-alcanzar-el-exito/?lang=es" target="_blank" rel="noopener noreferrer">cerrar la brecha de rendimiento académico</a>.</p>
+        <p class="footnote">¿Ofrece esta escuela oportunidades para todos sus estudiantes o deja algunos atrás? Las escuelas exitosas entienden cómo <a href="/gk/articles/la-brecha-en-el-rendimiento-academico-esta-tu-escuela-ayudando-a-todos-los-estudiantes-a-alcanzar-el-exito/?lang=es" target="_blank">cerrar la brecha de rendimiento académico</a>.</p>
       narrative_3_html: >
         <h3 class="neutral">Vale la pena una mirada más profunda:</h3>
         <p>En esta escuela los estudiantes de las comunidades más desfavorecidas se están desempeñando tan bien como
@@ -50,7 +50,7 @@ es:
         <hr>
         <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" />
         <span class="speech-bubble left">Consejos para padres</span></p>
-        <p class="footnote">¿Ofrece esta escuela oportunidades para todos sus estudiantes o deja algunos atrás? Las escuelas exitosas entienden cómo <a href="/gk/articles/la-brecha-en-el-rendimiento-academico-esta-tu-escuela-ayudando-a-todos-los-estudiantes-a-alcanzar-el-exito/?lang=es" target="_blank" rel="noopener noreferrer">cerrar la brecha de rendimiento académico</a>.</p>
+        <p class="footnote">¿Ofrece esta escuela oportunidades para todos sus estudiantes o deja algunos atrás? Las escuelas exitosas entienden cómo <a href="/gk/articles/la-brecha-en-el-rendimiento-academico-esta-tu-escuela-ayudando-a-todos-los-estudiantes-a-alcanzar-el-exito/?lang=es" target="_blank">cerrar la brecha de rendimiento académico</a>.</p>
       narrative_4_html: >
         <h3 class="positive">Un signo prometedor:</h3>
         <p>En esta escuela los estudiantes de las comunidades más desfavorecidas se están desempeñando mejor que otros
@@ -58,7 +58,7 @@ es:
         <hr>
         <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" />
         <span class="speech-bubble left">Consejos para padres</span></p>
-        <p class="footnote">¿Ofrece esta escuela oportunidades para todos sus estudiantes o deja algunos atrás? Las escuelas exitosas entienden cómo <a href="/gk/articles/la-brecha-en-el-rendimiento-academico-esta-tu-escuela-ayudando-a-todos-los-estudiantes-a-alcanzar-el-exito/?lang=es" target="_blank" rel="noopener noreferrer">cerrar la brecha de rendimiento académico</a>.</p>
+        <p class="footnote">¿Ofrece esta escuela oportunidades para todos sus estudiantes o deja algunos atrás? Las escuelas exitosas entienden cómo <a href="/gk/articles/la-brecha-en-el-rendimiento-academico-esta-tu-escuela-ayudando-a-todos-los-estudiantes-a-alcanzar-el-exito/?lang=es" target="_blank">cerrar la brecha de rendimiento académico</a>.</p>
       narrative_5_html: >
         <h3 class="positive">¡Buenas noticias!:</h3>
         <p>En esta escuela los estudiantes de las comunidades más desfavorecidas se están desempeñando mucho mejor que
@@ -66,11 +66,11 @@ es:
         <hr>
         <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" />
         <span class="speech-bubble left">Consejos para padres</span></p>
-        <p class="footnote">¿Ofrece esta escuela oportunidades para todos sus estudiantes o deja algunos atrás? Las escuelas exitosas entienden cómo <a href="/gk/articles/la-brecha-en-el-rendimiento-academico-esta-tu-escuela-ayudando-a-todos-los-estudiantes-a-alcanzar-el-exito/?lang=es" target="_blank" rel="noopener noreferrer">cerrar la brecha de rendimiento académico</a>.</p>
+        <p class="footnote">¿Ofrece esta escuela oportunidades para todos sus estudiantes o deja algunos atrás? Las escuelas exitosas entienden cómo <a href="/gk/articles/la-brecha-en-el-rendimiento-academico-esta-tu-escuela-ayudando-a-todos-los-estudiantes-a-alcanzar-el-exito/?lang=es" target="_blank">cerrar la brecha de rendimiento académico</a>.</p>
     equity_overview_alt:
       'title': 'Perspectiva de la equidad'
       subtitle_html: >
-        Estudios muestran que la diversidad en la escuela beneficia a largo plazo a los estudiantes. <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="Descubre por qué" href="/gk/articles/la-importancia-de-la-diversidad-dentro-del-aula-de-clases/?lang=es" target="_blank" rel="noopener noreferrer">¡Descubre por qué!</a>
+        Estudios muestran que la diversidad en la escuela beneficia a largo plazo a los estudiantes. <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="Descubre por qué" href="/gk/articles/la-importancia-de-la-diversidad-dentro-del-aula-de-clases/?lang=es" target="_blank">¡Descubre por qué!</a>
       no_data_summary_html: >
         <p>En esta sección, publicamos una calificación que refleja qué tan bien esta escuela satisface las necesidades de sus estudiantes en desventaja, en comparación con otras escuelas en el estado, basado en la preparación de la universidad, el progreso académico y en los resultados de los exámenes proporcionados por el Departamento de Educación del estado.</p>
         <p>Este estado no proporciona suficientes datos para calcular La Calificación de Equidad.</p>
@@ -90,7 +90,7 @@ es:
       info_text: >
         La Calificación de Equidad mira lo bien que esta escuela está atendiendo las necesidades de sus estudiantes en desventaja con relación a todos sus estudiantes, en comparación a otras escuelas en el estado, basado en métricas de preparación universitaria, progreso %{growth_type}, y en los resultados de los exámenes proporcionados por el Departamento de Educación del estado.
         <br>
-        <a href="/gk/ratings-ca-mi/?lang=es#equityrating" style="cursor: pointer;" target="_blank" rel="noopener noreferrer">Aprende más sobre esta calificación.</a>
+        <a href="/gk/ratings-ca-mi/?lang=es#equityrating" style="cursor: pointer;" target="_blank">Aprende más sobre esta calificación.</a>
       narrative_1_html: >
         <h3 class="negative">Muy preocupante:</h3>
         <p>En esta escuela los estudiantes de las comunidades más desfavorecidas pueden estar quedándose atrás en
@@ -98,7 +98,7 @@ es:
         <hr>
         <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" />
         <span class="speech-bubble left">Consejos para padres</span></p>
-        <p class="footnote">¿Ofrece esta escuela oportunidades para todos sus estudiantes o deja algunos atrás? Las escuelas exitosas entienden cómo <a href="/gk/articles/la-brecha-en-el-rendimiento-academico-esta-tu-escuela-ayudando-a-todos-los-estudiantes-a-alcanzar-el-exito/?lang=es" target="_blank" rel="noopener noreferrer">cerrar la brecha de rendimiento académico</a>.</p>
+        <p class="footnote">¿Ofrece esta escuela oportunidades para todos sus estudiantes o deja algunos atrás? Las escuelas exitosas entienden cómo <a href="/gk/articles/la-brecha-en-el-rendimiento-academico-esta-tu-escuela-ayudando-a-todos-los-estudiantes-a-alcanzar-el-exito/?lang=es" target="_blank">cerrar la brecha de rendimiento académico</a>.</p>
       narrative_2_html: >
         <h3 class="negative">Un signo preocupante:</h3>
         <p>En esta escuela los estudiantes de las comunidades más desfavorecidas pueden estar quedándose atrás en
@@ -107,7 +107,7 @@ es:
         <hr>
         <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" />
         <span class="speech-bubble left">Consejos para padres</span></p>
-        <p class="footnote">¿Ofrece esta escuela oportunidades para todos sus estudiantes o deja algunos atrás? Las escuelas exitosas entienden cómo <a href="/gk/articles/la-brecha-en-el-rendimiento-academico-esta-tu-escuela-ayudando-a-todos-los-estudiantes-a-alcanzar-el-exito/?lang=es" target="_blank" rel="noopener noreferrer">cerrar la brecha de rendimiento académico</a>.</p>
+        <p class="footnote">¿Ofrece esta escuela oportunidades para todos sus estudiantes o deja algunos atrás? Las escuelas exitosas entienden cómo <a href="/gk/articles/la-brecha-en-el-rendimiento-academico-esta-tu-escuela-ayudando-a-todos-los-estudiantes-a-alcanzar-el-exito/?lang=es" target="_blank">cerrar la brecha de rendimiento académico</a>.</p>
       narrative_3_html: >
         <h3 class="neutral">Vale la pena una mirada más profunda:</h3>
         <p>En esta escuela los estudiantes de las comunidades más desfavorecidas se están desempeñando tan bien como
@@ -115,7 +115,7 @@ es:
         <hr>
         <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" />
         <span class="speech-bubble left">Consejos para padres</span></p>
-        <p class="footnote">¿Ofrece esta escuela oportunidades para todos sus estudiantes o deja algunos atrás? Las escuelas exitosas entienden cómo <a href="/gk/articles/la-brecha-en-el-rendimiento-academico-esta-tu-escuela-ayudando-a-todos-los-estudiantes-a-alcanzar-el-exito/?lang=es" target="_blank" rel="noopener noreferrer">cerrar la brecha de rendimiento académico</a>.</p>
+        <p class="footnote">¿Ofrece esta escuela oportunidades para todos sus estudiantes o deja algunos atrás? Las escuelas exitosas entienden cómo <a href="/gk/articles/la-brecha-en-el-rendimiento-academico-esta-tu-escuela-ayudando-a-todos-los-estudiantes-a-alcanzar-el-exito/?lang=es" target="_blank">cerrar la brecha de rendimiento académico</a>.</p>
       narrative_4_html: >
         <h3 class="positive">Un signo prometedor:</h3>
         <p>En esta escuela los estudiantes de las comunidades más desfavorecidas se están desempeñando mejor que otros
@@ -123,7 +123,7 @@ es:
         <hr>
         <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" />
         <span class="speech-bubble left">Consejos para padres</span></p>
-        <p class="footnote">¿Ofrece esta escuela oportunidades para todos sus estudiantes o deja algunos atrás? Las escuelas exitosas entienden cómo <a href="/gk/articles/la-brecha-en-el-rendimiento-academico-esta-tu-escuela-ayudando-a-todos-los-estudiantes-a-alcanzar-el-exito/?lang=es" target="_blank" rel="noopener noreferrer">cerrar la brecha de rendimiento académico</a>.</p>
+        <p class="footnote">¿Ofrece esta escuela oportunidades para todos sus estudiantes o deja algunos atrás? Las escuelas exitosas entienden cómo <a href="/gk/articles/la-brecha-en-el-rendimiento-academico-esta-tu-escuela-ayudando-a-todos-los-estudiantes-a-alcanzar-el-exito/?lang=es" target="_blank">cerrar la brecha de rendimiento académico</a>.</p>
       narrative_5_html: >
         <h3 class="positive">¡Buenas noticias!:</h3>
         <p>En esta escuela los estudiantes de las comunidades más desfavorecidas se están desempeñando mucho mejor que
@@ -131,4 +131,4 @@ es:
         <hr>
         <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" />
         <span class="speech-bubble left">Consejos para padres</span></p>
-        <p class="footnote">¿Ofrece esta escuela oportunidades para todos sus estudiantes o deja algunos atrás? Las escuelas exitosas entienden cómo <a href="/gk/articles/la-brecha-en-el-rendimiento-academico-esta-tu-escuela-ayudando-a-todos-los-estudiantes-a-alcanzar-el-exito/?lang=es" target="_blank" rel="noopener noreferrer">cerrar la brecha de rendimiento académico</a>.</p>
+        <p class="footnote">¿Ofrece esta escuela oportunidades para todos sus estudiantes o deja algunos atrás? Las escuelas exitosas entienden cómo <a href="/gk/articles/la-brecha-en-el-rendimiento-academico-esta-tu-escuela-ayudando-a-todos-los-estudiantes-a-alcanzar-el-exito/?lang=es" target="_blank">cerrar la brecha de rendimiento académico</a>.</p>

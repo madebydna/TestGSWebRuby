@@ -5,7 +5,7 @@ en:
         This section includes test score information by subject and grade.
         <br></br>
       title: Test scores
-      subtitle_html: 'Find out <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="what state standardized test scores really tell you" href="/gk/articles/state-standardized-test-scores-issues-to-consider/" target="_blank" rel="noopener noreferrer">what state standardized test scores really tell you</a> about a school – and what they don’t.'
+      subtitle_html: 'Find out <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="what state standardized test scores really tell you" href="/gk/articles/state-standardized-test-scores-issues-to-consider/" target="_blank">what state standardized test scores really tell you</a> about a school – and what they don’t.'
       source: Source
       sources: Sources
       historical:

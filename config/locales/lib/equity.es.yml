@@ -33,7 +33,7 @@ es:
             <li>Para obtener más información sobre definiciones de bajos ingresos, consulte el "?" en la parte superior del módulo.</li>
             <li>Para obtener más información sobre la demografía del estudiante en esta escuela, visite la sección "estudiantes" a continuación.</li>
             </ul>
-            <p><a href="/gk/como-clasificamos/?lang=es#lowincomerating" target="_blank" rel="noopener noreferrer">Infórmese más sobre esta calificación.</a></p>
+            <p><a href="/gk/como-clasificamos/?lang=es#lowincomerating" target="_blank">Infórmese más sobre esta calificación.</a></p>
             <p>Todavía tiene preguntas? <a href="https://greatschools.zendesk.com/hc/en-us" target="_blank">Visite nuestra página de preguntas frecuentes.</a></p>
         disabilities:
           cta: ¿Notas que algo falta o confunde?
@@ -54,4 +54,4 @@ es:
           label: 'La Calificación de Progreso Académico de GreatSchools'
       description: Some description
       Dept of Education: Dept. de Educación
-      see more: '<span class="emphasis">Ver más:</span> <a href="/gk/como-clasificamos/?lang=es" target="_blank" rel="noopener noreferrer">Infórmese más sobre esta calificación.</a>'
+      see more: '<span class="emphasis">Ver más:</span> <a href="/gk/como-clasificamos/?lang=es" target="_blank">Infórmese más sobre esta calificación.</a>'
