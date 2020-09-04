@@ -1,7 +1,7 @@
 require 'spec_helper'
 describe SchoolProfilesController do
-  describe '#student_li_indicator' do
-    subject { controller.send(:student_li_indicator) }
+  describe '#student_li_indicator?' do
+    subject { controller.send(:student_li_indicator?) }
 
     context 'with no data' do
       before do
@@ -47,8 +47,8 @@ describe SchoolProfilesController do
     end
   end
 
-  describe '#student_ethnicity_indicator' do
-    subject { controller.send(:student_ethnicity_indicator) }
+  describe '#student_ethnicity_indicator?' do
+    subject { controller.send(:student_ethnicity_indicator?) }
 
     context 'with no data' do
       before do
@@ -118,8 +118,8 @@ describe SchoolProfilesController do
 
     context 'with both indicators false' do
       before do
-        allow(controller).to receive(:student_li_indicator).and_return(false)
-        allow(controller).to receive(:student_ethnicity_indicator).and_return(false)
+        allow(controller).to receive(:student_li_indicator?).and_return(false)
+        allow(controller).to receive(:student_ethnicity_indicator?).and_return(false)
       end
 
       it { is_expected.to eq({'uInd' => '' }) }
@@ -127,8 +127,8 @@ describe SchoolProfilesController do
 
     context 'with low income indicator true' do
       before do
-        allow(controller).to receive(:student_li_indicator).and_return(true)
-        allow(controller).to receive(:student_ethnicity_indicator).and_return(false)
+        allow(controller).to receive(:student_li_indicator?).and_return(true)
+        allow(controller).to receive(:student_ethnicity_indicator?).and_return(false)
       end
 
       it { is_expected.to eq({'uInd' => 'lInd' }) }
@@ -136,8 +136,8 @@ describe SchoolProfilesController do
 
     context 'with ethnicity indicator true' do
       before do
-        allow(controller).to receive(:student_li_indicator).and_return(false)
-        allow(controller).to receive(:student_ethnicity_indicator).and_return(true)
+        allow(controller).to receive(:student_li_indicator?).and_return(false)
+        allow(controller).to receive(:student_ethnicity_indicator?).and_return(true)
       end
 
       it { is_expected.to eq({'uInd' => 'eInd' }) }
@@ -145,8 +145,8 @@ describe SchoolProfilesController do
 
     context 'with both indicators true' do
       before do
-        allow(controller).to receive(:student_li_indicator).and_return(true)
-        allow(controller).to receive(:student_ethnicity_indicator).and_return(true)
+        allow(controller).to receive(:student_li_indicator?).and_return(true)
+        allow(controller).to receive(:student_ethnicity_indicator?).and_return(true)
       end
 
       it { is_expected.to eq({'uInd' => 'lInd,eInd' }) }
