@@ -2,13 +2,13 @@ en:
   school_profiles:
     stem_courses:
       title: Advanced courses
-      title_tooltip_text_html: STEM stands for science, technology, engineering, and math. <a href="/gk/articles/stem-in-the-classroom/">Find out</a> more about why STEM coursework is so important for today's students.
+      title_tooltip_text_html: STEM stands for science, technology, engineering, and math. <a href="/gk/articles/stem-in-the-classroom/" target="_blank">Find out</a> more about why STEM coursework is so important for today's students.
       m:
         title: Advanced courses
-        subtitle_html: Advanced STEM coursework in middle school can help set your student up for success in high school. <a href="/gk/articles/stem-in-the-classroom/">Find out more</a>.
-        parent_tip_html: When will your child take Algebra? <a href="/gk/articles/algebra-middle-school-math-track/">Here's what you need to understand</a> about math tracking.
+        subtitle_html: Advanced STEM coursework in middle school can help set your student up for success in high school. <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="Find out more" href="/gk/articles/stem-in-the-classroom/" target="_blank">Find out more</a>.
+        parent_tip_html: When will your child take Algebra? <a href="/gk/articles/algebra-middle-school-math-track/" target="_blank">Here's what you need to understand</a> about math tracking.
         faq_content_html: >
-          <p><a href="/gk/articles/why-algebra/">Algebra 1</a> is typically offered as an advanced math course for
+          <p><a href="/gk/articles/why-algebra/" target="_blank">Algebra 1</a> is typically offered as an advanced math course for
           students in middle school (it's a standard math class in high school). When participation is shown as 0%, or other information is missing in our
           display, it's most likely because this school either did not offer Algebra 1 to its 8th grade students. It may also be that the missing data was not
           included in the federal Civil Rights Data Collection (CRDC). (See "Sources" for more information.) Note&colon; While schools can offer Algebra 1 in 7th or 8th grades, we are displaying 8th grade Algebra 1 participation and pass rate information only, because the CRDC data set did not include pass rate information for 7th grade students.</p>
@@ -16,8 +16,8 @@ en:
           <p>Still have questions? <a href="https://greatschools.zendesk.com/hc/en-us" target="_blank">Visit our FAQ page</a>.</p>
       h:
         title: Advanced courses
-        subtitle_html: Rigorous courses can help students prepare for and get into college, including coursework in STEM subjects. <a href="/gk/articles/stem-in-the-classroom/">Find out more.</a>
-        parent_tip_html: Many successful high school students end up in remedial math courses in college. <a href="/gk/articles/ready-for-college-math/">Is your student prepared</a> for college-level math? Ask this school how they ensure that students are well prepared.
+        subtitle_html: Rigorous courses can help students prepare for and get into college, including coursework in STEM subjects. <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="Find out more" href="/gk/articles/stem-in-the-classroom/" target="_blank">Find out more.</a>
+        parent_tip_html: Many successful high school students end up in remedial math courses in college. <a href="/gk/articles/ready-for-college-math/" target="_blank">Is your student prepared</a> for college-level math? Ask this school how they ensure that students are well prepared.
         faq_content_html: >
           <div class="emphasis">What are AP classes?</div>
           <p>Advanced Placement (AP) classes are college-level classes with a final exam that, if passed, may count
@@ -37,11 +37,11 @@ en:
           <p>Still have questions? <a href="https://greatschools.zendesk.com/hc/en-us" target="_blank">Visit our FAQ page</a>.</p>
       mixed:
         title: Advanced courses
-        subtitle_html: STEM stands for science, technology, engineering, and math. <a href="/gk/articles/stem-in-the-classroom/">Find out</a> more about why STEM coursework is so important for today's students.
-        parent_tip_html: Many successful high school students end up in remedial math courses in college. <a href="/gk/articles/ready-for-college-math/">Is your student prepared</a> for college-level math? Ask this school how they ensure students are well-prepared.
+        subtitle_html: STEM stands for science, technology, engineering, and math. <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="Find out" href="/gk/articles/stem-in-the-classroom/" target="_blank">Find out</a> more about why STEM coursework is so important for today's students.
+        parent_tip_html: Many successful high school students end up in remedial math courses in college. <a href="/gk/articles/ready-for-college-math/" target="_blank">Is your student prepared</a> for college-level math? Ask this school how they ensure students are well-prepared.
         faq_content_html: >
           <div class="emphasis">Advanced math in middle school:</div>
-          <p><a href="/gk/articles/why-algebra/">Algebra 1</a> is typically offered as an advanced math course for
+          <p><a href="/gk/articles/why-algebra/" target="_blank">Algebra 1</a> is typically offered as an advanced math course for
           students in middle school (it's a standard math class in high school). When information is missing
           in our display, it's most likely because this school either did not offer Algebra 1 to its 8th grade
           students, or because this school does not have students in this grade. It may also be that the missing
@@ -62,16 +62,16 @@ en:
       faq_cta: Notice something missing or confusing?
       'Percentage algebra 1 enrolled grades 7-8':
         label: Algebra 1 participation rate
-        tooltip_html: Most schools consider <a href="/gk/articles/why-algebra/">Algebra 1</a> an advanced course in grades 7 or 8 and a standard course in high school. This reflects the percentage of 7th or 8th grade students at this school who took Algebra 1 compared to the state average. Here's what you need to know about <a href="/gk/articles/algebra-middle-school-math-track/">math tracking</a>.
+        tooltip_html: Most schools consider <a href="/gk/articles/why-algebra/" target="_blank">Algebra 1</a> an advanced course in grades 7 or 8 and a standard course in high school. This reflects the percentage of 7th or 8th grade students at this school who took Algebra 1 compared to the state average. Here's what you need to know about <a href="/gk/articles/algebra-middle-school-math-track/" target="_blank">math tracking</a>.
       'Percentage passing algebra 1 grades 7-8':
         label: Algebra 1 pass rate
-        tooltip_html: This reflects the percentage of 7th or 8th grade students at this school who passed <a href="/gk/articles/why-algebra/">Algebra 1</a> compared to the state average.
+        tooltip_html: This reflects the percentage of 7th or 8th grade students at this school who passed <a href="/gk/articles/why-algebra/" target="_blank">Algebra 1</a> compared to the state average.
       'Percent of students enrolled in Algebra 1':
         label: Algebra 1 participation rate
-        tooltip_html: Most schools consider <a href="/gk/articles/why-algebra/">Algebra 1</a> an advanced course in grades 7 or 8 and a standard course in high school. This reflects the percentage of 8th grade students at this school who took Algebra 1 compared to the state average. Here's what you need to know about <a href="/gk/articles/algebra-middle-school-math-track/">math tracking</a>.
+        tooltip_html: Most schools consider <a href="/gk/articles/why-algebra/" target="_blank">Algebra 1</a> an advanced course in grades 7 or 8 and a standard course in high school. This reflects the percentage of 8th grade students at this school who took Algebra 1 compared to the state average. Here's what you need to know about <a href="/gk/articles/algebra-middle-school-math-track/" target="_blank">math tracking</a>.
       'Percent of students passing Algebra 1':
         label: Algebra 1 pass rate
-        tooltip_html: This reflects the percentage of 8th grade students at this school who passed <a href="/gk/articles/why-algebra/">Algebra 1</a> compared to the state average.
+        tooltip_html: This reflects the percentage of 8th grade students at this school who passed <a href="/gk/articles/why-algebra/" target="_blank">Algebra 1</a> compared to the state average.
       'Percentage AP math enrolled grades 9-12':
         label: AP math course participation
         tooltip_html: This reflects the percentage of students at this school who took an Advanced Placement (AP) math course compared to the state average.

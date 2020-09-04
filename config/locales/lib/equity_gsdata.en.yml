@@ -24,7 +24,7 @@ en:
       RE UC/CSU eligibility narration: >
         Not all high school graduates have taken the classes they need to be eligible to apply to University of CA or CA state schools.
         This shows the percentages of graduates from high schools in this district who got a "C" grade or higher in the A-G required classes needed to be eligible for UC and CSU schools.
-        <a href="/gk/articles/dont-miss-these-requirements-to-get-into-college/">Find out more about these requirements.</a>
+        <a href="/gk/articles/dont-miss-these-requirements-to-get-into-college/" target="_blank">Find out more about these requirements.</a>
       RE Student Progress Rating narration: >
         These ratings reflect how much students at this school improved from one year to the next compared to similar students at other schools in the state. It's a helpful way to measure
         how well a school is helping kids learn and advance.
@@ -71,15 +71,15 @@ en:
           <p class="narrative-content">Test scores for low income students at this school fall <span class="emphasis">far below</span>
           the state average for all students.</p>
           <hr />
-          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tips</span></p>
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
           <div class="footnote">Low-income kids are really being left behind at this school. But some schools are doing an excellent job of serving all students.
-          <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="This toolkit will" href="/gk/equity-toolkit/">This toolkit will</a> help you close the equity gap at your school:%{more}
+          <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="This toolkit will" href="/gk/equity-toolkit/" target="_blank">This toolkit will</a> help you close the equity gap at your school:%{more}
           <ul>
-            <li><a href="/gk/equity-toolkit/#equity">Find out</a>: what the heck is equity, anyway?</li>
-            <li><a href="/gk/equity-toolkit/#best-practices">6 things</a> the best high schools do to help low-income kids.</li>
-            <li>How well is your school serving low income kids, <a href="/gk/equity-toolkit/#compare">compared to other schools near you?</a></li>
-            <li><a href="/gk/equity-toolkit/#what-to-ask">5 things</a> to ask your principal</li>
-            <li><a href="/gk/equity-toolkit/#principal-template">Share what you’ve learned</a> with your principal</li></ul></span>
+            <li><a href="/gk/equity-toolkit/#equity" target="_blank">Find out</a>: what the heck is equity, anyway?</li>
+            <li><a href="/gk/equity-toolkit/#best-practices" target="_blank">6 things</a> the best high schools do to help low-income kids.</li>
+            <li>How well is your school serving low income kids, <a href="/gk/equity-toolkit/#compare" target="_blank">compared to other schools near you?</a></li>
+            <li><a href="/gk/equity-toolkit/#what-to-ask" target="_blank">5 things</a> to ask your principal</li>
+            <li><a href="/gk/equity-toolkit/#principal-template" target="_blank">Share what you’ve learned</a> with your principal</li></ul></span>
           </ul>%{end_more}
           </div>
         _2_html: >
@@ -87,14 +87,14 @@ en:
           <p class="narrative-content">Test scores for low income students at this school fall <span class="emphasis">below</span> the state
           average for all students.</p>
           <hr />
-          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tips</span></p>
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
           <div class="footnote">Low-income kids are being left behind at this school. But some schools are doing an excellent job of serving all students.
-          <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="This toolkit will" href="/gk/equity-toolkit/">This toolkit will</a> help you close the equity gap at your school:%{more}<ul>
-            <li><a href="/gk/equity-toolkit/#equity">Find out</a>: what the heck is equity, anyway?</li>
-            <li><a href="/gk/equity-toolkit/#best-practices">6 things</a> the best high schools do to help low-income kids.</li>
-            <li>How well is your school serving low income kids, <a href="/gk/equity-toolkit/#compare">compared to other schools near you?</a></li>
-            <li><a href="/gk/equity-toolkit/#what-to-ask">5 things</a> to ask your principal</li>
-            <li><a href="/gk/equity-toolkit/#principal-template">Share what you’ve learned</a> with your principal</li></ul></span>
+          <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="This toolkit will" href="/gk/equity-toolkit/" target="_blank">This toolkit will</a> help you close the equity gap at your school:%{more}<ul>
+            <li><a href="/gk/equity-toolkit/#equity" target="_blank">Find out</a>: what the heck is equity, anyway?</li>
+            <li><a href="/gk/equity-toolkit/#best-practices" target="_blank">6 things</a> the best high schools do to help low-income kids.</li>
+            <li>How well is your school serving low income kids, <a href="/gk/equity-toolkit/#compare" target="_blank">compared to other schools near you?</a></li>
+            <li><a href="/gk/equity-toolkit/#what-to-ask" target="_blank">5 things</a> to ask your principal</li>
+            <li><a href="/gk/equity-toolkit/#principal-template" target="_blank">Share what you’ve learned</a> with your principal</li></ul></span>
           </ul>%{end_more}
           </div>
         _3_html: >
@@ -102,15 +102,15 @@ en:
           <p class="narrative-content">Test scores for low income students at this school are <span class="emphasis">about the same as</span> the
           state average, though still below the scores for all students at top-performing schools in the state.</p>
           <hr />
-          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tips</span></p>
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
           <div class="footnote">Most schools struggle to support low-income students.  But some schools are succeeding.
-          <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="This toolkit will" href="/gk/equity-toolkit/">This toolkit will</a> help you close the equity gap at your school:%{more}
+          <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="This toolkit will" href="/gk/equity-toolkit/" target="_blank">This toolkit will</a> help you close the equity gap at your school:%{more}
           <span><ul>
-            <li><a href="/gk/equity-toolkit/#equity">Find out</a>: what the heck is equity, anyway?</li>
-            <li><a href="/gk/equity-toolkit/#best-practices">6 things</a> the best high schools do to help low-income kids.</li>
-            <li>How well is your school serving low income kids, <a href="/gk/equity-toolkit/#compare">compared to other schools near you?</a></li>
-            <li><a href="/gk/equity-toolkit/#what-to-ask">5 things</a> to ask your principal</li>
-            <li><a href="/gk/equity-toolkit/#principal-template">Share what you’ve learned</a> with your principal</li></ul></span>
+            <li><a href="/gk/equity-toolkit/#equity" target="_blank">Find out</a>: what the heck is equity, anyway?</li>
+            <li><a href="/gk/equity-toolkit/#best-practices" target="_blank">6 things</a> the best high schools do to help low-income kids.</li>
+            <li>How well is your school serving low income kids, <a href="/gk/equity-toolkit/#compare" target="_blank">compared to other schools near you?</a></li>
+            <li><a href="/gk/equity-toolkit/#what-to-ask" target="_blank">5 things</a> to ask your principal</li>
+            <li><a href="/gk/equity-toolkit/#principal-template" target="_blank">Share what you’ve learned</a> with your principal</li></ul></span>
           </ul></span>%{end_more}
           </div>
         _4_html: >
@@ -118,15 +118,15 @@ en:
           <p class="narrative-content">Test scores for low income students at this school are <span class="emphasis">above</span> the state
           average for all students.</p>
           <hr />
-          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tips</span></p>
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
           <div class="footnote">This school is doing better than most schools when it comes to supporting low-income
           students. But some schools are doing an excellent job at serving all students.
-          <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="This toolkit will" href="/gk/equity-toolkit/">This toolkit will</a> help you close the equity gap at your school:%{more}<span><ul>
-            <li><a href="/gk/equity-toolkit/#equity">Find out</a>: what the heck is equity, anyway?</li>
-            <li><a href="/gk/equity-toolkit/#best-practices">6 things</a> the best high schools do to help low-income kids.</li>
-            <li>How well is your school serving low income kids, <a href="/gk/equity-toolkit/#compare">compared to other schools near you?</a></li>
-            <li><a href="/gk/equity-toolkit/#what-to-ask">5 things</a> to ask your principal</li>
-            <li><a href="/gk/equity-toolkit/#principal-template">Share what you’ve learned</a> with your principal</li></ul></span>
+          <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="This toolkit will" href="/gk/equity-toolkit/" target="_blank">This toolkit will</a> help you close the equity gap at your school:%{more}<span><ul>
+            <li><a href="/gk/equity-toolkit/#equity" target="_blank">Find out</a>: what the heck is equity, anyway?</li>
+            <li><a href="/gk/equity-toolkit/#best-practices" target="_blank">6 things</a> the best high schools do to help low-income kids.</li>
+            <li>How well is your school serving low income kids, <a href="/gk/equity-toolkit/#compare" target="_blank">compared to other schools near you?</a></li>
+            <li><a href="/gk/equity-toolkit/#what-to-ask" target="_blank">5 things</a> to ask your principal</li>
+            <li><a href="/gk/equity-toolkit/#principal-template" target="_blank">Share what you’ve learned</a> with your principal</li></ul></span>
           %{end_more}
           </div>
         _5_html: >
@@ -134,14 +134,14 @@ en:
           <p class="narrative-content">Test scores for low income students at this school <span class="emphasis">are far above</span> the state
           average for all students.</p>
           <hr />
-          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tips</span></p>
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
           <div class="footnote">This school is doing a much better job than most schools when it comes to supporting low-income students.
-          <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="This toolkit will" href="/gk/equity-toolkit/">This toolkit will</a> help you advocate for all kids.%{more}<span><ul>
-            <li><a href="/gk/equity-toolkit/#equity">Find out</a>: what the heck is equity, anyway?</li>
-            <li><a href="/gk/equity-toolkit/#best-practices">6 things</a> the best high schools do to help low-income kids.</li>
-            <li>How well is your school serving low income kids, <a href="/gk/equity-toolkit/#compare">compared to other schools near you?</a></li>
-            <li><a href="/gk/equity-toolkit/#what-to-ask">5 things</a> to ask your principal</li>
-            <li><a href="/gk/equity-toolkit/#principal-template">Share what you’ve learned</a> with your principal</li></ul></span>
+          <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="This toolkit will" href="/gk/equity-toolkit/" target="_blank">This toolkit will</a> help you advocate for all kids.%{more}<span><ul>
+            <li><a href="/gk/equity-toolkit/#equity" target="_blank">Find out</a>: what the heck is equity, anyway?</li>
+            <li><a href="/gk/equity-toolkit/#best-practices" target="_blank">6 things</a> the best high schools do to help low-income kids.</li>
+            <li>How well is your school serving low income kids, <a href="/gk/equity-toolkit/#compare" target="_blank">compared to other schools near you?</a></li>
+            <li><a href="/gk/equity-toolkit/#what-to-ask" target="_blank">5 things</a> to ask your principal</li>
+            <li><a href="/gk/equity-toolkit/#principal-template" target="_blank">Share what you’ve learned</a> with your principal</li></ul></span>
           %{end_more}
           </div>
       'UC/CSU eligibility': 'UC/CSU eligibility'
@@ -189,7 +189,7 @@ en:
       'Percentage of students chronically absent (15+ days)': '% chronically absent'
       Student with disabilities tooltip: >
         This group includes all students with physical or learning disabilities who receive special education and related services.
-        <a href="/gk/articles/special-education-a-practical-primer/">Learn more</a>.
+        <a href="/gk/articles/special-education-a-practical-primer/" target="_blank">Learn more</a>.
       narration:
         ER:
           normal:
@@ -197,12 +197,12 @@ en:
               <p class="narrative-content">This shows the percentage of students absent 15 or more days across different races/ethnicities at this school compared to the state average. High absenteeism rates mean less time for teaching and learning.</p>
               <hr />
               <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
-              <p class="footnote"><a href="/gk/articles/discipline-in-schools-moves-toward-peacemaking/">See how</a> some schools are using innovative approaches to improve discipline and attendance.</p>
+              <p class="footnote"><a href="/gk/articles/discipline-in-schools-moves-toward-peacemaking/" target="_blank">See how</a> some schools are using innovative approaches to improve discipline and attendance.</p>
             'Percentage of students suspended out of school': >
               <p class="narrative-content">This shows the out-of-school suspension rates across different races/ethnicities at this school compared to the state average. High suspension rates mean less time for teaching and learning.</p>
               <hr />
               <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
-              <p class="footnote"><a href="/gk/articles/discipline-in-schools-moves-toward-peacemaking/">See how</a> some schools are using innovative approaches to improve discipline and attendance.</p>
+              <p class="footnote"><a href="/gk/articles/discipline-in-schools-moves-toward-peacemaking/" target="_blank">See how</a> some schools are using innovative approaches to improve discipline and attendance.</p>
           disparity:
             'Percentage of students chronically absent (15+ days)': >
               <div class="auto-narration">
@@ -213,7 +213,7 @@ en:
                 what it's doing to make sure that attendance policies are fair.</p>
                 <hr />
                 <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
-                <p class="footnote"><a href="/gk/articles/discipline-in-schools-moves-toward-peacemaking/">See how</a> some schools are using innovative approaches to improve discipline and attendance.</p>
+                <p class="footnote"><a href="/gk/articles/discipline-in-schools-moves-toward-peacemaking/" target="_blank">See how</a> some schools are using innovative approaches to improve discipline and attendance.</p>
               </div>
             'Percentage of students suspended out of school': >
               <div class="auto-narration">
@@ -223,19 +223,19 @@ en:
                 groups of students and what it's doing to make sure that discipline policies are fair.</p>
                 <hr />
                 <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
-                <p class="footnote"><a href="/gk/articles/discipline-in-schools-moves-toward-peacemaking/">See how</a> some schools are using innovative approaches to improve discipline and attendance.</p>
+                <p class="footnote"><a href="/gk/articles/discipline-in-schools-moves-toward-peacemaking/" target="_blank">See how</a> some schools are using innovative approaches to improve discipline and attendance.</p>
               </div>
         SD:
           'Percentage of students chronically absent (15+ days)': >
             <p class="narrative-content">This shows the percentage of students with disabilities absent for 15 or more days compared to the state average. High absenteeism rates mean less time for teaching and learning.</p>
             <hr />
             <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
-            <p class="footnote"><a href="/gk/articles/school-discipline-the-rights-of-students-with-ieps-and-504-plans/">Learn about your child’s rights</a> when it comes to school discipline.</p>
+            <p class="footnote"><a href="/gk/articles/school-discipline-the-rights-of-students-with-ieps-and-504-plans/" target="_blank">Learn about your child’s rights</a> when it comes to school discipline.</p>
           'Percentage of students suspended out of school': >
             <p class="narrative-content">This shows the suspension rates for students with disabilities at this school compared to the state average. High suspension rates mean less time for  teaching and learning.</p>
             <hr />
             <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
-            <p class="footnote"><a href="/gk/articles/school-discipline-the-rights-of-students-with-ieps-and-504-plans/">Learn about your child’s rights</a> when it comes to school discipline.</p>
+            <p class="footnote"><a href="/gk/articles/school-discipline-the-rights-of-students-with-ieps-and-504-plans/" target="_blank">Learn about your child’s rights</a> when it comes to school discipline.</p>
           'Test scores':
             # one - subject begins with a vowel e.g. an English
             # other - subject begins with a consonant e.g. a Math
@@ -243,9 +243,9 @@ en:
               <p class="narrative-content">This shows results for students with disabilities on an %{subject} test given once a year. Big differences may suggest that some student groups are not getting the support they need to succeed.</p>
               <hr />
               <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
-              <p class="footnote">Ask your child’s school about <a href="/gk/articles/accommodations-what-they-are-and-how-they-work/">accommodations that can remove barriers to learning.</a></p>
+              <p class="footnote">Ask your child’s school about <a href="/gk/articles/accommodations-what-they-are-and-how-they-work/" target="_blank">accommodations that can remove barriers to learning.</a></p>
             other: >
               <p class="narrative-content">This shows results for students with disabilities on a %{subject} test given once a year. Big differences may suggest that some student groups are not getting the support they need to succeed.</p>
               <hr />
               <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
-              <p class="footnote">Ask your child’s school about <a href="/gk/articles/accommodations-what-they-are-and-how-they-work/">accommodations that can remove barriers to learning.</a></p>
+              <p class="footnote">Ask your child’s school about <a href="/gk/articles/accommodations-what-they-are-and-how-they-work/" target="_blank">accommodations that can remove barriers to learning.</a></p>
