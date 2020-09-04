@@ -104,25 +104,7 @@ module CommunityProfiles
       end
     end
 
-    # JT-10443:
-    # * If District has no Summer Learning data for either ES/MS or HS,
-    #     hide the Summer Learning tab completely.
-    # * If District offers at least one summer program in either ES/MS or HS, i.e.,
-    #     ES_MS_SUMMER_PROGRAM == "Yes" OR HS_SUMMER_PROGRAM == "Yes",
-    #     display all Summer Learning data types,
-    #     with an "N/A" value set if we have no data for a given data type.
-    # * If District offers no summer program in either ES/MS or HS, i.e.,
-    #     ES_MS_SUMMER_PROGRAM == "No" AND HS_SUMMER_PROGRAM == "No",
-    #     only display the Summer Learning data types for which we have data.
     def data_value(data_types)
-      # if [SUMMER_LEARNING_K8_SUBTAB_ACCESSORS, SUMMER_LEARNING_HIGH_SCHOOL_SUBTAB_ACCESSORS].include?(data_types)
-      #   es_ms_tab_data = crpe_data.fetch(ES_MS_SUMMER_PROGRAM, nil)
-      #   hs_tab_data = crpe_data.fetch(HS_SUMMER_PROGRAM, nil)
-      #   if (es_ms_tab_data.present? && es_ms_tab_data["value"] == "Yes") || (hs_tab_data.present? && hs_tab_data["value"] == "Yes")
-      #     return summer_learning_data_value(data_types)
-      #   end
-      # end
-
       data_types.map do |data_type|
         if [DISTRICT_REQUIRES_FACE_MASKS, TYPE_OF_REMOTE_INSTRUCTION_OFFERED_TO_STUDENTS].include?(data_type)
           multiple_labels_data_value(data_type, 2)
@@ -171,23 +153,6 @@ module CommunityProfiles
       I18n.t("#{data_type}.data_type_#{index}.tooltip_html", scope: 'community.distance_learning.data_types', default: nil)
     end
 
-    def summer_learning_data_value(data_types)
-      data_types.map do |data_type|
-        datum = crpe_data.fetch(data_type, nil)
-        date_valid = datum.present? ? datum["date_valid"] : nil
-        source = datum.present? ? datum["source"] : nil
-
-        {}.tap do |h|
-          h[:breakdown] = label(data_type)
-          h[:tooltip_html] = tooltip(data_type)
-          h[:data_type] = data_type
-          h[:value] = value(data_type)
-          h[:date_valid] = date_valid
-          h[:source] = source
-        end
-      end
-    end
-
     def value(data_type)
       datum = crpe_data.fetch(data_type, nil)
       if datum.present?
@@ -203,39 +168,14 @@ module CommunityProfiles
     end
 
     def tooltip(data_type)
-      summer_url = fetch_value(SUMMER_URL)
-
-      if [ES_MS_SUMMER_PROGRAM, HS_SUMMER_PROGRAM].include?(data_type) && !summer_url
-        tip = I18n.t("#{data_type}.tooltip_no_link_html", scope: 'community.distance_learning.data_types', default: nil)
-      else
-        tip = I18n.t("#{data_type}.tooltip_html", scope: 'community.distance_learning.data_types', url: summer_url, default: nil)
-      end
-      tip
+      I18n.t("#{data_type}.tooltip_html", scope: 'community.distance_learning.data_types', default: nil)
     end
 
     def label(data_type)
-      # TODO: What happens if RESOURCES_PROVIDED_BY_THE_DISTRICT is empty value set
-      if data_type == RESOURCE_COVERAGE && crpe_data.fetch(RESOURCES_PROVIDED_BY_THE_DISTRICT, nil)
-        datum = crpe_data.fetch(RESOURCES_PROVIDED_BY_THE_DISTRICT)
-        override_data_value = datum["value"]
-
-        I18n.t("#{datum['data_type']}.#{override_data_value.downcase}.label", scope: 'community.distance_learning.data_types')
-      else
-        # datum = crpe_data.fetch(data_type)
-        I18n.t("#{data_type}.label", scope: 'community.distance_learning.data_types')
-      end
+      I18n.t("#{data_type}.label", scope: 'community.distance_learning.data_types')
     end
 
     def format_overview
-      # JT-10443: If no SUMMER_SUMMARY, fall back to SUMMARY
-      # first_paragraph = fetch_value(SUMMER_SUMMARY)&.strip || fetch_value(SUMMARY)&.strip
-      # if first_paragraph
-      #   translated = I18n.db_t(first_paragraph, default: first_paragraph)
-      #   cta_link = fetch_value(SUMMER_URL) ? I18n.t('see_district_summer_page_html', scope: 'community.distance_learning', url: fetch_value(SUMMER_URL)) : ""
-
-      #   "#{translated} #{cta_link}"
-      # end
-
       summary = fetch_value(SUMMARY)&.strip
       learning_model = fetch_value(LEARNING_MODEL)&.strip
       remote_learning_plan = fetch_value(REMOTE_LEARNING_PLAN)&.strip
@@ -243,11 +183,9 @@ module CommunityProfiles
       noteworthy_practices = fetch_value(NOTEWORTHY_PRACTICES)&.strip
       cta_link = fetch_value(URL) ? I18n.t('see_district_page_html', scope: 'community.distance_learning', url: fetch_value(URL)) : ""
 
+      overview_datatypes = [summary, learning_model, remote_learning_plan, technology_and_wifi_access, noteworthy_practices].compact
+      translated_overview_datatypes = overview_datatypes.map { |type| I18n.db_t(type, default: type) }
       translated_summary = I18n.db_t(summary, default: summary)
-      translated_learning_model = I18n.db_t(learning_model, default: learning_model)
-      translated_remote_learning_plan = I18n.db_t(remote_learning_plan, default: remote_learning_plan)
-      translated_technology_and_wifi_access = I18n.db_t(technology_and_wifi_access, default: technology_and_wifi_access)
-      translated_noteworthy_practices = I18n.db_t(noteworthy_practices, default: noteworthy_practices)
       more = I18n.t('more', scope: 'community.distance_learning')
 
       str = translated_summary
@@ -256,7 +194,7 @@ module CommunityProfiles
       str += '.</a>'
       str += '<div class="js-moreReveal more-reveal">'
       str += '<ul>'
-      [translated_learning_model, translated_remote_learning_plan, translated_technology_and_wifi_access, translated_noteworthy_practices].compact.map do |data_type|
+      translated_overview_datatypes.map do |data_type|
         str += '<li class="overview-list">'
         str += data_type
         str += '</li>'
