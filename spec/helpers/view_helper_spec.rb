@@ -48,4 +48,28 @@ describe Api::ViewHelper do
       expect(display_card_information(card_details)).to eq('Visa ending in 4242')
     end
   end
+
+  describe '#progress_circle_class' do
+    [
+      [0, 1, 'gray'],
+      [1, 1, 'blue'],
+      [2, 1, 'blue']
+    ].each do |step, index, result|
+      it "expects step #{step}, index #{index} to equal result #{result}" do
+        expect(progress_circle_class(step, index)).to eq(result)
+      end
+    end
+  end
+
+  describe '#progress_bar_class' do
+    [
+      [0, 1, 'gray'],
+      [1, 1, 'gray'],
+      [2, 1, 'blue']
+    ].each do |step, index, result|
+      it "expects step #{step}, index #{index} to equal result #{result}" do
+        expect(progress_bar_class(step, index)).to eq(result)
+      end
+    end
+  end
 end

@@ -27,5 +27,13 @@ module Api
 
       "#{card_details.brand&.capitalize} ending in #{card_details.last_four}"
     end
+
+    def progress_circle_class(step, progress_index)
+      step >= progress_index ? 'blue' : 'gray'
+    end
+
+    def progress_bar_class(step, progress_index)
+      step > progress_index ? 'blue' : 'gray'
+    end
   end
 end

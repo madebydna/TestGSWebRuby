@@ -1,0 +1,7 @@
+<div class="progress-bar-circle-container">
+  <div class="<%= progress_circle_class(step, progress_index) %>"></div>
+  <div><%= step_label %></div>
+</div>
+<% unless end_of_progress_bar %>
+  <div class="progress-bar-line <%= progress_bar_class(step, progress_index) %>"></div>
+<% end %>
