@@ -183,7 +183,7 @@ module CommunityProfiles
       noteworthy_practices = fetch_value(NOTEWORTHY_PRACTICES)&.strip
       cta_link = fetch_value(URL) ? I18n.t('see_district_page_html', scope: 'community.distance_learning', url: fetch_value(URL)) : ""
 
-      overview_datatypes = [summary, learning_model, remote_learning_plan, technology_and_wifi_access, noteworthy_practices].compact
+      overview_datatypes = [learning_model, remote_learning_plan, technology_and_wifi_access, noteworthy_practices].compact
       translated_overview_datatypes = overview_datatypes.map { |type| I18n.db_t(type, default: type) }
       translated_summary = I18n.db_t(summary, default: summary)
       more = I18n.t('more', scope: 'community.distance_learning')
