@@ -27,7 +27,7 @@
         <div>
           <div id="js-ctaShow"></div>
         </div>
-        <%= render 'shared/ad', slotId: 'greatschools_Profiles_First', id_counter: 2, css_class: 'visible-xs visible-sm'  %>
+        <%= render 'shared/ad', slotId: 'greatschools_Profiles_First', id_counter: 2, css_class: 'visible-xs visible-sm', prerender_height: true  %>
 
         <a class="anchor-mobile-offset" name="Academics"></a>
         <div class="profile-section">
@@ -47,7 +47,7 @@
           </div>
         </div>
 
-        <%= render 'shared/ad', slotId: 'greatschools_Profiles_Second', css_class: 'mbl' %>
+        <%= render 'shared/ad', slotId: 'greatschools_Profiles_Second', css_class: 'mbl', prerender_height: true %>
         <div>
           <%= render 'equity', equity: @school_profile.equity, equity_overview: @school_profile.equity_overview %>
         </div>
@@ -75,7 +75,7 @@
           </div>
         </div>
 
-        <%= render 'shared/ad', slotId: 'greatschools_Profiles_Third', css_class: 'mbl' %>
+        <%= render 'shared/ad', slotId: 'greatschools_Profiles_Third', css_class: 'mbl', prerender_height: true %>
 
         <div class="profile-section">
           <%= render 'review_summary', reviews: @school_profile.reviews %>
@@ -92,7 +92,7 @@
     </div>
 
     <div class="profile-section">
-      <%= render 'shared/ad', slotId: 'greatschools_Profiles_Fourth', css_class: 'mbl' %>
+      <%= render 'shared/ad', slotId: 'greatschools_Profiles_Fourth', css_class: 'mbl', prerender_height: true %>
     </div>
     <a name="Neighborhood" id="Neighborhood"></a>
     <div class="profile-section">

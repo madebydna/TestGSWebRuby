@@ -7,6 +7,9 @@
   <%= stylesheet_link_tag "state", async: true %>
 <% end %>
 
+<% slot_1 = 'greatschools_statepagemobile_first' %>
+<% slot_2 = 'greatschools_statepage_second' %>
+
 <div class="community-page">
   <div class="state-body">
     <%= react_component('SearchBoxWrapper') %>
@@ -21,11 +24,11 @@
       <%= render 'community/toc' %><div class="community-modules">
 
         <%# First Ad %>
-        <div class="display-mobile">
+        <div class="display-mobile js-<%= slot_1 %>-height">
           <%#= render 'shared/ad', slotId: 'greatschools_statepagemobile_first', css_class: 'js-ad-hook' %>
 
           <%= react_component("AdWrapper", props: {
-              slot: "greatschools_statepagemobile_first"
+              slot: slot_1
           }) %>
         </div>
 
@@ -87,9 +90,9 @@
         </div>
 
         <%# Second Ad %>
-        <div id="second-ad">
+        <div id="second-ad" class="js-<%= slot_2 %>-height">
           <%= react_component("AdWrapper", props: {
-              slot: "greatschools_statepage_second"
+              slot: slot_2
           }) %>
         </div>
 

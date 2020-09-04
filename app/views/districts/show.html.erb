@@ -7,6 +7,9 @@
     <%= stylesheet_link_tag "district", async: true %>
 <% end %>
 
+<% slot_1 = 'greatschools_districtpagemobile_first' %>
+<% slot_2 = 'greatschools_districtpage_second' %>
+
 <div class="community-page">
   <div class="district-body">
     <%= react_component('SearchBoxWrapper') %>
@@ -32,9 +35,9 @@
       <%= render 'community/toc' %><div class="community-modules">
 
         <%# First Ad %>
-        <div class="display-mobile">
+        <div class="display-mobile js-<%= slot_1 %>-height">
           <%= react_component("AdWrapper", props: {
-              slot: "greatschools_districtpagemobile_first"
+              slot: slot_1
           }) %>
         </div>
 
@@ -93,9 +96,9 @@
         </div>
 
         <%# Second Ad %>
-        <div id="second-ad">
+        <div id="second-ad" class="js-<%= slot_2 %>-height">
           <%= react_component("AdWrapper", props: {
-              slot: "greatschools_districtpage_second"
+              slot: slot_2
           }) %>
         </div>
 

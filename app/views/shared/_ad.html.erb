@@ -1,6 +1,7 @@
 <% if AdsSwitch.ads_enabled_for_current_request? %>
   <% css_class ||= '' # CSS class to apply to container %>
   <% id_counter ||= 1 # For multiple ads with the same slotId/placementName %>
+  <% prerender_height ||= false # add a minimum height to the container to help with Google CLS issues. This get remove in util/advertising.js %> 
 
   <% unless defined?(show_ad_text) %>
     <% show_ad_text = true %>
@@ -14,6 +15,10 @@
 
   <% if close_button %>
     <% css_class << ' js-closable-ad' %>
+  <% end %>
+
+  <% if prerender_height %>
+    <% css_class << " js-#{slotId}-height" %>
   <% end %>
 
   <% divId = "#{slotId}_#{id_counter}" %>

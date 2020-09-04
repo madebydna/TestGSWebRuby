@@ -9,7 +9,8 @@
     <%= stylesheet_link_tag "search", async: true %>
 <% end %>
 
-<div id="search-page">
+<div id="search-page" >
   <%= react_component('Search') %>
 </div>
+<%= render 'layouts/fixed_loader' %>
 

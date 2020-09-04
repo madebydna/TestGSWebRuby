@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ColumnHeader from '../school_profiles/column_header';
+import QuestionMarkTooltip from 'react_components/school_profiles/question_mark_tooltip';
 
 export default class EquityContentPane extends React.Component {
 
@@ -15,6 +16,14 @@ export default class EquityContentPane extends React.Component {
   }
   get_narrative(){
     return this.props.text
+  }
+
+  getTooltip() {
+    if (this.props.tooltip) {
+      return (
+        <QuestionMarkTooltip content={this.props.tooltip} element_type='toptooltip' />
+      );
+    }
   }
 
   // Column header labels (i.e. 'Students', '% Proficient') will be added to every pane unless included in this
@@ -33,11 +42,15 @@ export default class EquityContentPane extends React.Component {
         'Percentage of students chronically absent (15+ days)',
         'Percentage of students enrolled in Dual Enrollment classes grade 9-12',
         'Percentage of students enrolled in IB grades 9-12',
-        'Learning',
-        'Planning',
-        'Teaching',
-        'K-8',
-        'High School',
+        // Distance Learning subtabs --
+        'Instruction',
+        'Support',
+        'Learning model',
+        'Academics',
+        'Learning loss',
+        'Resources',
+        'Special needs',
+        // -- Distance Learning subtabs
         'Student Progress Rating',
         'Academic Progress Rating',
         'SAT Scores',
@@ -60,7 +73,11 @@ export default class EquityContentPane extends React.Component {
     return(
       <div className={'tabs-panel tabs-panel_selected'}>
         <div className="row">
-    <div className="top-content">{this.get_narrative()}{this.props.graph && <hr  />}</div>
+          <div className="top-content">
+            {this.get_narrative()}
+            {this.getTooltip()}
+            {this.props.graph && <hr  />}
+          </div>
           {this.getColumnHeader()}
           <div>{this.props.graph}</div>
         </div>

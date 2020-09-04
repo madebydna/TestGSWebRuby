@@ -10,10 +10,17 @@ const Circle = (props) => {
   const { breakdown, tooltip_html, value } = props;
 
   const renderCircle = () => {
-    if (value === 'All' || value === 'Yes' || value === 'Partner') {
+    if (['All', 'Yes', 'Partner', 'Prioritizes'].includes(value)) {
       return (
         <div className="circle-viz">
           <CircleCheck key={breakdown} />
+        </div>
+      );
+    } else if (value === 'Mentions') {
+      return (
+        <div className="circle-viz">
+          <CircleDash key={breakdown} />
+          <div className="state-average tar">{t('distance_learning.ratings.somewhat')}</div>
         </div>
       );
     } else if (value === 'Partial') {
@@ -23,6 +30,7 @@ const Circle = (props) => {
           <div className="state-average tar">{t('distance_learning.ratings.not_all_grades')}</div>
         </div>
       );
+
     } else if (value === "N/A") {
       return (
         <div className="circle-viz">

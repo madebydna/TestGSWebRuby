@@ -2,121 +2,132 @@ es:
   community:
     distance_learning:
       title: Respuesta de COVID-19
-      subtitle: ¿Cómo ha apoyado este distrito el aprendizaje a distancia y otras necesidades de los estudiantes?
-      parent_tip: Los cierres de escuelas tienen impactos negativos en el aprendizaje de los niños, pero los principios del distrito pueden ayudar a reducir la pérdida de aprendizaje. Utiliza esta información para entender cómo este distrito planea ayudar a los estudiantes a recuperar el terreno perdido.
-      tooltip_html: <div>Esto muestra como el distrito está apoyando las necesidades de los estudiantes durante el cierre de escuelas debido a COVID-19. Si trabajas para este distrito y tienes actualizaciones sobre el aprendizaje a distancia, por favor envía un correo electrónico a <a href="mailto:crpedatabase@uw.edu">crpedatabase@uw.edu</a><div style="padding-top:10px;font-family:'opensans-italic';">Última actualización %{date_valid}</div></div>
+      subtitle: ¿Cómo está respondiendo este distrito a COVID-19 para el año escolar 2020-2021?
+      parent_tip: Los cierres de escuelas tienen impactos negativos en el aprendizaje de los niños, pero las políticas del distrito pueden ayudar a reducir la pérdida de aprendizaje. Utilice esta información para entender cómo se está adaptando este distrito para mantener a los estudiantes aprendiendo de manera segura.
+      tooltip_html: <div>Esta sección contiene información sobre cómo este distrito se está adaptando a COVID-19. Si trabajas para este distrito y tienes actualizaciones sobre el aprendizaje a distancia, por favor envía un correo electrónico a <a href="mailto:crpedatabase@uw.edu">crpedatabase@uw.edu</a><div style="padding-top:10px;font-family:'opensans-italic';">Última actualización %{date_valid}</div></div>
       district_overview: Resumen del distrito
       district_website_cta_html: <a href="%{url}" style="font-family:'opensans-semibold';" target="_blank">Visita la página de COVID-19 de tu distrito</a>
+      see_district_page_html: >
+        <a href="%{url}" style="font-family:'opensans-semibold';font-size:16px;" target="_blank">Ve la página del distrito para más información ></a>
       see_district_summer_page_html: Ve <a href="%{url}" style="font-family:'opensans-semibold';font-size:16px;" target="_blank">la página del programa de verano del distrito</a> para más detalles.
       see_more: Ver más
+      more: más
       sources_html: <div class="sourcing"><h1>Información y fuentes de aprendizaje a distancia del distrito</h1> <div>La información que se presenta en este módulo fue compilada por el <a href="https://www.crpe.org/" target="_blank">Center on Reinventing Public Education (CRPE por sus siglas)</a> quienes obtuvieron datos principalmente de planes públicos en sitios de web de distritos escolares. Si trabajas para este distrito y tienes actualizaciones sobre el aprendizaje a distancia, por favor envía un correo electrónico a <a href="mailto:crpedatabase@uw.edu">crpedatabase@uw.edu</a></div></div>
       tab:
         overview: Resumen
-        teaching: La enseñanza
+        health & safety: Salud y seguridad
+        teaching: Enseñanza
+        instruction: Instrucción
+        support: Apoyo
+        policies: Políticas del distrito
+        learning model: Modelo de aprendizaje
+        academics: Académico
+        learning loss: Pérdida de aprendizaje
+        student support: Apoyo al estudiante
         resources: Recursos
-        policies: Principios del distrito
-        learning: La enseñanza
-        planning: El regreso a clases
-        summer learning: Aprendizaje de verano
-        k-8: K-8
-        high school: Escuela secundaria
+        special needs: Necesidades especiales
       data_types:
-        RESOURCES PROVIDED BY THE DISTRICT:
-          specific:
-            label: Distritos/escuelas proporcionan currículo a nivel de grado
-          general:
-            label: Distritos proporcionan enlaces a recursos generales de aprendizaje
-        RESOURCE COVERAGE:
-          specific:
-            label: Distritos/escuelas proporcionan currículo a nivel de grado
-          general:
-            label: Distritos proporcionan enlaces a recursos generales de aprendizaje
-        INSTRUCTION FROM TEACHERS:
-          label: Los maestros proporcionan lecciones y tarea regularmente
-        SYNCHRONOUS TEACHING FLAG:
-          label: La enseñanza se realiza en tiempo real (por ejemplo, en vivo por video)
-        SYNCHRONOUS STUDENT ENGAGEMENT FLAG:
-          label: Los estudiantes interactúan en tiempo real
-        RESOURCES FOR STUDENTS WITH DISABILITIES:
-          label: Apoyo proporcionado para estudiantes con discapacidades
-        FEEDBACK ON STUDENT WORK:
+        DISTRICT REQUIRES FACE MASKS:
+          data_type_1:
+            label: Se requieren máscaras faciales para el personal de escuela
+          data_type_2:
+            label: Se requieren máscaras faciales para los estudiantes
+        DISTRICT COMMUNICATES CHANGES TO BUILDING HEALTH SANITATION AND PROTOCOLS:
+          label: El distrito ha actualizado las instalaciones y terrenos escolares para que sean más seguros
+          tooltip_html: Algunos ejemplos pueden incluir la instalación de grifos y basureros que no se tocan, la adición de estaciones desinfectantes manuales y la descontinuación de máquinas vendedoras.
+        DISTRICT COMMUNICATES CHANGES TO BUILDING PRACTICES FOR ALL SCHOOLS TO ENSURE PHYSICAL DISTANCING:
+          label: El distrito ha adoptado nuevas prácticas de salud y seguridad para el aprendizaje en persona
+          tooltip_html: Algunos ejemplos pueden incluir el monitoreo de entradas/salidas, el manejo del flujo de tráfico en los pasillos y la separación de los estudiantes en áreas comunes.
+        DISTRICT COMMUNICATES EXPECTATION THAT HEALTH AND SAFETY DATA WILL BE SHARED WITH FAMILIES:
+          label: 'El distrito compartirá # de casos/escuela y el progreso en el monitoreo de salud y seguridad'
+        DISTRICT HAS A PLAN OR POLICY FOR DETERMINING FUTURE ROLLING CLOSURES IF CONFIRMED INFECTION OF STAFF OR STUDENTS:
+          label: Distrito tiene un plan para cerrar escuelas en respuesta a futuros brotes
+        TYPE OF REMOTE INSTRUCTION OFFERED TO STUDENTS:
+          data_type_1:
+            label: La enseñanza se realiza en tiempo real (por ejemplo, en vivo por video)
+          data_type_2:
+            label: Los maestros proporcionan lecciones para que los estudiantes las hagan por sí solos
+        DISTRICT REQUIRES TEACHER-FAMILY CHECK-INS WHEN ENGAGED IN REMOTE LEARNING:
+          label: Los maestros deben hacer el check-in con los padres
+        DISTRICT REQUIRES TEACHER-STUDENT CHECK-INS WHEN ENGAGED IN REMOTE LEARNING:
+          label: Los maestros deben hacer el check-in con los estudiantes
+        DISTRICT EXPECTS TEACHERS TO PROVIDE FEEDBACK ON STUDENT WORK FOR STUDENTS ENGAGED IN REMOTE LEARNING:
           label: Los maestros proporcionan indicaciones en el trabajo de los estudiantes
-        FORMAL GRADING FLAG:
-          label: Los estudiantes reciben calificaciones (calificación de letra o pase/fallo)
-        TEACHER CHECK-INS:
-          label: Los maestros se conectan con los estudiantes individualmente fuera de clases
-        ATTENDANCE TRACKING:
+        DISTRICT OFFERED SUMMER PROFESSIONAL DEVELOPMENT:
+          label: Los maestros recibieron capacitación durante el verano para prepararse para el regreso a clases en el otoño
+        DISTRICT INCREASES TIME DEDICATED TO TEACHER PD OR COLLABORATION:
+          label: Se han aumentado las horas de capacitación y colaboración de los maestros
+        DISTRICT HAS PLAN TO PROVIDE COACHING AND SUPPORT TO TEACHERS DURING THE YEAR IN REMOTE LEARNING SETTING:
+          label: Los maestros recibirán capacitación y apoyo durante todo el año
+        START-OF-YEAR ANTICIPATED LEARNING MODEL:
+          data_type_1:
+            label: Los estudiantes regresan a la escuela para el aprendizaje en persona
+          data_type_2:
+            label: Los estudiantes comienzan la escuela en línea (aprendizaje a distancia)
+          data_type_3:
+            label: 'Aprendizaje híbrido: las escuelas combinan el aprendizaje en persona y en línea'
+          data_type_4:
+            label: 'El modelo varía: diferentes escuelas dentro del distrito están abriendo con diferentes modelos'
+        DISTRICT MENTIONS RACIAL EQUITY AS A PRIORITY OR CONSIDERS RACIAL EQUITY IN WHICH STUDENTS TO PRIORITIZE FOR SERVICES AND IN-PERSON INSTRUCTION:
+          label: El distrito ha priorizado la equidad racial en los planes de aprendizaje
+        DISTRICT WILL PROVIDE REMOTE CURRICULUM FOR ALL GRADE LEVELS:
+          label: Distritos/escuelas proporcionan currículo a nivel de grado
+        DISTRICT REQUIRES SCHOOLS TO PROVIDE STUDENT GRADES:
+          label: Los estudiantes reciben calificaciones
+        DISTRICT REQUIRES SCHOOLS TO TAKE ATTENDANCE:
           label: Las escuelas siguen la asistencia de los estudiantes
-        INSTRUCTIONAL MINUTES RECOMMENDED:
-          label: Distritos ofrecen directrices de aprendizaje para los padres
-        DEVICE DISTRIBUTION:
-          label: Computadoras/apartos proporcionados a los estudiantes que los necesitan
-        HOTSPOT ACCESS:
+        PLAN NAMES REQUIRED MINIMUM NUMBER OF INSTRUCTIONAL MINUTES:
+          label: El distrito tiene un número mínimo de minutos de instrucción que los estudiantes deben recibir
+        DISTRICT HAS A PLAN FOR SUPPORTING HIGH SCHOOL STUDENTS WITH COLLEGE AND CAREER PREPARATION:
+          label: Los estudiantes de secundaria reciben apoyo universitario/profesional
+        DISTRICT EXPECTS SCHOOLS TO DIAGNOSE ENTERING STUDENT LEARNING LOSS:
+          label: Las escuelas evaluarán la pérdida de aprendizaje de los estudiantes al comienzo del año
+          tooltip_html: El distrito tiene un plan para evaluar dónde están los estudiantes al principio del año, como medir la pérdida de aprendizaje y el dominio de los estudiantes de las habilidades básicas.
+        DISTRICT HAS A PLAN TO PROVIDE INTERVENTIONS OR INCREASED SUPPORTS BASED ON STUDENT LEARNING LOSS DIAGNOSTIC:
+          label: El distrito tiene estrategias para ayudar a los estudiantes a ponerse al día
+        DISTRICT HAS A PLAN TO MONITOR STUDENTS' ACADEMIC PROGRESS THROUGHOUT THE YEAR:
+          label: El distrito tiene un plan para monitorear el progreso de los estudiantes durante el año
+        PLAN COMMITS TO PROVIDE DEVICES FOR ALL STUDENTS IN NEED:
+          label: Computadoras/aparatos proporcionados a los estudiantes que los necesitan
+        PLAN COMMITS TO PROVIDE HOTSPOT/WIFI ACCESS FOR ALL STUDENTS IN NEED:
           label: Puntos de acceso a Wi-Fi proporcionados
-        DISTRICT DELEGATES DISTANCE LEARNING PLAN DECISION-MAKING:
-          label: El distrito ha delegado el aprendizaje a distancia a las escuelas
-          tooltip_html: En los distritos que han delegado el aprendizaje a distancia, las escuelas son responsables de diseñar sus propios planes. Esto lo que significa es que los enfoques pueden variar entres las escuelas del distrito.
-        20-21 CONTINGENCY PLAN:
-          label: Planes flexibles para ofrecer aprendizaje a distancia y/o en persona para el año escolar 2020-21
-          tooltip_html: El distrito tiene planes para abordar diferentes escenarios de aprendizaje para el nuevo año escolar, incluyendo aprendizaje a distancia o en persona, o una combinación de ambas estrategias.
-        LEARNING LOSS PLAN:
-          label: Planes para remediar la perdida de aprendizaje de los estudiantes durante el verano o otoño
-          tooltip_html: Distritos ofrecerán recuperacion de credito, instrucción correctiva y/o apoyo adicional para estudiantes con alto ausentismo o calificaciones bajas.
-        SUMMER LEARNING PLAN:
-          label: Planes para ofrecer opciones de escuela de verano
-          tooltip_html: El distrito ofrecerá la escuela de verano directamente o a través de una compañía externo.
-        LEARNING LOSS DIAGNOSTIC IDENTIFIED:
-          label: Herramientas para medir la perdida de aprendizaje de los estudiantes en el otoño del 2020
-          tooltip_html: El distrito evaluará a cada estudiante para la pérdida de aprendizaje para guiar las decisiones sobre el nivel de grado y los créditos.
-        ES MS SUMMER PROGRAM:
-          label: Ofreciendo un programa de verano
-          tooltip_html: El distrito ofrece al menos un programa de verano impartido por maestros del distrito. Consulta <a href="%{url}" style="font-family:'opensans-semibold';" target="_blank">el sitio del distrito</a> para obtener más información.
-          tooltip_no_link_html: El distrito ofrece al menos un programa de verano impartido por maestros del distrito.
-        "ES MS CONTENT: MAKE-UP":
-          label: Ofreciendo un programa para la pérdida de aprendizaje
-          tooltip_html: El Distrito está ofreciendo un programa de verano para ayudar a los estudiantes a ponerse al día con el material que pueden haber perdido debido al cierre de las escuelas.
-        "ES MS CONTENT: REVIEW":
-          label: Ofreciendo un programa para la pérdida de aprendizaje
-          tooltip_html: El Distrito está ofreciendo un programa de verano para ayudar a los estudiantes a ponerse al día con el material que pueden haber perdido debido al cierre de las escuelas.
-        "ES MS CONTENT: ENRICHMENT":
-          label: Ofreciendo un programa de enriquecimiento
-          tooltip_html: El programa se centra en material que normalmente no se cubre durante el año escolar. Estos programas no están destinados a ayudar a poner al día los estudiantes que están detrás.
-        HS SUMMER PROGRAM:
-          label: Ofreciendo un programa de verano
-          tooltip_html: El distrito ofrece al menos un programa de verano impartido por maestros del distrito. Consulta <a href="%{url}" style="font-family:'opensans-semibold';" target="_blank">el sitio del distrito</a> para obtener más información.
-          tooltip_no_link_html: El distrito ofrece al menos un programa de verano impartido por maestros del distrito.
-        "HS CONTENT: LEARNING LOSS":
-          label: Ofreciendo un programa para la pérdida de aprendizaje
-          tooltip_html: El programa aborda la pérdida de aprendizaje debido al cierre de las escuelas, pero no ofrece crédito para el curso.
-        "HS CONTENT: CREDIT RECOVERY":
-          label: Ofreciendo recuperación de crédito o classes fallidas
-          tooltip_html: El programa ayuda a los estudiantes de secundaria a retomar las clases fallidas o a compensar los créditos que les faltan.
-        "HS CONTENT: CREDIT ACCELERATION":
-          label: Ofreciendo aceleración de crédito
-          tooltip_html: El programa permite a los estudiantes que desean salir adelante a tomar cursos de crédito durante el verano.
-        "HS CONTENT: ENRICHMENT":
-          label: Ofreciendo programa de enriquecimiento
-          tooltip_html: El programa ofrece actividades de enriquecimiento como preparación para SAT/ACT o planificación universitaria/carrera.
-        SUMMER MEAL PLAN:
-          label: Comida gratuita para estudiantes
-          tooltip_html: Comida está disponible para cualquier estudiante, independientemente de la inscripción en la escuela de verano.
-      summer learning:
-        k-8:
-          narration: ¿Cómo aborda este distrito la pérdida de aprendizaje durante el verano para los estudiantes de primaria y intermedia?
-        high school:
-          narration: ¿Cómo aborda este distrito la pérdida de aprendizaje durante el verano para los estudiantes de secundaria?
-      resources:
+        DISTRICT OFFERS GUIDANCE OR TRAINING TO PARENTS IN HOW TO HELP STUDENTS LEARN AT HOME:
+          label: Los padres reciben pautas para apoyar el aprendizaje en casa
+          tooltip_html: El distrito ofrece capacitación a los padres para apoyar a los estudiantes académicamente, socialmente, manejando el tiempo de la pantalla, etc.
+        DISTRICT EXPECTS ALL SCHOOLS TO PROVIDE ACCESS TO COUNSELORS OR SOCIAL WORKERS:
+          label: El distrito requiere que las escuelas proporcionen a los estudiantes acceso a un consejero o trabajador social
+        DISTRICT HAS A PLAN TO PROVIDE SOCIAL, EMOTIONAL, AND MENTAL HEALTH SERVICES:
+          label: El distrito proporciona aprendizaje socioemocional / servicios de salud mental para los estudiantes
+        DISTRICT HAS A PLAN TO PROVIDE SPECIFIC SUPPORT TO STUDENTS WITH DISABILITIES:
+          label: Las escuelas deben brindar apoyo a los estudiantes con discapacidades
+        DISTRICT HAS A PLAN TO PROVIDE SPECIFIC SUPPORT TO STUDENTS WITH LANGUAGE BARRIERS:
+          label: Las escuelas deben ofrecer apoyo a los estudiantes de aprendices del idioma inglés (ELL)
+        DISTRICT HAS A PLAN TO PROVIDE SPECIFIC SUPPORT TO STUDENTS EXPERIENCING HOMELESSNESS OR TRANSITIONAL STUDENTS:
+          label: Las escuelas deben ofrecer apoyo a los estudiantes sin hogar
+      health & safety:
         main:
-          narration: ¿Qué apoyo ofrece el distrito a los estudiantes y a las familias?
+          narration: ¿Qué ha hecho el distrito para prepararse para un regreso seguro para el aprendizaje en persona cuando llega el momento?
+      teaching:
+        instruction:
+          narration: ¿Cómo están proporcionando los maestros la instrucción remota?
+        support:
+          narration: ¿Cómo ayuda este distrito a los maestros a proporcionar instrucción remota?
       policies:
-        learning:
-          narration: ¿Cuales son los principios de aprendizaje a distancia de este distrito?
-        planning:
-          narration: ¿Cuales son los planes del distrito para apoyar el aprendizaje de los estudiantes?
-        teaching:
-          narration: ¿Cómo proporciona este distrito instrucciones de aprendizaje a los estudiantes?
+        learning model:
+          narration: ¿Cómo planea este distrito comenzar el año escolar?
+        academics:
+          narration: ¿Cuáles son las políticas académicas para el año escolar 2020-2021?
+        learning loss:
+          narration: ¿Cómo planea el distrito remediar la pérdida de aprendizaje de los estudiantes?
+      student support:
+        resources:
+          narration: ¿Cómo está apoyando el distrito a los estudiantes y las familias?
+        special needs:
+          narration: ¿Cómo está garantizando el distrito el apoyo a los estudiantes más vulnerables?
+          tooltip_html: ¿Este distrito requiere que las escuelas prioricen el acceso a la enseñanza en persona para las poblaciones vulnerables, incluyendo los estudiantes con discapacidades, los estudiantes sin hogar y los estudiantes de aprendices del idioma inglés (ELL)?
       ratings:
         all_students: todos los estudiantes
         some_students: algunos de los estudiantes
         no_students: ninguno de los estudiantes
         not_all_grades: no todos los grados
+        somewhat: mas o menos
