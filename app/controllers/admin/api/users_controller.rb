@@ -4,7 +4,7 @@ class Admin::Api::UsersController < ApplicationController
 
   layout 'admin'
 
-  before_action :require_user, only: [:billing, :update, :confirmation, :receipt]
+  before_action :require_user, only: [:billing, :update, :confirmation, :receipt, :plan_update]
 
   def index
     @users = Api::User.all
@@ -47,7 +47,6 @@ class Admin::Api::UsersController < ApplicationController
 
   def confirmation
     redirect_to api_billing_path unless session[:billing_details].present? && session[:card].present?
-
     @card_details = Api::CreditCardDetails.call(session[:card], session[:billing_details])
 
     # @subscription = Api::Subscription.find('subscription_id').update(status: 'payment_added')
@@ -60,6 +59,17 @@ class Admin::Api::UsersController < ApplicationController
     session[:billing_details] = nil
     session[:card] = nil
     session[:user_id] = nil
+  end
+
+  def plan_update
+    subscription = Api::Subscription.find_by(id: params[:subscription_id])
+    return unless subscription.present?
+
+    subscription.update(plan_id: params[:plan_id])
+
+    respond_to do |format|
+      format.js
+    end
   end
 
   def notify_user

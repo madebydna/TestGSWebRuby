@@ -15,7 +15,7 @@
         <div style="position:relative;">
           <div class="price-secondary">
             <% if plan.name == 'free_trial' %>
-              /mo for 6 months
+              <%= price_secondary(plan.price) %> for 6 months
             <% else %>
               <%= price_secondary(plan.price) %> /mo
             <% end %>
@@ -30,7 +30,7 @@
     </div>
     <div class="api-plan-start">
       <%= form_tag(action_url(plan.name), method: "get") do %>
-        <%= hidden_field_tag :plan_id, plan.id %>
+        <%= hidden_field_tag :plan_id , plan.id %>
         <button class="<%= plan.name %>"><%= button_txt(plan.name) %></button>
       <% end %>
     </div>

@@ -4,6 +4,8 @@
 @import 'pages/nav/developer_nav';
 @import 'fonts/fonts-opensans-semibold';
 @import 'fonts/fonts-robotoslab-bold';
+@import 'components/progress_bar';
+
 
 .admin_header {
   text-align: right;
@@ -22,9 +24,7 @@
       line-height: 32px;
     }
   }
-  div {
-    // margin: 1%;
-  }
+
   .api-title {
     background: $blue-darker;
     padding: 8px;
@@ -208,6 +208,23 @@
         margin-right: 5px;
       }
       border: none;
+    }
+
+    .api-text-field.subscription, .js-edit-btn{
+      cursor: pointer;
+
+      &:hover{
+        color: #2ba3dc;
+        font-weight: bold;
+        transition: 0.3s;
+        opacity: .8;
+      }
+    }
+
+    .js-edit-btn {
+      color: #2ba3dc;
+      font-size: 12px;
+      text-transform: lowercase;
     }
 
   }

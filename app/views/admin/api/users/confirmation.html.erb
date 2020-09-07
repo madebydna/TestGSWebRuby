@@ -1,5 +1,7 @@
 <%= render 'admin/admin/developer_nav' %>
 
+<%= render 'admin/api/components/progress_bar', step: 3 %>
+
 <div class="col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
   <div class="new-api-account-form">
     <h3 class="api-form-header">Confirmation</h3>
@@ -44,10 +46,8 @@
       <hr/>
     </div>
     <div class="col-xs-12 col-md-5 col-md-offset-1">
-      <h4 class="api-form-subtitle">Plan</h4>
-      <div class="api-text-field">
-        <%= format_plan(@user.subscription) %>
-      </div>
+      <h4 class="api-form-subtitle">Plan <small class="js-edit-btn">edit</small></h4>
+      <%= render 'user_subscription_plan', user: @user %>
       <h4 class="api-form-subtitle">Billing Address</h4>
       <hr/>
       <div class="api-text-field">

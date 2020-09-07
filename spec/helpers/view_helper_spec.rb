@@ -27,8 +27,8 @@ describe Api::ViewHelper do
         [subscription, 'Free Trial $0.00/month'],
         [subscription2, 'Extreme Plan $1,000.00/month'],
         [nil, 'No Plan Selected'],
-      ].each do |plan, result|
-        expect(format_plan(plan)).to eq(result)
+      ].each do |subscription, result|
+        expect(format_plan(subscription&.plan)).to eq(result)
       end
     end
   end
@@ -46,6 +46,30 @@ describe Api::ViewHelper do
 
     it 'should return the correct phrase' do
       expect(display_card_information(card_details)).to eq('Visa ending in 4242')
+    end
+  end
+
+  describe '#progress_circle_class' do
+    [
+      [0, 1, 'gray'],
+      [1, 1, 'blue'],
+      [2, 1, 'blue']
+    ].each do |step, index, result|
+      it "expects step #{step}, index #{index} to equal result #{result}" do
+        expect(progress_circle_class(step, index)).to eq(result)
+      end
+    end
+  end
+
+  describe '#progress_bar_class' do
+    [
+      [0, 1, 'gray'],
+      [1, 1, 'gray'],
+      [2, 1, 'blue']
+    ].each do |step, index, result|
+      it "expects step #{step}, index #{index} to equal result #{result}" do
+        expect(progress_bar_class(step, index)).to eq(result)
+      end
     end
   end
 end
