@@ -38,3 +38,15 @@ document.addEventListener("DOMContentLoaded", () => {
     select.addEventListener('change', (e) => e.currentTarget.style.color = 'black')
   });
 });
+
+window.addEventListener('load', function () {
+  new Glider(document.querySelector('.plans-slider'), {
+    slidesToShow: 1,
+    dots: '.dots',
+    draggable: true,
+    arrows: {
+      prev: '.glider-prev',
+      next: '.glider-next'
+    }
+  });
+});

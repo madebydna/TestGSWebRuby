@@ -1,0 +1,38 @@
+<div class="api-plan-col">
+  <div class="api-plan-header">
+    <% if plan.name == 'premium' %>
+      <div class="api-plan-best-value"> Best Value</div>
+    <% end %>
+    <span class="api-plan-name"> <%= plan_name(plan.name) %> </span>
+  </div>
+  <div class="api-plan-details <%= plan.name %>">
+    <div class="api-plan-subdetails">
+      <div class="api-price">
+        <div style="position:relative;">
+          <div class="currency_sign">$</div>
+        </div>
+        <div class="price-primary"> <%= price_primary(plan.price) %></div>
+        <div style="position:relative;">
+          <div class="price-secondary">
+            <% if plan.name == 'free_trial' %>
+              <%= price_secondary(plan.price) %> for 6 months
+            <% else %>
+              <%= price_secondary(plan.price) %> /mo
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <div><%= number_with_delimiter(plan.calls, delimiter: ',') %> Calls</div>
+      <div><%= plan.private_use? ? "Private Use" : "Public Facing" %></div>
+    </div>
+    <div class="api-plan-datasets">
+      <%= render dataset_partial(plan), plan: plan %>
+    </div>
+    <div class="api-plan-start">
+      <%= form_tag(action_url(plan.name), method: "get") do %>
+        <%= hidden_field_tag :plan_id , plan.id %>
+        <button class="<%= plan.name %>"><%= button_txt(plan.name) %></button>
+      <% end %>
+    </div>
+  </div>
+</div>
