@@ -92,7 +92,7 @@ class DistrictFileSubscriptionProcessor
   def grades_signed_up_for(row)
     grades = []
     GRADE_MAPPING.each_pair do |key, value|
-      grades.push value if row[key] == '1'
+      grades.push value if row[key].present?
     end
 
     grades
