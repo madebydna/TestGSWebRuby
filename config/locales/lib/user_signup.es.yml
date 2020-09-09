@@ -2,7 +2,8 @@ es:
   lib:
     user_signup:
       heading: Suscribete para recibir boletines para ayudar a tu hijo a prosperar.
-      heading_stockton_html: <small><b>El Stockton Unified School District (SUSD)</b> se ha asociado con GreatSchools.org para ofrecerte boletines informativos gratuitos relacionados con el aprendizaje de tu hijo desde <b>kínder hasta 12.° grado.</b>  Suscríbete y ayuda a tu hijo a tener éxito.</small>
+      heading_district_gbg: ¡Bienvenidos!
+      heading_stockton_html: <b>El Stockton Unified School District (SUSD)</b> se ha asociado con GreatSchools.org para ofrecerte boletines informativos gratuitos relacionados con el aprendizaje de tu hijo desde <b>kínder hasta 12.° grado.</b>  Suscríbete y ayuda a tu hijo a tener éxito.
       subheading_html: For newsletters in English, %{subscribe_here_link}.
       subscribe_here_alt_lang: subscribe here
       email_input_placeholder: Tu dirección de correo electrónico aquí
