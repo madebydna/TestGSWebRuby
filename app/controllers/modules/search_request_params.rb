@@ -138,7 +138,7 @@ module SearchRequestParams
 
   # city that you can use when making URLs
   def url_city
-    city_param
+    city_param.downcase
   end
 
   def city_record
@@ -164,7 +164,7 @@ module SearchRequestParams
 
   # district name you can use when making URLs
   def url_district
-    district_param
+    district_param.downcase
   end
 
   def district_record
