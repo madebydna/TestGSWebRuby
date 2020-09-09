@@ -11,10 +11,10 @@
 <% path_to_yml = 'lib.user_signup.'%>
 <% language = I18n.locale == :es ? 'es' : 'en' %>
 
-<% sign_up_url = request.path %>
-<% if language == 'en' %>
-  <% sign_up_url = request.path + '?lang=es' %>
-<% end %>
+<% district_suffix = request.path.split('/').last %>
+<% url_prefix = request.path.include?('newsletter') ? '/boletin/' : '/newsletter/' %>
+
+<% sign_up_url = url_prefix + district_suffix %>
 
 <div id="user-signup-page">
   <%= react_component('SearchBoxWrapper') %>

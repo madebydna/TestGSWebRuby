@@ -30,6 +30,7 @@ class UserSignupController < ApplicationController
   def show_spanish
     I18n.locale = :es
     show_all
+    @grades_hashes = grades_hashes
   end
 
   def thankyou
@@ -44,7 +45,7 @@ class UserSignupController < ApplicationController
       set_variables_repopulate_form
       param_language == 'es' ? show_spanish : show_all
       if session[:district_id].present?
-        redirect_to susd_path
+        redirect_to susd_path(lang: I18n.locale)
       else
         @grades_hashes = grades_hashes
         render :show
