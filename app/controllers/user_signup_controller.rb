@@ -31,6 +31,7 @@ class UserSignupController < ApplicationController
     I18n.locale = :es
     show_all
     @grades_hashes = grades_hashes
+    render :show
   end
 
   def thankyou
