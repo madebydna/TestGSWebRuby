@@ -53,6 +53,7 @@ const userSignupPageInit = () => {
         let $form = $(this);
         let grades = [];
         let subscriptions = [];
+        let language = document.querySelector('.js-gradeCheckbox.active').dataset.language;
 
         $form.find('.js-gradeCheckbox.active').each(function () {
           grades.push([$(this).data('grade'), $(this).data('language'), $(this).data('districtId'), $(this).data('districtState')]);
@@ -71,6 +72,10 @@ const userSignupPageInit = () => {
         $form.find('div.active input').each(function () {
           $(this).prop('disabled', false);
         });
+
+        const button = document.querySelector('.js-join-login-submit-button');
+        button.disabled = true;
+        button.innerText = language === 'en' ? 'Processing...' : 'Procesando...'
       });
 
     }

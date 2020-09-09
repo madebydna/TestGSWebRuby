@@ -6,18 +6,25 @@ class UserSignupController < ApplicationController
 
   def show
     show_all
+    @grades_hashes = grades_hashes
   end
 
   def show_all
     @page_name = 'User Signup'
     gon.pagename = @page_name
     @grades = param_grades.present? ? formatted_grades_array(param_grades) : param_grades
-    @grades_hashes = grades_hashes
     @submit_path = submit_path
     @original_url = original_url
     account_meta_tags('Sign up for an account')
     set_tracking_info
-    render 'show'
+  end
+
+  def district_signup
+    district = DistrictRecord.find_by(state: params[:state], district_id: params[:district_id])
+    session[:district_id] = params[:district_id]
+    session[:district_state] = params[:state]
+    show_all
+    @grades_hashes = grades_hashes(district.district_id, district.state)
   end
 
   def show_spanish
@@ -36,10 +43,17 @@ class UserSignupController < ApplicationController
     if user || param_email.blank? || is_invalid?(param_email)
       set_variables_repopulate_form
       param_language == 'es' ? show_spanish : show_all
+      if session[:district_id].present?
+        redirect_to susd_path
+      else
+        @grades_hashes = grades_hashes
+        render :show
+      end
     else
       user = register_user(param_email)
       UserEmailSubscriptionManager.new(user).update(process_subscriptions(param_subscriptions))
       UserEmailGradeManager.new(user).update(process_grades(param_grades))
+      user.update(how: "#{session[:district_state]}-#{session[:district_id]}-signup")
       render 'thankyou'
     end
   end
@@ -91,31 +105,30 @@ class UserSignupController < ApplicationController
     params['subscriptions'] || []
   end
 
-  def grades_hashes
+  def grades_hashes(district_id = nil, district_state = nil)
     {
       :en => {
-        :overall => create_overall_grades('en')
+        :overall => create_overall_grades(language: 'en', district_id: district_id, district_state: district_state)
       },
       :es => {
-        :overall => create_overall_grades('es')
+        :overall => create_overall_grades(language: 'es', district_id: district_id, district_state: district_state)
       }
     }
   end
 
-  def create_overall_grades(language)
+  def create_overall_grades(language:, district_id:, district_state:)
     title = language == 'es' ? 'Grado por grado' : 'Grade by Grade'
     grades_labels = language == 'es' ? available_grades_spanish : available_grades
     path_to_yml = 'lib.user_signup.'
-
     {
-        :active_grades => @grades,
-        :district_state => '',
-        :district_id => '',
-        :language => language,
-        :title => title,
-        :subtitle => path_to_yml + "greatkidsnews_subtitle",
-        :label => path_to_yml + "select_grades",
-        :available_grades => grades_labels
+      :active_grades => @grades,
+      :district_state => district_state,
+      :district_id => district_id,
+      :language => language,
+      :title => title,
+      :subtitle => path_to_yml + "greatkidsnews_subtitle",
+      :label => path_to_yml + "select_grades",
+      :available_grades => grades_labels
     }
   end
 

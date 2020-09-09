@@ -2,6 +2,7 @@ en:
   lib:
     user_signup:
       heading: Sign up to receive newsletters to help your child thrive.
+      heading_stockton_html: <small><b>Stockton Unified School District (SUSD)</b> has partnered with GreatSchools.org to bring you free newsletters related to your child's learning in <b>kindergarten through 12th grade.</b> Sign up and help your child thrive.</small>
       subheading_html: Para boletines en español, %{subscribe_here_link}.
       subscribe_here_alt_lang: suscríbete aquí
       email_input_placeholder: Your email here
