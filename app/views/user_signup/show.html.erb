@@ -36,7 +36,6 @@
         <%= form_tag(@submit_path, method: :post, class:"user-signup-form-container") do |f| %>
           <input class="js-gradeSubmitValue" name="grades" type="hidden" value="">
           <input class="js-subscriptionSubmitValue" name="subscriptions" type="hidden" value="">
-          <%= hidden_field :callback_link, nil, value: 'newsletter' %>
 
           <%= render 'forms/join_email_fieldset' %>
 
