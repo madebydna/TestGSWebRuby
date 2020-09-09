@@ -34,7 +34,7 @@ class MAMetricsProcessor2019CSA < GS::ETL::MetricsProcessor
 
   subject_id_map = {
     "composite" => 1,
-    "reading_writing" => 4,
+    "reading_writing" => 2,
     "math" => 5
   }
 
