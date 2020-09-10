@@ -9,7 +9,6 @@
   <link rel="preload" href="<%= asset_path('Roboto-Slab-700.woff', format:'woff') %>" as="font" type="font/woff" crossorigin>
   <link rel="preload" href="<%= asset_path('Open-Sans-600.woff', format:'woff') %>" as="font" type="font/woff" crossorigin>
   <link rel="preload" href="<%= asset_path('opensans-regular-webfont.woff', format:'woff') %>" as="font" type="font/woff" crossorigin>
-  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= stylesheet_link_tag    "print",       media: "print" %>
   <%= render 'google_tag_manager/init_data_layer' %>
   <%= include_gon %>
@@ -43,7 +42,7 @@
 <div class="js-modal-container"></div>
 <%= render 'google_tag_manager/install' %>
 
-<%= render partial: 'nav/topnav_home' %>
+<%= render partial: 'nav/topnav_home_new' %>
 
 <div class="dn">
   <%= unique_content_for(:global_hidden_content) %>
