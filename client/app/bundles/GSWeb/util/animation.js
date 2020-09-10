@@ -8,7 +8,7 @@ export const init = (element, classNames) => {
       classNames.forEach(name => {
         const target = element.querySelector(name);
 
-        if(target.classList.contains('pre-animation'){
+        if(target.classList.contains('pre-animation')){
           target.classList.remove('pre-animation')
         }
         target.classList.add('animation')
