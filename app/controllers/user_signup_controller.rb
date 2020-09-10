@@ -63,7 +63,7 @@ class UserSignupController < ApplicationController
 
     UserEmailSubscriptionManager.new(user).update(process_subscriptions(param_subscriptions))
     unless param_grades.present?
-      UserEmailGradeManager.new(user).addictive_grades(process_grades(param_grades))
+      UserEmailGradeManager.new(user).additive_grades(process_grades(param_grades))
     end
     user.update(how: "#{session[:district_state]}-#{session[:district_id]}-signup")
 
