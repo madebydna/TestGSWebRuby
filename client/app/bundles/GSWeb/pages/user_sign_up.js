@@ -58,11 +58,8 @@ const userSignupPageInit = () => {
         $form.find('.js-gradeCheckbox.active').each(function () {
           grades.push([$(this).data('grade'), $(this).data('language'), $(this).data('districtId'), $(this).data('districtState')]);
         });
-        if(grades.length > 0){
-          $('.js-gradeSubmitValue').val(JSON.stringify(grades));
-        }else{
-          $('.js-gradeSubmitValue').val(JSON.stringify([]));
-        }
+
+        $('.js-gradeSubmitValue').val(JSON.stringify(grades));
 
         $form.find('.js-subscriptionCheckbox.active').each(function () {
           subscriptions.push([$(this).data('list'), $(this).data('language')]);
