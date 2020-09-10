@@ -1,13 +1,13 @@
 @include keyframes(show-up){
   0% { height: 0; }
-  30% { left: 0; height: 50%; }
+  20% { left: 0; height: 50%; }
   100% { height: 50%; }
 }
 
 @include keyframes(slide-right){
   0% { transform: translateX(-130px); }
-  50% { transform: translateX(-130px); }
-  75% { transform: translateX(5px); }
+  30% { transform: translateX(-130px); }
+  50% { transform: translateX(5px); }
   100% { transform: translateX(5px); }
 }
 
