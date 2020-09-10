@@ -58,9 +58,10 @@ const userSignupPageInit = () => {
         $form.find('.js-gradeCheckbox.active').each(function () {
           grades.push([$(this).data('grade'), $(this).data('language'), $(this).data('districtId'), $(this).data('districtState')]);
         });
-        console.log("Hello")
         if(grades.length > 0){
           $('.js-gradeSubmitValue').val(JSON.stringify(grades));
+        }else{
+          $('.js-gradeSubmitValue').val(JSON.stringify([]));
         }
 
         $form.find('.js-subscriptionCheckbox.active').each(function () {
