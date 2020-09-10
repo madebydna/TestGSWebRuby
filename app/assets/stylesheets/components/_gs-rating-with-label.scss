@@ -1,3 +1,16 @@
+@include keyframes(show-up){
+  0% { height: 0; }
+  30% { left: 0; height: 50%; }
+  100% { height: 50%; }
+}
+
+@include keyframes(slide-right){
+  0% { transform: translateX(-130px); }
+  50% { transform: translateX(-130px); }
+  75% { transform: translateX(5px); }
+  100% { transform: translateX(5px); }
+}
+
 .gs-rating-with-label {
   text-transform: uppercase;
   font-size: $font-size-l3;
@@ -18,6 +31,7 @@
   text-align: left;
   display: inline-block;
   max-width: 110px;
+  position: relative;
   &.private-school{
     font-size: 12px;
     clear:both;
@@ -31,14 +45,40 @@
   a.gs-tipso:hover {
     text-decoration: none;
   }
-  .coming-soon {
-    font-size: 12px;
-    text-transform: none;
-    font-family: openssans-regular, sans-serif;
-    color: #2ba3dc;
+  .coming-soon-container{
+    .coming-soon {
+      font-size: 12px;
+      text-transform: none;
+      font-family: "opensans-semibold";
+      color: $brand-primary-joyous;
+    }
+    &.pre-animation{
+      opacity: 0;
+    }
+    &.animation{
+      @include animation('slide-right 2s ease-in forwards');
+    }
+  }
+
+  .line {
+    position: absolute;
+    bottom: 20%;
+    border-left: 1px solid $brand-primary-joyous;
+
+    &.animation{
+      @include animation('show-up 2s ease-in forwards');
+    }
+    &.pre-animation{
+      opacity: 0;
+    }
+  }
+
+  .label-container{
+    overflow: hidden;
+    position: relative;
   }
   @media (min-width: 750px) {
-    max-width: 120px;
+    max-width: 140px;
     &.private-school{
       font-size: 10px;
     }
