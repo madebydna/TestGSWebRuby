@@ -49,21 +49,31 @@ const userSignupPageInit = () => {
         }
       });
 
-      $formContainer.find('form').on('submit', function () {
+      $formContainer.find('form').on('submit', function (e) {
         let $form = $(this);
         let grades = [];
         let subscriptions = [];
-        let language = document.querySelector('.js-gradeCheckbox.active').dataset.language;
+        let language = document.querySelector('.js-gradeCheckbox').dataset.language;
 
         $form.find('.js-gradeCheckbox.active').each(function () {
           grades.push([$(this).data('grade'), $(this).data('language'), $(this).data('districtId'), $(this).data('districtState')]);
         });
-        $('.js-gradeSubmitValue').val(JSON.stringify(grades));
+        console.log("Hello")
+        if(grades.length > 0){
+          $('.js-gradeSubmitValue').val(JSON.stringify(grades));
+        }
 
         $form.find('.js-subscriptionCheckbox.active').each(function () {
           subscriptions.push([$(this).data('list'), $(this).data('language')]);
         });
-        $('.js-subscriptionSubmitValue').val(JSON.stringify(subscriptions));
+
+        if (subscriptions.length > 0){
+          $('.js-subscriptionSubmitValue').val(JSON.stringify(subscriptions));
+        }else{
+          window.alert('No subscriptions selected')
+          e.preventDefault();
+          return;
+        }
 
         $form.find('.js-inverted-checkbox').each(function () {
           $(this).toggleClass('active');

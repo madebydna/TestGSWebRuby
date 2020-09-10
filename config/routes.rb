@@ -86,6 +86,7 @@ LocalizedProfiles::Application.routes.draw do
   # district by district grade newsletter
   scope '/newsletter' do
     get 'susd', to: 'user_signup#district_signup', district_id: 759 , state: 'ca' # stockton (CA-759)
+    post 'district-signup', to: 'user_signup#create_for_district_signup'
   end
 
   scope '/boletin' do

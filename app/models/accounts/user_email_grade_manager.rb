@@ -11,6 +11,11 @@ class UserEmailGradeManager
     save_grades(add_grades)
   end
 
+  def addictive_grades(new_grades)
+    grades_to_all = new_grades - get_grades
+    save_grades(grades_to_all)
+  end
+
   def district_add_no_duplicates(new_grades)
     remove_matching_grades_with_no_district(new_grades, get_grades)
     add_no_duplicates(new_grades)

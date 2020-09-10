@@ -41,7 +41,7 @@
           <input class="js-gradeSubmitValue" name="grades" type="hidden" value="">
           <input class="js-subscriptionSubmitValue" name="subscriptions" type="hidden" value="">
           
-          <%= render 'forms/join_email_fieldset' %>
+          <%= render 'forms/join_email_fieldset_no_validation' %>
 
           <%= render :partial => 'user_email_preferences/grades_display', :locals => { grades: @grades_hashes[language.to_sym][:overall] } %>
 

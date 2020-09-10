@@ -6,6 +6,7 @@ class UserSignupController < ApplicationController
 
   def show
     show_all
+    @submit_path = submit_path
     @grades_hashes = grades_hashes
   end
 
@@ -13,7 +14,6 @@ class UserSignupController < ApplicationController
     @page_name = 'User Signup'
     gon.pagename = @page_name
     @grades = param_grades.present? ? formatted_grades_array(param_grades) : param_grades
-    @submit_path = submit_path
     @original_url = original_url
     account_meta_tags('Sign up for an account')
     set_tracking_info
@@ -21,6 +21,7 @@ class UserSignupController < ApplicationController
 
   def district_signup
     district = DistrictRecord.find_by(state: params[:state], district_id: params[:district_id])
+    @submit_path = district_signup_path
     session[:district_id] = params[:district_id]
     session[:district_state] = params[:state]
     show_all
@@ -45,19 +46,24 @@ class UserSignupController < ApplicationController
     if user || param_email.blank? || is_invalid?(param_email)
       set_variables_repopulate_form
       param_language == 'es' ? show_spanish : show_all
-      if session[:district_id].present?
-        redirect_to susd_path(lang: I18n.locale)
-      else
-        @grades_hashes = grades_hashes
-        render :show
-      end
+      @grades_hashes = grades_hashes
+      render :show
     else
       user = register_user(param_email)
       UserEmailSubscriptionManager.new(user).update(process_subscriptions(param_subscriptions))
       UserEmailGradeManager.new(user).update(process_grades(param_grades))
-      user.update(how: "#{session[:district_state]}-#{session[:district_id]}-signup")
       render 'thankyou'
     end
+  end
+
+  def create_for_district_signup
+    user = User.find_by(email: param_email) || register_user(param_email)
+
+    UserEmailSubscriptionManager.new(user).update(process_subscriptions(param_subscriptions))
+    UserEmailGradeManager.new(user).addictive_grades(process_grades(param_grades))
+    user.update(how: "#{session[:district_state]}-#{session[:district_id]}-signup")
+
+    render 'thankyou'
   end
 
   def register_user(email)
