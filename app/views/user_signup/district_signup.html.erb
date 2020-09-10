@@ -14,7 +14,7 @@
 <% district_suffix = request.path.split('/').last %>
 <% url_prefix = request.path.include?('newsletter') ? '/boletin/' : '/newsletter/' %>
 
-<% sign_up_url = url_prefix + district_suffix %>
+<% alt_lang_url = url_prefix + district_suffix %>
 
 <div id="user-signup-page">
   <%= react_component('SearchBoxWrapper') %>
@@ -32,7 +32,7 @@
         <%= t('lib.user_signup.subheading_html',
               subscribe_here_link: link_to(
                   t('lib.user_signup.subscribe_here_alt_lang'),
-                  sign_up_url)
+                  alt_lang_url)
         ) %>
       </div>
 
