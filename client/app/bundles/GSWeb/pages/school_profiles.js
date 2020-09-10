@@ -11,7 +11,7 @@ import {
 } from 'util/interrupts';
 import SearchBox from 'react_components/search_box';
 import withViewportSize from 'react_components/with_viewport_size';
-import { viewport, relativeToViewport, firstInViewport, keepInViewport, isScrolledInViewport } from 'util/viewport';
+import { viewport, relativeToViewport, firstInViewport, keepInViewport } from 'util/viewport';
 import { init as initAnimation } from 'util/animation';
 import ProfileInterstitialAd, { shouldShowInterstitial, profileInterstitialLoader } from 'react_components/school_profiles/profile_interstitial_ad';
 import "jquery-unveil";
