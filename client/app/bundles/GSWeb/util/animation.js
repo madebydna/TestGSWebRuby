@@ -2,6 +2,7 @@ import { throttle } from 'lodash';
 import { isScrolledInViewport } from 'util/viewport';
 
 export const init = (element, classNames) => {
+  if (element === undefined) { return; }
 
   const startAnimation = throttle(() => {
     if (isScrolledInViewport(element)) {
