@@ -1,7 +1,7 @@
 // TODO: import ad addCompfilterToGlobalAdTargetingGon
 /* global gon, $, ReactOnRails, GS, analyticsEvent */
 import 'js-cookie';
-import { assign, throttle } from 'lodash';
+import { assign } from 'lodash';
 import owlSvg from 'school_profiles/brown-owl.svg';
 import { init as initAdvertising, applyStylingToIFrameAd } from 'util/advertising';
 import {
