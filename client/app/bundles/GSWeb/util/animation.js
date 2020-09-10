@@ -7,9 +7,13 @@ export const init = (element, classNames) => {
     if (isScrolledInViewport(element)) {
       classNames.forEach(name => {
         const target = element.querySelector(name);
-        target.classList.remove('pre-animation')
+
+        if(target.classList.contains('pre-animation'){
+          target.classList.remove('pre-animation')
+        }
         target.classList.add('animation')
       })
+
       window.removeEventListener('scroll', startAnimation);
     }
   }, 100)
