@@ -51,7 +51,7 @@ class UserSignupController < ApplicationController
     else
       user = register_user(param_email)
       UserEmailSubscriptionManager.new(user).update(process_subscriptions(param_subscriptions))
-      unless param_grades.present?
+      if param_grades.present?
         UserEmailGradeManager.new(user).update(process_grades(param_grades))
       end
       render 'thankyou'
@@ -62,7 +62,7 @@ class UserSignupController < ApplicationController
     user = User.find_by(email: param_email) || register_user(param_email)
 
     UserEmailSubscriptionManager.new(user).update(process_subscriptions(param_subscriptions))
-    unless param_grades.present?
+    if param_grades.present?
       UserEmailGradeManager.new(user).additive_grades(process_grades(param_grades))
     end
     user.update(how: "#{session[:district_state]}-#{session[:district_id]}-signup")
