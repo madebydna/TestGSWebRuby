@@ -25,7 +25,7 @@ en:
         relative to all its students, compared to other schools in the state, based on test scores provided from the
         state Department of Education.
         <br>
-        <a href="/gk/ratings/#equityrating" style="cursor: pointer;" target="_blank">Learn more about this rating.</a>
+        <a href="/gk/ratings-in-nd/#equityrating" style="cursor: pointer;" target="_blank">Learn more about this rating.</a>
       narrative_1_html: >
         <h3 class="negative">Very concerning:</h3>
         <p>Disadvantaged students at this school may be falling far behind other students in the state,
@@ -84,7 +84,7 @@ en:
       info_text: >
         The Equity Rating looks at how well this school is serving disadvantaged students relative to all students, compared to other schools in the state, based on college readiness metrics, %{growth_type} progress, and test scores provided from the state’s Department of Education.
         <br>
-        <a href="/gk/ratings-ca-mi/#equityrating" style="cursor: pointer;" target="_blank">Learn more about this rating.</a>
+        <a href="/gk/ratings/#equityrating" style="cursor: pointer;" target="_blank">Learn more about this rating.</a>
       narrative_1_html: >
         <h3 class="negative">Very concerning:</h3>
         <p>Disadvantaged students at this school may be falling far behind other students in the state,

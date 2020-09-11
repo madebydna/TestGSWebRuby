@@ -7,7 +7,7 @@ en:
       tooltip_html: >
         <p>This rating shows how well students at this school are prepared for college compared to students at other
         schools in this state, based on key measures, like graduation rates, college entrance tests and advanced coursework
-        when available.</p><p><a href="/gk/ratings/#collegereadinessrating" target="_blank">Learn more about this
+        when available.</p><p><a href="/gk/ratings-in-nd/#collegereadinessrating" target="_blank">Learn more about this
         rating.</a></p>
       subtitle_html: <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="One key thing" href="/gk/videos/why-college-counseling-matters/" target="_blank">One key thing</a> all successful schools do to help students enroll in college.
       source: Source
@@ -20,7 +20,7 @@ en:
       and: and
       state: state
       district: district
-      info_text: "<p>This rating shows how well students at this school are prepared for college compared to students at other schools in this state, based on key measures, like graduation rates, college entrance tests and advanced coursework when available.</p><p><a href='/gk/ratings/#collegereadinessrating' target='_blank'>Learn more about this rating.</a></p>"
+      info_text: "<p>This rating shows how well students at this school are prepared for college compared to students at other schools in this state, based on key measures, like graduation rates, college entrance tests and advanced coursework when available.</p><p><a href='/gk/ratings-in-nd/#collegereadinessrating' target='_blank'>Learn more about this rating.</a></p>"
       sources_title: 'GreatSchools profile data sources &amp; information'
       'GreatSchools Rating': 'GreatSchools College Readiness Rating'
       'Rating text': 'The college readiness rating reflects high school graduation rates, SAT or ACT participation/performance, and AP exam participation and performance (where available) for this school compared to the state average.'
@@ -49,7 +49,7 @@ en:
           <p>College readiness information comes from state or national education agencies (click on the "Sources" link for details).</p>
           <p>When information is missing in our display, it's most likely because this school did not offer an AP course, IB or dual enrollment classes, or participate in one of the two college readiness tests, the ACT or SAT (some states mandate which college readiness test schools use). It's also possible that the missing data was not included in the data we received from the state.</p>
           <p>Did you find the information about college readiness useful? What can we do better? <a href="https://s.qualaroo.com/45194/34aea707-ec71-4130-b6bb-2864e0528c64" target="_blank">Share your feedback.</a></p>
-          <p><a href="/gk/ratings/#collegereadinessrating" target="_blank">Learn more about this rating.</a></p>
+          <p><a href="/gk/ratings-in-nd/#collegereadinessrating" target="_blank">Learn more about this rating.</a></p>
           <p>Still have questions? <a href="https://greatschools.zendesk.com/hc/en-us" target="_blank">Visit our FAQ page.</a></p>
       'Graduating seniors pursuing 4 year college/university': 'Graduates pursuing 4-year college'
       'Graduating seniors pursuing 2 year college/university': 'Graduates pursuing 2-year college'
@@ -246,7 +246,7 @@ en:
         This section includes information about this school’s graduation rates, SAT/ACT tests, and AP coursework.
       title: College readiness
       tooltip_html: >
-        <p>This rating shows how well students at this school are prepared for college compared to students at other schools in this state, based on graduation rates, college entrance tests, and other available data such as advanced coursework.</p><p><a href="/gk/ratings-ca-mi/#collegereadinessrating" target="_blank">Learn more about this
+        <p>This rating shows how well students at this school are prepared for college compared to students at other schools in this state, based on graduation rates, college entrance tests, and other available data such as advanced coursework.</p><p><a href="/gk/ratings/#collegereadinessrating" target="_blank">Learn more about this
         rating.</a></p>
       subtitle_html: <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="One key thing" href="/gk/videos/why-college-counseling-matters/" target="_blank">One key thing</a> all successful schools do to help students enroll in college.
       source: Source
@@ -259,7 +259,7 @@ en:
       and: and
       state: state
       district: district
-      info_text: "<p>This rating shows how well students at this school are prepared for college compared to students at other schools in this state, based on graduation rates, college entrance tests, and other available data such as advanced coursework.</p><p><a href='/gk/ratings-ca-mi/#collegereadinessrating' target='_blank'>Learn more about this rating.</a></p>"
+      info_text: "<p>This rating shows how well students at this school are prepared for college compared to students at other schools in this state, based on graduation rates, college entrance tests, and other available data such as advanced coursework.</p><p><a href='/gk/ratings/#collegereadinessrating' target='_blank'>Learn more about this rating.</a></p>"
       sources_title: 'GreatSchools profile data sources &amp; information'
       'GreatSchools Rating': 'GreatSchools College Readiness Rating'
       'Rating text': 'The college readiness rating reflects high school graduation rates, SAT or ACT participation/performance, and AP exam participation and performance (where available) for this school compared to the state average.'
@@ -288,7 +288,7 @@ en:
           <p>College readiness information comes from state or national education agencies (click on the "Sources" link for details).</p>
           <p>When information is missing in our display, it’s most likely because this school did not offer an AP course, IB or dual enrollment classes, or participate in one of the two college readiness tests, the ACT or SAT. It’s also possible that the state did not make the missing data available.</p>
           <p>Did you find the information about college readiness useful? What can we do better? <a href="https://s.qualaroo.com/45194/34aea707-ec71-4130-b6bb-2864e0528c64" target="_blank">Share your feedback.</a></p>
-          <p><a href="/gk/ratings-ca-mi/#collegereadinessrating" target="_blank">Learn more about this rating.</a></p>
+          <p><a href="/gk/ratings/#collegereadinessrating" target="_blank">Learn more about this rating.</a></p>
           <p>Still have questions? <a href="https://greatschools.zendesk.com/hc/en-us" target="_blank">Visit our FAQ page.</a></p>
       'Graduating seniors pursuing 4 year college/university': 'Graduates pursuing 4-year college'
       'Graduating seniors pursuing 2 year college/university': 'Graduates pursuing 2-year college'

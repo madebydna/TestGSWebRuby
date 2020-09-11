@@ -25,7 +25,7 @@ es:
         estudiantes en desventaja con relación a todos sus estudiantes, en comparación a otras escuelas en el estado,
         basado en los resultados de los exámenes del Departamento de Educación del estado.
         <br>
-        <a href="/gk/como-clasificamos/?lang=es#equityrating" style="cursor: pointer;" target="_blank">Aprenda más acerca de esta clasificación.</a>
+        <a href="/gk/ratings-in-nd/?lang=es#equityrating" style="cursor: pointer;" target="_blank">Aprenda más acerca de esta clasificación.</a>
       narrative_1_html: >
         <h3 class="negative">Muy preocupante:</h3>
         <p>En esta escuela los estudiantes de las comunidades más desfavorecidas pueden estar quedándose atrás en
@@ -90,7 +90,7 @@ es:
       info_text: >
         La Calificación de Equidad mira lo bien que esta escuela está atendiendo las necesidades de sus estudiantes en desventaja con relación a todos sus estudiantes, en comparación a otras escuelas en el estado, basado en métricas de preparación universitaria, progreso %{growth_type}, y en los resultados de los exámenes proporcionados por el Departamento de Educación del estado.
         <br>
-        <a href="/gk/ratings-ca-mi/?lang=es#equityrating" style="cursor: pointer;" target="_blank">Aprende más sobre esta calificación.</a>
+        <a href="/gk/como-clasificamos/?lang=es#equityrating" style="cursor: pointer;" target="_blank">Aprende más sobre esta calificación.</a>
       narrative_1_html: >
         <h3 class="negative">Muy preocupante:</h3>
         <p>En esta escuela los estudiantes de las comunidades más desfavorecidas pueden estar quedándose atrás en
