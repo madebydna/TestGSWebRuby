@@ -21,19 +21,25 @@
   <section class="row">
     <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3 js-user-signup-form-container phl">
 
-
       <div class="heading">
         <%= t('lib.user_signup.heading_district_gbg') %>
       </div>
-      <%= t('lib.user_signup.heading_stockton_html') %>
-      <br/>
-      <br/>
-      <div class="subheading">
-        <%= t('lib.user_signup.subheading_html',
-              subscribe_here_link: link_to(
-                  t('lib.user_signup.subscribe_here_alt_lang'),
-                  alt_lang_url)
-        ) %>
+      <div class="subtitle-container">
+        <div>
+          <%= image_tag 'susd-logo.png', alt: 'logo', height: '80px' %>
+        </div>
+        <div>
+          <%= t('lib.user_signup.heading_stockton_html') %>
+          <br/>
+          <br/>
+          <div class="subheading">
+            <%= t('lib.user_signup.subheading_html',
+                  subscribe_here_link: link_to(
+                      t('lib.user_signup.subscribe_here_alt_lang'),
+                      alt_lang_url)
+            ) %>
+          </div>
+        </div>
       </div>
 
       <div class="body">
