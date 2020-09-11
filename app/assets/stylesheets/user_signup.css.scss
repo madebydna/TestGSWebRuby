@@ -169,3 +169,15 @@
     margin: 20px 0;
   }
 }
+
+.subtitle-container {
+  display: flex;
+  justify-content: space-between;
+
+  > div:first-child {
+    margin: 0 10px;
+  }
+  img {
+    align-self: center;
+  }
+}
