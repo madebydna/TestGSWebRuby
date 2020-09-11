@@ -1,8 +1,5 @@
-import { init as toastInit } from 'components/header/toast';
 import { isSignedIn } from 'util/session';
 import { currentLocale } from 'util/i18n';
-
-toastInit();
 
 const newsletterLinkSelector = '.js-send-me-updates-button-footer';
 
