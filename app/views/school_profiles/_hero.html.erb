@@ -1,5 +1,5 @@
 <% hero %>
-<% path_to_yml = ['ca', 'mi'].include?(@school.state.downcase) ? 'alt_' : '' %>
+<% path_to_yml = ['in', 'nd'].exclude?(@school.state.downcase) ? 'alt_' : '' %>
 
 <div id="hero">
   <div class="container">

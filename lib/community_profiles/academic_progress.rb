@@ -55,7 +55,7 @@ module CommunityProfiles
     end
 
     def path_to_yml
-      if ['ca', 'mi'].include?(@state_cache_data_reader.state.downcase)
+      if ['in', 'nd'].exclude?(@state_cache_data_reader.state.downcase)
         path = 'lib.academic_progress_alt.district_scope'
       else
         path = 'lib.academic_progress.district_scope'
