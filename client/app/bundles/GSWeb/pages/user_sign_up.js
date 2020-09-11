@@ -49,20 +49,29 @@ const userSignupPageInit = () => {
         }
       });
 
-      $formContainer.find('form').on('submit', function () {
+      $formContainer.find('form').on('submit', function (e) {
         let $form = $(this);
         let grades = [];
         let subscriptions = [];
+        let language = document.querySelector('.js-gradeCheckbox').dataset.language;
 
         $form.find('.js-gradeCheckbox.active').each(function () {
           grades.push([$(this).data('grade'), $(this).data('language'), $(this).data('districtId'), $(this).data('districtState')]);
         });
+
         $('.js-gradeSubmitValue').val(JSON.stringify(grades));
 
         $form.find('.js-subscriptionCheckbox.active').each(function () {
           subscriptions.push([$(this).data('list'), $(this).data('language')]);
         });
-        $('.js-subscriptionSubmitValue').val(JSON.stringify(subscriptions));
+
+        if (subscriptions.length > 0){
+          $('.js-subscriptionSubmitValue').val(JSON.stringify(subscriptions));
+        }else{
+          window.alert('No subscriptions selected')
+          e.preventDefault();
+          return;
+        }
 
         $form.find('.js-inverted-checkbox').each(function () {
           $(this).toggleClass('active');
@@ -71,6 +80,10 @@ const userSignupPageInit = () => {
         $form.find('div.active input').each(function () {
           $(this).prop('disabled', false);
         });
+
+        const button = document.querySelector('.js-join-login-submit-button');
+        button.disabled = true;
+        button.innerText = language === 'en' ? 'Processing...' : 'Procesando...'
       });
 
     }

@@ -83,6 +83,17 @@ LocalizedProfiles::Application.routes.draw do
   get '/newsletter/' => 'user_signup#thankyou', as: 'user_signup_confirmation'
   get '/espanol/' => 'user_signup#thankyou', as: 'user_signup_confirmation_spanish'
 
+  # district by district grade newsletter
+  scope '/newsletter' do
+    get 'susd', to: 'user_signup#district_signup', district_id: 759 , state: 'ca' # stockton (CA-759)
+    post 'district-signup', to: 'user_signup#create_for_district_signup'
+  end
+
+  scope '/boletin' do
+    get 'susd', to: 'user_signup#district_signup', district_id: 759 , state: 'ca', lang: 'es' # stockton (CA-759)
+    get '', to: redirect('/espanol/') #order matters due to matching constraints
+  end
+
   get '/compare', as: :compare_schools, to: 'compare_schools#show'
 
   # OSP routes

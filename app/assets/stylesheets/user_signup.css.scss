@@ -115,6 +115,10 @@
       color: #ffffff;
       padding: 0 50px;
       margin: 5px 0;
+
+      &:disabled{
+        background-color: #c1d2d9;
+      }
     }
 
     button.submit {
@@ -163,5 +167,17 @@
     color: #ffffff;
     padding: 10px 50px;
     margin: 20px 0;
+  }
+}
+
+.subtitle-container {
+  display: flex;
+  justify-content: space-between;
+
+  > div:first-child {
+    margin: 0 10px;
+  }
+  img {
+    align-self: center;
   }
 }
