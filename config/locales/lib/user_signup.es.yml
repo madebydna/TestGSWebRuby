@@ -2,6 +2,8 @@ es:
   lib:
     user_signup:
       heading: Suscribete para recibir boletines para ayudar a tu hijo a prosperar.
+      heading_district_gbg: ¡Bienvenidos!
+      heading_stockton_html: <b>El Stockton Unified School District (SUSD)</b> se ha asociado con <a href='/gk/grade-by-grade-newsletter/'>GreatSchools</a> para ofrecerte boletines informativos gratuitos relacionados con el aprendizaje de tu hijo desde kínder hasta 12.° grado. Suscríbete y ayuda a tu hijo <b>a alcanzar</b> el éxito.
       subheading_html: For newsletters in English, %{subscribe_here_link}.
       subscribe_here_alt_lang: subscribe here
       email_input_placeholder: Tu dirección de correo electrónico aquí
@@ -11,7 +13,7 @@ es:
       greatkidsnews_title: Grado por grado
       greatkidsnews_subtitle: Recursos esenciales para ayudar a tu hijo durante todo el año escolar.
       select_grades: Selecciona los grados de tu hijo a continuación.
-      teacher_list_title: GreatEducators
+      teacher_list_title: Just for Educators
       teacher_list_subtitle: Resources and insights designed for teachers and school leaders.
       sponsor_title: Partner Updates
       sponsor_subtitle: News and offers from our partners.

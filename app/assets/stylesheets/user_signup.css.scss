@@ -115,6 +115,10 @@
       color: #ffffff;
       padding: 0 50px;
       margin: 5px 0;
+
+      &:disabled{
+        background-color: #c1d2d9;
+      }
     }
 
     button.submit {
