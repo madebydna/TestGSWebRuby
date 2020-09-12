@@ -61,6 +61,14 @@ en:
         <hr>
         <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
         <p class="footnote">Does this school offer opportunity for all its students, or leave some behind? Successful schools understand how to <a href="/gk/articles/the-achievement-gap-is-your-school-helping-all-students-succeed/" target="_blank">close the achievement gap</a>.</p>
+      graph_label: Student outcomes by percentile
+      graph_tooltip: This shows the percentile that students at this school achieved in in the measures that are used to calculate the school’s Equity Rating, compared to the state average for all students.
+      graph_label_li: Low-income and underserved minority students
+      graph_label_all: All other students in the school
+      graph_label_student_progress: Student Progress
+      graph_label_academic_progress: Academic Progress
+      graph_label_college_readiness: College Readiness
+      graph_label_test_scores: Test Scores
     equity_overview_alt:
       'title': 'Equity overview'
       subtitle_html: >
@@ -120,3 +128,11 @@ en:
         <hr>
         <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
         <p class="footnote">Does this school offer opportunity for all its students, or leave some behind? Successful schools understand how to <a href="/gk/articles/the-achievement-gap-is-your-school-helping-all-students-succeed/" target="_blank">close the achievement gap</a>.</p>
+      graph_label: Student outcomes by percentile
+      graph_tooltip: This shows the percentile that students at this school achieved in in the measures that are used to calculate the school’s Equity Rating, compared to the state average for all students.
+      graph_label_li: Low-income and underserved minority students
+      graph_label_all: All other students in the school
+      graph_label_academic_progress: Academic Progress
+      graph_label_student_progress: Student Progress
+      graph_label_college_readiness: College Readiness
+      graph_label_test_scores: Test Scores

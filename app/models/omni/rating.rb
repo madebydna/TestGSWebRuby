@@ -7,7 +7,7 @@ module Omni
     STATE_ENTITY = 'state'
     DISTRICT_ENTITY = 'district'
     SCHOOL_ENTITY = 'school'
-    TAGS = %w(rating summary_rating_weight csa)
+    TAGS = %w(rating summary_rating_weight csa rating_display_support)
 
     belongs_to :data_set
     belongs_to :breakdown

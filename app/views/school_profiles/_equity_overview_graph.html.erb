@@ -1,0 +1,42 @@
+<div class="equity-graph-wrapper">
+  <p class="equity-graph-label">
+    <%= I18n.t('lib.equity_overview.graph_label') %>
+    <%= render 'info_circle', content: I18n.t('lib.equity_overview.graph_tooltip'), element_type: 'datatooltip' %>
+  </p>
+  <div class="equity-bar-chart">
+    <div class="graph">
+      <div class="y-axis">
+        <div class="line"><span>100%</span></div>
+        <div class="line dashed"><span>State Avg.</span></div>
+        <div class="line"><span>0%</span></div>
+      </div>
+      <div class="histogram">
+        <% ["Academic Progress", "Student Progress", "College Readiness", "Test Scores"].each do |key| %>
+          <% next unless data[key] %>
+          <div class="histogram-cell">
+            <div class="bars-group">
+              <div class="bar low-income" style="height: <%= data[key]["Disadvantaged Students"]%>;">
+                <span class="value"><%= data[key]["Disadvantaged Students"]%></span>
+              </div>
+              <div class="bar all-students" style="height: <%= data[key]["Advantaged Students"]%>;">
+                <span class="value"><%= data[key]["Advantaged Students"]%></span>
+              </div>
+            </div>
+            <div class="label"><span><%= t("lib.equity_overview.graph_label_#{key.parameterize.underscore}") %></span></div>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="legend">
+        <div class="item">
+          <span class="color low-income">&nbsp;</span>
+          <span><%= I18n.t('lib.equity_overview.graph_label_li') %></span>
+        </div>
+        <div class="item">
+          <span class="color all-students">&nbsp;</span>
+          <span><%= I18n.t('lib.equity_overview.graph_label_all') %></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -67,6 +67,14 @@ es:
         <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" />
         <span class="speech-bubble left">Consejos para padres</span></p>
         <p class="footnote">¿Ofrece esta escuela oportunidades para todos sus estudiantes o deja algunos atrás? Las escuelas exitosas entienden cómo <a href="/gk/articles/la-brecha-en-el-rendimiento-academico-esta-tu-escuela-ayudando-a-todos-los-estudiantes-a-alcanzar-el-exito/?lang=es" target="_blank">cerrar la brecha de rendimiento académico</a>.</p>
+      graph_label: Desempeño estudiantil expresado en percentiles
+      graph_tooltip: Muestra los percentiles alcanzados por los estudiantes de esta escuela con las medidas usadas para calcular la Calificación de Equidad de la misma, en comparación con el promedio estatal de los estudiantes en general. 
+      graph_label_li: Estudiantes menos favorecidos<br/>y de bajos recursos
+      graph_label_all: El resto de estudiantes<br/>de la escuela
+      graph_label_student_progress: Progreso del Estudiante
+      graph_label_academic_progress: Progreso Académico
+      graph_label_college_readiness: Preparación Universitaria
+      graph_label_test_scores: Resultados de Exámenes
     equity_overview_alt:
       'title': 'Perspectiva de la equidad'
       subtitle_html: >
@@ -132,3 +140,11 @@ es:
         <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" />
         <span class="speech-bubble left">Consejos para padres</span></p>
         <p class="footnote">¿Ofrece esta escuela oportunidades para todos sus estudiantes o deja algunos atrás? Las escuelas exitosas entienden cómo <a href="/gk/articles/la-brecha-en-el-rendimiento-academico-esta-tu-escuela-ayudando-a-todos-los-estudiantes-a-alcanzar-el-exito/?lang=es" target="_blank">cerrar la brecha de rendimiento académico</a>.</p>
+      graph_label: Desempeño estudiantil expresado en percentiles
+      graph_tooltip: Muestra los percentiles alcanzados por los estudiantes de esta escuela con las medidas usadas para calcular la Calificación de Equidad de la misma, en comparación con el promedio estatal de los estudiantes en general.
+      graph_label_li: Estudiantes menos favorecidos<br/>y de bajos recursos
+      graph_label_all: El resto de estudiantes<br/>de la escuela
+      graph_label_student_progress: Progreso del Estudiante
+      graph_label_academic_progress: Progreso Académico
+      graph_label_college_readiness: Preparación Universitaria
+      graph_label_test_scores: Resultados de Exámenes
