@@ -19,6 +19,7 @@ $graph-row-height: $graph-height/3;
 .equity-bar-chart {
   position: relative;
   margin: 24px auto 0;
+  font-size: 14px;
 
   .graph {
     height: $graph-height;
@@ -33,7 +34,7 @@ $graph-row-height: $graph-height/3;
       position: relative;
       height: $graph-row-height;
       width: 100%;
-      border-top: 1px solid $gray-dark;
+      border-top: 0.5px solid $light-mist-gray;
       &.dashed {
         border-top-style: dashed;
       }
@@ -71,7 +72,7 @@ $graph-row-height: $graph-height/3;
         justify-content: center;
       }
       .label {
-        font-size: 12px;
+        font-size: 14px;
         color: $gray-dark;
         height: 30px;
         display: inline-flex;
@@ -82,23 +83,30 @@ $graph-row-height: $graph-height/3;
       }
     }
     .bar {
-      width: 40px;
+      width: 50px;
       text-align: center;
+      border-radius: $border-radius-small $border-radius-small 0 0;
+    }
+    .bar.low-income {
+      border: 1px solid $teal;
+    }
+    .bar.all-students {
+      border: 1px solid $light-teal;
     }
     .value {
       position: relative;
-      top: -20px;
-      height: 20px;
-      font-size: 12px;
-      @extend .open-sans_b;
+      top: -22px;
+      height: 22px;
+      font-size: 18px;
+      @extend .open-sans_sb;
     }
   }
 
   .low-income {
-    background-color: rgb(24,152,157);
+    background-color: $teal;
   }
   .all-students {
-    background-color: rgb(118,202,205);
+    background-color: $light-teal;
   }
 
   .legend {
@@ -133,30 +141,49 @@ $graph-row-height: $graph-height/3;
 
   .equity-bar-chart {
     .graph {
-      margin-bottom: 45px;
+      margin-bottom: 70px;
     }
 
     .y-axis {
-      padding-right: 40px;
+      padding-right: 50px;
       .line span {
-        right: -40px;
-        width: 40px;
+        right: -50px;
+        width: 50px;
         padding: 0 0 0 6px;
       }
     }
 
     .histogram {
-      padding-right: 40px;
+      padding-right: 50px;
+      height: (2 * $graph-row-height) + 41px;
+      bottom: $graph-row-height - 41px;
+
+      .histogram-cell {
+        margin-right: 5px;
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+
+      .histogram-cell .label {
+        width: 76px;
+        font-size: 13px;
+        height: 40px;
+      }
 
       .bar {
-        width: 30px;
+        width: 38px;
+      }
+
+      .value {
+        font-size: 16px;
       }
     }
 
     .legend {
-      padding-right: 40px;
+      padding-right: 50px;
       flex-wrap: wrap;
-      top: (2 * $graph-row-height) + 35px;
+      top: (2 * $graph-row-height) + 45px;
       .item {
         flex: 1 1 100%;
         padding: 15px 0 0;
