@@ -258,6 +258,7 @@ LocalizedProfiles::Application.routes.draw do
   get '/api/receipt/', to: 'admin/api/users#receipt'
   post '/api/plan_update', to: 'admin/api/users#plan_update'
 
+  get '/admin/api_admin', to: 'admin/api/admin#index'
 
   namespace :api, controller: 'api', path:'/gsr/api' do
     resource :session

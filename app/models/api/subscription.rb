@@ -6,10 +6,13 @@ module Api
 
     belongs_to :user
     belongs_to :plan
+
+    scope :pending_approval, -> { where status: 'pending_approval'}
   end
 
   # plan selected
-  # payment added
+  # payment_added
+  # pending_approval
   # bizdev rejected
   # bizdev approved
   # payment charged successfully
