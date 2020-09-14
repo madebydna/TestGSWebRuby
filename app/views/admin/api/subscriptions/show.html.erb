@@ -1,0 +1,21 @@
+<% content_for :head do %><title>GS Update API Account</title><% end %>
+
+<h3>View/Edit Api Account</h3><br>
+
+<div class="api_account_form" style="margin-top: 30px;">
+  <%= form_for([:admin, @subscription], method: :put) do |f| %>
+    <div>
+      <%= f.label :aws_api_key %>
+      <%= f.text_field :aws_api_key, required: true %>
+    </div>
+
+    <div>
+      <%= f.label :status %>
+      <%= f.text_field :status, required: true %>
+    </div>
+
+  <% end %>
+
+</div>
+
+<div style="text-align: left; margin-bottom: 40px;"><%= link_to 'Back to all accounts', admin_api_subscriptions_path %></div>

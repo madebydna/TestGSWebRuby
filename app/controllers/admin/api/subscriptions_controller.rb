@@ -4,20 +4,15 @@ class Admin::Api::SubscriptionsController < ApplicationController
   layout 'admin'
 
   def index
-    @subscriptions = Api::Subscription.all
+    @subscriptions = Api::Subscription.includes(:user)
   end
 
-  def new
-    @user = ::Api::Subscription.new
+  def pending_approval
+    @subscriptions = Api::Subscription.pending_approval.includes(:user)
   end
 
-  def create
-    Api::SubscriptionCreator.new(@user, 1).call
+  def show
+    @subscription = Api::Subscription.where(params[:id]).first
   end
-
-  # This occurs when bizdev approves the request
-  # def approval(user, price_id)
-  #   Api::StripeInteractor.create_subscription(user, price_id)
-  # end
 
 end
