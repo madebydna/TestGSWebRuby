@@ -8,7 +8,7 @@ en:
         Are you an administrator at this school?<br />
         <a href="/school-accounts/">Claim your school’s profile</a>
         to edit general information and share what makes your school unique.<br />
-        <a href="/gk/schools/">Learn more.</a>
+        <a href="/gk/schools/" target="_blank">Learn more.</a>
       bullet_2_html: >
         Are you a parent or student at this school?<br />
         %{mailto_start}Encourage school administrators%{mailto_end} to claim this school’s profile.

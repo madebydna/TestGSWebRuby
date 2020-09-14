@@ -1,6 +1,6 @@
 #!/bin/bash
 
-RAILS_ENV=test coverage=false bundle exec rspec \
+RAILS_ENV=test JENKINS_URL=true coverage=false bundle exec rspec \
 --tag ~js \
 --tag ~remote \
 --tag ~brittle \

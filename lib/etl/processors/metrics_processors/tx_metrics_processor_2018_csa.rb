@@ -549,7 +549,7 @@ class TXMetricsProcessor2018CSA < GS::ETL::MetricsProcessor
 		.transform('setting data_type, data_type_id, subject, fixing percents for remediation rate',WithBlock) do |row|
 			if row[:variable][/HEE18R/]
 				row[:data_type] = 'enrollment in TX IHEs'
-				row[:data_type_id] = 450
+				row[:data_type_id] = 481
 				row[:subject] = 'Not applicable'
 			elsif row[:variable][/HEC18R/]
 				row[:data_type] = 'percent found needing any remediation'
@@ -604,7 +604,7 @@ class TXMetricsProcessor2018CSA < GS::ETL::MetricsProcessor
 		.transform('setting data_type, data_type_id, subject, fixing percents for remediation rate',WithBlock) do |row|
 			if row[:variable][/HEE18R/]
 				row[:data_type] = 'enrollment in TX IHEs'
-				row[:data_type_id] = 450
+				row[:data_type_id] = 481
 				row[:subject] = 'Not applicable'
 			elsif row[:variable][/HEC18R/]
 				row[:data_type] = 'percent found needing any remediation'
@@ -659,7 +659,7 @@ class TXMetricsProcessor2018CSA < GS::ETL::MetricsProcessor
 		.transform('setting data_type, data_type_id, subject, fixing percents for remediation rate',WithBlock) do |row|
 			if row[:variable][/HEE18R/]
 				row[:data_type] = 'enrollment in TX IHEs'
-				row[:data_type_id] = 450
+				row[:data_type_id] = 481
 				row[:subject] = 'Not applicable'
 			elsif row[:variable][/HEC18R/]
 				row[:data_type] = 'percent found needing any remediation'

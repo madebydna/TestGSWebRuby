@@ -29,9 +29,8 @@ es:
           académicamente en comparación a otros estudiantes en el estado.</p>
           %{test_score_dependent_content}
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos
-          para padres:</span></p>
-          <p class="footnote">Pregúntele a la escuela cómo interpreta esta clasificación y cómo podría utilizar esta
-          información para mejorar sus programas.</p>
+          para padres</span></p>
+          <p class="footnote">Una clave forma en que las mejores escuelas ayudan a todos los estudiantes a aprender es <a href="/gk/videos/why-student-centered-education-should-be-the-norm/" target="_blank">dándoles una voz y opciones</a>.</p>
         2_low_html: >
           <p class="side-bar"><span class="emphasis">Poco progreso con bajas calificaciones en los exámenes</span>
           significa que los estudiantes empiezan en un punto bajo y caerán aún más lejos detrás de sus compañeros de
@@ -46,9 +45,8 @@ es:
           grado a otro en comparación con estudiantes en otras escuelas en el estado.</p>
           %{test_score_dependent_content}
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos
-          para padres:</span></p>
-          <p class="footnote">Pregúntele a la escuela cómo interpreta esta clasificación y cómo podría utilizar esta
-          información para ayudar a los estudiantes a crecer y alcanzar su máximo potencial.</p>
+          para padres</span></p>
+          <p class="footnote">Una clave forma en que las mejores escuelas ayudan a todos los estudiantes a aprender es <a href="/gk/videos/why-student-centered-education-should-be-the-norm/" target="_blank">dándoles una voz y opciones</a>.</p>
         3_low_html: >
           <p class="side-bar"><span class="emphasis">Progreso promedio con bajas calificaciones en los exámenes</span>
           significa que los estudiantes están comenzando en un punto bajo pero manteniendo el ritmo con sus compañeros
@@ -63,9 +61,8 @@ es:
           académico de un grado a otro en comparación con estudiantes en otras escuelas en el estado.</p>
           %{test_score_dependent_content}
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos
-          para padres:</span></p>
-          <p class="footnote">Pregúntele a la escuela cómo interpreta esta clasificación y cómo podría utilizar esta
-          información para ayudar a los estudiantes a crecer y alcanzar su máximo potencial.</p>
+          para padres</span></p>
+          <p class="footnote">Una clave forma en que las mejores escuelas ayudan a todos los estudiantes a aprender es <a href="/gk/videos/why-student-centered-education-should-be-the-norm/" target="_blank">dándoles una voz y opciones</a>.</p>
         4_low_html: >
           <p class="side-bar"><span class="emphasis">Grande progreso con bajas calificaciones en los exámenes </span>
           significa que los estudiantes están comenzando en un punto bajo pero están haciendo mayores ganancias que sus
@@ -80,9 +77,8 @@ es:
           grado a otro en comparación con estudiantes en otras escuelas en el estado.</p>
           %{test_score_dependent_content}
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos
-          para padres:</span></p>
-          <p class="footnote">Pregúntele a la escuela cómo interpreta esta clasificación y qué puedes hacer para
-          apoyar el éxito continuo de la escuela.</p>
+          para padres</span></p>
+          <p class="footnote">Una clave forma en que las mejores escuelas ayudan a todos los estudiantes a aprender es <a href="/gk/videos/why-student-centered-education-should-be-the-norm/" target="_blank">dándoles una voz y opciones</a>.</p>
         5_low_html: >
           <p class="side-bar"><span class="emphasis">Alto progreso con bajas calificaciones en los exámenes</span>
           significa que los estudiantes
@@ -98,9 +94,8 @@ es:
           de un grado a otro en comparación con estudiantes en otras escuelas en el estado.</p>
           %{test_score_dependent_content}
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos
-          para padres:</span></p>
-          <p class="footnote">Pregúntele a la escuela cómo interpreta esta clasificación y qué puedes hacer para apoyar
-          el éxito continuo de la escuela.</p>
+          para padres</span></p>
+          <p class="footnote">Una clave forma en que las mejores escuelas ayudan a todos los estudiantes a aprender es <a href="/gk/videos/why-student-centered-education-should-be-the-norm/" target="_blank">dándoles una voz y opciones</a>.</p>
       javascript:
         toc_item: 'Progreso académico'
       district_scope:
@@ -111,7 +106,7 @@ es:
         tooltip_html: >
           <p>¿Cuánto ayudan las escuelas a los estudiantes crecer cada año?</p>
           <p>Muchos estados publican datos del crecimiento del estudiante para reflejar cuánto progreso estudiantes están haciendo año tras año. Este estado no publica datos del crecimiento del estudiante. En cambio, estimamos con nuestra Calificación del Progreso Académico el progreso del estudiante comparando año tras año en las calificaciones de grado y sujeto en cada escuela frente a todas las escuelas del estado que comenzaron con similares niveles de conocimiento. En esta sección puedes ver un resumen del porcentaje de escuelas en este distrito con Calificaciones de Progreso Académico que están por encima del promedio, por debajo del promedio o aproximadamente el promedio.</p>
-          <a href='/gk/como-clasificamos/?lang=es#academicprogressrating'>Aprende más sobre esta clasificación.</a>
+          <a href='/gk/como-clasificamos/?lang=es#academicprogressrating' target="_blank">Aprende más sobre esta clasificación.</a>
         graphic_header: ¿Cómo se compara este distrito con el resto del estado?
         graphic_header_tooltip: Este cuadro muestra el porcentaje de escuelas en este distrito con Calificaciones del Progreso Académico que están por encima del promedio (7-10), promedio (5-6) o por debajo del promedio (1-4) en comparación con los promedios estatales.
         narrative:
@@ -156,9 +151,8 @@ es:
           académicamente en comparación a otros estudiantes en el estado.</p>
           %{test_score_dependent_content}
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos
-          para padres:</span></p>
-          <p class="footnote">Pregúntele a la escuela cómo interpreta esta clasificación y cómo podría utilizar esta
-          información para mejorar sus programas.</p>
+          para padres</span></p>
+          <p class="footnote">Una clave forma en que las mejores escuelas ayudan a todos los estudiantes a aprender es <a href="/gk/videos/why-student-centered-education-should-be-the-norm/" target="_blank">dándoles una voz y opciones</a>.</p>
         2_low_html: >
           <p class="side-bar"><span class="emphasis">Poco progreso con bajas calificaciones en los exámenes</span>
           significa que los estudiantes empiezan en un punto bajo y caerán aún más lejos detrás de sus compañeros de
@@ -173,9 +167,8 @@ es:
           grado a otro en comparación con estudiantes en otras escuelas en el estado.</p>
           %{test_score_dependent_content}
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos
-          para padres:</span></p>
-          <p class="footnote">Pregúntele a la escuela cómo interpreta esta clasificación y cómo podría utilizar esta
-          información para ayudar a los estudiantes a crecer y alcanzar su máximo potencial.</p>
+          para padres</span></p>
+          <p class="footnote">Una clave forma en que las mejores escuelas ayudan a todos los estudiantes a aprender es <a href="/gk/videos/why-student-centered-education-should-be-the-norm/" target="_blank">dándoles una voz y opciones</a>.</p>
         3_low_html: >
           <p class="side-bar"><span class="emphasis">Progreso promedio con bajas calificaciones en los exámenes</span>
           significa que los estudiantes están comenzando en un punto bajo pero manteniendo el ritmo con sus compañeros
@@ -190,9 +183,8 @@ es:
           académico de un grado a otro en comparación con estudiantes en otras escuelas en el estado.</p>
           %{test_score_dependent_content}
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos
-          para padres:</span></p>
-          <p class="footnote">Pregúntele a la escuela cómo interpreta esta clasificación y cómo podría utilizar esta
-          información para ayudar a los estudiantes a crecer y alcanzar su máximo potencial.</p>
+          para padres</span></p>
+          <p class="footnote">Una clave forma en que las mejores escuelas ayudan a todos los estudiantes a aprender es <a href="/gk/videos/why-student-centered-education-should-be-the-norm/" target="_blank">dándoles una voz y opciones</a>.</p>
         4_low_html: >
           <p class="side-bar"><span class="emphasis">Grande progreso con bajas calificaciones en los exámenes </span>
           significa que los estudiantes están comenzando en un punto bajo pero están haciendo mayores ganancias que sus
@@ -207,9 +199,8 @@ es:
           grado a otro en comparación con estudiantes en otras escuelas en el estado.</p>
           %{test_score_dependent_content}
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos
-          para padres:</span></p>
-          <p class="footnote">Pregúntele a la escuela cómo interpreta esta clasificación y qué puedes hacer para
-          apoyar el éxito continuo de la escuela.</p>
+          para padres</span></p>
+          <p class="footnote">Una clave forma en que las mejores escuelas ayudan a todos los estudiantes a aprender es <a href="/gk/videos/why-student-centered-education-should-be-the-norm/" target="_blank">dándoles una voz y opciones</a>.</p>
         5_low_html: >
           <p class="side-bar"><span class="emphasis">Alto progreso con bajas calificaciones en los exámenes</span>
           significa que los estudiantes
@@ -225,9 +216,8 @@ es:
           de un grado a otro en comparación con estudiantes en otras escuelas en el estado.</p>
           %{test_score_dependent_content}
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos
-          para padres:</span></p>
-          <p class="footnote">Pregúntele a la escuela cómo interpreta esta clasificación y qué puedes hacer para apoyar
-          el éxito continuo de la escuela.</p>
+          para padres</span></p>
+          <p class="footnote">Una clave forma en que las mejores escuelas ayudan a todos los estudiantes a aprender es <a href="/gk/videos/why-student-centered-education-should-be-the-norm/" target="_blank">dándoles una voz y opciones</a>.</p>
       javascript:
         toc_item: 'Progreso académico'
       district_scope:
@@ -238,7 +228,7 @@ es:
         tooltip_html: >
           <p>¿Cuánto ayudan las escuelas a los estudiantes crecer cada año?</p>
           <p>Muchos estados publican datos del crecimiento del estudiante para reflejar cuánto progreso estudiantes están haciendo año tras año. Este estado no publica datos del crecimiento del estudiante. En cambio, estimamos con nuestra Calificación del Progreso Académico el progreso del estudiante comparando año tras año en las calificaciones de grado y sujeto en cada escuela frente a todas las escuelas del estado que comenzaron con similares niveles de conocimiento. En esta sección puedes ver un resumen del porcentaje de escuelas en este distrito con Calificaciones de Progreso Académico que están por encima del promedio, por debajo del promedio o aproximadamente el promedio.</p>
-          <a href='/gk/ratings-ca-mi/?lang=es#academicprogressrating'>Aprende más sobre esta clasificación.</a>
+          <a href='/gk/ratings-ca-mi/?lang=es#academicprogressrating' target="_blank">Aprende más sobre esta clasificación.</a>
         graphic_header: ¿Cómo se compara este distrito con el resto del estado?
         graphic_header_tooltip: Este cuadro muestra el porcentaje de escuelas en este distrito con Calificaciones del Progreso Académico que están por encima del promedio (7-10), promedio (5-6) o por debajo del promedio (1-4) en comparación con los promedios estatales.
         narrative:

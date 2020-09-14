@@ -111,7 +111,7 @@ module Feeds
       private
 
       def school_ids
-        @schools.map(&:id)
+        @schools.map(&:school_id)
       end
 
       def district_ids

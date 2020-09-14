@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { t } from 'util/i18n';
 import ModalTooltip from 'react_components/modal_tooltip';
-import BrownOwl from './icons/brown_owl';
+import BrownOwl from 'react_components/icons/brown_owl';
 
 const RatingWithTooltip = ({rating, ratingScale}) => {
   const className = `circle-rating--small circle-rating--${rating || 'gray'}`;

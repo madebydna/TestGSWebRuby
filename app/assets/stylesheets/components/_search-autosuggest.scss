@@ -105,22 +105,23 @@
   .search-mode-homepage{
     // Class added to search box to allow mobile user to have more room to search
     // Overwrites CSS from search-box class
-    @media (min-width: 549px){
-      margin-top: -150px;
+    @include media-breakpoint-down(sm) {
+      position: fixed;
+      margin: 10px;
     }
-    @media (max-width: 548px){
-      margin-top: -185px;
+    @supports (-webkit-touch-callout: none) {
+      /* CSS specific to iOS devices */
+      input:active{
+        font-size: 16px;
+      }
     }
     z-index: 5;
     margin-left: -10px;
     width: 93%;
-    // For small phone screen widths
-    @media (max-width: 320px){
-      width: 110%;
-    }
-    @media (max-width: 548px){
-      .search-results-list{
-        width: 130%;
+
+    .search-results-list{
+      @include media-breakpoint-down(sm) {
+        width: 120%;
       }
     }
     input{

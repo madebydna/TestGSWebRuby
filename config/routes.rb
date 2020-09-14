@@ -1,4 +1,4 @@
-
+require 'sidekiq/web'
 LocalizedProfiles::Application.routes.draw do
   require 'states'
 
@@ -285,6 +285,7 @@ LocalizedProfiles::Application.routes.draw do
   get '/admin/gsr/widget-test', to: 'widget#test'
 
   namespace :admin, controller: 'admin', path: '/admin/gsr' do
+    mount Sidekiq::Web => '/sidekiq'
     resources :api_accounts, except: [:show, :destroy]
     post '/api_accounts/create_api_key', to: 'api_accounts#create_api_key', as: :create_api_key
     get '/info', action: :info

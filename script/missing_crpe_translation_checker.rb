@@ -32,8 +32,32 @@ class MissingCrpeTranslationChecker
         table:  :'omni.covid_responses',
         column: :value,
         key_column: :data_type,
-        key_value: 'SUMMER SUMMARY'
-      }
+        key_value: 'SUMMARY'
+      },
+      {
+        table:  :'omni.covid_responses',
+        column: :value,
+        key_column: :data_type,
+        key_value: 'LEARNING MODEL'
+      },
+      {
+        table:  :'omni.covid_responses',
+        column: :value,
+        key_column: :data_type,
+        key_value: 'REMOTE LEARNING PLAN'
+      },
+      {
+        table:  :'omni.covid_responses',
+        column: :value,
+        key_column: :data_type,
+        key_value: 'TECHNOLOGY AND WIFI ACCESS'
+      },
+      {
+        table:  :'omni.covid_responses',
+        column: :value,
+        key_column: :data_type,
+        key_value: 'NOTEWORTHY PRACTICES'
+      },
     ]
     @missing_translation_messages = []
   end
@@ -55,7 +79,13 @@ class MissingCrpeTranslationChecker
   def missing_translations_hash
     @config.each_with_object({}) do |hash, aggregate_hash|
       column_check = new_column_checker(hash[:table], hash[:column], hash[:key_column], hash[:key_value], hash)
-      aggregate_hash.merge!(column_check.missing_translations_hash)
+      column_check.missing_translations_hash.each do |(k, v)|
+        if aggregate_hash.has_key?(k)
+          aggregate_hash[k] += v
+        else
+          aggregate_hash[k] = v
+        end
+      end
     end
   end
 

@@ -29,7 +29,7 @@ es:
         elegible para aplicar a la Universidad de CA o escuelas estatales de CA. Esto muestra los porcentajes de
         graduados de las escuelas secundarias de este distrito que obtuvieron un grado "C" o superior en las A-G clases requeridas para ser elegible
         para la Universidad de CA y colegios de CA State.
-        <a href="/gk/articles/no-pierda-de-vista-estos-requisitos-para-entrar-a-la-universidad/?lang=es">Obtenga más información acerca de estos requisitos.</a>
+        <a href="/gk/articles/no-pierda-de-vista-estos-requisitos-para-entrar-a-la-universidad/?lang=es" target="_blank">Obtenga más información acerca de estos requisitos.</a>
       RE Student Progress Rating narration: >
         Estas calificaciones reflejan cuánto mejoraron los estudiantes de esta escuela de un año a otro en comparación con estudiantes similares en otras escuelas del estado. Es una manera útil de medir qué tan bien una escuela está ayudando a los niños a aprender y avanzar.
       RE Academic Progress Rating narration: >
@@ -77,13 +77,13 @@ es:
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
           <div class="footnote">Los estudiantes de bajos ingresos realmente están siendo dejados atrás en esta escuela.
           Pero algunas escuelas están haciendo un excelente trabajo de servir a todos los estudiantes.
-          <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="Este kit de herramientas" href="/gk/equity-toolkit/?lang=es">Este kit de herramientas</a> te ayudará a cerrar la brecha de equidad en tu escuela: %{more}
+          <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="Este kit de herramientas" href="/gk/equity-toolkit/?lang=es" target="_blank">Este kit de herramientas</a> te ayudará a cerrar la brecha de equidad en tu escuela: %{more}
           <ul>
-            <li><a href="/gk/equity-toolkit/?lang=es#equity">Averigua</a>: ¿qué es la equidad de todos modos?</li>
-            <li><a href="/gk/equity-toolkit/?lang=es#best-practices">6 cosas</a> que las mejores escuelas secundarias hacen para ayudar a los niños de bajos ingresos.</li>
-            <li>¿Qué tan bien está tu escuela sirviendo a niños de bajos ingresos, <a href="/gk/equity-toolkit/?lang=es#compare">en comparación con otras escuelas cercanas?</a></li>
-            <li><a href="/gk/equity-toolkit/?lang=es#what-to-ask">5 cosas</a> para preguntarle a tu director</li>
-            <li><a href="/gk/equity-toolkit/?lang=es#principal-template">Comparte lo que has aprendido</a> con tu director</li>
+            <li><a href="/gk/equity-toolkit/?lang=es#equity" target="_blank">Averigua</a>: ¿qué es la equidad de todos modos?</li>
+            <li><a href="/gk/equity-toolkit/?lang=es#best-practices" target="_blank">6 cosas</a> que las mejores escuelas secundarias hacen para ayudar a los niños de bajos ingresos.</li>
+            <li>¿Qué tan bien está tu escuela sirviendo a niños de bajos ingresos, <a href="/gk/equity-toolkit/?lang=es#compare" target="_blank">en comparación con otras escuelas cercanas?</a></li>
+            <li><a href="/gk/equity-toolkit/?lang=es#what-to-ask" target="_blank">5 cosas</a> para preguntarle a tu director</li>
+            <li><a href="/gk/equity-toolkit/?lang=es#principal-template" target="_blank">Comparte lo que has aprendido</a> con tu director</li>
           </ul>%{end_more}
           </div>
         _2_html: >
@@ -94,13 +94,13 @@ es:
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
           <div class="footnote">Los estudiantes de bajos ingresos realmente están siendo dejados atrás en esta escuela.
           Pero algunas escuelas están haciendo un excelente trabajo de servir a todos los estudiantes.
-          <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="Este kit de herramientas" href="/gk/equity-toolkit/?lang=es">Este kit de herramientas</a> te ayudará a cerrar la brecha de equidad en tu escuela: %{more}
+          <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="Este kit de herramientas" href="/gk/equity-toolkit/?lang=es" target="_blank">Este kit de herramientas</a> te ayudará a cerrar la brecha de equidad en tu escuela: %{more}
           <ul>
-            <li><a href="/gk/equity-toolkit/?lang=es#equity">Averigua</a>: ¿qué es la equidad de todos modos?</li>
-            <li><a href="/gk/equity-toolkit/?lang=es#best-practices">6 cosas</a> que las mejores escuelas secundarias hacen para ayudar a los niños de bajos ingresos.</li>
-            <li>¿Qué tan bien está tu escuela sirviendo a niños de bajos ingresos, <a href="/gk/equity-toolkit/?lang=es#compare">en comparación con otras escuelas cercanas?</a></li>
-            <li><a href="/gk/equity-toolkit/?lang=es#what-to-ask">5 cosas</a> para preguntarle a tu director</li>
-            <li><a href="/gk/equity-toolkit/?lang=es#principal-template">Comparte lo que has aprendido</a> con tu director</li>
+            <li><a href="/gk/equity-toolkit/?lang=es#equity" target="_blank">Averigua</a>: ¿qué es la equidad de todos modos?</li>
+            <li><a href="/gk/equity-toolkit/?lang=es#best-practices" target="_blank">6 cosas</a> que las mejores escuelas secundarias hacen para ayudar a los niños de bajos ingresos.</li>
+            <li>¿Qué tan bien está tu escuela sirviendo a niños de bajos ingresos, <a href="/gk/equity-toolkit/?lang=es#compare" target="_blank">en comparación con otras escuelas cercanas?</a></li>
+            <li><a href="/gk/equity-toolkit/?lang=es#what-to-ask" target="_blank">5 cosas</a> para preguntarle a tu director</li>
+            <li><a href="/gk/equity-toolkit/?lang=es#principal-template" target="_blank">Comparte lo que has aprendido</a> con tu director</li>
           </ul>%{end_more}
           </div>
         _3_html: >
@@ -112,12 +112,12 @@ es:
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
           <div class="footnote">La mayoría de las escuelas tienen dificultades para apoyar a los estudiantes de bajos ingresos.
           Pero algunas escuelas están teniendo éxito.
-          <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="Este kit de herramientas" href="/gk/equity-toolkit/?lang=es">Este kit de herramientas</a> te ayudará a cerrar la brecha de equidad en tu escuela: %{more}<ul>
-            <li><a href="/gk/equity-toolkit/?lang=es#equity">Averigua</a>: ¿qué es la equidad de todos modos?</li>
-            <li><a href="/gk/equity-toolkit/?lang=es#best-practices">6 cosas</a> que las mejores escuelas secundarias hacen para ayudar a los niños de bajos ingresos.</li>
-            <li>¿Qué tan bien está tu escuela sirviendo a niños de bajos ingresos, <a href="/gk/equity-toolkit/?lang=es#compare">en comparación con otras escuelas cercanas?</a></li>
-            <li><a href="/gk/equity-toolkit/?lang=es#what-to-ask">5 cosas</a> para preguntarle a tu director</li>
-            <li><a href="/gk/equity-toolkit/?lang=es#principal-template">Comparte lo que has aprendido</a> con tu director</li>
+          <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="Este kit de herramientas" href="/gk/equity-toolkit/?lang=es" target="_blank">Este kit de herramientas</a> te ayudará a cerrar la brecha de equidad en tu escuela: %{more}<ul>
+            <li><a href="/gk/equity-toolkit/?lang=es#equity" target="_blank">Averigua</a>: ¿qué es la equidad de todos modos?</li>
+            <li><a href="/gk/equity-toolkit/?lang=es#best-practices" target="_blank">6 cosas</a> que las mejores escuelas secundarias hacen para ayudar a los niños de bajos ingresos.</li>
+            <li>¿Qué tan bien está tu escuela sirviendo a niños de bajos ingresos, <a href="/gk/equity-toolkit/?lang=es#compare" target="_blank">en comparación con otras escuelas cercanas?</a></li>
+            <li><a href="/gk/equity-toolkit/?lang=es#what-to-ask" target="_blank">5 cosas</a> para preguntarle a tu director</li>
+            <li><a href="/gk/equity-toolkit/?lang=es#principal-template" target="_blank">Comparte lo que has aprendido</a> con tu director</li>
           </ul>%{end_more}
           </div>
         _4_html: >
@@ -128,13 +128,13 @@ es:
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
           <div class="footnote">Esta escuela está mejor que la mayoría de las escuelas cuando se trata de apoyar a los
           estudiantes de bajos ingresos. Pero algunas escuelas están haciendo un excelente trabajo sirviendo a todos los estudiantes.
-          <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="Este kit de herramientas" href="/gk/equity-toolkit/?lang=es">Este kit de herramientas</a> te ayudará a cerrar la brecha de equidad en tu escuela: %{more}
+          <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="Este kit de herramientas" href="/gk/equity-toolkit/?lang=es" target="_blank">Este kit de herramientas</a> te ayudará a cerrar la brecha de equidad en tu escuela: %{more}
           <ul>
-            <li><a href="/gk/equity-toolkit/?lang=es#equity">Averigua</a>: ¿qué es la equidad de todos modos?</li>
-            <li><a href="/gk/equity-toolkit/?lang=es#best-practices">6 cosas</a> que las mejores escuelas secundarias hacen para ayudar a los niños de bajos ingresos.</li>
-            <li>¿Qué tan bien está tu escuela sirviendo a niños de bajos ingresos, <a href="/gk/equity-toolkit/?lang=es#compare">en comparación con otras escuelas cercanas?</a></li>
-            <li><a href="/gk/equity-toolkit/?lang=es#what-to-ask">5 cosas</a> para preguntarle a tu director</li>
-            <li><a href="/gk/equity-toolkit/?lang=es#principal-template">Comparte lo que has aprendido</a> con tu director</li>
+            <li><a href="/gk/equity-toolkit/?lang=es#equity" target="_blank">Averigua</a>: ¿qué es la equidad de todos modos?</li>
+            <li><a href="/gk/equity-toolkit/?lang=es#best-practices" target="_blank">6 cosas</a> que las mejores escuelas secundarias hacen para ayudar a los niños de bajos ingresos.</li>
+            <li>¿Qué tan bien está tu escuela sirviendo a niños de bajos ingresos, <a href="/gk/equity-toolkit/?lang=es#compare" target="_blank">en comparación con otras escuelas cercanas?</a></li>
+            <li><a href="/gk/equity-toolkit/?lang=es#what-to-ask" target="_blank">5 cosas</a> para preguntarle a tu director</li>
+            <li><a href="/gk/equity-toolkit/?lang=es#principal-template" target="_blank">Comparte lo que has aprendido</a> con tu director</li>
           </ul>%{end_more}
           </div>
         _5_html: >
@@ -145,13 +145,13 @@ es:
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
           <div class="footnote">Esta escuela está haciendo un trabajo mucho mejor que la mayoría de las escuelas cuando
           se trata de apoyar a los estudiantes de bajos ingresos.
-          <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="Este kit de herramientas" href="/gk/equity-toolkit/?lang=es">Este kit de herramientas</a> te ayudará a abogar por todos los niños.%{more}
+          <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="Este kit de herramientas" href="/gk/equity-toolkit/?lang=es" target="_blank">Este kit de herramientas</a> te ayudará a abogar por todos los niños.%{more}
           <ul>
-            <li><a href="/gk/equity-toolkit/?lang=es#equity">Averigua</a>: ¿qué es la equidad de todos modos?</li>
-            <li><a href="/gk/equity-toolkit/?lang=es#best-practices">6 cosas</a> que las mejores escuelas secundarias hacen para ayudar a los niños de bajos ingresos.</li>
-            <li>¿Qué tan bien está tu escuela sirviendo a niños de bajos ingresos, <a href="/gk/equity-toolkit/?lang=es#compare">en comparación con otras escuelas cercanas?</a></li>
-            <li><a href="/gk/equity-toolkit/?lang=es#what-to-ask">5 cosas</a> para preguntarle a tu director</li>
-            <li><a href="/gk/equity-toolkit/?lang=es#principal-template">Comparte lo que has aprendido</a> con tu director</li>
+            <li><a href="/gk/equity-toolkit/?lang=es#equity" target="_blank">Averigua</a>: ¿qué es la equidad de todos modos?</li>
+            <li><a href="/gk/equity-toolkit/?lang=es#best-practices" target="_blank">6 cosas</a> que las mejores escuelas secundarias hacen para ayudar a los niños de bajos ingresos.</li>
+            <li>¿Qué tan bien está tu escuela sirviendo a niños de bajos ingresos, <a href="/gk/equity-toolkit/?lang=es#compare" target="_blank">en comparación con otras escuelas cercanas?</a></li>
+            <li><a href="/gk/equity-toolkit/?lang=es#what-to-ask" target="_blank">5 cosas</a> para preguntarle a tu director</li>
+            <li><a href="/gk/equity-toolkit/?lang=es#principal-template" target="_blank">Comparte lo que has aprendido</a> con tu director</li>
           </ul>%{end_more}
           </div>
       'UC/CSU eligibility': 'La elegibilidad a la UC/CSU'
@@ -208,12 +208,12 @@ es:
               <p class="narrative-content">Esto muestra el porcentaje de alumnos ausentes 15 días o más a través de diferentes razas y etnias en esta escuela, en comparación con el promedio estatal. Altos índices de absentismo y suspensiones significa menos tiempo para la enseñanza y el aprendizaje.</p>
               <hr />
               <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
-              <p class="footnote"><a href="/gk/articles/la-disciplina-en-las-escuelas-se-aproxima-a-la-pacificacion/?lang=es">Vea cómo</a> algunas escuelas están utilizando métodos innovadores para mejorar la disciplina y la asistencia.</p>
+              <p class="footnote"><a href="/gk/articles/la-disciplina-en-las-escuelas-se-aproxima-a-la-pacificacion/?lang=es" target="_blank">Vea cómo</a> algunas escuelas están utilizando métodos innovadores para mejorar la disciplina y la asistencia.</p>
             'Percentage of students suspended out of school': >
               <p class="narrative-content">Esto demuestra los índices de suspensiones fuera de la escuela entre diferentes razas/etnias en esta escuela, en comparación con el promedio estatal. Altos índices de suspensiones significa menos tiempo para la enseñanza y el aprendizaje.</p>
               <hr />
               <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
-              <p class="footnote"><a href="/gk/articles/la-disciplina-en-las-escuelas-se-aproxima-a-la-pacificacion/?lang=es">Vea cómo</a> algunas escuelas están utilizando métodos innovadores para mejorar la disciplina y la asistencia.</p>
+              <p class="footnote"><a href="/gk/articles/la-disciplina-en-las-escuelas-se-aproxima-a-la-pacificacion/?lang=es" target="_blank">Vea cómo</a> algunas escuelas están utilizando métodos innovadores para mejorar la disciplina y la asistencia.</p>
           disparity:
             'Percentage of students chronically absent (15+ days)': >
               <div class="auto-narration">
@@ -225,7 +225,7 @@ es:
                 asistencia sean justas.</p>
                 <hr />
                 <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
-                <p class="footnote"><a href="/gk/articles/la-disciplina-en-las-escuelas-se-aproxima-a-la-pacificacion/?lang=es">Vea cómo</a> algunas escuelas están utilizando métodos innovadores para mejorar la disciplina y la asistencia.</p>
+                <p class="footnote"><a href="/gk/articles/la-disciplina-en-las-escuelas-se-aproxima-a-la-pacificacion/?lang=es" target="_blank">Vea cómo</a> algunas escuelas están utilizando métodos innovadores para mejorar la disciplina y la asistencia.</p>
               </div>
             'Percentage of students suspended out of school': >
               <div class="auto-narration">
@@ -236,19 +236,19 @@ es:
                 asegurar que las políticas de disciplina sean justas.</p>
                 <hr />
                 <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
-                <p class="footnote"><a href="/gk/articles/la-disciplina-en-las-escuelas-se-aproxima-a-la-pacificacion/?lang=es">Vea cómo</a> algunas escuelas están utilizando métodos innovadores para mejorar la disciplina y la asistencia.</p>
+                <p class="footnote"><a href="/gk/articles/la-disciplina-en-las-escuelas-se-aproxima-a-la-pacificacion/?lang=es" target="_blank">Vea cómo</a> algunas escuelas están utilizando métodos innovadores para mejorar la disciplina y la asistencia.</p>
               </div>
         SD:
           'Percentage of students chronically absent (15+ days)': >
             <p class="narrative-content">Esto muestra el porcentaje de estudiantes con discapacidades ausentes 15 días o más en esta escuela en comparación con el promedio estatal. Altos índices de absentismo significa menos tiempo para la enseñanza y el aprendizaje.</p>
             <hr />
             <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
-            <p class="footnote"><a href='/gk/articles/disciplina-escolar-los-derechos-de-los-estudiantes-con-iep-o-un-plan-504/?lang=es'>Entérate de los derechos de tu hijo</a> cuando se trata de la disciplina escolar.</p>
+            <p class="footnote"><a href='/gk/articles/disciplina-escolar-los-derechos-de-los-estudiantes-con-iep-o-un-plan-504/?lang=es' target="_blank">Entérate de los derechos de tu hijo</a> cuando se trata de la disciplina escolar.</p>
           'Percentage of students suspended out of school': >
             <p class="narrative-content">Este índice muestra la suspensión de los estudiantes con discapacidades en esta escuela en comparación con el promedio estatal. Altos índices de suspensiones significa menos tiempo para la enseñanza y el aprendizaje.</p>
             <hr />
             <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
-            <p class="footnote"><a href='/gk/articles/disciplina-escolar-los-derechos-de-los-estudiantes-con-iep-o-un-plan-504/?lang=es'>Entérate de los derechos de tu hijo</a> cuando se trata de la disciplina escolar.</p>
+            <p class="footnote"><a href='/gk/articles/disciplina-escolar-los-derechos-de-los-estudiantes-con-iep-o-un-plan-504/?lang=es' target="_blank">Entérate de los derechos de tu hijo</a> cuando se trata de la disciplina escolar.</p>
           'Test scores':
             # one - subject begins with a vowel e.g. de English
             # other - subject begins with a consonant e.g. de Math
@@ -256,9 +256,9 @@ es:
               <p class="narrative-content">Esto muestra los resultados para los estudiantes con discapacidades en un examen de %{subject} dado a los estudiantes una vez al año. Grandes diferencias pueden sugerir que algunos grupos de estudiantes no están recibiendo el apoyo que necesitan para tener éxito.</p>
               <hr />
               <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
-              <p class="footnote">Pregúntale a la escuela de tu hijo <a href='/gk/articles/adaptaciones-que-son-y-como-funcionan/?lang=es'>sobre adaptaciones que pueden eliminar barreras para el aprendizaje.</a></p>
+              <p class="footnote">Pregúntale a la escuela de tu hijo <a href='/gk/articles/adaptaciones-que-son-y-como-funcionan/?lang=es' target="_blank">sobre adaptaciones que pueden eliminar barreras para el aprendizaje.</a></p>
             other: >
               <p class="narrative-content">Esto muestra los resultados para los estudiantes con discapacidades en un examen de %{subject} dado a los estudiantes una vez al año. Grandes diferencias pueden sugerir que algunos grupos de estudiantes no están recibiendo el apoyo que necesitan para tener éxito.</p>
               <hr />
               <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
-              <p class="footnote">Pregúntale a la escuela de tu hijo <a href='/gk/articles/adaptaciones-que-son-y-como-funcionan/?lang=es'>sobre adaptaciones que pueden eliminar barreras para el aprendizaje.</a></p>
+              <p class="footnote">Pregúntale a la escuela de tu hijo <a href='/gk/articles/adaptaciones-que-son-y-como-funcionan/?lang=es' target="_blank">sobre adaptaciones que pueden eliminar barreras para el aprendizaje.</a></p>

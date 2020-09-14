@@ -7,4 +7,7 @@ es:
       title: 'Profesores y personal'
       source: 'Fuente'
       sources: Fuentes
-      subtitle_html: 'A menudo los padres valoran clases pequeñas, pero la verdad es más complicada.'
+      subtitle_html: ¿Qué hace que una maestra sea genial? <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="La verdad puede sorprenderte" href="/gk/videos/how-to-make-better-teachers/" target="_blank">La verdad puede sorprenderte.</a>
+      parent_tip_html: >
+        <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
+        <p class="footnote">¿Qué es <a href="/gk/videos/the-value-of-student-staff-connections-in-high-school/" target="_blank">lo más importante</a> que debes buscar en el personal de una escuela?</p><hr />

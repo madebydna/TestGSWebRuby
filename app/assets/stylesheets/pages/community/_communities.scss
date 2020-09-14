@@ -9,11 +9,6 @@ $font-size: 16px;
 $subtle-gray: #647981;
 $line-height-community: 1.428571429;
 
-// Hides the navbar links
-.featured {
-  display: none; // TODO: dont put this here
-}
-
 svg {
   vertical-align: middle;
   border: 0;
@@ -713,6 +708,18 @@ svg {
 
 #distance-learning {
   margin-bottom: 20px;
+
+  .more-reveal-link {
+    font-size: 16px;
+  }
+
+  .more-reveal {
+    display: none;
+  }
+
+  .overview-list {
+    margin: 10px 0;
+  }
 
   .speech-bubble, .speech-bubble.left {
     background: #747C83;

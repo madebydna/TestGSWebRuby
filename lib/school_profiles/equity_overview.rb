@@ -43,6 +43,10 @@ module SchoolProfiles
              end_more: SchoolProfilesController.show_more_end).html_safe if key
     end
 
+    def state_equity_rating?
+      @school_cache_data_reader.state_equity_rating?
+    end
+
     def equity_rating
       equity_overview_struct.try(:school_value_as_int)
     end
@@ -90,7 +94,7 @@ module SchoolProfiles
     end
 
     def has_rating?
-      equity_rating && equity_rating.to_s.downcase != 'nr' && equity_rating.to_i.between?(1, 10)
+      @_has_rating ||= equity_rating && equity_rating.to_s.downcase != 'nr' && equity_rating.to_i.between?(1, 10)
     end
 
     def path_to_yml

@@ -2,6 +2,7 @@
 <% data_values = teachers_staff.data_values %>
 <% initial_size = 3 %>
 <% title = t('.title') %>
+<% narration = t('.parent_tip_html') %>
 
 <% content_for(:profile_module_header, flush: true) do %>
   <%= render "module_header",
@@ -20,7 +21,8 @@
   css_class: 'teachers-staff',
   ga_click_label: 'Teachers and staff',
   sources_link: teachers_staff.sources,
-  qualaroo_link: teachers_staff.qualaroo_module_link
+  qualaroo_link: teachers_staff.qualaroo_module_link,
+  narration: narration
 } do %>
   <%= render partial: 'rating_score_item', collection: data_values.take(initial_size), as: :score_data %>
   <% if data_values.size > initial_size %>
