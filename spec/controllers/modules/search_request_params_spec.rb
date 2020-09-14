@@ -65,4 +65,24 @@ describe SearchRequestParams do
       end
     end
   end
+
+  describe '#url_district' do
+    subject { search_module.url_district }
+
+    before { allow(search_module).to receive(:district_param).and_return('San-Mateo-Unified-School-District') }
+
+    it 'is expected to downcase district name' do
+      expect(subject).to eq 'san-mateo-unified-school-district'
+    end
+  end
+
+  describe '#url_city' do
+    subject { search_module.url_city }
+
+    before { allow(search_module).to receive(:city_param).and_return('San-Mateo') }
+
+    it 'is expected to downcase city name' do
+      expect(subject).to eq 'san-mateo'
+    end
+  end
 end
