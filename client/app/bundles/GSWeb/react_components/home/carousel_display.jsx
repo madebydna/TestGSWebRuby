@@ -4,10 +4,10 @@ import { useTransition, animated, config } from "react-spring";
 
 const CarouselDisplay = ({ type, size, index, direction, slideshowUrls }) => {
 
-  const formattedUrls = slideshowUrls.map((url, idx) => ({id: idx, url: url }))
-  
+  const slideshows = slideshowUrls.map((url, idx) => ({id: idx, url}))
+
   const transitionGoingLeft = useTransition(
-    formattedUrls[index],
+    slideshows[index],
     (item) => item.id,
     {
       from: { transform: "translate3d(100%,0,0)" },
@@ -17,7 +17,7 @@ const CarouselDisplay = ({ type, size, index, direction, slideshowUrls }) => {
     }
   );
   const transitionGoingRight = useTransition(
-    formattedUrls[index],
+    slideshows[index],
     (item) => item.id,
     {
       from: { transform: "translate3d(-100%,0,0)" },
@@ -40,11 +40,10 @@ const CarouselDisplay = ({ type, size, index, direction, slideshowUrls }) => {
                 backgroundImage: `url(${item.url})`,
                 width: "100%",
                 height: "100%",
-                backgroundRepeat:"no-repeat",
-                backgroundSize:'contain'
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "contain",
               }}
-            >
-            </animated.div>
+            ></animated.div>
           );
         })}
       </span>
@@ -65,8 +64,7 @@ const CarouselDisplay = ({ type, size, index, direction, slideshowUrls }) => {
                 backgroundRepeat: "no-repeat",
                 backgroundSize: "contain",
               }}
-            >
-            </animated.div>
+            ></animated.div>
           );
         })}
       </span>

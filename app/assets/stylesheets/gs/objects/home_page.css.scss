@@ -305,11 +305,24 @@ section {
     }
 
     > div:first-child{
+      position: relative;
       flex-grow: 1;
       padding: 20px;
+      flex-basis: 40%;
 
       p {
-        text-align: left
+        text-align: left;
+      }
+      @include media-breakpoint-down(sm){
+        max-width: 100%;
+        min-height: 200px;
+      }
+      @media (max-width:422px){
+        text-align: center;
+        padding: 0;
+        p {
+          text-align: inherit;
+        }
       }
     }
 
@@ -325,7 +338,7 @@ section {
       margin-right: 5px;
     }
     @media (max-width:422px){
-      width: 100vw;
+      width: 90vw;
     }
   }
 }

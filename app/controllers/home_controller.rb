@@ -7,9 +7,16 @@ class HomeController < ApplicationController
 
   layout "home"
 
+  set_additional_js_translations(
+    {
+      slideshows: [:home, :controller, :slideshows]
+    }
+  )
+
   def show
 
     @show_ads = PropertyConfig.advertising_enabled?
+    # @slideshows = slideshows
 
     @canonical_url = home_url
     # Description lives in view because the meta-tags gem truncates description at 200 chars. See https://github.com/kpumuk/meta-tags
@@ -77,6 +84,23 @@ class HomeController < ApplicationController
   end
 
   protected
+
+  # def slideshows
+  #   slideshow_paths.each_with_index.reduce([]) do |accum, (pathname, idx)|
+  #     accum << {
+  #       id: idx,
+  #       url: pathname,
+  #       header: I18n.t(idx, scope: 'home.controller.slideshows.headers'),
+  #       subtext: I18n.t(idx, scope: 'home.controller.slideshows.subtexts'),
+  #       link: I18n.t(idx, scope: 'home.controller.slideshows.links'),
+  #     }
+  #     accum
+  #   end
+  # end
+
+  # def slideshow_paths
+  #   Dir.glob('app/assets/images/home/slideshows_2/*').sort
+  # end
 
   def greatkids_content
     @_greatkids_content ||= ExternalContent.try(:homepage_features)
