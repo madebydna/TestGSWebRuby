@@ -30,6 +30,7 @@ class DistrictFileSubscriptionProcessor
     @state = state
     @district_id = district_id
     @file_name = filename
+    StudentGradeLevel.where("district_id = ? and district_state = ? and updated < ?", district_id, state, '2020-09-15').delete_all
   end
 
   def parse_file
@@ -38,7 +39,9 @@ class DistrictFileSubscriptionProcessor
 
   def member(row)
     email = row[FILE_FIELD_MAPPING[:email]]
-    return nil if email.blank? || is_invalid?(email)
+    return nil if email.blank?
+    email = email.strip
+    return nil if is_invalid?(email)
     user = User.find_by(email: email)
     return user if user.present?
     new_member(email)
@@ -92,7 +95,7 @@ class DistrictFileSubscriptionProcessor
   def grades_signed_up_for(row)
     grades = []
     GRADE_MAPPING.each_pair do |key, value|
-      grades.push value if row[key].present?
+      grades.push value if row[key].present? && row[key] != "0"
     end
 
     grades
@@ -130,7 +133,7 @@ end
 # sudo -u syncer aws s3 cp s3://greatschools-releasefiles/district-loads/stockton_20200902.csv /tmp/
 
 # Cabrillo district load
-DistrictFileSubscriptionProcessor.new("/tmp/cabrillo_20200902.csv", 'CA', 783).run
+#DistrictFileSubscriptionProcessor.new("/tmp/cabrillo_20200902.csv", 'CA', 783).run
 
 # Stockton district load
 DistrictFileSubscriptionProcessor.new("/tmp/stockton_20200902.csv", 'CA', 759).run
