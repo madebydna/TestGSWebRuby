@@ -2,27 +2,28 @@
 @import "mixins/*";
 @import "gs/mixins";
 @import "resources/bootstrap/bootstrap";
-@import "gs/twitter-typeahead";
-@import "gs/tooltip";
-@import "gs/objects/scaling_image_layout";
-@import "gs/objects/spinny_wheel";
-@import "base/spacing";
-@import "gs/navigation";
-@import "base/deprecated_typography";
+// @import "gs/twitter-typeahead";
+// @import "gs/tooltip";
+// @import "gs/objects/scaling_image_layout";
+// @import "gs/objects/spinny_wheel";
+// @import "base/spacing";
+// @import "gs/navigation";
+// @import "base/deprecated_typography";
 @import "gs/objects/search_area_layout";
 @import "gs/objects/search_page";
-@import "gs/objects/home_page";
+// @import "gs/objects/home_page";
 @import "header_new";
-@import "gs/objects/footer";
+// @import "gs/objects/footer";
 @import "gs/objects/home_footer";
-@import "sprites/footer_icons_16x16";
-@import "libs/home/banner";
+// @import "sprites/footer_icons_16x16";
+// @import "libs/home/banner";
+// @import "libs/home/highlights";
 
 
-@import "fonts/fonts-opensans"; // regular + italic
-@import "fonts/fonts-robotoslab-light";
-@import "fonts/gs-icon-font";
-@import "sprites/icons_24x24";
+// @import "fonts/fonts-opensans"; // regular + italic
+// @import "fonts/fonts-robotoslab-light";
+// @import "fonts/gs-icon-font";
+// @import "sprites/icons_24x24";
 
 #home-page {
   h1 {
