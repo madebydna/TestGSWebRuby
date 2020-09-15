@@ -85,23 +85,6 @@ class HomeController < ApplicationController
 
   protected
 
-  # def slideshows
-  #   slideshow_paths.each_with_index.reduce([]) do |accum, (pathname, idx)|
-  #     accum << {
-  #       id: idx,
-  #       url: pathname,
-  #       header: I18n.t(idx, scope: 'home.controller.slideshows.headers'),
-  #       subtext: I18n.t(idx, scope: 'home.controller.slideshows.subtexts'),
-  #       link: I18n.t(idx, scope: 'home.controller.slideshows.links'),
-  #     }
-  #     accum
-  #   end
-  # end
-
-  # def slideshow_paths
-  #   Dir.glob('app/assets/images/home/slideshows_2/*').sort
-  # end
-
   def greatkids_content
     @_greatkids_content ||= ExternalContent.try(:homepage_features)
   end

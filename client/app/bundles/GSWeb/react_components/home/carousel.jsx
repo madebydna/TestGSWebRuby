@@ -27,15 +27,6 @@ const Carousel = ({ size }) => {
     setIndex((index - 1 + slideshowUrls.length) % slideshowUrls.length);
   });
 
-  // const slideshows = slideshowUrls.map((url, idx) => {
-  //   return {
-  //     url,
-  //     header: t(`slideshows.headers.${idx}`),
-  //     subtext: t(`slideshows.subtexts.${idx}`),
-  //     links: t(`slideshows.links.${idx}`),
-  //   };
-  // });
-
   const translateLeft = useCallback(() => {
     setDirection("left");
     setIndex((index + 1 + slideshowUrls.length) % slideshowUrls.length);
