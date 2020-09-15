@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import { useTransition, animated } from "react-spring";
+import { animated } from "react-spring";
 import useTransitions from "react_components/hooks/use_transitions";
 import { t } from "util/i18n";
 
@@ -43,7 +43,7 @@ const Card = ({ index, slideshowUrls, direction }) => {
           <br />
           <br />
           <a href={`${item.link}`} className="primary-button">
-            {t('Learn more', )}
+            {t('slideshows.Learn more')}
           </a>
         </p>
       </React.Fragment>
@@ -73,6 +73,12 @@ const Card = ({ index, slideshowUrls, direction }) => {
         })}
       </div>
     );
+};
+
+Card.propTypes = {
+  index: PropTypes.number,
+  slideshowUrls: PropTypes.arrayOf(PropTypes.string),
+  direction: PropTypes.string
 };
 
 export default Card;
