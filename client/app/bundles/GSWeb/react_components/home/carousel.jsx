@@ -4,7 +4,7 @@ import CarouselDisplay from "react_components/home/carousel_display";
 import Card from "react_components/home/card";
 import ArrowLeft from "react_components/icons/arrow_left";
 import ArrowRight from "react_components/icons/arrow_right";
-import { SM, XS, validSizes, viewport } from "util/viewport";
+import { XS } from "util/viewport";
 import slideshow1 from "home/slideshows_2/01_CSA_Insights_2020_Success_without_Selection.jpg";
 import slideshow2 from "home/slideshows_2/02_GreatSchools_College_Sucess_Awards_Report_Final-1.jpg";
 import slideshow3 from "home/slideshows_2/03_GreatSchools_Transparency_Report_Web.jpg";
@@ -91,6 +91,14 @@ const Carousel = ({ size }) => {
       </div>
     </React.Fragment>
   );
+};
+
+Carousel.propTypes = {
+  size: PropTypes.number,
+};
+
+Carousel.defaultProps = {
+  size: 2
 };
 
 
