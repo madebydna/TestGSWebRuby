@@ -157,10 +157,8 @@ module SchoolProfiles
     end
 
     def extract_from_overview_data(data_points)
-      {}.tap do |hash|
-        data_points.each do |data_point|
-          hash[data_point.breakdowns.first] = "#{(data_point.school_value.to_f * 100).round}%"
-        end
+      data_points.each_with_object({}) do |data_point, hash|
+        hash[data_point.breakdowns.first] = "#{(data_point.school_value.to_f * 100).round}%"
       end
     end
 

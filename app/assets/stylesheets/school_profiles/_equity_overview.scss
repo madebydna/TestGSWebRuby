@@ -1,5 +1,7 @@
 $graph-height: 255px;
 $graph-row-height: $graph-height/3;
+$y-axis-label-width: 80px;
+$x-axis-label-height: 30px;
 
 .equity-graph-wrapper {
   margin: 1.5rem auto;
@@ -8,7 +10,7 @@ $graph-row-height: $graph-height/3;
 
 .equity-graph-label {
   @extend .open-sans_i;
-  color: $gray-dark;
+  color: $gray-mute;
   position: relative;
   .info-circle {
     position: relative;
@@ -29,7 +31,7 @@ $graph-row-height: $graph-height/3;
   .y-axis {
     position: absolute;
     width: 100%;
-    padding-right: 80px;
+    padding-right: $y-axis-label-width;
     .line {
       position: relative;
       height: $graph-row-height;
@@ -42,22 +44,22 @@ $graph-row-height: $graph-height/3;
     .line span {
       position: absolute;
       top: -10px;
-      right: -80px;
+      right: -$y-axis-label-width;
       padding: 0 6px;
-      width: 80px;
+      width: $y-axis-label-width;
       text-align: left;
-      color: $gray-dark;
+      color: $gray-mute;
     }
   }
 
   .histogram {
     position: absolute;
-    height: (2 * $graph-row-height) + 31px;
-    bottom: $graph-row-height - 31px;
+    height: (2 * $graph-row-height) + ($x-axis-label-height + 1px);
+    bottom: $graph-row-height - ($x-axis-label-height + 1px);
     z-index: 1;
     width: 100%;
     display: flex;
-    padding-right: 80px;
+    padding-right: $y-axis-label-width;
 
     .histogram-cell {
       flex-grow: 1;
@@ -73,8 +75,8 @@ $graph-row-height: $graph-height/3;
       }
       .label {
         font-size: 14px;
-        color: $gray-dark;
-        height: 30px;
+        color: $gray-darkest;
+        height: $x-axis-label-height;
         display: inline-flex;
         padding-top: 2px;
       }
@@ -115,7 +117,7 @@ $graph-row-height: $graph-height/3;
     z-index: 1;
     width: 100%;
     display: flex;
-    color: $gray-dark;
+    color: $gray-darkest;
 
     .item {
       flex: 1 1 50%;
