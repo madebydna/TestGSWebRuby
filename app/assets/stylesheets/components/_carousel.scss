@@ -15,7 +15,7 @@
   .carousel-display-large {
     position: relative;
     height: 364px;
-    width: 281px; 
+    min-width: 281px;
     margin-right: 20px;
     overflow: hidden;
   }
@@ -31,10 +31,6 @@
     border-top-left-radius: 50px;
     border-bottom-right-radius: 50px;
     margin-right: 20px;
-    @include media-breakpoint-down(xs){
-      border-top-left-radius: 0;
-      border-bottom-right-radius: 0;
-    }
   }
 
   .carousel-display-small-right {

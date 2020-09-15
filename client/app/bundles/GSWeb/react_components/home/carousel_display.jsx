@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
+import { SM, XS, validSizes, viewport } from "util/viewport";
 import { useTransition, animated, config } from "react-spring";
 
-const CarouselDisplay = ({ type, size, index, direction, slideshowUrls }) => {
+const CarouselDisplay = ({ type, size, index, direction, slideshowUrls, callback }) => {
 
   const slideshows = slideshowUrls.map((url, idx) => ({id: idx, url}))
 
@@ -27,6 +28,12 @@ const CarouselDisplay = ({ type, size, index, direction, slideshowUrls }) => {
     }
   );
 
+  const translateRight = () => {
+    if(type == 'large' && size == XS){
+      callback()
+    }
+  }
+
   if (direction == "right") {
     return (
       <span className={`carousel-display-${type}`}>
@@ -34,6 +41,7 @@ const CarouselDisplay = ({ type, size, index, direction, slideshowUrls }) => {
           return (
             <animated.div
               key={key}
+              onClick={translateRight}
               style={{
                 ...props,
                 position: "absolute",

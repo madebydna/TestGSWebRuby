@@ -22,6 +22,7 @@ const slideshowUrls = [
 const Carousel = ({ size }) => {
   const [index, setIndex] = useState(0);
   const [direction, setDirection] = useState("right");
+
   const translateRight = useCallback(() => {
     setDirection("right");
     setIndex((index - 1 + slideshowUrls.length) % slideshowUrls.length);
@@ -32,51 +33,60 @@ const Carousel = ({ size }) => {
     setIndex((index + 1 + slideshowUrls.length) % slideshowUrls.length);
   });
 
+  const buttons = () => {
+    return <div className="carousel-buttons">
+      <ArrowLeft onClick={translateLeft} className={"arrow"} />
+      <ArrowRight onClick={translateRight} className={"arrow"} />
+    </div>;
+  }
+
   return (
     <React.Fragment>
       <h2>What we've been working on</h2>
       <p>Greatschools is committed to bringing forth equitable opportunities</p>
       <div className="module-row">
-        <Card index={index} 
-              slideshowUrls={slideshowUrls}
-              direction={direction}
+        <Card
+          index={index}
+          slideshowUrls={slideshowUrls}
+          direction={direction}
         />
-        <div className="carousel-container">
-          {size > XS && (
+        <div>
+          <div className="carousel-container">
             <CarouselDisplay
               type="large"
               size={size}
               index={index}
               direction={direction}
               slideshowUrls={slideshowUrls}
+              callback={translateRight}
             />
-          )}
-          <div>
-            <div style={{ display: "flex" }}>
-              <CarouselDisplay
-                type="small-left"
-                size={size}
-                index={
-                  (index + 1 + slideshowUrls.length) % slideshowUrls.length
-                }
-                direction={direction}
-                slideshowUrls={slideshowUrls}
-              />
-              <CarouselDisplay
-                type="small-right"
-                size={size}
-                index={
-                  (index + 2 + slideshowUrls.length) % slideshowUrls.length
-                }
-                direction={direction}
-                slideshowUrls={slideshowUrls}
-              />
-            </div>
-            <div className="carousel-buttons">
-              <ArrowLeft onClick={translateLeft} className={"arrow"} />
-              <ArrowRight onClick={translateRight} className={"arrow"} />
+            <div>
+              <div style={{ display: "flex" }}>
+                <CarouselDisplay
+                  type="small-left"
+                  size={size}
+                  index={
+                    (index + 1 + slideshowUrls.length) % slideshowUrls.length
+                  }
+                  direction={direction}
+                  slideshowUrls={slideshowUrls}
+                />
+                {size > XS && (
+                  <CarouselDisplay
+                    type="small-right"
+                    size={size}
+                    index={
+                      (index + 2 + slideshowUrls.length) % slideshowUrls.length
+                    }
+                    direction={direction}
+                    slideshowUrls={slideshowUrls}
+                  />
+                )}
+              </div>
+              { size > XS && buttons() }
             </div>
           </div>
+          { size == XS && buttons() }
         </div>
       </div>
     </React.Fragment>
