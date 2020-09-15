@@ -23,17 +23,19 @@
     <th>Organization</th>
     <th>Email</th>
     <th>Active</th>
+    <th>Active</th>
     <th>Added</th>
   </tr>
   </thead>
   <tbody>
-  <% @subscriptions.each do |subscription| %>
+  <% @accounts.each do |account| %>
     <tr>
-      <td><%= link_to subscription.user.full_name, admin_api_subscription_path(subscription.id) %></td>
-      <td><%= subscription.user.organization %></td>
-      <td><%= subscription.user.email %></td>
-      <td><%= subscription.status %></td>
-      <td><%= subscription.created_at.strftime('%m/%d/%Y') %></td>
+      <td><%= link_to account.user.full_name, edit_admin_api_account_path(account.user.id) %></td>
+      <td><%= account.user.organization %></td>
+      <td><%= account.user.email %></td>
+      <td><%= account.status %></td>
+      <td><%= account.active %></td>
+      <td><%= account.created_at.strftime('%m/%d/%Y') %></td>
     </tr>
   <% end %>
   </tbody>

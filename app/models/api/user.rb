@@ -4,9 +4,6 @@ module Api
     self.table_name = 'users'
     db_magic :connection => :api_rw
 
-    has_one :subscription
-    has_many :awaiting_approval_subscriptions, -> { awaiting_bizdev_approval }, class_name: "Subscription"
-
     validates :first_name, :last_name, :organization, :website, :email, :phone, :city, :state, presence: true
     validates :organization_description, :role, :intended_use, presence: true
     validates :email, format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i }

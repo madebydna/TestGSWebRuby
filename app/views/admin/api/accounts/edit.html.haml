@@ -1,0 +1,64 @@
+- content_for :head do
+  %title GS Update API Account
+
+%h3 User details
+= form_for(@account.user, url: '#') do |f|
+  %fieldset{:disabled => "disabled"}
+    %div
+      = f.label :full_name
+      = f.text_field :full_name
+    %div
+      = f.label :organization
+      = f.text_field :organization
+    %div
+      = f.label :email
+      = f.text_field :email
+    %div
+      = f.label :website
+      = f.text_field :website
+    %div
+      = f.label :phone
+      = f.text_field :phone
+    %div
+      = f.label :city
+      = f.text_field :city
+    %div
+      = f.label :state
+      = f.text_field :state
+    %div
+      = f.label :organization_description
+      = f.text_field :organization_description
+    %div
+      = f.label :role
+      = f.text_field :role
+    %div
+      = f.label :intended_use
+      = f.text_field :intended_use
+    %div
+      = f.label :intended_use_details
+      = f.text_field :intended_use_details
+    %div
+      = f.label :stripe_customer_id
+      = f.text_field :stripe_customer_id
+    %div
+      = f.label :created_at
+      = f.text_field :created_at
+%br/
+%h3 Subscription Details
+%br/
+%div
+  = form_for(@account, url: admin_api_account_path(@account), method: :put) do |f|
+    %div
+      = f.label :aws_api_key
+      = f.text_field :aws_api_key
+    %div
+      = f.label :status
+      = f.text_field :status, disabled: true
+    %div
+      = f.label :created_at
+      = f.text_field :created_at, disabled: true
+    %div{:style => "text-align: center;margin-top: 40px;"}
+      = f.submit "Save", class: "btn btn-primary", style: "width: 150px; margin-right: 15px;"
+      = f.submit "Approve request", name: "delete_key", class: "btn btn-danger"
+      = f.submit "Deactivate account", name: "delete_key", class: "btn btn-danger"
+%div{:style => "text-align: left; margin-bottom: 40px;"}= link_to 'Back to all accounts', admin_api_accounts_path

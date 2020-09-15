@@ -1,7 +1,4 @@
 class Admin::Api::SubscriptionsController < ApplicationController
-  include Api::ErrorHelper
-
-  layout 'admin'
 
   def index
     @subscriptions = Api::Subscription.includes(:user)
@@ -14,5 +11,20 @@ class Admin::Api::SubscriptionsController < ApplicationController
   def show
     @subscription = Api::Subscription.where(params[:id]).first
   end
+
+  def edit
+    @subscription = Api::Subscription.where(params[:id]).first
+  end
+
+  def update
+    subscription = Api::Subscription.where(params[:id]).first
+    subscription.update!(subscription_params)
+  end
+
+
+  def subscription_params
+    params.require(:api_subscription).permit(:aws_api_key)
+  end
+
 
 end

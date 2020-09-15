@@ -194,6 +194,13 @@ GEM
       rspec (>= 2.14, < 4.0)
     gyoku (1.1.1)
       builder (>= 2.1.2)
+    haml (4.0.3)
+      tilt
+    haml-rails (0.5.3)
+      actionpack (>= 4.0.1)
+      activesupport (>= 4.0.1)
+      haml (>= 3.1, < 5.0)
+      railties (>= 4.0.1)
     has_scope (0.5.1)
     hashdiff (0.3.7)
     hashie (2.1.1)
@@ -561,6 +568,7 @@ DEPENDENCIES
   guard-bundler
   guard-livereload
   guard-rspec (= 4.2.9)
+  haml-rails
   has_scope
   hashie
   i18n-tasks (~> 0.8.3)

@@ -284,7 +284,7 @@ LocalizedProfiles::Application.routes.draw do
 
   namespace :admin, controller: 'admin', path: '/admin/gsr' do
     namespace :api do
-      resources :subscriptions
+      resources :accounts
     end
     mount Sidekiq::Web => '/sidekiq'
     resources :api_accounts, except: [:show, :destroy]
