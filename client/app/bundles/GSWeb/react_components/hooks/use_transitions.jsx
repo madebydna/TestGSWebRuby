@@ -1,5 +1,4 @@
 import { useTransition, config } from "react-spring";
-import { merge } from "lodash";
 import PropTypes from "prop-types";
 
 const useTransitions = (item, configs) => {
@@ -10,7 +9,7 @@ const useTransitions = (item, configs) => {
     config: config.stiff,
   };
 
-  return useTransition(item, (item) => item.id, merge(initialProps, configs));
+  return useTransition(item, (item) => item.id, {...initialProps, ...configs});
 }
 
 useTransitions.propTypes = {
