@@ -30,7 +30,7 @@ class DistrictFileSubscriptionProcessor
     @state = state
     @district_id = district_id
     @file_name = filename
-    StudentGradeLevel.where("district_id = ? and district_state = ? and updated < ?", district_id, state, '2020-09-15').delete_all
+    StudentGradeLevel.on_db(:gs_schooldb_rw).where("district_id = ? and district_state = ? and updated < ?", district_id, state, '2020-09-15').delete_all
   end
 
   def parse_file
