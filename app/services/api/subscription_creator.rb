@@ -2,7 +2,7 @@ module Api
   # Handles the creation of an api subscription
   class SubscriptionCreator
 
-    attr_reader :user, :plan_id
+    attr_reader :user, :plan_id, :price_id
 
     def initialize(user, plan_id)
       @user    = user

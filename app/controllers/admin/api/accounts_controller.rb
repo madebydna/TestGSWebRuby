@@ -23,6 +23,14 @@ class Admin::Api::AccountsController < ApplicationController
     redirect_to edit_admin_api_account_path(@subscription)
   end
 
+  def approve
+    @subscription = Api::Subscription.find(params[:id])
+    result = Api::SubscriptionCreator.new(@subscription.user, 'price_1H0VXAC0DFRCPjlNgnmXLZu6').call
+    # update stripe
+    #
+    redirect_to edit_admin_api_account_path(@subscription)
+  end
+
   def subscription_params
     params.require(:api_subscription).permit(:aws_api_key)
   end
