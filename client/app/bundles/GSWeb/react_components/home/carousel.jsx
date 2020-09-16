@@ -54,8 +54,7 @@ const Carousel = ({ size }) => {
 
   return (
     <React.Fragment>
-      <h2>What we've been working on</h2>
-      <p>Greatschools is committed to bringing forth equitable opportunities</p>
+      <h2>Recent Reports</h2>
       <div className="module-row">
         <Card
           index={index}
