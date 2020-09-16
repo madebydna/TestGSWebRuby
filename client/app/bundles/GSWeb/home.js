@@ -10,13 +10,16 @@ import mobile_milestone_image from 'home/milestone_background_mobile.jpg';
 import { setupImages } from 'util/responsive_images';
 import "jquery-unveil";
 import SearchBox from 'react_components/search_box';
+import Carousel from "react_components/home/carousel";
 import withViewportSize from 'react_components/with_viewport_size';
 import { t } from 'util/i18n';
 import { init as bannerInit } from 'components/header/home_banner';
 
 const SearchBoxWrapper = withViewportSize({ propName: 'size' })(SearchBox);
+const CarouselWrapper = withViewportSize({ propName: "size" })(Carousel);
 ReactOnRails.register({
   SearchBoxWrapper,
+  CarouselWrapper,
 });
 
 $(function() {
