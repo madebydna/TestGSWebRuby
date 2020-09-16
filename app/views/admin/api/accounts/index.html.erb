@@ -30,7 +30,7 @@
   <tbody>
   <% @accounts.each do |account| %>
     <tr>
-      <td><%= link_to account.user.full_name, edit_admin_api_account_path(account.user.id) %></td>
+      <td><%= link_to account.user.full_name, edit_admin_api_account_path(account.id) %></td>
       <td><%= account.user.organization %></td>
       <td><%= account.user.email %></td>
       <td><%= account.status %></td>
