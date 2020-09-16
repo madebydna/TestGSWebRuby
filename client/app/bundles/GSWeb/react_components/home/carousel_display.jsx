@@ -28,7 +28,7 @@ const CarouselDisplay = ({ type, size, index, direction, slideshowUrls, callback
     }
   }
 
-  if (direction == "right") {
+  if (direction === "right") {
     transitions = transitionGoingRight
   }else{
     transitions = transitionGoingLeft
