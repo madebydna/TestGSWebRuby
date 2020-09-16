@@ -1,3 +1,18 @@
+$border-radius: 50px;
+// $large-carousel-height-xl: 469px;
+// $large-carousel-width-xl: 363px;
+// $small-carousel-height-xl: 341px;
+// $small-carousel-width-xl: 263px;
+$large-carousel-height-xl: 480px;
+$large-carousel-width-xl: 350px;
+$small-carousel-height-xl: $large-carousel-height-xl * .73;
+$small-carousel-width-xl: $large-carousel-width-xl * .73;
+
+$large-carousel-height-other: 360px;
+$large-carousel-width-other: 280px;
+$small-carousel-height-other: $large-carousel-height-other * .73;
+$small-carousel-width-other: $large-carousel-width-other * .73;
+
 .carousel-row{
   @include media-breakpoint-down(sm){
     margin: 0 auto;
@@ -21,35 +36,35 @@
 
   .carousel-display-large {
     position: relative;
-    height: 469px;
-    min-width:363px;
+    height: $large-carousel-height-xl;
+    min-width: $large-carousel-width-xl;
     margin-right: 20px;
     overflow: hidden;
     @include media-breakpoint-down(lg){
-      height: 363px;
-      min-width:280px;
+      height: $large-carousel-height-other;
+      min-width: $large-carousel-width-other;
     }
   }
 
   .carousel-display-small-left, .carousel-display-small-right{
     position: relative;
-    height: 341px;
-    min-width: 263px;
+    height: $small-carousel-height-xl;
+    min-width: $small-carousel-width-xl;
     overflow: hidden;
     @include media-breakpoint-down(lg){
-      height: 264px;
-      min-width:202px;
+      height: $small-carousel-height-other;
+      min-width: $small-carousel-width-other;
     }
   }
 
   .carousel-display-small-left {
-    border-top-left-radius: 50px;
-    border-bottom-right-radius: 50px;
+    border-top-left-radius: $border-radius;
+    border-bottom-right-radius: $border-radius;
     margin-right: 20px;
   }
 
   .carousel-display-small-right {
-    border-top-right-radius: 50px;
-    border-bottom-left-radius: 50px;
+    border-top-right-radius: $border-radius;
+    border-bottom-left-radius: $border-radius;
   }
 }
