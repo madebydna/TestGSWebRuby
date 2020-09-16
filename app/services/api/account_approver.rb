@@ -19,12 +19,8 @@ module Api
       @subscription ||= Api::Subscription.find(subscription_id)
     end
 
-    def update_status(status)
-      subscription.update(status: status)
-    end
-
     def create_subscription
-      @result = Api::SubscriptionCreator.new(subscription.user, subscription.plan.price_id)
+      @result = Api::SubscriptionCreator.new(subscription.user, subscription.plan.stripe_price_id)
     end
 
     def post_approval
