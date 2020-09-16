@@ -34,15 +34,11 @@ class Ad extends React.Component {
   state = {
     adRenderEnded: false,
     adFilled: false
-  }
+  };
 
   componentDidMount() {
     this.onAdRenderEnded = this.onAdRenderEnded.bind(this);
-    const {
-      slot,
-      defer,
-      slotOccurrenceNumber
-    } = this.props;
+    const { slot, defer, slotOccurrenceNumber } = this.props;
 
     if (adsInitialized() && !defer) {
       showAd(slot, slotOccurrenceNumber, this.onAdRenderEnded);
@@ -59,7 +55,7 @@ class Ad extends React.Component {
     this.setState(
       {
         adRenderEnded: true,
-        adFilled: !event.isEmpty
+        adFilled: !event.isEmpty,
       },
       () => {
         if (this.state.adFilled && this.props.onFill) {
@@ -73,15 +69,18 @@ class Ad extends React.Component {
   render() {
     const { container, slot, slotOccurrenceNumber } = this.props;
     const givenContainerClassName = container.props.className;
-    const newContainerClassName = `${givenContainerClassName || ''} ${
-      this.shouldShowContainer() ? '' : 'dn'
+    const newContainerClassName = `${givenContainerClassName || ""} ${
+      this.shouldShowContainer() ? "" : "dn"
     }`;
     const adElement = (
       <React.Fragment>
-        <div className="tac js-ad-hook" id={slotIdFromName(slot, slotOccurrenceNumber)} />
+        <div
+          className={"tac js-ad-hook"}
+          id={slotIdFromName(slot, slotOccurrenceNumber)}
+        />
         {this.props.ghostTextEnabled && (
           <div width="100%">
-            <div className="advertisement-text ma">{t('advertisement')}</div>
+            <div className="advertisement-text ma">{t("advertisement")}</div>
           </div>
         )}
       </React.Fragment>
@@ -96,7 +95,7 @@ class Ad extends React.Component {
           className: `${newContainerClassName}`,
           children: this.props.children
             ? this.props.children(adElement)
-            : adElement
+            : adElement,
         })}
       </CSSTransition>
     );

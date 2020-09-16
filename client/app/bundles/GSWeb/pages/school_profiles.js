@@ -12,6 +12,7 @@ import {
 import SearchBox from 'react_components/search_box';
 import withViewportSize from 'react_components/with_viewport_size';
 import { viewport, relativeToViewport, firstInViewport, keepInViewport } from 'util/viewport';
+import { init as initAnimation } from 'util/animation';
 import ProfileInterstitialAd, { shouldShowInterstitial, profileInterstitialLoader } from 'react_components/school_profiles/profile_interstitial_ad';
 import "jquery-unveil";
 import * as validatingInputs from '../components/validating_inputs';
@@ -403,3 +404,13 @@ document.addEventListener('DOMContentLoaded', () => updateProfileHeart(gon.schoo
 
 // specify style targeting on second ad found in SchoolProfiles#Show
 applyStylingToIFrameAd('.js-Profiles_Second_Ad-wrapper', [300,250], 'margin-left:150px');
+
+// animations
+document.addEventListener('DOMContentLoaded', ()=>{
+  const labelContainer = document.querySelector('.label-container');
+  const classes = ['.line', '.coming-soon-container'];
+
+  setTimeout(() => {
+    initAnimation(labelContainer, classes)
+  }, 500)
+})

@@ -1,0 +1,82 @@
+<% content_for :page_javascripts do %>
+  <%= webpack_javascript_include_tag 'react-redux', defer: true %>
+  <%= webpack_javascript_include_tag 'signup', defer: true %>
+<% end %>
+
+<% content_for :page_stylesheets do %>
+  <%= stylesheet_link_tag "post_load", async: true %>
+  <%= stylesheet_link_tag "user_signup", async: true %>
+<% end %>
+
+<% path_to_yml = 'lib.user_signup.'%>
+<% language = I18n.locale == :es ? 'es' : 'en' %>
+
+<% district_suffix = request.path.split('/').last %>
+<% url_prefix = request.path.include?('newsletter') ? '/boletin/' : '/newsletter/' %>
+
+<% alt_lang_url = url_prefix + district_suffix %>
+
+<div id="user-signup-page">
+  <%= react_component('SearchBoxWrapper') %>
+  <section class="row">
+    <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3 js-user-signup-form-container phl">
+
+      <div class="heading">
+        <%= t('lib.user_signup.heading_district_gbg') %>
+      </div>
+      <div class="subtitle-container">
+        <div>
+          <%= image_tag 'susd-logo.png', alt: 'logo', height: '80px' %>
+        </div>
+        <div>
+          <%= t('lib.user_signup.heading_stockton_html') %>
+          <br/>
+          <br/>
+          <div class="subheading">
+            <%= t('lib.user_signup.subheading_html',
+                  subscribe_here_link: link_to(
+                      t('lib.user_signup.subscribe_here_alt_lang'),
+                      alt_lang_url)
+            ) %>
+          </div>
+        </div>
+      </div>
+
+      <div class="body">
+        <%= form_tag(@submit_path, method: :post, class:"user-signup-form-container") do |f| %>
+          <input class="js-gradeSubmitValue" name="grades" type="hidden" value="">
+          <input class="js-subscriptionSubmitValue" name="subscriptions" type="hidden" value="">
+          
+          <%= render 'forms/join_email_fieldset_no_validation' %>
+
+          <%= render :partial => 'user_email_preferences/grades_display', :locals => { grades: @grades_hashes[language.to_sym][:overall] } %>
+
+          <% if language == 'en' %>
+            <div class="mtm">
+              <%= render partial: 'user_email_preferences/subscription', :locals => {
+                  list: 'teacher_list',
+                  language: language,
+                  active: @teacher_list,
+                  title: path_to_yml + 'teacher_list_title',
+                  subtitle: path_to_yml + 'teacher_list_subtitle'} %>
+            </div>
+          <% end %>
+
+          <fieldset>
+            <button type="submit" class="submit js-join-login-submit-button"><%= t('lib.user_signup.sign_up') %></button>
+            <p class="tou">
+              <%= t('lib.user_signup.terms_and_privacy_html',
+                    terms_of_use_link: link_to(
+                      t('lib.user_signup.terms_of_use'),
+                      terms_of_use_url, target: '_blank'),
+                    privacy_policy_link: link_to(
+                      t('lib.user_signup.privacy_policy'),
+                      privacy_url, target: '_blank')
+              ) %>
+            </p>
+          </fieldset>
+        <% end %>
+      </div>
+    </div>
+  </section>
+</div>

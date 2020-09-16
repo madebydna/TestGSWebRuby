@@ -76,10 +76,10 @@
               <%= t('lib.user_signup.terms_and_privacy_html',
                     terms_of_use_link: link_to(
                       t('lib.user_signup.terms_of_use'),
-                      terms_of_use_url),
+                      terms_of_use_url, target: '_blank'),
                     privacy_policy_link: link_to(
                       t('lib.user_signup.privacy_policy'),
-                      privacy_url)
+                      privacy_url, target: '_blank')
               ) %>
             </p>
           </fieldset>

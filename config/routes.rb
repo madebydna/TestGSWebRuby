@@ -1,4 +1,4 @@
-
+require 'sidekiq/web'
 LocalizedProfiles::Application.routes.draw do
   require 'states'
 
@@ -82,6 +82,17 @@ LocalizedProfiles::Application.routes.draw do
   post '/espanol/' => 'user_signup#create', as: 'user_signup_submit_spanish'
   get '/newsletter/' => 'user_signup#thankyou', as: 'user_signup_confirmation'
   get '/espanol/' => 'user_signup#thankyou', as: 'user_signup_confirmation_spanish'
+
+  # district by district grade newsletter
+  scope '/newsletter' do
+    get 'susd', to: 'user_signup#district_signup', district_id: 759 , state: 'ca' # stockton (CA-759)
+    post 'district-signup', to: 'user_signup#create_for_district_signup'
+  end
+
+  scope '/boletin' do
+    get 'susd', to: 'user_signup#district_signup', district_id: 759 , state: 'ca', lang: 'es' # stockton (CA-759)
+    get '', to: redirect('/espanol/') #order matters due to matching constraints
+  end
 
   get '/compare', as: :compare_schools, to: 'compare_schools#show'
 
@@ -284,6 +295,7 @@ LocalizedProfiles::Application.routes.draw do
   get '/admin/gsr/widget-test', to: 'widget#test'
 
   namespace :admin, controller: 'admin', path: '/admin/gsr' do
+    mount Sidekiq::Web => '/sidekiq'
     resources :api_accounts, except: [:show, :destroy]
     post '/api_accounts/create_api_key', to: 'api_accounts#create_api_key', as: :create_api_key
     get '/info', action: :info

@@ -11,6 +11,37 @@ class UserEmailGradeManager
     save_grades(add_grades)
   end
 
+  def additive_grades(new_grades)
+    added_grades = new_grades - get_grades
+    save_grades(added_grades)
+  end
+
+  def district_add_no_duplicates(new_grades)
+    remove_matching_grades_with_no_district(new_grades, get_grades)
+    add_no_duplicates(new_grades)
+  end
+
+  # when inserting district grades from the data loads, we want to eliminate the
+  # existing gbyg that is not district associated.
+  # all other district sign ups should remain untouched.
+  def remove_matching_grades_with_no_district(new_grades, current_grades)
+    return if current_grades.nil?
+    delete_g = []
+    current_grades.each do |grade|
+        new_grades.each do |n_g|
+          if n_g[0] == grade[0] && #grade
+             n_g[1] == grade[1] && #language
+             grade[2].blank? && # district_id
+             grade[3].blank? # state
+
+            delete_g << grade
+          end
+        end
+    end
+    delete_grades(delete_g)
+  end
+
+
   def add_no_duplicates(new_grades)
     add_grades = grades_to_add(new_grades, get_grades)
     save_grades(add_grades)
