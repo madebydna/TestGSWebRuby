@@ -24,10 +24,17 @@ class Admin::Api::AccountsController < ApplicationController
   end
 
   def approve
+    # activate subscription in stripe and charge user
+    # on success:
+    # update our local data store (Api::Subscription table set status to active)
+    # send an email to user confirming start of subscription and subscription details
+    # on failure:
+    # send an email to user confirming failed approval
+    # send an email to bizdev
+
     @subscription = Api::Subscription.find(params[:id])
+    @subscription.update(status: 'bizdev_approved')
     result = Api::SubscriptionCreator.new(@subscription.user, 'price_1H0VXAC0DFRCPjlNgnmXLZu6').call
-    # update stripe
-    #
     redirect_to edit_admin_api_account_path(@subscription)
   end
 

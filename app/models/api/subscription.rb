@@ -14,12 +14,12 @@ module Api
     end
   end
 
-  # plan selected
+  # plan_selected
   # payment_added
   # pending_approval
-  # bizdev rejected
-  # bizdev approved
-  # payment charged successfully
-  # payment failed
+  # bizdev_rejected
+  # bizdev_approved
+  # payment_succeeded
+  # payment_failed
 
 end
