@@ -28,9 +28,11 @@
 // @import "fonts/gs-icon-font";
 // @import "sprites/icons_24x24";
 
+.row{
+  background-color: $primary-background;
+}
 section {
   width: 100%;
-  background-color: $primary-background;
   padding: 2em;
   min-height: 543px;
   max-width: 1440px;
