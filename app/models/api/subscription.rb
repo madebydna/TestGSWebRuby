@@ -7,7 +7,11 @@ module Api
     belongs_to :user
     belongs_to :plan
 
-    scope :pending_approval, -> { where status: 'pending_approval'}
+    scope :pending_approval, -> { where status: 'pending_approval' }
+
+    def pending_approval?
+      status == 'pending_approval'
+    end
   end
 
   # plan selected
