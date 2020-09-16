@@ -57,6 +57,9 @@
     %div
       = f.label :created_at
       = f.text_field :created_at, disabled: true
+    %div
+      = f.label :notes
+      = f.text_field :notes
     %div{:style => "text-align: center;margin-top: 40px;"}
       = f.submit "Save", class: "btn btn-primary", style: "width: 150px; margin-right: 15px;"
 
