@@ -12,6 +12,111 @@ en:
         This state doesn’t publish student growth data. Instead, our Academic Progress Rating estimates student
         progress by comparing year-over-year test scores by grade and subject at this school compared to all schools
         in the state that started with similar proficiency levels.</p>
+        <p style='text-align:left'><a href="/gk/ratings-in-nd/#academicprogressrating" target="_blank">Learn more about this rating.</a></p>
+      narrative:
+        1_low_html: >
+          <p class="side-bar"><span class="emphasis">Very low progress with low test scores</span> means students are
+          starting at a low point and are falling even farther behind their peers at other schools in the state.</p>
+        1_high_html: >
+          <p class="side-bar"><span class="emphasis">Very low progress with high test scores</span> means students
+          have strong academic skills but are making smaller gains than their peers at other schools in the state. </p>
+        1_html: >
+          <h3 class="negative">Very concerning:</h3>
+          <p>Students at this school are making <span class="emphasis">far less</span> academic progress from one grade to the next
+           compared to students at other schools in the state.</p>
+          %{test_score_dependent_content}
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
+          <p class="footnote">One key way the best schools help all students learn is by <a href="/gk/videos/why-student-centered-education-should-be-the-norm/" target="_blank">giving them voice and choice</a>.</p>
+        2_low_html: >
+          <p class="side-bar"><span class="emphasis">Low progress with low test scores</span> means students are
+          starting at a low point and are falling even farther behind their peers at other schools in the state.</p>
+        2_high_html: >
+          <p class="side-bar"><span class="emphasis">Low progress with high test scores</span> means students have
+          strong academic skills but are making smaller gains than their peers at other schools in the state. </p>
+        2_html: >
+          <h3 class="negative">A worrisome sign:</h3>
+          <p>Students at this school are making <span class="emphasis">less</span> academic progress from one grade to the next
+          compared to students at other schools in the state.</p>
+          %{test_score_dependent_content}
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
+          <p class="footnote">One key way the best schools help all students learn is by <a href="/gk/videos/why-student-centered-education-should-be-the-norm/" target="_blank">giving them voice and choice</a>.</p>
+        3_low_html: >
+          <p class="side-bar"><span class="emphasis">Average progress with low test scores</span> means students are
+          starting at a low point but are progressing at about the same rate as their peers at other schools in the state.</p>
+        3_high_html: >
+          <p class="side-bar"><span class="emphasis">Average progress with high test scores</span>  means students have
+          strong academic skills and are progressing at about the same rate as their peers at other schools in the state.</p>
+        3_html: >
+          <h3 class="neutral">Worth a deeper look:</h3>
+          <p>Students at this school are making <span class="emphasis">average</span> academic progress from one grade to the next
+          compared to students at other schools in the state.</p>
+          %{test_score_dependent_content}
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
+          <p class="footnote">One key way the best schools help all students learn is by <a href="/gk/videos/why-student-centered-education-should-be-the-norm/" target="_blank">giving them voice and choice</a>.</p>
+        4_low_html: >
+          <p class="side-bar"><span class="emphasis">Above average progress with low test scores</span> means students
+          are starting at a low point but are making larger gains than their peers at other schools in the state.</p>
+        4_high_html: >
+          <p class="side-bar"><span class="emphasis">Strong progress with high test scores</span> means students have
+          strong academic skills and are making bigger gains than their peers at other schools in the state.</p>
+        4_html: >
+          <h3 class="positive">A promising sign:</h3>
+          <p>Students at this school are making <span class="emphasis">more</span> academic progress from one grade to the next
+          compared to students at other schools in the state.</p>
+          %{test_score_dependent_content}
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
+          <p class="footnote">One key way the best schools help all students learn is by <a href="/gk/videos/why-student-centered-education-should-be-the-norm/" target="_blank">giving them voice and choice</a>.</p>
+        5_low_html: >
+          <p class="side-bar"><span class="emphasis">Very strong progress with low test scores</span> means students are
+          starting at a low point, but compared to most other schools in the state, this school is doing a great job of supporting students’ academic growth.</p>
+        5_high_html: >
+          <p class="side-bar"><span class="emphasis">Very strong progress with high test scores</span> means students
+          have strong academic skills and are making bigger gains than their peers at other schools in the state.</p>
+        5_html: >
+          <h3 class="positive">Good news!</h3>
+          <p>Students at this school are making <span class="emphasis">far more</span> academic progress from one grade to the next
+          compared to students at other schools in the state.</p>
+          %{test_score_dependent_content}
+          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
+          <p class="footnote">One key way the best schools help all students learn is by <a href="/gk/videos/why-student-centered-education-should-be-the-norm/" target="_blank">giving them voice and choice</a>.</p>
+      javascript:
+        toc_item: 'Academic progress'
+      district_scope:
+        title: 'Academic progress'
+        source_title: GreatSchools district data sources & information
+        subtext: 'How much are students learning in this district compared to the rest of the state?'
+        data_point_label: 'District'
+        tooltip_html: >
+          <p>How much do schools help students grow each year?</p>
+          <p>Many states publish student growth data to reflect how much progress students are making year-over-year. This state doesn’t publish student growth data. Instead, our Academic Progress Rating estimates student progress by comparing year-over-year test scores by grade and subject at each school compared to all schools in the state that started with similar proficiency levels. In this section you can see a summary of the percentage of schools in this district with above, below, or about average Academic Progress Ratings.</p>
+          <a href='/gk/ratings-in-nd/#academicprogressrating' target="_blank">Learn more about this rating.</a>
+        graphic_header: How does this district compare with the rest of the state?
+        graphic_header_tooltip: This pie chart shows the percentage of schools in this district with Academic Progress Ratings that are above average (7-10), average (5-6), or below average (1-4) compared to state averages.
+        narrative:
+          below_average_html: >
+            <span class="emphasis" style="color:#CB5C35;">A worrisome sign:</span>
+            <p>This district has a larger number of schools whose students are making <span class="emphasis">less</span> academic progress than their peers at other schools in the state.</p>
+          average_html: >
+            <span class="emphasis" style="color:#8a720a;">Worth a deeper look:</span>
+            <p>Students at many of the schools in this district are making <span class="emphasis">about the same</span> academic progress as the state average.</p>
+          above_average_html: >
+            <span class="emphasis" style="color:#367A1E;">A promising sign:</span>
+            <p>A larger number of schools in this district have students who are making <span class="emphasis">more</span> academic progress than their peers at other schools in the state.</p>
+          even_distribution_html: >
+            <span class="emphasis" style="color:#8a720a;">Worth a deeper look:</span>
+            <p>This district has <span class="emphasis">a mixed record</span> of helping students improve over time. Look below to see what percentage of schools in this district are making <span class="emphasis">more, less, or about the same</span> progress as other schools in the state.</p>
+    academic_progress_alt:
+      'title': 'Academic progress'
+      'subtitle': 'How much did this school help its students improve from one year to the next? This rating compares schools with similar proficiency levels to measure student progress over time.'
+      'sources_title': 'GreatSchools profile data sources &amp; information'
+      'source': 'Source'
+      'Greatschools rating': 'GreatSchools Academic Progress Rating'
+      info_text: >
+        <p style='text-align:left'>How much do schools and teachers help students grow each year? </p>
+        <p style='text-align:left'>Many states publish student growth data to reflect how much progress students are making during the school year.
+        This state doesn’t publish student growth data. Instead, our Academic Progress Rating estimates student
+        progress by comparing year-over-year test scores by grade and subject at this school compared to all schools
+        in the state that started with similar proficiency levels. It's a helpful way to measure how well a school is helping kids learn and advance.</p>
         <p style='text-align:left'><a href="/gk/ratings/#academicprogressrating" target="_blank">Learn more about this rating.</a></p>
       narrative:
         1_low_html: >
@@ -90,111 +195,6 @@ en:
           <p>How much do schools help students grow each year?</p>
           <p>Many states publish student growth data to reflect how much progress students are making year-over-year. This state doesn’t publish student growth data. Instead, our Academic Progress Rating estimates student progress by comparing year-over-year test scores by grade and subject at each school compared to all schools in the state that started with similar proficiency levels. In this section you can see a summary of the percentage of schools in this district with above, below, or about average Academic Progress Ratings.</p>
           <a href='/gk/ratings/#academicprogressrating' target="_blank">Learn more about this rating.</a>
-        graphic_header: How does this district compare with the rest of the state?
-        graphic_header_tooltip: This pie chart shows the percentage of schools in this district with Academic Progress Ratings that are above average (7-10), average (5-6), or below average (1-4) compared to state averages.
-        narrative:
-          below_average_html: >
-            <span class="emphasis" style="color:#CB5C35;">A worrisome sign:</span>
-            <p>This district has a larger number of schools whose students are making <span class="emphasis">less</span> academic progress than their peers at other schools in the state.</p>
-          average_html: >
-            <span class="emphasis" style="color:#8a720a;">Worth a deeper look:</span>
-            <p>Students at many of the schools in this district are making <span class="emphasis">about the same</span> academic progress as the state average.</p>
-          above_average_html: >
-            <span class="emphasis" style="color:#367A1E;">A promising sign:</span>
-            <p>A larger number of schools in this district have students who are making <span class="emphasis">more</span> academic progress than their peers at other schools in the state.</p>
-          even_distribution_html: >
-            <span class="emphasis" style="color:#8a720a;">Worth a deeper look:</span>
-            <p>This district has <span class="emphasis">a mixed record</span> of helping students improve over time. Look below to see what percentage of schools in this district are making <span class="emphasis">more, less, or about the same</span> progress as other schools in the state.</p>
-    academic_progress_alt:
-      'title': 'Academic progress'
-      'subtitle': 'How much did this school help its students improve from one year to the next? This rating compares schools with similar proficiency levels to measure student progress over time.'
-      'sources_title': 'GreatSchools profile data sources &amp; information'
-      'source': 'Source'
-      'Greatschools rating': 'GreatSchools Academic Progress Rating'
-      info_text: >
-        <p style='text-align:left'>How much do schools and teachers help students grow each year? </p>
-        <p style='text-align:left'>Many states publish student growth data to reflect how much progress students are making during the school year.
-        This state doesn’t publish student growth data. Instead, our Academic Progress Rating estimates student
-        progress by comparing year-over-year test scores by grade and subject at this school compared to all schools
-        in the state that started with similar proficiency levels. It's a helpful way to measure how well a school is helping kids learn and advance.</p>
-        <p style='text-align:left'><a href="/gk/ratings-ca-mi/#academicprogressrating" target="_blank">Learn more about this rating.</a></p>
-      narrative:
-        1_low_html: >
-          <p class="side-bar"><span class="emphasis">Very low progress with low test scores</span> means students are
-          starting at a low point and are falling even farther behind their peers at other schools in the state.</p>
-        1_high_html: >
-          <p class="side-bar"><span class="emphasis">Very low progress with high test scores</span> means students
-          have strong academic skills but are making smaller gains than their peers at other schools in the state. </p>
-        1_html: >
-          <h3 class="negative">Very concerning:</h3>
-          <p>Students at this school are making <span class="emphasis">far less</span> academic progress from one grade to the next
-           compared to students at other schools in the state.</p>
-          %{test_score_dependent_content}
-          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
-          <p class="footnote">One key way the best schools help all students learn is by <a href="/gk/videos/why-student-centered-education-should-be-the-norm/" target="_blank">giving them voice and choice</a>.</p>
-        2_low_html: >
-          <p class="side-bar"><span class="emphasis">Low progress with low test scores</span> means students are
-          starting at a low point and are falling even farther behind their peers at other schools in the state.</p>
-        2_high_html: >
-          <p class="side-bar"><span class="emphasis">Low progress with high test scores</span> means students have
-          strong academic skills but are making smaller gains than their peers at other schools in the state. </p>
-        2_html: >
-          <h3 class="negative">A worrisome sign:</h3>
-          <p>Students at this school are making <span class="emphasis">less</span> academic progress from one grade to the next
-          compared to students at other schools in the state.</p>
-          %{test_score_dependent_content}
-          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
-          <p class="footnote">One key way the best schools help all students learn is by <a href="/gk/videos/why-student-centered-education-should-be-the-norm/" target="_blank">giving them voice and choice</a>.</p>
-        3_low_html: >
-          <p class="side-bar"><span class="emphasis">Average progress with low test scores</span> means students are
-          starting at a low point but are progressing at about the same rate as their peers at other schools in the state.</p>
-        3_high_html: >
-          <p class="side-bar"><span class="emphasis">Average progress with high test scores</span>  means students have
-          strong academic skills and are progressing at about the same rate as their peers at other schools in the state.</p>
-        3_html: >
-          <h3 class="neutral">Worth a deeper look:</h3>
-          <p>Students at this school are making <span class="emphasis">average</span> academic progress from one grade to the next
-          compared to students at other schools in the state.</p>
-          %{test_score_dependent_content}
-          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
-          <p class="footnote">One key way the best schools help all students learn is by <a href="/gk/videos/why-student-centered-education-should-be-the-norm/" target="_blank">giving them voice and choice</a>.</p>
-        4_low_html: >
-          <p class="side-bar"><span class="emphasis">Above average progress with low test scores</span> means students
-          are starting at a low point but are making larger gains than their peers at other schools in the state.</p>
-        4_high_html: >
-          <p class="side-bar"><span class="emphasis">Strong progress with high test scores</span> means students have
-          strong academic skills and are making bigger gains than their peers at other schools in the state.</p>
-        4_html: >
-          <h3 class="positive">A promising sign:</h3>
-          <p>Students at this school are making <span class="emphasis">more</span> academic progress from one grade to the next
-          compared to students at other schools in the state.</p>
-          %{test_score_dependent_content}
-          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
-          <p class="footnote">One key way the best schools help all students learn is by <a href="/gk/videos/why-student-centered-education-should-be-the-norm/" target="_blank">giving them voice and choice</a>.</p>
-        5_low_html: >
-          <p class="side-bar"><span class="emphasis">Very strong progress with low test scores</span> means students are
-          starting at a low point, but compared to most other schools in the state, this school is doing a great job of supporting students’ academic growth.</p>
-        5_high_html: >
-          <p class="side-bar"><span class="emphasis">Very strong progress with high test scores</span> means students
-          have strong academic skills and are making bigger gains than their peers at other schools in the state.</p>
-        5_html: >
-          <h3 class="positive">Good news!</h3>
-          <p>Students at this school are making <span class="emphasis">far more</span> academic progress from one grade to the next
-          compared to students at other schools in the state.</p>
-          %{test_score_dependent_content}
-          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Parent tip</span></p>
-          <p class="footnote">One key way the best schools help all students learn is by <a href="/gk/videos/why-student-centered-education-should-be-the-norm/" target="_blank">giving them voice and choice</a>.</p>
-      javascript:
-        toc_item: 'Academic progress'
-      district_scope:
-        title: 'Academic progress'
-        source_title: GreatSchools district data sources & information
-        subtext: 'How much are students learning in this district compared to the rest of the state?'
-        data_point_label: 'District'
-        tooltip_html: >
-          <p>How much do schools help students grow each year?</p>
-          <p>Many states publish student growth data to reflect how much progress students are making year-over-year. This state doesn’t publish student growth data. Instead, our Academic Progress Rating estimates student progress by comparing year-over-year test scores by grade and subject at each school compared to all schools in the state that started with similar proficiency levels. In this section you can see a summary of the percentage of schools in this district with above, below, or about average Academic Progress Ratings.</p>
-          <a href='/gk/ratings-ca-mi/#academicprogressrating' target="_blank">Learn more about this rating.</a>
         graphic_header: How does this district compare with the rest of the state?
         graphic_header_tooltip: This pie chart shows the percentage of schools in this district with Academic Progress Ratings that are above average (7-10), average (5-6), or below average (1-4) compared to state averages.
         narrative:

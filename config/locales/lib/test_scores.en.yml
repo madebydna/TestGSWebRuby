@@ -12,7 +12,7 @@ en:
       'source': 'Source'
       note: Note
       Test scores: Test scores
-      info_text: "<p>The GreatSchools Test Score Rating reflects annual state test results for this school compared with scores statewide.</p><p><a href='/gk/ratings/#testscorerating' target='_blank'>Learn more about this rating.</a></p>"
+      info_text: "<p>The GreatSchools Test Score Rating reflects annual state test results for this school compared with scores statewide.</p><p><a href='/gk/ratings-in-nd/#testscorerating' target='_blank'>Learn more about this rating.</a></p>"
       'Math': Math
       Science: Science
       Source: Source
@@ -36,7 +36,7 @@ en:
           is too small. This can mean that some grade-level scores that are part of the overall score cannot be
           displayed individually.</p>
           %{standardized_tests_note}
-          <p><a href="/gk/ratings/#testscorerating" target="_blank">Learn more about this rating.</a></p>
+          <p><a href="/gk/ratings-in-nd/#testscorerating" target="_blank">Learn more about this rating.</a></p>
           <p>Still have questions? <a href="https://greatschools.zendesk.com/hc/en-us" target="_blank">Visit our FAQ page</a>.</p>
       narration:
         _1_html: >
@@ -202,7 +202,7 @@ en:
       'source': 'Source'
       note: Note
       Test scores: Test scores
-      info_text: "<p>The Test Score Rating reflects annual state test results for this school compared with scores statewide.</p><p><a href='/gk/ratings-ca-mi/#testscorerating' target='_blank'>Learn more about this rating.</a></p>"
+      info_text: "<p>The Test Score Rating reflects annual state test results for this school compared with scores statewide.</p><p><a href='/gk/ratings/#testscorerating' target='_blank'>Learn more about this rating.</a></p>"
       'Math': Math
       Science: Science
       Source: Source
@@ -223,7 +223,7 @@ en:
           received from the DOE.</p>
           <p>Why are grade-level scores sometimes different from the overall score for a subject? Most likely this is due to suppression. States are required to suppress grade/subject data if the number of test-taking students is too small. This helps protect student privacy, and can mean that some grade-level scores that are part of the overall score cannot be displayed individually.</p>
           %{standardized_tests_note}
-          <p><a href="/gk/ratings-ca-mi/#testscoresrating" target="_blank">Learn more about this rating.</a></p>
+          <p><a href="/gk/ratings/#testscoresrating" target="_blank">Learn more about this rating.</a></p>
           <p>Still have questions? <a href="https://greatschools.zendesk.com/hc/en-us" target="_blank">Visit our FAQ page</a>.</p>
       narration:
         _1_html: >

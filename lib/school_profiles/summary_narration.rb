@@ -23,7 +23,7 @@ module SchoolProfiles
 
     def build_content
       if @src.present? && @school_cache_data_reader.gs_rating.present?
-        if ['ca', 'mi'].include?(@school.state.downcase)
+        if ['in', 'nd'].exclude?(@school.state.downcase)
           SUMMARY_RATING_METHODS_ALT.map { |method| send(method) }.compact.delete_if(&:empty?)
         else
           SUMMARY_RATING_METHODS.map { |method| send(method) }.compact.delete_if(&:empty?)
@@ -126,7 +126,7 @@ module SchoolProfiles
     end
 
     def sentence_ender
-      if ['ca', 'mi'].include?(@school.state.downcase)
+      if ['in', 'nd'].exclude?(@school.state.downcase)
         obj = @src.test_scores
       else
         obj = @src.equity_overview
@@ -148,7 +148,7 @@ module SchoolProfiles
     end
 
     def path_to_yml
-      if ['ca', 'mi'].include?(@school.state.downcase)
+      if ['in', 'nd'].exclude?(@school.state.downcase)
         path = 'school_profiles.summary_narration_alt'
       else
         path = 'school_profiles.summary_narration'

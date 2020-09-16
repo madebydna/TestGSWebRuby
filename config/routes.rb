@@ -248,7 +248,7 @@ LocalizedProfiles::Application.routes.draw do
     get '/gk/articles/the-achievement-gap-is-your-school-helping-all-students-succeed/', as: :article_achievement_gap
     get '/gk/ratings/',  as: :ratings
     get '/gk/como-clasificamos/',  as: :ratings_spanish
-    get '/gk/ratings-ca-mi/',  as: :ratings_alt
+    get '/gk/ratings-in-nd/',  as: :ratings_alt
     get '/gk/csa-winners/', as: :csa_winners
     get '/gk/coronavirus-school-closure-support/', as: :coronavirus
     get '/status/error404.page'

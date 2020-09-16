@@ -158,7 +158,7 @@ module SchoolProfiles
     end
 
     def path_to_yml
-      if ['ca', 'mi'].include?(@school_cache_data_reader.school.state.downcase)
+      if ['in', 'nd'].exclude?(@school_cache_data_reader.school.state.downcase)
         path = 'school_profiles.college_readiness_alt'
       else
         path = 'school_profiles.college_readiness'
