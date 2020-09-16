@@ -2,6 +2,8 @@ en:
   lib:
     user_signup:
       heading: Sign up to receive newsletters to help your child thrive.
+      heading_district_gbg: Welcome!
+      heading_stockton_html: <b>Stockton Unified School District (SUSD)</b> has partnered with <a href='/gk/grade-by-grade-newsletter/'>GreatSchools.org</a> to bring you free newsletters related to your child's learning in <b>kindergarten through 12th grade.</b> Sign up and help your child thrive.
       subheading_html: Para boletines en español, %{subscribe_here_link}.
       subscribe_here_alt_lang: suscríbete aquí
       email_input_placeholder: Your email here
@@ -11,7 +13,7 @@ en:
       greatkidsnews_title: Grade by Grade
       greatkidsnews_subtitle: Essentials to help your child throughout the school year.
       select_grades: Select your children’s grades below.
-      teacher_list_title: GreatEducators
+      teacher_list_title: Just for Educators
       teacher_list_subtitle: Resources and insights designed for teachers and school leaders.
       sponsor_title: Partner Updates
       sponsor_subtitle: News and offers from our partners.
