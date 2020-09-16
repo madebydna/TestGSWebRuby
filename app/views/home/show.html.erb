@@ -20,8 +20,8 @@
     </script>
 <% end %>
 
-<div id="home-page" class="gs-bootstrap container-fluid">
-
+<div id="home-page">
+<% if false %>
   <%= render layout: 'hero' do %>
       <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-2">
         <div class="mtxl hidden-xs"></div>
@@ -59,6 +59,7 @@
         </div>
       </div>
   <% end %>
+<% end %>
   <%= render partial: 'below_hero' %>
 </div>
 
@@ -80,6 +81,6 @@
 
 <% end %>
 
-<%= react_component('SearchBoxWrapper', props: {
+<%#= react_component('SearchBoxWrapper', props: {
   pageType: 'Home'
 }) %>

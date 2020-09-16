@@ -1,0 +1,87 @@
+$border-radius: 50px;
+$large-carousel-height-xl: 480px;
+$large-carousel-width-xl: 350px;
+$small-carousel-height-xl: $large-carousel-height-xl * .73;
+$small-carousel-width-xl: $large-carousel-width-xl * .73;
+
+$large-carousel-height-other: 360px;
+$large-carousel-width-other: 280px;
+$small-carousel-height-other: $large-carousel-height-other * .73;
+$small-carousel-width-other: $large-carousel-width-other * .73;
+
+$large-carousel-height-small: $large-carousel-height-other * .65;
+$large-carousel-width-small: $large-carousel-width-other * .65;
+$small-carousel-height-small: $small-carousel-height-other * .50;
+$small-carousel-width-small: $small-carousel-width-other * .50;
+
+.carousel-row{
+  @include media-breakpoint-down(sm){
+    margin: 0 auto;
+  }
+}
+
+.carousel-container{
+  display: flex;
+  margin-bottom: 25px;
+
+  .arrow {
+    cursor: pointer;
+
+    @include media-breakpoint-up(sm){
+      &:hover{
+        transition: 0.2s;
+        transform: scale(1.3);
+      }
+    }
+  }
+
+  .carousel-display-large {
+    position: relative;
+    height: $large-carousel-height-xl;
+    min-width: $large-carousel-width-xl;
+    margin-right: 20px;
+    overflow: hidden;
+    @include media-breakpoint-down(lg){
+      height: $large-carousel-height-other;
+      min-width: $large-carousel-width-other;
+    }
+    @include media-breakpoint-down(xs){
+      height: $large-carousel-height-small;
+      min-width: $large-carousel-width-small;
+    }
+  }
+
+  .carousel-display-small-left, .carousel-display-small-right{
+    position: relative;
+    height: $small-carousel-height-xl;
+    min-width: $small-carousel-width-xl;
+    overflow: hidden;
+    @include media-breakpoint-down(lg){
+      height: $small-carousel-height-other;
+      min-width: $small-carousel-width-other;
+    }
+    @include media-breakpoint-down(xs){
+      height: $small-carousel-height-small;
+      min-width: $small-carousel-width-small;
+    }
+  }
+
+  .carousel-display-small-left {
+    border-top-left-radius: $border-radius;
+    border-bottom-right-radius: $border-radius;
+    @include media-breakpoint-down(xs){
+      border-top-left-radius: $border-radius * .40;
+      border-bottom-right-radius: $border-radius * .40;
+    }
+    margin-right: 20px;
+  }
+
+  .carousel-display-small-right {
+    border-top-right-radius: $border-radius;
+    border-bottom-left-radius: $border-radius;
+    @include media-breakpoint-down(xs){
+      border-top-right-radius: $border-radius * .40;
+      border-bottom-left-radius: $border-radius * .40;
+    }
+  }
+}
