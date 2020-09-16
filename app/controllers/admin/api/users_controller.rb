@@ -106,12 +106,12 @@ class Admin::Api::UsersController < ApplicationController
 
   private
 
-  def api_user
-    @api_user ||= Api::User.find_by_id(session[:api_user_id])
+  def user
+    @user ||= Api::User.find_by_id(session[:api_user_id])
   end
 
   def require_user
-    redirect_to api_signup_path unless api_user
+    redirect_to api_signup_path unless user
   end
 
 end
