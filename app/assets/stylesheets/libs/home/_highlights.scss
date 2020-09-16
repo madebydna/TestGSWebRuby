@@ -1,0 +1,108 @@
+.highlights-section {
+  background-color: $midnight_blue;
+  color: white;
+  padding: 40px 20px;
+
+  h2 {
+    color: white;
+    font-family: $font-family-base-bold;
+    font-size: 28px;
+    margin: 0 0 20px 0;
+    text-align: center;
+  }
+
+  h3 {
+    color: white;
+    font-family: $font-family-sans-serif;
+    font-size: $font-size-h4;
+    margin: 0;
+    text-align: center;
+  }
+
+  h5 {
+    color: white;
+    text-transform: uppercase;
+    margin: 0 0 20px 0;
+  }
+
+  .overview {
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+
+  .article-name {
+    font-size: 28px;
+    margin-bottom: 20px;
+  }
+
+  .highlights-content {
+    display: flex;
+    flex-direction: row;
+    text-align: left;
+
+    @include media-breakpoint-down(sm){
+      flex-direction: column;
+    }
+
+    .section-photo {
+      background: url('home/father_and_child_reading.jpg');
+      background-repeat: no-repeat;
+      border-top-left-radius: 50px;
+      border-bottom-right-radius: 50px;
+
+      @include media-breakpoint-up(md){
+        flex-basis: 0;
+        flex-grow: 1;
+        background-position: 35% 0;
+        background-size: cover;
+      }
+
+      @include media-breakpoint-down(sm){
+        background-size: contain;
+        padding-top: 66.667%; // necessary to give div a height when there is no content to fill it
+      }
+    }
+
+    .highlighted-articles {
+      flex-basis: 0;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+
+      .article-group {
+        display: flex;
+        flex-direction: row;
+        margin-bottom: 40px;
+
+        &:last-of-type {
+          margin-bottom: 0;
+        }
+
+        @include media-breakpoint-down(sm){
+          flex-direction: column;
+          text-align: center;
+        }
+
+        .icon {
+          padding: 20px;
+        }
+      }
+    }
+  }
+}
+
+.display-mobile {
+  display: block;
+
+  @include media-breakpoint-up(md) {
+    display: none;
+  }
+}
+
+.display-desktop {
+  display: block;
+
+  @include media-breakpoint-down(sm) {
+    display: none;
+  }
+}

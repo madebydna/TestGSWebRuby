@@ -10,4 +10,9 @@
     color: white;
     transition: 0.3s;
   }
+
+  &.light-gray {
+    color: $light-gray;
+    border: 1px solid $light-gray;
+  }
 }
