@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useState, useCallback } from "react";
 import PropTypes from "prop-types";
 import CarouselDisplay from "react_components/home/carousel_display";
 import Card from "react_components/home/card";
@@ -25,12 +25,12 @@ const Carousel = ({ size }) => {
 
   const translateRight = useCallback(() => {
     setDirection("right");
-    setIndex((index - 1 + slideshowUrls.length) % slideshowUrls.length);
+    setIndex((index + 1 + slideshowUrls.length) % slideshowUrls.length);
   });
 
   const translateLeft = useCallback(() => {
     setDirection("left");
-    setIndex((index + 1 + slideshowUrls.length) % slideshowUrls.length);
+    setIndex((index - 1 + slideshowUrls.length) % slideshowUrls.length);
   });
 
   const buttons = () => {
@@ -50,7 +50,7 @@ const Carousel = ({ size }) => {
           slideshowUrls={slideshowUrls}
           direction={direction}
         />
-        <div>
+        <div className="carousel-row">
           <div className="carousel-container">
             <CarouselDisplay
               type="large"

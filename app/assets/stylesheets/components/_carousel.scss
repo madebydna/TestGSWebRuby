@@ -1,5 +1,12 @@
+.carousel-row{
+  @include media-breakpoint-down(sm){
+    margin: 0 auto;
+  }
+}
+
 .carousel-container{
   display: flex;
+  margin-bottom: 25px;
 
   .arrow {
     cursor: pointer;
@@ -14,17 +21,25 @@
 
   .carousel-display-large {
     position: relative;
-    height: 364px;
-    min-width: 281px;
+    height: 469px;
+    min-width:363px;
     margin-right: 20px;
     overflow: hidden;
+    @include media-breakpoint-down(lg){
+      height: 363px;
+      min-width:280px;
+    }
   }
 
   .carousel-display-small-left, .carousel-display-small-right{
     position: relative;
-    height: 255px;
-    width: 195px;
+    height: 341px;
+    min-width: 263px;
     overflow: hidden;
+    @include media-breakpoint-down(lg){
+      height: 264px;
+      min-width:202px;
+    }
   }
 
   .carousel-display-small-left {

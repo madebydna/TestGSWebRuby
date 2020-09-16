@@ -7,7 +7,7 @@ import { t } from "util/i18n";
 const cardStyles = {
   position: "absolute",
   overflow: "hidden",
-  padding: "5px"
+  padding: "0 5px 5px 5px",
 };
 
 const Card = ({ index, slideshowUrls, direction }) => {
@@ -21,16 +21,16 @@ const Card = ({ index, slideshowUrls, direction }) => {
   }));
 
   const transitionTranslatingUp = useTransitions(slideshows[index], {
-    from: { transform: "translate3d(0, 25%,0)" },
+    from: { transform: "translate3d(0, -25%,0)" },
     enter: { transform: "translate3d(0,0,0)" },
-    leave: { transform: "translate3d(0,-100%,0)", opacity: 0 },
+    leave: { transform: "translate3d(0,100%,0)", opacity: 0 },
     config: { mass: 5, tension: 500, friction: 80 },
   });
 
   const transitionTranslatingDown = useTransitions(slideshows[index], {
-    from: { transform: "translate3d(0,-25%,0)" },
+    from: { transform: "translate3d(0,25%,0)" },
     enter: { transform: "translate3d(0,0,0)" },
-    leave: { transform: "translate3d(0,100%,0)", opacity: 0 },
+    leave: { transform: "translate3d(0,-100%,0)", opacity: 0 },
     config: { mass: 5, tension: 500, friction: 80 },
   });
 

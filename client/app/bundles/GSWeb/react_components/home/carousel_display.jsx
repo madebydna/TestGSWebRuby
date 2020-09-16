@@ -8,8 +8,8 @@ const CarouselDisplay = ({ type, size, index, direction, slideshowUrls, callback
 
   let transitions;
   const slideshows = slideshowUrls.map((url, idx) => ({id: idx, url}))
-  const transitionGoingLeft = useTransitions(slideshows[index]);
-  const transitionGoingRight = useTransitions(slideshows[index], {
+  const transitionGoingRight = useTransitions(slideshows[index]);
+  const transitionGoingLeft = useTransitions(slideshows[index], {
     from: { transform: "translate3d(-100%,0,0)" },
     enter: { transform: "translate3d(0%,0,0)" },
     leave: { transform: "translate3d(100%,0,0)" },
@@ -19,7 +19,7 @@ const CarouselDisplay = ({ type, size, index, direction, slideshowUrls, callback
     width: "100%",
     height: "100%",
     backgroundRepeat: "no-repeat",
-    backgroundSize: "contain",
+    backgroundSize: "cover",
   };
 
   const translateRight = () => {
