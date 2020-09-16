@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { animated } from "react-spring";
+import { XS } from "util/viewport";
 import useTransitions from "react_components/hooks/use_transitions";
 import { t } from "util/i18n";
 
@@ -10,7 +11,7 @@ const cardStyles = {
   padding: "0 5px 5px 5px",
 };
 
-const Card = ({ index, slideshowUrls, direction }) => {
+const Card = ({ index, slideshowUrls, direction, size }) => {
   let transitions;
   const slideshows = slideshowUrls.map((url, idx) => ({
     id: idx,
@@ -28,7 +29,7 @@ const Card = ({ index, slideshowUrls, direction }) => {
   });
 
   const transitionTranslatingDown = useTransitions(slideshows[index], {
-    from: { transform: "translate3d(0,-25%,0)" },
+    from: { transform: `translate3d(0,${size == XS ? '-5%' : '-25%'},0)` },
     enter: { transform: "translate3d(0,0,0)" },
     leave: { transform: "translate3d(0,100%,0)", opacity: 0 },
     config: { mass: 5, tension: 500, friction: 80 },
@@ -78,7 +79,8 @@ const Card = ({ index, slideshowUrls, direction }) => {
 Card.propTypes = {
   index: PropTypes.number,
   slideshowUrls: PropTypes.arrayOf(PropTypes.string),
-  direction: PropTypes.string
+  direction: PropTypes.string,
+  size: PropTypes.number
 };
 
 export default Card;

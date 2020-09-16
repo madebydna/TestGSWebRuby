@@ -61,6 +61,7 @@ const Carousel = ({ size }) => {
           index={index}
           slideshowUrls={slideshowUrls}
           direction={direction}
+          size={size}
         />
         <div className="carousel-row">
           <div className="carousel-container">
