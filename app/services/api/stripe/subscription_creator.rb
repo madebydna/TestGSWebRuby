@@ -9,12 +9,8 @@ module Api
       @price_id = price_id
     end
 
-    def call
-      create_subscription
-    end
-
     # https://stripe.com/docs/api/subscriptions
-    def create_subscription
+    def create
       Stripe::Subscription.create({ customer: user.stripe_customer_id,
                                     items: [{ price: price_id }] })
     end
