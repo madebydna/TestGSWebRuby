@@ -1,36 +1,67 @@
+// reset css
+@import 'resources/normalize';
+
+// variables, mixins, base styles
 @import "variables/variables";
 @import "gs_v2/variables";
 @import "mixins/*";
 @import "gs/mixins";
 @import "resources/bootstrap/bootstrap";
+@import "base/spacing";
+
+// fonts
+@import "fonts/fonts-opensans"; // regular + italic
+@import 'fonts/fonts-opensans-semibold';
+@import 'fonts/fonts-opensans-bold';
+
+// icons / sprites
+@import 'fonts/gs-icon-font';
+@import 'sprites/avatars_33x33';
+@import 'sprites/avatars_65x65';
+
+// footer-specific
+@import "gs/objects/footer";
+@import "gs/objects/home_footer";
+@import "sprites/footer_icons_16x16";
+
+
 // @import "gs/twitter-typeahead";
 // @import "gs/tooltip";
 // @import "gs/objects/scaling_image_layout";
 // @import "gs/objects/spinny_wheel";
-// @import "base/spacing";
 // @import "gs/navigation";
 // @import "base/deprecated_typography";
 @import "gs/objects/search_area_layout";
 @import "gs/objects/search_page";
 // @import "gs/objects/home_page";
 @import "header_new";
-// @import "gs/objects/footer";
-@import "gs/objects/home_footer";
-// @import "sprites/footer_icons_16x16";
 @import "libs/home/banner";
 // @import "libs/home/highlights";
 @import "components/carousel";
 @import "components/buttons";
+// @import "libs/home/highlights";
 
-
-// @import "fonts/fonts-opensans"; // regular + italic
 // @import "fonts/fonts-robotoslab-light";
 // @import "fonts/gs-icon-font";
 // @import "sprites/icons_24x24";
 
-.section-container{
+
+#home-page {
+  padding-right: 0;
+  padding-left: 0;
+
+  h1 {
+    font-size: 32px;
+  }
+}
+
+.blue-section-container {
+  background-color: $midnight_blue;
+}
+.section-container {
   background-color: $primary-background;
 }
+
 section {
   width: 100%;
   padding: 2em;
