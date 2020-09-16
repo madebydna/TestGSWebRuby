@@ -16,7 +16,6 @@ class HomeController < ApplicationController
   def show
 
     @show_ads = PropertyConfig.advertising_enabled?
-    # @slideshows = slideshows
 
     @canonical_url = home_url
     # Description lives in view because the meta-tags gem truncates description at 200 chars. See https://github.com/kpumuk/meta-tags
