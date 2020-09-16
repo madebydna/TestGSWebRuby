@@ -1,12 +1,5 @@
 module Api
   # This class handles the approval logic for a subscription
-  #   activates subscription in payment processor and charges the user
-  # # on success:
-  #     # update our local data store (Api::Subscription table set status to active)
-  #     # send an email to user confirming start of subscription and subscription details
-  #     # on failure:
-  #     # send an email to user confirming failed approval
-  #     # send an email to bizdev
   class AccountApprover
 
     attr_reader :subscription_id
@@ -16,9 +9,10 @@ module Api
     end
 
     def approve
-      update_status('bizdev_approved')
+      subscription.update(status: 'bizdev_approved')
       create_subscription
       post_approval
+      subscription
     end
 
     def subscription
@@ -35,10 +29,27 @@ module Api
 
     def post_approval
       if @result
-        update_status('')
+        subscription.update(status: 'payment_succeeded', active: true)
+        email_user
+        email_biz_dev('success')
       else
-
+        subscription.update(status: 'payment_failed', active: false)
+        email_user
+        email_biz_dev('fail')
       end
+    end
+
+    def email_user
+      p "emailing user"
+    end
+
+    def email_biz_dev(status)
+      if status == 'success'
+        p "emailing biz dev success"
+      else
+        p "emailing biz dev fail"
+      end
+
     end
 
   end

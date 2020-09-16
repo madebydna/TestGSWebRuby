@@ -67,14 +67,6 @@ class Admin::Api::UsersController < ApplicationController
     end
   end
 
-  def notify_user
-    # ApiRequestReceivedEmail.deliver_to_api_key_requester(@user)
-  end
-
-  def notify_admin
-    # ApiRequestToModerateEmail.deliver_to_admin(@user)
-  end
-
   def user_params
     params.require(:api_user).permit(:id,
                                      :first_name,
