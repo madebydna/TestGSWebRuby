@@ -1,9 +1,9 @@
 .primary-button {
   height: 20px;
-  border: 1px solid #71787E;
-  color: #71787E;
-  padding: 5px;
-  border-radius: 5px;
+  border: 1px solid $gray-text-color;
+  color: $gray-text-color;
+  padding: 3px 10px;
+  border-radius: 8px;
 
   &:hover{
     background-color: $gray-mute;
