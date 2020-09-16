@@ -28,7 +28,7 @@ class Admin::Api::UsersController < ApplicationController
   end
 
   def update
-    user.subscription.update(status: 'payment_added')
+    user.subscription.update(status: 'pending_approval')
     @results = params['result']
     payment_object ||= Stripe::PaymentMethod.retrieve(@results[:setupIntent][:payment_method])
 
