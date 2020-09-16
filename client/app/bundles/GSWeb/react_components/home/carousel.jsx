@@ -33,11 +33,23 @@ const Carousel = ({ size }) => {
     setIndex((index - 1 + slideshowUrls.length) % slideshowUrls.length);
   });
 
-  const buttons = () => {
-    return <div className="carousel-buttons">
-      <ArrowLeft onClick={translateLeft} className={"arrow"} />
-      <ArrowRight onClick={translateRight} className={"arrow"} />
-    </div>;
+  const buttons = (hw) => {
+    return (
+      <div className="carousel-buttons">
+        <ArrowLeft
+          onClick={translateLeft}
+          className={"arrow"}
+          height={hw}
+          width={hw}
+        />
+        <ArrowRight
+          onClick={translateRight}
+          className={"arrow"}
+          height={hw}
+          width={hw}
+        />
+      </div>
+    );
   }
 
   return (
@@ -83,10 +95,9 @@ const Carousel = ({ size }) => {
                   />
                 )}
               </div>
-              { size > XS && buttons() }
+              { size == XS ? buttons('20') : buttons() }
             </div>
           </div>
-          { size == XS && buttons() }
         </div>
       </div>
     </React.Fragment>
