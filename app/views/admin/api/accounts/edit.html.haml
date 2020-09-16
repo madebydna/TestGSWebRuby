@@ -59,6 +59,8 @@
       = f.text_field :created_at, disabled: true
     %div{:style => "text-align: center;margin-top: 40px;"}
       = f.submit "Save", class: "btn btn-primary", style: "width: 150px; margin-right: 15px;"
+
+  = form_for(@account, url: approve_admin_api_account_path(@account), method: :get) do |f|
+    - if @account.pending_approval?
       = f.submit "Approve request", name: "delete_key", class: "btn btn-danger"
-      = f.submit "Deactivate account", name: "delete_key", class: "btn btn-danger"
 %div{:style => "text-align: left; margin-bottom: 40px;"}= link_to 'Back to all accounts', admin_api_accounts_path
