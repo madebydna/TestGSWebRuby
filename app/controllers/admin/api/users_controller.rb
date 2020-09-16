@@ -20,7 +20,7 @@ class Admin::Api::UsersController < ApplicationController
     if @user.save
       Api::StripeCustomerCreator.new(@user).call
       Api::SubscriptionCreator.new(@user, session[:plan_id]).call
-      session[:user_id] = @user.id
+      session[:api_user_id] = @user.id
       redirect_to action: 'billing'
     else
       render :new
@@ -32,7 +32,7 @@ class Admin::Api::UsersController < ApplicationController
     @results = params['result']
     payment_object ||= Stripe::PaymentMethod.retrieve(@results[:setupIntent][:payment_method])
 
-    session[:user_id] = user.id
+    session[:api_user_id] = user.id
     session[:billing_details] = payment_object[:billing_details]
     session[:card] = payment_object[:card]
 
@@ -58,7 +58,7 @@ class Admin::Api::UsersController < ApplicationController
     # email biz here
     session[:billing_details] = nil
     session[:card] = nil
-    session[:user_id] = nil
+    session[:api_user_id] = nil
   end
 
   def plan_update
@@ -106,12 +106,12 @@ class Admin::Api::UsersController < ApplicationController
 
   private
 
-  def user
-    @user ||= Api::User.find_by_id(session[:user_id])
+  def api_user
+    @api_user ||= Api::User.find_by_id(session[:api_user_id])
   end
 
   def require_user
-    redirect_to api_signup_path unless user
+    redirect_to api_signup_path unless api_user
   end
 
 end
