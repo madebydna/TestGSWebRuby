@@ -1,14 +1,18 @@
 .primary-button {
-  height: 20px;
   border: 1px solid $gray-text-color;
   color: $gray-text-color;
   padding: 3px 10px;
   border-radius: 8px;
 
-  &:hover{
+  &:hover {
     background-color: $gray-mute;
     text-decoration: none;
     color: white;
     transition: 0.3s;
+  }
+
+  &.light-gray {
+    color: $light-gray;
+    border: 1px solid $light-gray;
   }
 }

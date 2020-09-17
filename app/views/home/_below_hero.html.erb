@@ -1,3 +1,96 @@
 <div class="below-hero">
+  <%= render 'highlights' %>
   <%= render 'homepage_recent_reports' %>
+<% if false %>
+  <div class="our-work-module">
+    <div class="row">
+      <div class="col-xs-12 col-sm-8 col-sm-offset-2">
+        <p class="mission-text"><%= t('home.show.mission-text') %></p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12 col-sm-8 col-sm-offset-2">
+        <p class="mission-text subtext"><%= t('home.show.more-about-our-work') %>:</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12 col-md-4 our-work-block">
+        <%= image_tag image_path('home/school-quality.png') %>
+        <p><%= t('home.show.school-quality') %></p>
+        <p><%= t('home.show.school-quality-text') %></p>
+      </div>
+      <div class="col-xs-12 col-md-4 our-work-block">
+        <%= image_tag image_path('home/supporting-advocacy.png') %>
+        <p><%= t('home.show.supporting-advocacy') %></p>
+        <p><%= t('home.show.supporting-advocacy-text') %></p>
+      </div>
+      <div class="col-xs-12 col-md-4 our-work-block">
+        <%= image_tag image_path('home/parenting-resources.png') %>
+        <p><%= t('home.show.parenting-information') %></p>
+        <p><%= t('home.show.parenting-information-text') %></p>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <a href="<%= about_path %>"><button class="learn-more blue-background"><%= t('home.show.learn-more') %></button></a>
+  </div>
+
+  <div class="highlights-module">
+
+    <h2 class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+      <p class="mission-text subtext"><%= t('home.show.highlights') %>:</p>
+    </h2>
+
+    <div class="row">
+      <div class="col-xs-12 col-md-6">
+        <%= image_tag image_path('home/csa.png') %>
+      </div>
+      <div class="col-xs-12 col-md-6 highlights-module-text pad-right">
+        <p><%= t('home.show.school-quality') %></p>
+        <p><%= t('home.show.csa-title_html') %></p>
+        <p><%= t('home.show.csa-text') %></p>
+        <a href="/gk/csa-winners/"><button class="learn-more white-background"><%= t('home.show.learn-more') %></button></a>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12 col-md-6 highlights-module-text">
+        <p><%= t('home.show.school-quality') %></p>
+        <p><%= t('home.show.gs-summary-rating_html') %></p>
+        <p><%= t('home.show.gs-summary-rating-text') %></p>
+        <a href="<%= ratings_path %>"><button class="learn-more white-background"><%= t('home.show.learn-more') %></button></a>
+      </div>
+      <div class="col-xs-12 col-md-6 pull-right">
+        <%= image_tag image_path('home/summary-rating.png') %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12 col-md-6">
+        <%= image_tag image_path('home/two-covers-2019-02.png') %>
+      </div>
+      <div class="col-xs-12 col-md-6 highlights-module-text pad-right">
+        <p><%= t('home.show.supporting-advocacy') %></p>
+        <p><%= t('home.show.supporting-advocacy-title_html') %></p>
+        <p><%= t('home.show.supporting-advocacy-text') %></p>
+        <a href="<%= research_reports_path(lang: nil) %>"><button class="learn-more white-background"><%= t('home.show.learn-more') %></button></a>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12 col-md-6 highlights-module-text">
+        <p><%= t('home.show.parenting-information') %></p>
+        <p><%= t('home.show.grade-by-grade-newsletters-title_html') %></p>
+        <p><%= t('home.show.grade-by-grade-newsletters-text') %></p>
+        <a href="<%= grade_by_grade_newsletter_path(lang: nil) %>"><button class="learn-more white-background"><%= t('home.show.learn-more') %></button></a>
+      </div>
+      <div class="col-xs-12 col-md-6 pull-right">
+        <%= image_tag image_path('home/newsletters.png') %>
+      </div>
+    </div>
+  <% end %>
+  </div>
 </div>
