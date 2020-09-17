@@ -9,7 +9,8 @@ class HomeController < ApplicationController
 
   set_additional_js_translations(
     {
-      slideshows: [:home, :controller, :slideshows]
+      slideshows: [:home, :controller, :slideshows],
+      show: [:home, :show]
     }
   )
 
