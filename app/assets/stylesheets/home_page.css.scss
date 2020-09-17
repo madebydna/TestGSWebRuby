@@ -24,7 +24,10 @@
 @import "gs/objects/home_footer";
 @import "sprites/footer_icons_16x16";
 
+@import 'components/back-to-top';
+
 @import "gs_v2/home_hero";
+@import "gs_v2/home_highlights";
 
 
 // @import "gs/twitter-typeahead";
@@ -41,10 +44,8 @@
 @import "gs_v2/components/module-footer";
 @import "gs_v2/components/module-header";
 @import "libs/home/banner";
-// @import "libs/home/highlights";
 @import "components/carousel";
 @import "components/buttons";
-@import "libs/home/highlights";
 
 // @import "fonts/fonts-robotoslab-light";
 // @import "fonts/gs-icon-font";
