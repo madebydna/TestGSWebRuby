@@ -140,9 +140,8 @@ section {
     > svg:first-child{
       margin-right: 20px;
     }
-    @media (max-width:422px){
-      text-align: left;
-      width: 90vw;
+    @include media-breakpoint-down(xs){
+      width: 80%;
     }
   }
 }
