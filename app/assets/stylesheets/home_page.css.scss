@@ -158,7 +158,8 @@ section {
     justify-content: center;
     min-width: 50%;
     max-width: 50%;
-    padding: 3em;
+    padding-left: 150px;
+    padding-right: 30px;
     background-color: $module-background;
     @include media-breakpoint-down(sm){
       min-width: 100%;
