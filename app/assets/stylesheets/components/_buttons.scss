@@ -1,6 +1,7 @@
 .primary-button {
   border: 1px solid $gray-text-color;
   color: $gray-text-color;
+  display: inline-block;
   padding: 3px 10px;
   border-radius: 8px;
   font-size: 18px;
@@ -15,6 +16,7 @@
 
 .secondary-button {
   color: white;
+  display: inline-block;
   background-color: $primary-brand-blue;
   padding: 3px 10px;
   border-radius: 8px;
@@ -32,8 +34,18 @@
   border: 1px solid $light-gray;
   border-radius: 8px;
   color: $light-gray;
+  display: inline-block;
   font-size: 16px;
   padding: 3px 10px;
+
+  &.brand-blue-bg {
+    background-color: $primary-brand-blue;
+  }
+
+  &.midnight-blue-bg {
+    border: 1px solid $midnight_blue;
+    background-color: $midnight_blue;
+  }
 
   &:hover {
     background-color: white;
@@ -42,4 +54,5 @@
     text-decoration: none;
     transition: 0.3s;
   }
+
 }

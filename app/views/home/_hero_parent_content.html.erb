@@ -1,20 +1,19 @@
 <div class="parent-content ">
   <h1><%= t('home.hero.parenting-header') %></h1>
   <h2><%= t('home.hero.parenting-subtitle') %></h2>
-  <%= link_to t('home.hero.coronavirus'), coronavirus_url %>
-  <br /><br />
+  <div><%= link_to t('home.hero.coronavirus'), coronavirus_url, class: "tertiary-button midnight-blue-bg" %></div>
   <div class="column-container">
     <div class="columns">
-      <%= link_to t('home.hero.raising_kids_html'), greatkids_home_url %><br /><br />
-      <%= link_to t('home.hero.road_to_college'), reading_url %><br /><br />
-      <%= link_to t('home.hero.parent_power_html'), parent_power_url(lang: nil) %><br /><br />
-      <%= link_to t('home.hero.building_character'), reading_url %><br /><br />
+      <div><%= link_to t('home.hero.raising_kids_html'), greatkids_home_url, class: "tertiary-button brand-blue-bg" %></div>
+      <div><%= link_to t('home.hero.road_to_college'), reading_url, class: "tertiary-button brand-blue-bg" %></div>
+      <div><%= link_to t('home.hero.parent_power_html'), parent_power_url(lang: nil), class: "tertiary-button brand-blue-bg" %></div>
+      <div><%= link_to t('home.hero.building_character'), reading_url, class: "tertiary-button brand-blue-bg" %></div>
     </div>
     <div class="columns">
-      <%= link_to t('home.hero.worksheets_html'), worksheets_and_activities_url %><br /><br />
-      <%= link_to t('home.hero.book_lists'), emotional_smarts_url(lang: nil) %><br /><br />
-      <%= link_to t('home.hero.podcast_for_parents_html'), podcasts_url(lang: nil) %><br /><br />
-      <%= link_to t('home.hero.videos'), school_ratings_url %>
+      <div><%= link_to t('home.hero.worksheets_html'), worksheets_and_activities_url, class: "tertiary-button brand-blue-bg" %></div>
+      <div><%= link_to t('home.hero.book_lists'), emotional_smarts_url(lang: nil), class: "tertiary-button brand-blue-bg" %></div>
+      <div><%= link_to t('home.hero.podcast_for_parents_html'), podcasts_url(lang: nil), class: "tertiary-button brand-blue-bg" %></div>
+      <div><%= link_to t('home.hero.videos'), school_ratings_url, class: "tertiary-button brand-blue-bg" %></div>
     </div>
   </div>
 </div>

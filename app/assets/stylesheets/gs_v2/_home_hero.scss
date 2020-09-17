@@ -62,28 +62,16 @@ $font_color: #F0F0F0;
           background-position: bottom center;
           width: 48%;
           a {
-            //margin: 15px;
-            font-size: 16px;
-            //height: 20px;
-            border: 1px solid $midnight_blue;
-            color: $font_color;
-            padding: 3px 10px;
-            border-radius: 8px;
-            background-color: $midnight_blue;
+            margin-bottom: 10px;
           }
           .column-container {
             display: flex;
             flex-direction: row;
 
             .columns {
+              margin-right: 10px;
               a {
-                margin-right: 15px;
-                //height: 20px;
-                border: 1px solid $font_color;
-                color: $font_color;
-                padding: 3px 10px;
-                border-radius: 8px;
-                background-color: rgba(26, 157, 209, 0.8);
+                margin-bottom: 10px;
               }
             }
           }
