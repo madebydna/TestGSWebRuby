@@ -5,10 +5,11 @@ import Card from "react_components/home/card";
 import ArrowLeft from "react_components/icons/arrow_left";
 import ArrowRight from "react_components/icons/arrow_right";
 import { XS } from "util/viewport";
+import { t } from "util/i18n";
 import slideshow1 from "home/slideshows_2/01_CSA_Insights_2020_Success_without_Selection.jpg";
-import slideshow2 from "home/slideshows_2/02_GreatSchools_College_Sucess_Awards_Report_Final-1.jpg";
+import slideshow2 from "home/slideshows_2/02_Parent_Insights_Supporting_learning_at_home_during_COVID-19.png";
 import slideshow3 from "home/slideshows_2/03_GreatSchools_Transparency_Report_Web.jpg";
-import slideshow4 from "home/slideshows_2/04_Parent_Insights_Supporting_learning_at_home_during_COVID-19.png";
+import slideshow4 from "home/slideshows_2/04_GreatSchools_College_Sucess_Awards_Report_Final-1.jpg";
 import slideshow5 from "home/slideshows_2/05_searching_for_opportunity.jpg";
 
 const slideshowUrls = [
@@ -54,7 +55,8 @@ const Carousel = ({ size }) => {
 
   return (
     <React.Fragment>
-      <h2>Recent Reports</h2>
+      <h2>{t('show.Research')}</h2>
+      <p style={{textAlign: 'center'}}>{t("show.Research-subtext")}</p>
       <div className="module-row">
         <Card
           index={index}
@@ -95,7 +97,7 @@ const Carousel = ({ size }) => {
                   />
                 )}
               </div>
-              { size == XS ? buttons('20') : buttons() }
+              {size == XS ? buttons("20") : buttons()}
             </div>
           </div>
         </div>

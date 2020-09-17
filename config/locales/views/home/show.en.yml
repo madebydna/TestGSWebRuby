@@ -47,6 +47,8 @@ en:
         Our K-12 newsletters offer parents research-backed insights, tips, and actionable ways to support
         their child’s growth and development throughout the school year, starting in kindergarten and continuing
         all the way through the end of 12th grade.
+      Research: Research
+      Research-subtext: Using data to spotlight educational equity and gathering insights from millions of parents
     controller:
       meta_title: 'School Ratings & Reviews for Public & Private Schools: GreatSchools'
       og_title: K-12 school quality information and parenting resources
