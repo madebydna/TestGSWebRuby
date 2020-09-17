@@ -47,6 +47,8 @@ en:
         Our K-12 newsletters offer parents research-backed insights, tips, and actionable ways to support
         their child’s growth and development throughout the school year, starting in kindergarten and continuing
         all the way through the end of 12th grade.
+      millions-of-parents: We help millions of parents get a great education for their child.
+      millions_of_parents_description_html: <p>Each year we reach more than half of all parents in the U.S. with school-age children. Whether it's helping parents find the right school, advocate for better schools, or support their children's learning, we work to empower parents with the information they need to improve educational opportunities–in their homes and their communities.</p>
     controller:
       meta_title: 'School Ratings & Reviews for Public & Private Schools: GreatSchools'
       og_title: K-12 school quality information and parenting resources

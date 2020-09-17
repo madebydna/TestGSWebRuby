@@ -60,6 +60,9 @@
 }
 .section-container {
   background-color: $primary-background;
+  h2 {
+    text-align: center;
+  }
 }
 
 section {
@@ -70,11 +73,6 @@ section {
   margin: 0 auto;
   @include media-breakpoint-down(sm){
     padding: 1em;
-  }
-
-
-  h2 {
-    text-align: center;
   }
 
   h2 {
@@ -143,4 +141,99 @@ section {
       width: 90vw;
     }
   }
+}
+
+.million-parents{
+  display: flex;
+  min-height: 350px;
+  padding: 2em 2em 2em 0;
+  @include media-breakpoint-down(sm){
+    padding-left: 0;
+    padding-right: 0; 
+  }
+
+  > div:first-child{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 50%;
+    max-width: 50%;
+    padding: 3em;
+    background-color: $module-background;
+    @include media-breakpoint-down(sm){
+      min-width: 100%;
+    }
+  }
+
+  .image-container{
+    padding: 0 2em 2em 2em;
+    object-fit: cover;
+    overflow: hidden;
+    width: 60%;
+    @include media-breakpoint-down(md){
+      width: 100%;
+      padding: 0 0 0 2em;
+    }
+    @include media-breakpoint-down(sm){
+      display: none;
+    }
+
+    img {
+      height: auto;
+      max-width: 100%;
+      border-top-left-radius: 50px;
+      border-bottom-right-radius: 50px;
+    }
+  }
+
+  .shape-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 0 2em 2em 0;
+    @include media-breakpoint-down(md){
+      display: none;
+    }
+    .quarter-circle{
+      width: 145px;
+      height: 145px;
+      background: $quarter-orange;
+      border-radius: 0 0 145px 0;
+    }
+  
+    .circle-stack{
+      position: relative;
+      width: 145px;
+      height: 145px;
+      border-radius: 50%;
+      background-color: $midnight_blue;
+      .stacked-quarter-circle{
+        position: absolute;
+        width: 73px;
+        height: 73px;
+        background: green;
+        right: 0;
+        border-radius: 0 73px 0 0;
+      }
+    }
+  }
+
+  .solid-bar-container{
+    position: relative;
+    min-height: 125px;
+    margin: 0 9em 0 2em;
+    background-color: $midnight_blue;
+    @include media-breakpoint-down(md){
+      display: none;
+    }
+
+    .blue-bar{
+      position: absolute;
+      min-height: 125px;
+      background-color: $primary-brand-blue;
+      width: 40%;
+    }
+  }
+
+
 }
