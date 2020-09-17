@@ -1,0 +1,198 @@
+$graph-height: 255px;
+$graph-row-height: $graph-height/3;
+$y-axis-label-width: 80px;
+$x-axis-label-height: 30px;
+
+.equity-graph-wrapper {
+  margin: 1.5rem auto;
+  padding: 0 20px;
+}
+
+.equity-graph-label {
+  @extend .open-sans_i;
+  color: $gray-mute;
+  position: relative;
+  .info-circle {
+    position: relative;
+    top: -2px;
+  }
+}
+
+.equity-bar-chart {
+  position: relative;
+  margin: 24px auto 0;
+  font-size: 14px;
+
+  .graph {
+    height: $graph-height;
+    position: relative;
+  }
+
+  .y-axis {
+    position: absolute;
+    width: 100%;
+    padding-right: $y-axis-label-width;
+    .line {
+      position: relative;
+      height: $graph-row-height;
+      width: 100%;
+      border-top: 0.5px solid $light-mist-gray;
+      &.dashed {
+        border-top-style: dashed;
+      }
+    }
+    .line span {
+      position: absolute;
+      top: -10px;
+      right: -$y-axis-label-width;
+      padding: 0 6px;
+      width: $y-axis-label-width;
+      text-align: left;
+      color: $gray-mute;
+    }
+  }
+
+  .histogram {
+    position: absolute;
+    height: (2 * $graph-row-height) + ($x-axis-label-height + 1px);
+    bottom: $graph-row-height - ($x-axis-label-height + 1px);
+    z-index: 1;
+    width: 100%;
+    display: flex;
+    padding-right: $y-axis-label-width;
+
+    .histogram-cell {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-right: 20px;
+      .bars-group {
+        flex: 1;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+      }
+      .label {
+        font-size: 14px;
+        color: $gray-darkest;
+        height: $x-axis-label-height;
+        display: inline-flex;
+        padding-top: 2px;
+      }
+      .label span {
+        text-align: center;
+      }
+    }
+    .bar {
+      width: 50px;
+      text-align: center;
+      border-radius: $border-radius-small $border-radius-small 0 0;
+    }
+    .bar.low-income {
+      border: 1px solid $teal;
+    }
+    .bar.all-students {
+      border: 1px solid $light-teal;
+    }
+    .value {
+      position: relative;
+      top: -22px;
+      height: 22px;
+      font-size: 18px;
+      @extend .open-sans_sb;
+    }
+  }
+
+  .low-income {
+    background-color: $teal;
+  }
+  .all-students {
+    background-color: $light-teal;
+  }
+
+  .legend {
+    position: absolute;
+    top: (2 * $graph-row-height) + 22px;
+    z-index: 1;
+    width: 100%;
+    display: flex;
+    color: $gray-darkest;
+
+    .item {
+      flex: 1 1 50%;
+      padding: 20px 10px;
+      display: flex;
+      align-items: center;
+    }
+    .item .color {
+      width: 16px;
+      height: 16px;
+      display: inline-block;
+      margin-right: 8px;
+      flex-shrink: 0;
+    }
+  }
+
+}
+
+@include media-breakpoint-down(sm) {
+  .equity-graph-wrapper {
+    padding: 0;
+  }
+
+  .equity-bar-chart {
+    .graph {
+      margin-bottom: 70px;
+    }
+
+    .y-axis {
+      padding-right: 50px;
+      .line span {
+        right: -50px;
+        width: 50px;
+        padding: 0 0 0 6px;
+      }
+    }
+
+    .histogram {
+      padding-right: 50px;
+      height: (2 * $graph-row-height) + 41px;
+      bottom: $graph-row-height - 41px;
+
+      .histogram-cell {
+        margin-right: 5px;
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+
+      .histogram-cell .label {
+        width: 76px;
+        font-size: 13px;
+        height: 40px;
+      }
+
+      .bar {
+        width: 38px;
+      }
+
+      .value {
+        font-size: 16px;
+      }
+    }
+
+    .legend {
+      padding-right: 50px;
+      flex-wrap: wrap;
+      top: (2 * $graph-row-height) + 45px;
+      .item {
+        flex: 1 1 100%;
+        padding: 15px 0 0;
+      }
+    }
+
+  }
+
+}
+

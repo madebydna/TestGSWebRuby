@@ -135,6 +135,10 @@ module SchoolProfiles
       decorated_school.equity_overview_rating_year
     end
 
+    def equity_overview_data
+      decorated_school.equity_overview_data
+    end
+
     def academic_progress_rating
       decorated_school.academic_progress_rating
     end
