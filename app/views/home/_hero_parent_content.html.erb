@@ -5,15 +5,27 @@
   <div class="column-container">
     <div class="columns">
       <div><%= link_to t('home.hero.raising_kids_html'), greatkids_home_url, class: "tertiary-button brand-blue-bg" %></div>
-      <div><%= link_to t('home.hero.road_to_college'), reading_url, class: "tertiary-button brand-blue-bg" %></div>
-      <div><%= link_to t('home.hero.parent_power_html'), parent_power_url(lang: nil), class: "tertiary-button brand-blue-bg" %></div>
-      <div><%= link_to t('home.hero.building_character'), reading_url, class: "tertiary-button brand-blue-bg" %></div>
+      <% if I18n.locale == :es %>
+        <div><%= link_to t('home.hero.road_to_college'), road_to_college_url, class: "tertiary-button brand-blue-bg" %></div>
+      <% else %>
+        <div><%= link_to t('home.hero.road_to_college'), road_to_college_spanish_url, class: "tertiary-button brand-blue-bg" %></div>
+      <% end %>
+      <% if I18n.locale == :en %>
+        <div><%= link_to t('home.hero.parent_power_html'), parent_power_url(lang: nil), class: "tertiary-button brand-blue-bg" %></div>
+      <% end %>
+      <% if I18n.locale == :es %>
+        <div><%= link_to t('home.hero.building_character'), building_character_spanish_url, class: "tertiary-button brand-blue-bg" %></div>
+      <% else %>
+        <div><%= link_to t('home.hero.building_character'), building_character_url, class: "tertiary-button brand-blue-bg" %></div>
+      <% end %>
     </div>
     <div class="columns">
       <div><%= link_to t('home.hero.worksheets_html'), worksheets_and_activities_url, class: "tertiary-button brand-blue-bg" %></div>
-      <div><%= link_to t('home.hero.book_lists'), emotional_smarts_url(lang: nil), class: "tertiary-button brand-blue-bg" %></div>
-      <div><%= link_to t('home.hero.podcast_for_parents_html'), podcasts_url(lang: nil), class: "tertiary-button brand-blue-bg" %></div>
-      <div><%= link_to t('home.hero.videos'), school_ratings_url, class: "tertiary-button brand-blue-bg" %></div>
+      <div><%= link_to t('home.hero.book_lists'), book_lists_url, class: "tertiary-button brand-blue-bg" %></div>
+      <% if I18n.locale == :en %>
+        <div><%= link_to t('home.hero.podcast_for_parents_html'), podcasts_url(lang: nil), class: "tertiary-button brand-blue-bg" %></div>
+      <% end %>
+      <div><%= link_to t('home.hero.videos'), videos_url, class: "tertiary-button brand-blue-bg" %></div>
     </div>
   </div>
 </div>

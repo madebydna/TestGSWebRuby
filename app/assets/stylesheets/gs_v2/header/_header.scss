@@ -134,7 +134,7 @@ $nav_font_color: #F0F0F0;
     display: table-cell;
     a{
       div{
-        background-image: asset_data_url('nav/greatschools_logo.svg');
+        background-image: url('nav/gs_logo_white.png');
         @media (max-width:820px){
           margin: 0 auto;
         }
