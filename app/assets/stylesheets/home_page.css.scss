@@ -4,6 +4,7 @@
 // variables, mixins, base styles
 @import "variables/variables";
 @import "gs_v2/variables";
+@import "gs_v2/typography";
 @import "mixins/*";
 @import "gs/mixins";
 @import "resources/bootstrap/bootstrap";
@@ -28,6 +29,8 @@
 
 @import "gs_v2/home_hero";
 @import "gs_v2/home_highlights";
+@import "gs_v2/home_recent_reports";
+@import "gs_v2/home_million_parents";
 
 
 // @import "gs/twitter-typeahead";
@@ -74,171 +77,26 @@
 section {
   width: 100%;
   padding: 40px 100px;
-  min-height: 543px;
+  // min-height: 543px;
   max-width: 1440px;
   margin: 0 auto;
-  @include media-breakpoint-down(sm){
-    padding: 1em;
-  }
+  // @include media-breakpoint-down(sm){
+  //   padding: 1em;
+  // }
 
   h2 {
-    font-size: 28px;
-    font-family: 'opensans-semibold';
+    font-size: 30px;
+    font-family: $font-family-bold;
   }
 
   h3 {
     font-size: 28px;
-    font-family: 'opensans-regular';
+    font-family: $font-family-base;
     margin: 0 0 10px 0;
   }
 
   p {
     font-size: 18px;
   }
-
-  .module-row{
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    height: 100%;
-    font-size: 40px;
-    @include media-breakpoint-down(sm){
-      flex-direction: column-reverse;
-      padding: 0.5em;
-    }
-
-    > div:first-child{
-      position: relative;
-      flex-grow: 1;
-      padding: 0 20px 20px 20px;
-      min-width: 25%;
-      max-width: 25%;
-
-      p {
-        text-align: left;
-      }
-      @include media-breakpoint-down(sm){
-        max-width: 100%;
-        min-height: 200px;
-      }
-      @media (max-width:422px){
-        text-align: center;
-        padding: 0;
-        p {
-          text-align: inherit;
-        }
-      }
-    }
-
-    // ::carousel
-    .carousel-container{
-      flex-grow: 3;
-    }
-
-  }
-  .carousel-buttons{
-    text-align: center;
-    > svg:first-child{
-      margin-right: 20px;
-    }
-    @include media-breakpoint-down(xs){
-      width: 80%;
-    }
-  }
 }
 
-.million-parents{
-  display: flex;
-  min-height: 350px;
-  padding: 2em 2em 2em 0;
-  @include media-breakpoint-down(sm){
-    padding-left: 0;
-    padding-right: 0; 
-  }
-
-  > div:first-child{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    min-width: 50%;
-    max-width: 50%;
-    padding: 5% 5% 5% 10%;
-    background-color: $module-background;
-    @include media-breakpoint-down(sm){
-      min-width: 100%;
-      padding-left: 5%;
-    }
-  }
-
-  .image-container{
-    padding: 0 2em 2em 2em;
-    object-fit: cover;
-    overflow: hidden;
-    width: 60%;
-    @include media-breakpoint-down(md){
-      width: 100%;
-      padding: 0 0 0 2em;
-    }
-    @include media-breakpoint-down(sm){
-      display: none;
-    }
-
-    img {
-      height: auto;
-      max-width: 100%;
-      border-top-left-radius: 50px;
-      border-bottom-right-radius: 50px;
-    }
-  }
-
-  .shape-container{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 0 2em 2em 0;
-    @include media-breakpoint-down(md){
-      display: none;
-    }
-    .quarter-circle{
-      width: 145px;
-      height: 145px;
-      background: $quarter-orange;
-      border-radius: 0 0 145px 0;
-    }
-  
-    .circle-stack{
-      position: relative;
-      width: 145px;
-      height: 145px;
-      border-radius: 50%;
-      background-color: $midnight_blue;
-      .stacked-quarter-circle{
-        position: absolute;
-        width: 73px;
-        height: 73px;
-        background: green;
-        right: 0;
-        border-radius: 0 73px 0 0;
-      }
-    }
-  }
-
-  .solid-bar-container{
-    position: relative;
-    min-height: 125px;
-    margin: 0 9em 0 2em;
-    background-color: $midnight_blue;
-    @include media-breakpoint-down(md){
-      display: none;
-    }
-
-    .blue-bar{
-      position: absolute;
-      min-height: 125px;
-      background-color: $primary-brand-blue;
-      width: 40%;
-    }
-  }
-
-
-}
