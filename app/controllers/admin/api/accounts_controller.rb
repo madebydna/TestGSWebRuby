@@ -24,7 +24,7 @@ class Admin::Api::AccountsController < ApplicationController
   end
 
   def approve
-    @subscription = AccountApprover.new(params[:id]).approve
+    @subscription = Api::AccountApprover.new(params[:id]).approve
     redirect_to edit_admin_api_account_path(@subscription)
   end
 

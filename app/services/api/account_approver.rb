@@ -20,7 +20,8 @@ module Api
     end
 
     def create_subscription
-      @result = Api::SubscriptionCreator.new(subscription.user, subscription.plan.stripe_price_id)
+      @result = Stripe::Subscription.create({ customer: subscription.user.stripe_customer_id,
+                                    items: [{ price: subscription.plan.stripe_price_id }] })
     end
 
     def post_approval

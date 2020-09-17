@@ -59,7 +59,6 @@
           errorElement.style.display='block';
           errorElement.textContent = result.error.message;
         } else {
-          console.log("Card successfully added. Redirecting to confirmation");
           // send card id back to controller to be rendered into confirmation page
           $.ajax({
             type: 'PATCH',
