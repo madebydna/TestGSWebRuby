@@ -1,0 +1,75 @@
+.module-header {
+  @include media-breakpoint-only(xs) {
+    padding: 0 10px;
+  }
+  min-height: 55px;
+
+  .circle-rating--medium, .circle-rating--equity-blue {
+    float: left;
+  }
+  .title-container {
+    padding: 0 $spacing-medium;
+    overflow: hidden;
+    // Overwrites the general styles applied on h3
+    h3 {
+      display: inline-block;
+      margin: 0;
+      font-size: 20px;
+      font-family: "opensans-bold";
+    }
+  }
+
+  > .icon {
+    float:left;
+    vertical-align: middle;
+  }
+
+  .share-link {
+    &:hover, &:active {
+      text-decoration: none;
+    }
+  }
+
+  .title {
+    font-family: opensans-semibold;
+    font-size: 18px;
+    @include media-breakpoint-up(sm) {
+      font-size: 20px;
+    }
+  }
+  .info-circle {
+    vertical-align: text-top;
+  }
+  .show-share-button {
+    text-align: right;
+    > div {
+      padding-right:10px;
+      color: #2ba3dc;
+      @include media-breakpoint-down(sm) {
+        padding: 10px 0 0 60px;
+      }
+    }
+
+    button {
+      color: #2ba3dc;
+      cursor: pointer;
+      border-radius: 2px;
+      padding: 3px 5px;
+      margin-top: 10px;
+      font-size: 12px;
+      font-family: opensans-regular;
+      background-color: #FFFFFF;
+      text-align: left;
+      border-color: #2ba3dc;
+      > span {
+        font-size: 12px;
+      }
+      @include media-breakpoint-down(sm) {
+        margin-left: 60px;
+      }
+    }
+    @include media-breakpoint-down(sm) {
+      text-align: left;
+    }
+  }
+}
