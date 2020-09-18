@@ -25,7 +25,7 @@ es:
         estudiantes en desventaja con relación a todos sus estudiantes, en comparación a otras escuelas en el estado,
         basado en los resultados de los exámenes del Departamento de Educación del estado.
         <br>
-        <a href="/gk/como-clasificamos/?lang=es#equityrating" style="cursor: pointer;" target="_blank">Aprenda más acerca de esta clasificación.</a>
+        <a href="/gk/ratings-in-nd/?lang=es#equityrating" style="cursor: pointer;" target="_blank">Aprenda más acerca de esta clasificación.</a>
       narrative_1_html: >
         <h3 class="negative">Muy preocupante:</h3>
         <p>En esta escuela los estudiantes de las comunidades más desfavorecidas pueden estar quedándose atrás en
@@ -67,6 +67,15 @@ es:
         <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" />
         <span class="speech-bubble left">Consejos para padres</span></p>
         <p class="footnote">¿Ofrece esta escuela oportunidades para todos sus estudiantes o deja algunos atrás? Las escuelas exitosas entienden cómo <a href="/gk/articles/la-brecha-en-el-rendimiento-academico-esta-tu-escuela-ayudando-a-todos-los-estudiantes-a-alcanzar-el-exito/?lang=es" target="_blank">cerrar la brecha de rendimiento académico</a>.</p>
+      graph_label: Desempeño estudiantil expresado en percentiles
+      graph_tooltip: Muestra los percentiles alcanzados por los estudiantes de esta escuela con las medidas usadas para calcular la Calificación de Equidad de la misma, en comparación con el promedio estatal de los estudiantes en general. 
+      graph_label_li_html: Estudiantes menos favorecidos<br/>y de bajos recursos
+      graph_label_all_html: El resto de estudiantes<br/>de la escuela
+      graph_label_state_avg: Promedio estatal
+      graph_label_student_progress: Progreso del Estudiante
+      graph_label_academic_progress: Progreso Académico
+      graph_label_college_readiness: Preparación Universitaria
+      graph_label_test_scores: Resultados de Exámenes
     equity_overview_alt:
       'title': 'Perspectiva de la equidad'
       subtitle_html: >
@@ -90,7 +99,7 @@ es:
       info_text: >
         La Calificación de Equidad mira lo bien que esta escuela está atendiendo las necesidades de sus estudiantes en desventaja con relación a todos sus estudiantes, en comparación a otras escuelas en el estado, basado en métricas de preparación universitaria, progreso %{growth_type}, y en los resultados de los exámenes proporcionados por el Departamento de Educación del estado.
         <br>
-        <a href="/gk/ratings-ca-mi/?lang=es#equityrating" style="cursor: pointer;" target="_blank">Aprende más sobre esta calificación.</a>
+        <a href="/gk/como-clasificamos/?lang=es#equityrating" style="cursor: pointer;" target="_blank">Aprende más sobre esta calificación.</a>
       narrative_1_html: >
         <h3 class="negative">Muy preocupante:</h3>
         <p>En esta escuela los estudiantes de las comunidades más desfavorecidas pueden estar quedándose atrás en
@@ -132,3 +141,12 @@ es:
         <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" />
         <span class="speech-bubble left">Consejos para padres</span></p>
         <p class="footnote">¿Ofrece esta escuela oportunidades para todos sus estudiantes o deja algunos atrás? Las escuelas exitosas entienden cómo <a href="/gk/articles/la-brecha-en-el-rendimiento-academico-esta-tu-escuela-ayudando-a-todos-los-estudiantes-a-alcanzar-el-exito/?lang=es" target="_blank">cerrar la brecha de rendimiento académico</a>.</p>
+      graph_label: Desempeño estudiantil expresado en percentiles
+      graph_tooltip: Muestra los percentiles alcanzados por los estudiantes de esta escuela con las medidas usadas para calcular la Calificación de Equidad de la misma, en comparación con el promedio estatal de los estudiantes en general.
+      graph_label_li_html: Estudiantes menos favorecidos<br/>y de bajos recursos
+      graph_label_all_html: El resto de estudiantes<br/>de la escuela
+      graph_label_state_avg: Promedio estatal
+      graph_label_student_progress: Progreso del Estudiante
+      graph_label_academic_progress: Progreso Académico
+      graph_label_college_readiness: Preparación Universitaria
+      graph_label_test_scores: Resultados de Exámenes

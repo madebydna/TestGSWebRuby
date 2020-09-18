@@ -6,7 +6,7 @@ es:
         subtext: ¿Qué tan bien están las escuelas en este distrito en comparación con las escuelas en todo el estado?
         tooltip_html: >
           <p>La Calificación General de GreatSchools proporciona una visión general de la calidad de la escuela basada en múltiples medidas, como lo académico, la equidad y el entorno escolar, en comparación con otras escuelas públicas del estado. En esta sección puedes ver un resumen de las escuelas en este distrito que tienen Calificaciones Generales que están por encima del promedio, por debajo del promedio o aproximadamente el promedio.</p>
-          <a href="/gk/como-clasificamos/?lang=es">Aprende más sobre esta clasificación.</a>
+          <a href="/gk/ratings-in-nd/?lang=es">Aprende más sobre esta clasificación.</a>
         graphic_header: ¿Cómo se compara este distrito con el resto del estado?
         graphic_header_tooltip: Este cuadro muestra el porcentaje de escuelas en este distrito con Calificaciones Generales que están por encima del promedio (7-10), promedio (5-6) o por debajo del promedio (1-4) en comparación con los promedios estatales.
         narrative:
@@ -27,16 +27,16 @@ es:
             <h1>Las fuentes de datos y informacion de los perfiles de distritos de GreatSchools</h1>
             <p>La Calificación General de GreatSchools es una reflexión de múltiples medidas sobre la calidad de la escuela en base a los componentes de calificación disponibles para cada escuela. Para ver cómo se calculó la Calificación General para una escuela en este distrito, visita el perfil de la escuela y haz clic en el signo de interrogación junto a la Calificación General en la parte superior de la página.</p>
             <p>Las Calificaciones Generales de las escuelas de este distrito se actualizaron por última vez el %{date_in_words}.</p>
-            <a href="/gk/como-clasificamos/?lang=es">Infórmate más sobre las Calificaciones de GreatSchools.</a>
+            <a href="/gk/ratings-in-nd/?lang=es">Infórmate más sobre las Calificaciones de GreatSchools.</a>
           </div>
       district_scope_alt:
         tooltip_html: >
           <p>La Calificación General de GreatSchools proporciona una visión general de la calidad de la escuela basada en múltiples medidas, como lo académico, la equidad y el entorno escolar, en comparación con otras escuelas públicas del estado. En esta sección puedes ver un resumen de las escuelas en este distrito que tienen Calificaciones Generales que están por encima del promedio, por debajo del promedio o aproximadamente el promedio.</p>
-          <a href="/gk/ratings-ca-mi/?lang=es">Aprende más sobre esta clasificación.</a>
+          <a href="/gk/como-clasificamos/?lang=es">Aprende más sobre esta clasificación.</a>
         source_html: >
           <div class="sourcing">
             <h1>Las fuentes de datos y informacion de los perfiles de distritos de GreatSchools</h1>
             <p>La Calificación General de GreatSchools es una reflexión de múltiples medidas sobre la calidad de la escuela en base a los componentes de calificación disponibles para cada escuela. Para ver cómo se calculó la Calificación General para una escuela en este distrito, visita el perfil de la escuela y haz clic en el signo de interrogación junto a la Calificación General en la parte superior de la página.</p>
             <p>Las Calificaciones Generales de las escuelas de este distrito se actualizaron por última vez el %{date_in_words}.</p>
-            <a href="/gk/ratings-ca-mi/?lang=es">Infórmate más sobre las Calificaciones de GreatSchools.</a>
+            <a href="/gk/como-clasificamos/?lang=es">Infórmate más sobre las Calificaciones de GreatSchools.</a>
           </div>

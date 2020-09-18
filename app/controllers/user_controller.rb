@@ -26,14 +26,8 @@ class UserController < ApplicationController
     user = User.where(email: email).first
     need_to_signin = user.present?
 
-    if need_to_signin == true
-      respond_to do |format|
-        format.js { render json: need_to_signin, status: 403  }
-      end
-    else
-      respond_to do |format|
-        format.js { render json: need_to_signin }
-      end
+    respond_to do |format|
+      format.js { render json: need_to_signin, status: need_to_signin ? 403 : 200 }
     end
   end
 

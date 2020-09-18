@@ -1,31 +1,107 @@
+// reset css
+@import 'resources/normalize';
+
+// variables, mixins, base styles
 @import "variables/variables";
+@import "gs_v2/variables";
+@import "gs_v2/typography";
 @import "mixins/*";
 @import "gs/mixins";
 @import "resources/bootstrap/bootstrap";
-@import "gs/twitter-typeahead";
-@import "gs/tooltip";
-@import "gs/objects/scaling_image_layout";
-@import "gs/objects/spinny_wheel";
 @import "base/spacing";
-@import "gs/navigation";
-@import "base/deprecated_typography";
-@import "gs/objects/search_area_layout";
-@import "gs/objects/search_page";
-@import "gs/objects/home_page";
-@import "header";
+
+// fonts
+@import "fonts/fonts-opensans"; // regular + italic
+@import 'fonts/fonts-opensans-semibold';
+@import 'fonts/fonts-opensans-bold';
+
+// icons / sprites
+@import 'fonts/gs-icon-font';
+@import 'sprites/avatars_33x33';
+@import 'sprites/avatars_65x65';
+
+// footer-specific
 @import "gs/objects/footer";
 @import "gs/objects/home_footer";
 @import "sprites/footer_icons_16x16";
+
+@import 'components/back-to-top';
+
+@import "gs_v2/home_hero";
+@import "gs_v2/home_highlights";
+@import "gs_v2/home_recent_reports";
+@import "gs_v2/home_million_parents";
+
+
+// @import "gs/twitter-typeahead";
+// @import "gs/tooltip";
+// @import "gs/objects/scaling_image_layout";
+// @import "gs/objects/spinny_wheel";
+// @import "gs/navigation";
+// @import "base/deprecated_typography";
+//@import "gs/objects/search_area_layout";
+//@import "gs/objects/search_page";
+// @import "gs/objects/home_page";
+@import "header_new";
+@import "gs_v2/components/search-autosuggest";
+@import "gs_v2/components/module-footer";
+@import "gs_v2/components/module-header";
 @import "libs/home/banner";
+@import "components/carousel";
+@import "components/buttons";
 
+// @import "fonts/fonts-robotoslab-light";
+// @import "fonts/gs-icon-font";
+// @import "sprites/icons_24x24";
 
-@import "fonts/fonts-opensans"; // regular + italic
-@import "fonts/fonts-robotoslab-light";
-@import "fonts/gs-icon-font";
-@import "sprites/icons_24x24";
 
 #home-page {
+  padding-right: 0;
+  padding-left: 0;
+  line-height: 1.18;
+
   h1 {
     font-size: 32px;
   }
 }
+
+.blue-section-container {
+  background-color: $midnight_blue;
+}
+.section-container {
+  background-color: $primary-background;
+  h2 {
+    text-align: center;
+  }
+}
+
+section {
+  width: 100%;
+  padding: 40px 20px;
+  // min-height: 543px;
+  max-width: 1440px;
+  margin: 0 auto;
+  // @include media-breakpoint-down(sm){
+  //   padding: 1em;
+  // }
+
+  @include media-breakpoint-up(lg){
+    padding: 40px 100px;
+  }
+
+  h2 {
+    font-size: 30px;
+    font-family: $font-family-bold;
+  }
+
+  h3 {
+    font-size: 28px;
+    font-family: $font-family-base;
+    margin: 0 0 10px 0;
+  }
+
+  p {
+    font-size: 18px;
+  }
+}
+

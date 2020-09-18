@@ -1640,6 +1640,21 @@
         }
       }
     },
+    "@babel/runtime": {
+      "version": "7.11.2",
+      "resolved": "https://registry.npmjs.org/@babel/runtime/-/runtime-7.11.2.tgz",
+      "integrity": "sha512-TeWkU52so0mPtDcaCTxNBI/IHiz0pZgr8VEFqXFtZWpYD08ZB6FaSwVAS8MKRQAP3bYKiVjwysOJgMFY28o6Tw==",
+      "requires": {
+        "regenerator-runtime": "^0.13.4"
+      },
+      "dependencies": {
+        "regenerator-runtime": {
+          "version": "0.13.7",
+          "resolved": "https://registry.npmjs.org/regenerator-runtime/-/regenerator-runtime-0.13.7.tgz",
+          "integrity": "sha512-a54FxoJDIr27pgf7IgeQGxmqUNYrcV338lf/6gH456HZ/PhX+5BcwHXG9ajESmwe6WRO0tAzRUrRmNONWgkrew=="
+        }
+      }
+    },
     "@babel/template": {
       "version": "7.0.0-beta.44",
       "resolved": "https://registry.npmjs.org/@babel/template/-/template-7.0.0-beta.44.tgz",
@@ -18093,6 +18108,15 @@
           "resolved": "https://registry.npmjs.org/lodash-es/-/lodash-es-4.17.8.tgz",
           "integrity": "sha512-I9mjAxengFAleSThFhhAhvba6fsO0hunb9/0sQ6qQihSZsJRBofv2rYH58WXaOb/O++eUmYpCLywSQ22GfU+sA=="
         }
+      }
+    },
+    "react-spring": {
+      "version": "8.0.27",
+      "resolved": "https://registry.npmjs.org/react-spring/-/react-spring-8.0.27.tgz",
+      "integrity": "sha512-nDpWBe3ZVezukNRandTeLSPcwwTMjNVu1IDq9qA/AMiUqHuRN4BeSWvKr3eIxxg1vtiYiOLy4FqdfCP5IoP77g==",
+      "requires": {
+        "@babel/runtime": "^7.3.1",
+        "prop-types": "^15.5.8"
       }
     },
     "react-test-renderer": {

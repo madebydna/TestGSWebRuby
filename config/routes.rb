@@ -155,6 +155,7 @@ LocalizedProfiles::Application.routes.draw do
     get '/gk/category/dilemmas/', as: :parenting_dilemmas
     get '/gk/emotional-smarts/', as: :emotional_smarts
     get '/gk/road-to-college/', as: :road_to_college
+    get '/gk/category/preparacion-universitaria/', as: :road_to_college_spanish
     get '/gk/category/learning-disabilities/', as: :learning_disabilities
     get '/parenting.topic?content=1539', as: :health_and_behavior
     get '/gk/common-core-test-guide/', as: :common_core_test_guide
@@ -248,9 +249,13 @@ LocalizedProfiles::Application.routes.draw do
     get '/gk/articles/the-achievement-gap-is-your-school-helping-all-students-succeed/', as: :article_achievement_gap
     get '/gk/ratings/',  as: :ratings
     get '/gk/como-clasificamos/',  as: :ratings_spanish
-    get '/gk/ratings-ca-mi/',  as: :ratings_alt
+    get '/gk/ratings-in-nd/',  as: :ratings_alt
     get '/gk/csa-winners/', as: :csa_winners
     get '/gk/coronavirus-school-closure-support/', as: :coronavirus
+    get '/gk/building-character/', as: :building_character
+    get '/gk/category/caracter-es/', as: :building_character_spanish
+    get '/gk/book-lists/', as: :book_lists
+    get '/gk/videos/', as: :videos
     get '/status/error404.page'
   end
 

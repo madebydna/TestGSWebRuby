@@ -489,7 +489,7 @@ export default class SearchBox extends React.Component {
             onClick={e => this.toggleSearchBoxModal(e, true)}
           >
             <button className="search_form_button">
-              <span style={{ fontSize: 22 }}>X</span>
+              <span>X</span>
             </button>
           </div>
         )}

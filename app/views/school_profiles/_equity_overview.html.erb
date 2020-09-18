@@ -23,4 +23,7 @@
   qualaroo_link: equity_overview.qualaroo_module_link(:equity_overview),
   narration: equity_overview.narration
 } do %>
+  <% unless equity_overview.suppress_overview_data? %>
+    <%= render 'equity_overview_graph', data: equity_overview.overview_data %>
+  <% end %>
 <% end %>

@@ -98,12 +98,40 @@ module SchoolProfiles
     end
 
     def path_to_yml
-      if ['ca', 'mi'].include?(@school_cache_data_reader.school.state.downcase)
+      if ['in', 'nd'].exclude?(@school_cache_data_reader.school.state.downcase)
         path = 'lib.equity_overview_alt'
       else
         path = 'lib.equity_overview'
       end
       path
+    end
+
+    def suppress_overview_data?
+      overview_data.empty?
+    end
+
+    def overview_data
+      @_overview_data ||= begin
+        all_data = @school_cache_data_reader.equity_overview_data
+        # reject unless we have data for both breakdowns - advantaged and disadvantaged students
+        all_data.reject! {|k, v| v.length < 2 }
+        {}.tap do |hash|
+          if all_data["Equity Rating: College Readiness Percentile"].present?
+            hash["College Readiness"] = extract_from_overview_data(all_data["Equity Rating: College Readiness Percentile"])
+          end
+          if all_data["Equity Rating: State Test Percentile"].present?
+            hash["Test Scores"] = extract_from_overview_data(all_data["Equity Rating: State Test Percentile"])
+          end
+          if @school_cache_data_reader.growth_type == "Student Progress Rating" &&
+            all_data["Equity Rating: Growth Percentile"].present?
+            hash["Student Progress"] = extract_from_overview_data(all_data["Equity Rating: Growth Percentile"])
+          end
+          if @school_cache_data_reader.growth_type == "Academic Progress Rating" &&
+            all_data["Equity Rating: Growth Proxy Percentile"].present?
+            hash["Academic Progress"] = extract_from_overview_data(all_data["Equity Rating: Growth Proxy Percentile"])
+          end
+        end
+      end
     end
 
     protected
@@ -126,6 +154,12 @@ module SchoolProfiles
         return @_equity_overview_struct
       end
       @_equity_overview_struct = @school_cache_data_reader.equity_overview_rating_hash
+    end
+
+    def extract_from_overview_data(data_points)
+      data_points.each_with_object({}) do |data_point, hash|
+        hash[data_point.breakdowns.first] = "#{(data_point.school_value.to_f * 100).round}%"
+      end
     end
 
   end

@@ -18,6 +18,7 @@ $text-disabled-color:   $gray-light;
 $brand-primary:                #26ABE2;
 $brand-primary-darker:         #4788be;
 $brand-primary-dark:           #2880b9;
+$brand-primary-joyous:         #2ba3dc;
 $brand-primary-darkest:        #195074;
 $brand-primary-light:          lighten($brand-primary, 40%); // #66B5D1
 $brand-primary-lighter:        lighten($brand-primary, 47%); // #F5FAFC
@@ -39,6 +40,8 @@ $blue-dark:               #0D6A99;
 $blue-darker:             #002c47;
 $midnight-blue:           #337ab7;
 $ocean-blue:              #F5FBFD;
+$teal:                    #18989D;
+$light-teal:              #76CACD;
 $green-light:             #69b684;
 $medium-green:            #8cbe3b;
 $neutral-color:           #444444;
@@ -58,6 +61,7 @@ $module-gray:             $gray-lighter;
 $module-gray-stroke:      #dedede;
 $dark-steel-gray:         #1d1d1d;
 $light-ash-gray:          #777777;
+$light-mist-gray:         #CECECE;
 $light-blue-background:   #e6ebf5;
 $gray-link-color:         $light-ash-gray;
 $gray-link-hover-color:   darken($light-ash-gray, 15%);

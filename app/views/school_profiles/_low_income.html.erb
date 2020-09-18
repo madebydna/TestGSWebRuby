@@ -1,4 +1,4 @@
-<% if %w(ca mi).include?(@school.state.downcase) %>
+<% if ['in', 'nd'].exclude?(@school.state.downcase) %>
   <%= react_component('LowIncomeDataModule', props: {
                     title: t('Low-income students', scope: 'school_profiles.equity'),
                     anchor: 'Low-income_students',
