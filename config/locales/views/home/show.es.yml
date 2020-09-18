@@ -54,7 +54,7 @@ es:
         para apoyar el crecimiento y desarrollo de su hijo a lo largo del año escolar, comenzando en el
         Kinder y continuando hasta el final del 12º grado.
       millions-of-parents: Ayudamos a millones de padres a obtener una educación de calidad para sus hijos
-      millions_of_parents_description_html: <p>Año tras año, llegamos a más de la mitad de padres estadounidenses con niños en edad escolar. Bien sea ayudando a los padres a encontrar la escuela ideal, abogando por una mejor educación o apoyando el aprendizaje de los niños, trabajamos para empoderar a los padres con la información necesaria para mejorar las oportunidades educativas (tanto en casa como en su comunidad). <a href='/gk/sobre-nosotros/?lang=es'>Más información</a></p>
+      millions_of_parents_description_html: <p>Año tras año, llegamos a más de la mitad de padres estadounidenses con niños en edad escolar. Bien sea ayudando a los padres a encontrar la escuela ideal, abogando por una mejor educación o apoyando el aprendizaje de los niños, trabajamos para empoderar a los padres con la información necesaria para mejorar las oportunidades educativas (tanto en casa como en su comunidad)</p>
       Research: Investigación
       Research-subtext: Usando datos para enfatizar la equidad en el ámbito educativo y recopilar las perspectivas de millones de padres
     controller:
@@ -72,7 +72,7 @@ es:
           4: Searching for Opportunity
         subtexts:
           0: Nonselective high schools that help underserved students enroll and persist in college.
-          1: Exploring the experiences of our users at home during the COVID-19 crisis. These insights shed light on what parents and caregivers are doing to support learning at home and what they need and want most.
+          1: Exploring the experiences of our users at home during the COVID-19 crisis.
           2: A state by state assessment of education data transparency
           3: Celebrating high schools that prepare students to succeed in college
           4: Examining racial gaps in access to quality schools in California and a list of Spotlight Schools

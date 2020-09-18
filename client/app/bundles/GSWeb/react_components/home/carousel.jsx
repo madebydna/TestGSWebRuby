@@ -56,7 +56,7 @@ const Carousel = ({ size }) => {
   return (
     <React.Fragment>
       <h2>{t('show.Research')}</h2>
-      <p style={{textAlign: 'center'}}>{t("show.Research-subtext")}</p>
+      <p style={{textAlign: 'center', paddingBottom: '3em'}}>{t("show.Research-subtext")}</p>
       <div className="module-row">
         <Card
           index={index}
