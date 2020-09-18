@@ -8,7 +8,7 @@ import { t } from "util/i18n";
 const cardStyles = {
   position: "absolute",
   overflow: "hidden",
-  padding: "0 5px 5px 5px",
+  padding: "0 5px 5px 0",
 };
 
 const Card = ({ index, slideshowUrls, direction, size }) => {

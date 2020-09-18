@@ -76,13 +76,17 @@
 
 section {
   width: 100%;
-  padding: 40px 100px;
+  padding: 40px 20px;
   // min-height: 543px;
   max-width: 1440px;
   margin: 0 auto;
   // @include media-breakpoint-down(sm){
   //   padding: 1em;
   // }
+
+  @include media-breakpoint-up(lg){
+    padding: 40px 100px;
+  }
 
   h2 {
     font-size: 30px;
