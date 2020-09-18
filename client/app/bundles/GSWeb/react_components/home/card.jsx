@@ -9,6 +9,7 @@ const cardStyles = {
   position: "absolute",
   overflow: "hidden",
   padding: "0 5px 5px 0",
+  marginTop: '40px'
 };
 
 const Card = ({ index, slideshowUrls, direction, size }) => {
