@@ -7,6 +7,13 @@ class HomeController < ApplicationController
 
   layout "home"
 
+  set_additional_js_translations(
+    {
+      slideshows: [:home, :controller, :slideshows],
+      show: [:home, :show]
+    }
+  )
+
   def show
 
     @show_ads = PropertyConfig.advertising_enabled?

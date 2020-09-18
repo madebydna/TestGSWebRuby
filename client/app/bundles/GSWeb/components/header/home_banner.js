@@ -30,7 +30,7 @@ export const init = () => {
     header.parentNode.insertBefore(banner, header.nextSibling);
 
     if (window.innerWidth < 768) {
-      const hero = document.querySelector('.dark-gray-bg.pr');
+      const hero = document.querySelector('#home-page');
       const height = document.querySelector('#home-page-banner').offsetHeight;
       hero.style.marginTop = `${height}px`;
       activateRemoveMarginListener(hero);

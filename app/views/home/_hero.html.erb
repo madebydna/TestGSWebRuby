@@ -1,10 +1,17 @@
-<div class="row">
-  <div class="dark-gray-bg pr">
-    <div class="image-bg-scale image-scaling-height oh">
-        <div class="img-container is-scaled"><!--not empty--></div>
-    </div>
-    <div class="absolute-center">
-      <%= yield %>
+<div class="blue-section-container">
+  <section class="hero-section">
+    <div class="module-container">
+      <div class="search-module">
+        <h1><%= t('home.hero.heading-new') %></h1>
+<!--        <h2 class="subtitle uc mtl"><%#= t('home.hero.subheading') %></h2>-->
+        <div class="search-container">
+          <%= render partial: 'home/search_form' %>
+        </div>
+          <img src="<%= asset_path('home/graduation.jpg') %>">
+      </div>
+      <div class="parent-module">
+        <%= render partial: 'home/hero_parent_content' %>
+      </div>
     </div>
   </div>
 </div>

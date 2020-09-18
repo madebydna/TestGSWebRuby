@@ -1,0 +1,128 @@
+@import "mixins/breakpoints";
+$font_color: #F0F0F0;
+#home-page {
+  .hero-section {
+    @include media-breakpoint-only(xs) {
+      padding-bottom: 0;
+    }
+
+    .module-container {
+      display: flex;
+      flex-direction: row;
+
+      > div {
+        // margin: 0px 15px 30px;
+        width: 100%;
+      }
+      h1 {
+        color: $font_color;
+        font-size: 28px;
+        font-family: $font-family-bold;
+      }
+      .search-module {
+        margin: 0 15px 30px 0;
+        width: 48%;
+
+        h1 {
+          color: $font_color;
+          font-size: 28px;
+        }
+        img{
+          width:100%;
+          border-top-left-radius: 50px;
+          border-bottom-right-radius: 50px;
+        }
+        .search-container {
+          position: relative;
+          margin-bottom: 65px;
+        }
+      }
+
+      .parent-module {
+        margin: 0 0 30px 15px;
+
+        h1 {
+          padding-top: 10px;
+          width: 100%;
+          font-size: 32px;
+        }
+        h2 {
+          font-family: $font-family-semibold;
+          font-size: 16px;
+          text-transform: uppercase;
+          color: $font_color;
+          padding-bottom: 10px;
+        }
+        padding: 20px;
+        background-color: rgba(26, 157, 209, 1);
+        background-image: url('home/hero-vectors-laptop.svg');
+        background-repeat: no-repeat;
+        //background-position: bottom right;
+        background-size:  456px 289px;
+        background-position: 50% 101%;
+        width: 48%;
+        a {
+          margin-bottom: 10px;
+        }
+        .column-container {
+          display: flex;
+          flex-direction: row;
+
+          .columns {
+            margin-right: 10px;
+            a {
+              margin-bottom: 10px;
+            }
+          }
+        }
+      }
+      @include media-breakpoint-only(md) {
+        .parent-module {
+          h1{
+            padding-top: 10px;
+            margin-top: 11px;
+          }
+        }
+      }
+      @include media-breakpoint-down(sm) {
+        .parent-module {
+          h1{
+            padding-top: 0px;
+            margin-top: 0px;
+            font-size: 26px;
+          }
+          background-size:  326px 205px;
+          background-position: bottom right;
+        }
+      }
+
+      @include media-breakpoint-only(xs) {
+        .search-module {
+          width: 100%;
+          margin: 0 auto;
+          margin-bottom: 20px;
+        }
+        .parent-module {
+          margin: 0 auto;
+          padding-bottom: 120px;
+          text-align: center;
+          background-size:  282px 194px;
+          background-position: bottom center;
+          background-image: url('home/hero-vectors-mobile-tablet.svg');
+          h1{
+            display: none;
+          }
+          width: 100%;
+          .column-container {
+            flex-direction: column;
+            text-align: center;
+            .columns {
+              float: none;
+            }
+          }
+        }
+        flex-direction: column;
+      }
+    }
+  }
+}

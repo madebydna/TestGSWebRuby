@@ -19,29 +19,46 @@ const signupPageSpecialCase = function () {
 };
 
 const initLanguageLinkListener = function() {
-  let changeLanguageLink = document.querySelector('.jsChangeLanguageLink');
+  let changeLanguageLink = document.querySelectorAll('.jsChangeLanguageLink');
+  let changeLanguageLinkCount = changeLanguageLink.length;
   let locationLanguageLink =  window.location.href;
   if (typeof otherLanguageAvailable !== 'undefined'  && !otherLanguageAvailable ) {
     locationLanguageLink = "/gk/";
   }
 
   if(isSpanish()) {
-    changeLanguageLink.innerHTML = 'In English';
+    changeLanguageLink[0].innerHTML = 'In English';
+    if(changeLanguageLinkCount > 1) { changeLanguageLink[1].innerHTML = 'In English'; }
   } else {
-    changeLanguageLink.innerHTML = 'En Español';
+    changeLanguageLink[0].innerHTML = 'En Español';
+    if(changeLanguageLinkCount > 1) { changeLanguageLink[1].innerHTML = 'En Español'; }
   }
 
-  changeLanguageLink.onclick = function(e) {
+  changeLanguageLink[0].onclick = function(e) {
     if (signupPageSpecialCase()) {
       return true;
     }
     locationLanguageLink = window.location.href;
     if(isSpanish()) {
-      changeLanguageLink.href = updateUrlParameter(locationLanguageLink, 'lang', '');
+      changeLanguageLink[0].href = updateUrlParameter(locationLanguageLink, 'lang', '');
     } else {
-      changeLanguageLink.href = updateUrlParameter(locationLanguageLink, 'lang', 'es');
+      changeLanguageLink[0].href = updateUrlParameter(locationLanguageLink, 'lang', 'es');
     }
     return true;
+  }
+  if(changeLanguageLinkCount > 1) {
+    changeLanguageLink[1].onclick = function (e) {
+      if (signupPageSpecialCase()) {
+        return true;
+      }
+      locationLanguageLink = window.location.href;
+      if (isSpanish()) {
+        changeLanguageLink[1].href = updateUrlParameter(locationLanguageLink, 'lang', '');
+      } else {
+        changeLanguageLink[1].href = updateUrlParameter(locationLanguageLink, 'lang', 'es');
+      }
+      return true;
+    };
   }
 };
 

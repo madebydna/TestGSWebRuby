@@ -1,4 +1,31 @@
 <div class="below-hero">
+  <section class="million-parents">
+    <div>
+      <h2><%= t('home.show.millions-of-parents') %></h2>
+      <%= t('home.show.millions_of_parents_description_html') %>
+      <br/>
+      <div>
+        <a class="secondary-button" href='/gk/about/'>Learn more</a>
+      </div>
+    </div>
+    <div class="right-side-container">
+      <div class="image-container" style="display: flex; margin-right: 25px;">
+        <%= image_tag image_url('home/Small_flute.jpg'), class: 'flute-image' %>
+        <div class="shape-container">
+          <div class="quarter-circle"></div>
+          <div class="circle-stack">
+            <div class="stacked-quarter-circle"></div>
+          </div>
+        </div>
+      </div>
+      <div class="solid-bar-container">
+        <div class="blue-bar"></div>
+      </div>
+    </div>
+  </section>
+  <%= render 'highlights' %>
+  <%= render 'homepage_recent_reports' %>
+<% if false %>
   <div class="our-work-module">
     <div class="row">
       <div class="col-xs-12 col-sm-8 col-sm-offset-2">
@@ -88,6 +115,6 @@
         <%= image_tag image_path('home/newsletters.png') %>
       </div>
     </div>
-
+  <% end %>
   </div>
 </div>
