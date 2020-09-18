@@ -10,9 +10,7 @@ import './vendor/typeahead_modified.bundle';
 
 const init = function() {
   if ( document.getElementsByClassName("header_un").length > 0 ) {
-    if(window.location.pathname !== '/'){
-      menuInit();
-    }
+    menuInit();
     searchBarInit();
     languageInit();
     searchInit();
