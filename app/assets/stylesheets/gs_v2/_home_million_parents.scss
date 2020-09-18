@@ -35,6 +35,12 @@
     }
   }
 
+  .right-side-container{
+    @include media-breakpoint-down(sm){
+      display: none;
+    }
+  }
+
   .image-container{
     display: flex;
     margin-right: 100px;
