@@ -1,7 +1,15 @@
+import { runValidations } from '../components/validating_inputs';
+
 const userSignupPageInit = () => {
   $(function () {
     if (gon.pagename == "User Signup") {
       let $formContainer = $('.js-user-signup-form-container');
+      const emailFieldSelector = '.js-join-email-field';
+      let emailPromises;
+
+      $formContainer.on('blur', emailFieldSelector, (event) => {
+        emailPromises = runValidations(event.currentTarget);
+      });
 
       function gbygCheckbox(obj) {
         $(obj)
@@ -50,10 +58,19 @@ const userSignupPageInit = () => {
       });
 
       $formContainer.find('form').on('submit', function (e) {
+        e.preventDefault();
+        let hasError = false;
         let $form = $(this);
         let grades = [];
         let subscriptions = [];
         let language = document.querySelector('.js-gradeCheckbox').dataset.language;
+        const button = document.querySelector('.js-join-login-submit-button');
+        button.disabled = true;
+        button.innerText = language === 'en' ? 'Processing...' : 'Procesando...';
+        const emailField = document.querySelector(emailFieldSelector);
+        if (document.body.contains(emailField)) {
+          emailPromises = runValidations(emailField);
+        }
 
         $form.find('.js-gradeCheckbox.active').each(function () {
           grades.push([$(this).data('grade'), $(this).data('language'), $(this).data('districtId'), $(this).data('districtState')]);
@@ -67,10 +84,11 @@ const userSignupPageInit = () => {
 
         if (subscriptions.length > 0){
           $('.js-subscriptionSubmitValue').val(JSON.stringify(subscriptions));
-        }else{
-          window.alert('No subscriptions selected')
-          e.preventDefault();
-          return;
+        } else {
+          window.alert('No subscriptions selected');
+          hasError = true;
+          button.disabled = false;
+          button.innerText = language === 'en' ? 'Sign up' : 'Subscribeme ya';
         }
 
         $form.find('.js-inverted-checkbox').each(function () {
@@ -81,9 +99,16 @@ const userSignupPageInit = () => {
           $(this).prop('disabled', false);
         });
 
-        const button = document.querySelector('.js-join-login-submit-button');
-        button.disabled = true;
-        button.innerText = language === 'en' ? 'Processing...' : 'Procesando...'
+        if (emailPromises) {
+          emailPromises.done(() => {
+            if (!hasError) this.submit();
+          }).fail(() => {
+            button.disabled = false;
+            button.innerText = language === 'en' ? 'Sign up' : 'Subscribeme ya';
+          });
+        } else if (!hasError) {
+          this.submit()
+        }
       });
 
     }
