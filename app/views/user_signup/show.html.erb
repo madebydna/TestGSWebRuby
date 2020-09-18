@@ -33,11 +33,23 @@
       </div>
 
       <div class="body">
-        <%= form_tag(@submit_path, method: :post, class:"user-signup-form-container") do |f| %>
+        <%= form_tag(@submit_path, method: :post, class:"user-signup-form-container") do %>
           <input class="js-gradeSubmitValue" name="grades" type="hidden" value="">
           <input class="js-subscriptionSubmitValue" name="subscriptions" type="hidden" value="">
 
-          <%= render 'forms/join_email_fieldset' %>
+          <fieldset>
+              <%= email_field_tag(
+                :email,
+                nil,
+                {
+                  id: "join-email",
+                  placeholder: "#{t('email address', scope: 'forms')}",
+                  class: 'js-join-email-field',
+                  'data-async-validations' => 'emailRequired,emailFormat,emailAvailable'
+                }
+              ) %>
+
+            </fieldset>
 
           <%= render partial: 'user_email_preferences/subscription', :locals => {
               list: 'greatnews',

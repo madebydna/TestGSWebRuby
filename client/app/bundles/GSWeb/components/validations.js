@@ -1,4 +1,5 @@
 import * as functions from './validation_functions';
+import { t } from 'util/i18n'; // TODO: translate validation messages
 
 const composeValidations = function(...validations) {
   return (...args) => validations.reduce((accum, validation) => accum.concat(validation(...args)), []);
@@ -11,6 +12,7 @@ export const VALID_URL_REQUIRED = 'validUrlRequired';
 export const TERMS_REQUIRED = 'termsRequired';
 export const EMAIL_AVAILABLE = 'emailAvailable';
 
+// TODO: translate these validation messages
 const emailFormat = (...args) => functions.emailFormat('Please enter a valid email address', ...args);
 const urlFormat = (...args) => functions.urlFormat('Please enter a valid URL', ...args);
 const emailRequired = (...args) => functions.required('Email address is required', ...args);
@@ -18,7 +20,7 @@ const urlRequired = (...args) => functions.required('A valid URL is required', .
 const validEmailRequired = composeValidations(emailFormat, emailRequired);
 const validUrlRequired = composeValidations(urlFormat, urlRequired);
 const termsRequired = (...args) => functions.checkRequired('You must agree to the widget terms of service', ...args);
-const emailAvailable = (...args) => functions.emailAvailable('Looks like you already have an account. <a href="#login" data-toggle="tab">Log in</a>', ...args);
+const emailAvailable = (...args) => functions.emailAvailable('Looks like you already have an account. <a href="/gsr/login" data-toggle="tab">Log in</a>', ...args);
 
 const validations = {
   [EMAIL_FORMAT]: emailFormat,

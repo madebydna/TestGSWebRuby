@@ -4,6 +4,8 @@ class UserSignupController < ApplicationController
 
   layout 'application'
 
+  before_action :manage_redirect, only: [:show, :show_spanish]
+
   def show
     show_all
     @submit_path = submit_path
@@ -161,6 +163,15 @@ class UserSignupController < ApplicationController
 
   def set_tracking_info
     data_layer_gon_hash[DataLayerConcerns::PAGE_NAME] = 'GS:Email:Signup'
+  end
+
+  def manage_redirect
+    if current_user
+      redirect_to user_preferences_path
+    else
+      # if existing user logs in, they will be redirected to the email preferences page
+      write_cookie :redirect_uri, user_preferences_url, { expires: 10.minutes.from_now }
+    end
   end
 end
 
