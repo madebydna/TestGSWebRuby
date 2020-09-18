@@ -29,6 +29,7 @@
     @include media-breakpoint-down(md){
       margin-right: 25px;
     }
+
   }
 
   .flute-image{
@@ -38,6 +39,9 @@
     margin-left: 2em;
     @include media-breakpoint-down(md){
       max-width: 100%;
+    }
+    @include media-breakpoint-down(sm){
+      display: none;
     }
   }
 
