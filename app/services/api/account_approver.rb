@@ -10,8 +10,7 @@ module Api
 
     def approve
       subscription.update(status: 'bizdev_approved')
-      create_subscription
-      post_approval
+      create_stripe_subscription
       subscription
     end
 
@@ -19,29 +18,27 @@ module Api
       @subscription ||= Api::Subscription.find(subscription_id)
     end
 
-    def create_subscription
-      @result = Stripe::Subscription.create({ customer: subscription.user.stripe_customer_id,
+    def stripe_subscription
+      @stripe_subscription ||= Stripe::Subscription.create({ customer: subscription.user.stripe_customer_id,
                                     items: [{ price: subscription.plan.stripe_price_id }] })
     end
 
-    def post_approval
-      if @result
+    def create_stripe_subscription
+      if stripe_subscription
         subscription.update(status: 'payment_succeeded', active: true)
-        email_user
-        email_biz_dev('success')
       else
         subscription.update(status: 'payment_failed', active: false)
-        email_user
-        email_biz_dev('fail')
       end
+      email_biz_dev
+      email_user
     end
 
     def email_user
       p "emailing user"
     end
 
-    def email_biz_dev(status)
-      if status == 'success'
+    def email_biz_dev
+      if stripe_subscription
         p "emailing biz dev success"
       else
         p "emailing biz dev fail"
