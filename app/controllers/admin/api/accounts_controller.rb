@@ -18,17 +18,17 @@ class Admin::Api::AccountsController < ApplicationController
   end
 
   def update
-    @subscription = Api::Subscription.find(params[:id])
-    @subscription.update!(subscription_params)
-    redirect_to edit_admin_api_account_path(@subscription)
+    @account = Api::Subscription.find(params[:id])
+    @account.update!(account_params)
+    redirect_to edit_admin_api_account_path(@account)
   end
 
   def approve
-    @subscription = Api::AccountApprover.new(params[:id]).approve
-    redirect_to edit_admin_api_account_path(@subscription)
+    @account = Api::AccountApprover.new(params[:id]).approve
+    redirect_to edit_admin_api_account_path(@account)
   end
 
-  def subscription_params
+  def account_params
     params.require(:api_subscription).permit(:aws_api_key, :notes)
   end
 
