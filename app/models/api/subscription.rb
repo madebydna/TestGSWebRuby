@@ -14,12 +14,13 @@ module Api
     end
   end
 
-  # plan_selected
-  # payment_added
-  # pending_approval
-  # bizdev_rejected
-  # bizdev_approved
-  # payment_succeeded
-  # payment_failed
+  # Subscription Lifecycle
+  # plan_selected -> Initial status after subscription is created via the plan selection page
+  # payment_added -> Once user adds payment
+  # pending_approval -> Once user clicks 'place order' on the confirmation page
+  # bizdev_rejected -> bizdev reject the request via the api admin panel
+  # bizdev_approved -> bizdev approve the request via the api admin panel
+  # payment_succeeded -> once bizdev approve a request payment is attempted if it succeeds we update to this status
+  # payment_failed -> once bizdev approve a request payment is attempted if it fails we update to this status
 
 end
