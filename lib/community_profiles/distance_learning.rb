@@ -188,20 +188,32 @@ module CommunityProfiles
       translated_summary = I18n.db_t(summary, default: summary)
       more = I18n.t('more', scope: 'community.distance_learning')
 
-      str = translated_summary
-      str += '<a class="js-gaClick js-moreRevealLink more-reveal-link" href="javascript:void(0)">...'
-      str += more
-      str += '.</a>'
-      str += '<div class="js-moreReveal more-reveal">'
-      str += '<ul>'
-      translated_overview_datatypes.map do |data_type|
-        str += '<li class="overview-list">'
-        str += data_type
-        str += '</li>'
+      if translated_summary
+        str = translated_summary
+        str += '<a class="js-gaClick js-moreRevealLink more-reveal-link" href="javascript:void(0)">...'
+        str += more
+        str += '.</a>'
+        str += '<div class="js-moreReveal more-reveal">'
+        str += '<ul>'
+        translated_overview_datatypes.map do |data_type|
+          str += '<li class="overview-list">'
+          str += data_type
+          str += '</li>'
+        end
+        str += '</ul>'
+        str += cta_link
+        str += '</div>'
+      else
+        str = '<ul>'
+        translated_overview_datatypes.map do |data_type|
+          str += '<li class="overview-list">'
+          str += data_type
+          str += '</li>'
+        end
+        str += '</ul>'
+        str += cta_link
       end
-      str += '</ul>'
-      str += cta_link
-      str += '</div>'
+
       str
     end
 
