@@ -1,23 +1,30 @@
 class Admin::Api::SubscriptionsController < ApplicationController
-  include Api::ErrorHelper
-
-  layout 'admin'
 
   def index
     @subscriptions = Api::Subscription.all
   end
 
-  def new
-    @user = ::Api::Subscription.new
+  def pending_approval
+    @subscriptions = Api::Subscription.pending_approval
   end
 
-  def create
-    Api::SubscriptionCreator.new(@user, 1).call
+  def show
+    @subscription = Api::Subscription.find(params[:id])
   end
 
-  # This occurs when bizdev approves the request
-  # def approval(user, price_id)
-  #   Api::StripeInteractor.create_subscription(user, price_id)
-  # end
+  def edit
+    @subscription = Api::Subscription.find(params[:id])
+  end
+
+  def update
+    subscription = Api::Subscription.find(params[:id])
+    subscription.update!(subscription_params)
+  end
+
+
+  def subscription_params
+    params.require(:api_subscription).permit(:aws_api_key)
+  end
+
 
 end

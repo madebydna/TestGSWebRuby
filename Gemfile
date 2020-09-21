@@ -7,6 +7,8 @@ source "https://rubygems.org"
 # Full-stack web application framework. (http://rubyonrails.org)
 gem 'rails', '4.2.8'
 
+gem "haml-rails"
+
 # A simple, fast Mysql library for Ruby, binding to libmysql (https://github.com/brianmario/mysql2)
 gem 'mysql2', '0.4.10'
 

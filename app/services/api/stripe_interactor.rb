@@ -12,12 +12,6 @@ module Api
       Stripe::PaymentMethod.list({ customer: user.stripe_customer_id, type: 'card', })
     end
 
-    # https://stripe.com/docs/api/subscriptions
-    def self.create_subscription(user, price_id)
-      Stripe::Subscription.create({ customer: user.stripe_customer_id,
-                                    items:    [{ price: price_id }] })
-    end
-
   end
 
 end

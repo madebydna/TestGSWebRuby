@@ -20,7 +20,7 @@ class Admin::Api::UsersController < ApplicationController
     if @user.save
       Api::StripeCustomerCreator.new(@user).call
       Api::SubscriptionCreator.new(@user, session[:plan_id]).call
-      session[:user_id] = @user.id
+      session[:api_user_id] = @user.id
       redirect_to action: 'billing'
     else
       render :new
@@ -28,11 +28,11 @@ class Admin::Api::UsersController < ApplicationController
   end
 
   def update
-    # TODO! Do we need to save anything from the results hash coming back from stripe?
+    user.subscription.update(status: 'pending_approval')
     @results = params['result']
     payment_object ||= Stripe::PaymentMethod.retrieve(@results[:setupIntent][:payment_method])
 
-    session[:user_id] = user.id
+    session[:api_user_id] = user.id
     session[:billing_details] = payment_object[:billing_details]
     session[:card] = payment_object[:card]
 
@@ -48,17 +48,12 @@ class Admin::Api::UsersController < ApplicationController
   def confirmation
     redirect_to api_billing_path unless session[:billing_details].present? && session[:card].present?
     @card_details = Api::CreditCardDetails.call(session[:card], session[:billing_details])
-
-    # @subscription = Api::Subscription.find('subscription_id').update(status: 'payment_added')
-    # notify_user
-    # notify_admin
   end
 
   def receipt
-    # email biz here
     session[:billing_details] = nil
     session[:card] = nil
-    session[:user_id] = nil
+    session[:api_user_id] = nil
   end
 
   def plan_update
@@ -70,18 +65,6 @@ class Admin::Api::UsersController < ApplicationController
     respond_to do |format|
       format.js
     end
-  end
-
-  def notify_user
-    # ApiRequestReceivedEmail.deliver_to_api_key_requester(@user)
-  end
-
-  def notify_admin
-    # ApiRequestToModerateEmail.deliver_to_admin(@user)
-  end
-
-  def complete
-    # SubscriptionUpdaterJob.perform_later(subscription_id: subscription_id, status: 'awaiting_bizdev_approval')
   end
 
   def user_params
@@ -107,7 +90,7 @@ class Admin::Api::UsersController < ApplicationController
   private
 
   def user
-    @user ||= Api::User.find_by_id(session[:user_id])
+    @user ||= Api::User.find_by_id(session[:api_user_id])
   end
 
   def require_user

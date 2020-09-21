@@ -269,7 +269,6 @@ LocalizedProfiles::Application.routes.draw do
   get '/api/receipt/', to: 'admin/api/users#receipt'
   post '/api/plan_update', to: 'admin/api/users#plan_update'
 
-
   namespace :api, controller: 'api', path:'/gsr/api' do
     resource :session
     resource :school_user_digest
@@ -295,6 +294,13 @@ LocalizedProfiles::Application.routes.draw do
   get '/admin/gsr/widget-test', to: 'widget#test'
 
   namespace :admin, controller: 'admin', path: '/admin/gsr' do
+    namespace :api do
+      resources :accounts do
+        member do
+          get 'approve'
+        end
+      end
+    end
     mount Sidekiq::Web => '/sidekiq'
     resources :api_accounts, except: [:show, :destroy]
     post '/api_accounts/create_api_key', to: 'api_accounts#create_api_key', as: :create_api_key

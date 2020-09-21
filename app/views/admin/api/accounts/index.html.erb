@@ -1,0 +1,64 @@
+<% content_for :head do %>
+  <title>GS API Account Moderation</title>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      $.noConflict();
+      $('#myTable').DataTable({
+        initComplete: function () {
+          this.api().columns().every( function () {
+            var column = this;
+            var select = $('<select><option value=""></option></select>')
+              .appendTo( $(column.footer()).empty() )
+              .on( 'change', function () {
+                var val = $.fn.dataTable.util.escapeRegex(
+                  $(this).val()
+                );
+                column
+                  .search( val ? '^'+val+'$' : '', true, false )
+                  .draw();
+              } );
+            column.data().unique().sort().each( function ( d, j ) {
+              select.append( '<option value="'+d+'">'+d+'</option>' )
+            } );
+          } );
+        }
+      });
+    });</script>
+<% end %>
+
+<% content_for :page_javascripts do %>
+  <%= webpack_javascript_include_tag "commons", defer: true %>
+  <%= webpack_javascript_include_tag 'react-redux', defer: true %>
+  <%= webpack_javascript_include_tag 'admin-tools', defer: true %>
+<% end %>
+
+<h3>Api Accounts</h3>
+<table class="api-accounts table table-striped" id="myTable">
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Organization</th>
+    <th>Email</th>
+    <th>Status</th>
+    <th>Active</th>
+    <th>Added</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @accounts.each do |account| %>
+    <tr>
+      <td><%= link_to account.user.full_name, edit_admin_api_account_path(account.id) %></td>
+      <td><%= account.user.organization %></td>
+      <td><%= account.user.email %></td>
+      <td><%= account.status %></td>
+      <td><%= account.active %></td>
+      <td><%= account.created_at.strftime('%m/%d/%Y') %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+
