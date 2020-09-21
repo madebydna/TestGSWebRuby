@@ -133,7 +133,7 @@ end
 # sudo -u syncer aws s3 cp s3://greatschools-releasefiles/district-loads/stockton_20200902.csv /tmp/
 
 # Cabrillo district load
-DistrictFileSubscriptionProcessor.new("/tmp/cabrillo_20200902.csv", 'CA', 783).run
+#DistrictFileSubscriptionProcessor.new("/tmp/cabrillo_20200902.csv", 'CA', 783).run
 
 # Stockton district load
 DistrictFileSubscriptionProcessor.new("/tmp/stockton_20200902.csv", 'CA', 759).run

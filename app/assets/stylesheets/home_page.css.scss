@@ -49,6 +49,10 @@
 @import "libs/home/banner";
 @import "components/carousel";
 @import "components/buttons";
+@import 'components/join-form';
+@import 'gs/objects/modal_layout';
+@import 'resources/remodal'; // used on profiles / used by modals
+@import 'resources/remodal-default-theme'; // used on profiles / used by modals
 
 // @import "fonts/fonts-robotoslab-light";
 // @import "fonts/gs-icon-font";
