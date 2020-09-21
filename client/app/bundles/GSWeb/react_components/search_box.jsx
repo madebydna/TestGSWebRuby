@@ -94,7 +94,12 @@ const newSearchResultsPageUrl = newParams => {
   return `/search/search.page?${stringify(params)}`;
 };
 
-const zipcodeBrowsePageUrl = params => {
+const zipcodeBrowsePageUrl = newParams => {
+  const { lang } = parse(window.location.search);
+  const params = {
+    lang,
+    ...newParams
+  };
   return `/search/search.zipcode?${stringify(params)}`;
 }
 
