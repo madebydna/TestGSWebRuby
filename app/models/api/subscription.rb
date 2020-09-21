@@ -4,8 +4,8 @@ module Api
     self.table_name = 'subscriptions'
     db_magic :connection => :api_rw
 
-    belongs_to :user
-    belongs_to :plan
+    belongs_to :user, class_name: 'Api::User'
+    belongs_to :plan, class_name: 'Api::Plan'
 
     scope :pending_approval, -> { where status: 'pending_approval' }
 

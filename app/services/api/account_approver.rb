@@ -20,7 +20,7 @@ module Api
 
     def stripe_subscription
       @stripe_subscription ||= Stripe::Subscription.create({ customer: subscription.user.stripe_customer_id,
-                                    items: [{ price: subscription.plan.stripe_price_id }] })
+                                                             items: [{ price: subscription.plan.stripe_price_id }] })
     end
 
     def create_stripe_subscription
@@ -43,9 +43,7 @@ module Api
       else
         p "emailing biz dev fail"
       end
-
     end
-
   end
 
 end
