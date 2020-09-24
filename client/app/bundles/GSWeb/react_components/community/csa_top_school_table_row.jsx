@@ -39,8 +39,12 @@ const renderSchoolItem = ({ name, rating, links, districtName, enrollment, grade
   );
 }
 
-const renderHomesAndRentals = (state, zipcode, community) => (
-  <div style={{marginTop: '5px'}}>
+const renderHomesAndRentals = (state, zipcode, community) => {
+  const utmCampaign =
+    community === "district"
+      ? "districtpage_schoollistings"
+      : "citypage_sdlistings";
+  return <div style={{marginTop: '5px'}}>
     <a
       className="icon icon-house active"
       href={addCampaignCode(
@@ -51,7 +55,7 @@ const renderHomesAndRentals = (state, zipcode, community) => (
       <span>&#32;{t("homes_for_sale")}</span>
     </a>
   </div>
-);
+};
 
 const renderDistrictName = (districtName, districtLink) => {
   if (districtName && districtLink) {

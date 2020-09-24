@@ -39,19 +39,25 @@ const renderSchoolItem = ({ name, rating, links, districtName, districtCity, num
   );
 }
 
-const renderHomesAndRentals = (state, zipcode, community) => (
-  <div style={{marginTop: '5px'}}>
-    <a
-      className="icon icon-house active"
-      href={addCampaignCode(
-        `https://www.zillow.com/${state}-${zipcode}`,
-        `${community}page_schoollistings`
-      )}
-    >
-      <span>&#32;{t("homes_for_sale")}</span>
-    </a>
-  </div>
-);
+const renderHomesAndRentals = (state, zipcode, community) => {
+  const utmCampaign =
+    community === "district"
+      ? "districtpage_schoollistings"
+      : "citypage_sdlistings";
+  return (
+    <div style={{ marginTop: "5px" }}>
+      <a
+        className="icon icon-house active"
+        href={addCampaignCode(
+          `https://www.zillow.com/${state}-${zipcode}`,
+          utmCampaign
+        )}
+      >
+        <span>&#32;{t("homes_for_sale")}</span>
+      </a>
+    </div>
+  );
+};
 
 const renderReviews = (numReviews, parentRating, links) => {
   const reviewCt = numReviews && numReviews > 0 ? <a href={links.reviews}>
