@@ -1,7 +1,7 @@
 .million-parents{
   display: flex;
   min-height: 350px;
-  padding: 2em 2em 2em 0;
+  padding: 2em 0;
   @include media-breakpoint-down(sm){
     padding-left: 0;
     padding-right: 0; 
@@ -23,8 +23,8 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    min-width: 50%;
-    max-width: 50%;
+    min-width: calc(50% - 10px);
+    max-width: calc(50% - 10px);
     padding: 20px 40px 20px 100px;
     background-color: $module-background;
     @include media-breakpoint-down(md){
@@ -60,7 +60,7 @@
     max-width: 100%;
     border-top-left-radius: 50px;
     border-bottom-right-radius: 50px;
-    margin-left: 2em;
+    margin-left: 20px;
     @include media-breakpoint-down(md){
       max-width: 100%;
     }
@@ -104,7 +104,7 @@
   .solid-bar-container{
     position: relative;
     min-height: 80px;
-    margin: 1em 10em 0 2em;
+    margin: 25px 140px 0 20px;
     background-color: $midnight_blue;
     @include media-breakpoint-down(md){
       display: none;
