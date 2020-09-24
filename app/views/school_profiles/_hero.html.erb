@@ -1,5 +1,4 @@
 <% hero %>
-<% path_to_yml = ['in', 'nd'].exclude?(@school.state.downcase) ? 'alt_' : '' %>
 
 <div id="hero">
   <div class="container">
@@ -122,7 +121,7 @@
             <% else %>
               <% type_key = @school.private_school? ? 'private' : 'public' %>
               <%= render 'hero_no_rating',
-                         tooltip_content: t(".#{path_to_yml}#{new_rating_key}summary_rating_info.unrated_#{type_key}"),
+                         tooltip_content: t(".#{new_rating_key}summary_rating_info.unrated_#{type_key}"),
                          type_key: type_key,
                          greatschools_no_rating: t(".greatschools_no_rating_#{type_key}")
               %>
