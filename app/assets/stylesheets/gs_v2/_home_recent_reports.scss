@@ -1,5 +1,8 @@
 .recent-reports-section {
   min-height: 543px;
+  @include media-breakpoint-down(xs) {
+    min-height: 815px;
+  }
 
   @include media-breakpoint-down(sm) {
     padding: 1em;

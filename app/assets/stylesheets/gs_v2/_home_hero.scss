@@ -20,15 +20,15 @@ $font_color: #F0F0F0;
         font-family: $font-family-bold;
       }
       .search-module {
-        margin: 0 15px 30px 0;
-        width: 48%;
+        margin: 0 20px 30px 0;
+        width: 50%;
 
         h1 {
           color: $font_color;
           font-size: 28px;
         }
-        img{
-          width:100%;
+        .section-photo {
+          width: 100%;
           border-top-left-radius: 50px;
           border-bottom-right-radius: 50px;
         }
@@ -39,7 +39,14 @@ $font_color: #F0F0F0;
       }
 
       .parent-module {
-        margin: 0 0 30px 15px;
+        margin-bottom: 30px;
+        padding: 20px;
+        background-color: rgba(26, 157, 209, 1);
+        background-image: url('home/hero-vectors-laptop.svg');
+        background-repeat: no-repeat;
+        background-size: 456px 289px;
+        background-position: 50% 101%;
+        width: 50%;
 
         h1 {
           padding-top: 10px;
@@ -53,14 +60,6 @@ $font_color: #F0F0F0;
           color: $font_color;
           padding-bottom: 10px;
         }
-        padding: 20px;
-        background-color: rgba(26, 157, 209, 1);
-        background-image: url('home/hero-vectors-laptop.svg');
-        background-repeat: no-repeat;
-        //background-position: bottom right;
-        background-size:  456px 289px;
-        background-position: 50% 101%;
-        width: 48%;
         a {
           margin-bottom: 10px;
         }
