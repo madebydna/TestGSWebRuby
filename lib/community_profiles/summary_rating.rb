@@ -36,12 +36,7 @@ module CommunityProfiles
     end
 
     def path_to_yml
-      if ['in', 'nd'].exclude?(@state_cache_data_reader.state.downcase)
-        path = 'lib.summary_rating.district_scope_alt'
-      else
-        path = 'lib.summary_rating.district_scope'
-      end
-      path
+      'lib.summary_rating.district_scope'
     end
 
     def data_values
