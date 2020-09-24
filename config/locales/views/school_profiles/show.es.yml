@@ -15,7 +15,7 @@ es:
       powered_by_zillow: Desarrollado por Zillow
     xq:
       school_board_finder_html: <a href="https://xqsuperschool.org/school-board-lookup?address=%{address}&utm_source=greatschools&utm_medium=search_tool&utm_campaign=school_board_thing" target="_blank" rel="nofollow">Encuentra tu junta escolar</a>
-      learn_more_school_board: PLACEHOLDER
+      learn_more_school_board: Aprenda más sobre cómo involúcrate
       powered_by_xq: Desarrollado por XQ
       sources: >
         <div class="sourcing">

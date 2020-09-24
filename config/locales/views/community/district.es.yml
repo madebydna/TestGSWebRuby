@@ -13,7 +13,7 @@ es:
         homes_body: Casas en alquiler y venta cerca de esta escuela
       xq:
         school_board_finder_html: <a href="https://xqsuperschool.org/school-board-lookup?address=%{address}&utm_source=greatschools&utm_medium=search_tool&utm_campaign=school_board_thing" target="_blank" rel="nofollow">Encuentra tu junta escolar</a>
-        learn_more_school_board: PLACEHOLDER - Learn more about how to get involved
+        learn_more_school_board: Aprenda más sobre cómo involúcrate
         sources: >
           <div class="sourcing">
             <h1>Las fuentes de datos y información de los perfiles de distritos de GreatSchools</h1>
