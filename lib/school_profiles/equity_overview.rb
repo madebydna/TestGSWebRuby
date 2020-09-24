@@ -98,12 +98,7 @@ module SchoolProfiles
     end
 
     def path_to_yml
-      if ['in', 'nd'].exclude?(@school_cache_data_reader.school.state.downcase)
-        path = 'lib.equity_overview_alt'
-      else
-        path = 'lib.equity_overview'
-      end
-      path
+      'lib.equity_overview'
     end
 
     def suppress_overview_data?
