@@ -44,17 +44,19 @@ const renderHomesAndRentals = (state, zipcode, community) => {
     community === "district"
       ? "districtpage_schoollistings"
       : "citypage_sdlistings";
-  return <div style={{marginTop: '5px'}}>
-    <a
-      className="icon icon-house active"
-      href={addCampaignCode(
-        `https://www.zillow.com/${state}-${zipcode}`,
-        `${community}page_schoollistings`
-      )}
-    >
-      <span>&#32;{t("homes_for_sale")}</span>
-    </a>
-  </div>
+  return (
+    <div style={{ marginTop: "5px" }}>
+      <a
+        className="icon icon-house active"
+        href={addCampaignCode(
+          `https://www.zillow.com/${state}-${zipcode}`,
+          utmCampaign
+        )}
+      >
+        <span>&#32;{t("homes_for_sale")}</span>
+      </a>
+    </div>
+  );
 };
 
 const renderDistrictName = (districtName, districtLink) => {
