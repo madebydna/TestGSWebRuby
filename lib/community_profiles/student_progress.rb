@@ -55,12 +55,7 @@ module CommunityProfiles
     end
 
     def path_to_yml
-      if ['in', 'nd'].exclude?(@state_cache_data_reader.state.downcase)
-        path = 'lib.student_progress_alt.district_scope'
-      else
-        path = 'lib.student_progress.district_scope'
-      end
-      path
+      'lib.student_progress.district_scope'
     end
 
     # data points for the pie chart
