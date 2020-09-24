@@ -15,44 +15,6 @@ en:
       Summary Rating_school_name_html: >
         <span class="emphasis">%{school_name} is rated %{rating_string} average</span> in school quality compared to other schools in %{state_name}. Students here
       Test Scores_html: >
-        perform <a href="#Test_scores">%{rating_string} average</a> on state tests,
-      College Readiness_html: >
-        have <a href="#College_readiness">%{rating_string} average</a> college readiness measures,
-      Student Progress_html: >
-        are making <a href="#Student_progress">%{rating_string} average</a> year-over-year academic improvement,
-      Academic Progress_html: >
-        are making <a href="#Academic_progress">%{rating_string} average</a> year-over-year academic improvement,
-      Advanced Courses_html: >
-        take <a href="#Advanced_courses">%{rating_string}</a> advanced courses per student %{adverb} the state average,
-      Equity Overview_html: >
-        and this school has <a href="#Equity_overview">%{rating_string} average</a> results in how well it’s serving disadvantaged students.
-      sentence_ender_html: >
-        and more information about this school can be found below.
-      discipline_and_attendance_html: >
-        Large disparities in <a href="#Race_ethnicity*Discipline_and_attendance">%{danda}</a> rates exist at this school, which is concerning.
-      Test scores only pre more_html: >
-        <span class="emphasis">*This school is rated %{rating_string} average</span> based on how its students perform
-      Test scores only post more_html: >
-         on state tests compared with other schools in %{state_name}. However, test scores are only one aspect of school quality.
-         <br/><br/>In most states, we show a <a href="%{ratings_path}">Summary Rating</a> which  is based on multiple measures, including
-         information like college readiness, student progress, advanced coursework, and how well a school is serving
-         students from all racial/ethnic and socioeconomic groups. <br/><br/>%{state_name} does not have sufficient information
-         for us to generate a Summary Rating, which is why we instead display the school’s Test Score Rating.
-    summary_narration_alt:
-      attendance: absenteeism
-      and: and
-      discipline: suspension
-      about_the_same: about the same
-      more: more
-      fewer: fewer
-      above: above
-      about: about
-      below: below
-      Summary Rating_html: >
-        <span class="emphasis">This school is rated %{rating_string} average</span> in school quality compared to other schools in %{state_name}. Students here
-      Summary Rating_school_name_html: >
-        <span class="emphasis">%{school_name} is rated %{rating_string} average</span> in school quality compared to other schools in %{state_name}. Students here
-      Test Scores_html: >
         and students perform <a href="#Test_scores">%{rating_string} average</a> on state tests.
       College Readiness_html: >
         have <a href="#College_readiness">%{rating_string} average</a> college readiness measures,
