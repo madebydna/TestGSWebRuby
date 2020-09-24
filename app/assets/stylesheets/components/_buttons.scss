@@ -2,9 +2,10 @@
   border: 1px solid $gray-text-color;
   color: $gray-text-color;
   display: inline-block;
-  padding: 3px 10px;
+  padding: 5px 10px;
   border-radius: 8px;
   font-size: 16px;
+  line-height: 1.18;
 
   &:hover {
     background-color: $gray-mute;
@@ -18,9 +19,10 @@
   color: white;
   display: inline-block;
   background-color: $primary-brand-blue;
-  padding: 3px 10px;
+  padding: 5px 10px;
   border-radius: 8px;
   font-size: 18px;
+  line-height: 1.18;
 
   &:hover {
     background-color: $midnight_blue;
@@ -36,7 +38,8 @@
   color: $light-gray;
   display: inline-block;
   font-size: 16px;
-  padding: 3px 10px;
+  line-height: 1.18;
+  padding: 5px 10px;
 
   &.brand-blue-bg {
     background-color: $primary-brand-blue;
