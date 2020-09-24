@@ -64,9 +64,9 @@ en:
       header:
         title: GreatSchools Summary Rating
         subtext_html: >
-          GreatSchools is a national nonprofit organization. Our Summary Rating provides a multi-measured reflection
-          of school quality based on the ratings components you see here.
-        Learn more: Learn more about GreatSchools Ratings.
+          GreatSchools is a national nonprofit organization. Our Summary Rating provides a snapshot of school quality based on the following measures.
+        learn_more_html: >
+          Learn more <a href="/gk/ratings" target="_blank">about GreatSchools Ratings</a> and <a href="/gk/articles/why-we-changed-our-ratings/" target="_blank">why we changed them</a>.
         Last updated: Last updated
       table_content:
         Rating components: Rating components

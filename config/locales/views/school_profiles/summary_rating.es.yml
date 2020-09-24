@@ -69,10 +69,9 @@ es:
       header:
         title: La Calificación General de GreatSchools
         subtext_html: >
-          GreatSchools es una organización nacional sin fines de lucro. Nuestra Calificación General de
-          GreatSchools es una reflexión de múltiples medidas sobre la calidad de la escuela en base a los
-          componentes de calificación que ve aquí.
-        Learn more: Infórmate más sobre las Calificaciones de GreatSchools.
+          GreatSchools es una organización nacional sin fines de lucro. Nuestra Calificación General proporciona una idea de la calidad de las escuelas con base en los siguientes parámetros.
+        learn_more_html: >
+          Aprende más <a href="/gk/como-clasificamos/?lang=es" target="_blank">sobre las Calificaciones de GreatSchools</a> y <a href="/gk/articles/nuestras-nuevas-calificaciones/?lang=es" target="_blank">por qué las modificamos</a>.
         Last updated: Última actualización
       table_content:
         Rating components: Elementos de las calificaciones
