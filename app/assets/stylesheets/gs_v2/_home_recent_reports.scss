@@ -1,7 +1,7 @@
 .recent-reports-section {
   min-height: 543px;
-  @include media-breakpoint-up(xs) {
-    min-height: 800px;
+  @include media-breakpoint-down(xs) {
+    min-height: 815px;
   }
 
   @include media-breakpoint-down(sm) {
