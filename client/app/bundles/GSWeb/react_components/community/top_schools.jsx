@@ -63,7 +63,7 @@ const browseLink = (link, levelCodes, community, size) => {
   return addQueryParamToUrl("gradeLevels%5B%5D", levelCodes, searchLink);
 }
 
-const assignDisplayType = (schools, levelCodes, size) => {
+const assignDisplayType = (schools, levelCodes, size, community) => {
   let displayedSchools = [];
 
   displayedSchools.push(
@@ -72,6 +72,7 @@ const assignDisplayType = (schools, levelCodes, size) => {
         key={school.state + school.id}
         {...school}
         size={size}
+        community={community}
         display={levelCodes === 'e' ? true : false}
       />
     ))
@@ -118,7 +119,7 @@ const TopSchools = ({ schools, handleGradeLevel, renderTabsContainer, size, leve
                   </section>;
   } else {
     schoolList = <section className="top-school-list">
-          {assignDisplayType(schools, levelCodes, size)}
+          {assignDisplayType(schools, levelCodes, size, community)}
         </section>;
   }
 

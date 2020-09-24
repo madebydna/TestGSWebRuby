@@ -8,14 +8,22 @@ es:
       grades: Grados
       find_schools_in: Escuelas en
       district_calendar: Calendario
+      homes_sales:
+        homes_nearby_html: <a href="https://www.zillow.com/%{query}?cbpartner=Great+Schools&utm_source=Great_Schools&utm_medium=referral&utm_campaign=districtpage_resources" target="_blank" rel="nofollow">Homes Nearby - PLACEHOLDER</a>
+        homes_body: PLACEHOLDER - Homes for rent & sale near this school
       xq:
         school_board_finder: Encuentra tu junta escolar
-        learn_more_school_board_html: Obtén más información sobre la junta escolar de este distrito y sobre <a href="https://xqsuperschool.org/school-board-lookup?address=%{address}&utm_source=greatschools&utm_medium=search_tool&utm_campaign=school_board_thing" target="_blank" rel="nofollow">cómo puedes participar</a> (enlace en inglés).
+        school_board_finder_html: <a href="https://xqsuperschool.org/school-board-lookup?address=%{address}&utm_source=greatschools&utm_medium=search_tool&utm_campaign=school_board_thing" target="_blank" rel="nofollow">Encuentra tu junta escolar</a>
+        learn_more_school_board: PLACEHOLDER - Learn more about how to get involved
         sources: >
           <div class="sourcing">
             <h1>Las fuentes de datos y información de los perfiles de distritos de GreatSchools</h1>
             <div>
               <h4>Encuentra tu junta escolar</h4>
               <p><span class="emphasis">Fuente&#58;</span> XQ</p>
+            </div>
+            <div>
+              <h4>Placeholder - Homes Nearby</h4>
+              <p><span class="emphasis">Fuente&#58;</span> Zillow</p>
             </div>
           </div>

@@ -1,0 +1,15 @@
+<div class="row">
+  <div class="col-xs-12">
+    <div class="circle-rating--equity-blue">
+      <%= image_tag image_path("icons/home_icon.svg"), width: '25px' %>
+    </div>
+    <div class="title-container">
+      <div>
+        <h3 class="title">
+          <%= t('homes_sales.homes_nearby_html', query: query, scope: "community.#{community}") %>
+        </h3>
+      </div>
+      <span><%= t('homes_sales.homes_body', scope: "community.#{community}") %></span>
+    </div>
+  </div>
+</div>

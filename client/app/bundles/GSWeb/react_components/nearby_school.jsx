@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { t } from "util/i18n";
+import { addCampaignCode } from 'api_clients/homes_and_rentals';
 
 export default class NearbySchool extends React.Component {
 
@@ -13,7 +15,8 @@ export default class NearbySchool extends React.Component {
     state: PropTypes.string,
     distance: PropTypes.number,
     schoolUrl: PropTypes.string,
-    nearbySchoolsType: PropTypes.string
+    nearbySchoolsType: PropTypes.string,
+    schoolZipcode: PropTypes.string
   }
 
   constructor(props) {
@@ -97,10 +100,17 @@ export default class NearbySchool extends React.Component {
             </span>
           </div>
           <div>{this.distance()}</div>
-          <div>
-            <div>
-              <span class="icon icon-house active">Homes for Sales</span>
-            </div>
+          <div style={{ marginTop: "5px" }}>
+            <a
+              className="icon icon-house active"
+              href={`https://www.zillow.com/${this.props.state}-${this.props.schoolZipcode}?`}
+              href={addCampaignCode(
+                `https://www.zillow.com/${this.props.state}-${this.props.schoolZipcode}`,
+                "schoolprofiles_schoollistings"
+              )}
+            >
+              <span>&#32;{t('homes_for_sale')}</span>
+            </a>
           </div>
         </div>
       </div>

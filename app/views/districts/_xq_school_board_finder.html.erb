@@ -2,13 +2,14 @@
 <% city = @locality[:city] %>
 <% state_short = @locality[:stateShort] %>
 <% zip_code = @locality[:zipCode] %>
+<% query = "#{state_short}-#{zip_code}" %>
 
 <% address_string = "#{address}, #{city}, #{state_short} #{zip_code}" %>
 <% encoded_address = URI.escape(address_string, Regexp.new("[^#{URI::PATTERN::UNRESERVED}]")) %>
 <% sources = I18n.t('xq.sources', scope: 'community.district') %>
 
-<div class="xq_school_board_module_container">
-  <div class="module-header xq_school_board_module">
+<div class="community_resource_module_container">
+  <div class="module-header community_resource_module">
     <div class="row">
       <div class="col-xs-12">
         <div class="circle-rating--equity-blue">
@@ -17,13 +18,15 @@
         <div class="title-container">
           <div>
             <h3 class="title">
-              <%= I18n.t('xq.school_board_finder', scope: 'community.district') %>
+              <%= t('xq.school_board_finder_html', address: encoded_address, scope: 'community.district') %>
             </h3>
           </div>
-          <span><%= t('xq.learn_more_school_board_html', scope: 'community.district', address: encoded_address) %></span>
+          <span><%= t('xq.learn_more_school_board', scope: 'community.district') %></span>
         </div>
       </div>
     </div>
+    <hr/>
+    <%= render 'community/nearby_homes_resources', query: query, community: 'district' %>
   </div>
 
   <div class="module-footer">

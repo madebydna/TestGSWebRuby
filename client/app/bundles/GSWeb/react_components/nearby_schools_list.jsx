@@ -74,6 +74,7 @@ class NearbySchoolsList extends React.Component {
         state={school.state}
         distance={school.distance}
         schoolUrl={school.links.show}
+        schoolZipcode={school.zipcode}
         nearbySchoolsType={this.props.nearbySchoolsType}
       />
     ));

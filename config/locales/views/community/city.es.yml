@@ -5,3 +5,6 @@ es:
       hero_narrative_no_county: '%{city} es una ciudad en %{state_long}'
       find_schools_in: Encuentra escuelas en
       districts_header: Distritos escolares en %{city}
+      homes_sales:
+        homes_nearby_html: <a href="https://www.zillow.com/%{query}?cbpartner=Great+Schools&utm_source=Great_Schools&utm_medium=referral&utm_campaign=citypage_sdlistings" target="_blank" rel="nofollow">Homes Nearby - PLACEHOLDER</a>
+        homes_body: PLACEHOLDER - Homes for rent & sale near this school
