@@ -8,3 +8,11 @@ en:
       homes_sales:
         homes_nearby_html: <a href="https://www.zillow.com/%{query}?cbpartner=Great+Schools&utm_source=Great_Schools&utm_medium=referral&utm_campaign=citypage_sdlistings" target="_blank" rel="nofollow">Homes Nearby</a>
         homes_body: Homes for rent & sale near this school
+        sources: >
+          <div class="sourcing">
+            <h1>GreatSchools district data sources & information</h1>
+            <div>
+              <h4>Homes Nearby</h4>
+              <p><span class="emphasis">Source&#58;</span> Zillow</p>
+            </div>
+          </div>

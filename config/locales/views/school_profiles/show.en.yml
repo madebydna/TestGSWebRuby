@@ -15,9 +15,7 @@ en:
       powered_by_zillow: Powered by Zillow
     xq:
       school_board_finder_html: <a href="https://xqsuperschool.org/school-board-lookup?address=%{address}&utm_source=greatschools&utm_medium=search_tool&utm_campaign=school_board_thing" target="_blank" rel="nofollow">School board finder</a>
-      school_board_finder: School board finder
       learn_more_school_board: Learn more about how to get involved
-      learn_more_school_board_html: Learn more about this district's school board and <a href="https://xqsuperschool.org/school-board-lookup?address=%{address}&utm_source=greatschools&utm_medium=search_tool&utm_campaign=school_board_thing" target="_blank" rel="nofollow">how you can get involved</a>.
       powered_by_xq: Powered by XQ
       sources: >
         <div class="sourcing">
