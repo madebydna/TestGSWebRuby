@@ -230,8 +230,6 @@ module CommunityProfiles
       formatted_date
     end
 
-    private
-
     def show_more_link?(datatypes)
       datatypes.length > 1
     end
