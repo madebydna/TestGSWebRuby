@@ -144,13 +144,13 @@ describe CommunityProfiles::CollegeReadinessComponent do
       expect(metric.data_type).to eq("Graduates needing Math Remediation for College")
     end
 
-    it "maintains original data type for college remediation with Composite Subject" do
-      metric = metrics_data["Percent Needing Remediation for College"].first
-      expect(metric.data_type).to eq("Percent Needing Remediation for College")
+    it "does not contain data type for college remediation with Composite Subject" do
+      metric = metrics_data["Percent Needing Remediation for College"].detect {|m| m.subject == 'Composite Subject'}
+      expect(metric).to be nil
     end
 
     it "changes college remediation data type for college remediation with Any Subject" do
-      metric = metrics_data["Percent Needing Remediation for College"][1]
+      metric = metrics_data["Percent Needing Remediation for College"].detect {|m| m.subject == 'Any Subject'}
       expect(metric.data_type).to eq("Percent Needing any Remediation for College")
     end
 
@@ -169,7 +169,7 @@ describe CommunityProfiles::CollegeReadinessComponent do
 
     it "includes college success data by college_success_datatypes" do
       college_success_by_data_types = college_success_element[:values].map {|d| d[:data_type]}
-      expect(college_success_by_data_types).to include("Percent Needing Remediation for College")
+      expect(college_success_by_data_types).to include("Percent Needing any Remediation for College")
       expect(college_success_by_data_types).to include("Percent enrolled in any in-state postsecondary institution within 12 months after graduation")
     end
 

@@ -278,7 +278,7 @@ describe MetricsCaching::Value do
       data = [
         hash.merge({"subject" => "Composite Subject", "data_type" => "Enrollment"}),
         hash.merge({"subject" => "Composite Subject", "data_type" => "Percent Needing Remediation for College"}),
-        hash.merge({"subject" => "Math", "data_type" => "Graduates needing Writing remediation in college"}),
+        hash.merge({"subject" => "Math", "data_type" => "Graduates needing Writing Remediation for College"}),
         hash.merge({"subject" => "Math", "data_type" => "Enrollment"}),
         hash.merge({"subject" => "Any Subject", "data_type" => "Percent needing any remediation in in-state public 2-year institutions"})
       ]

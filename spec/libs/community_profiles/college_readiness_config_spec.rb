@@ -45,33 +45,33 @@ describe MetricsCaching::CollegeReadinessConfig do
 
     context "REMEDIATION_SUBGROUPS" do
         it "is an array" do
-            expect(MetricsCaching::CollegeReadinessConfig::REMEDIATION_SUBGROUPS).to be_a(Array)
+          expect(MetricsCaching::CollegeReadinessConfig::REMEDIATION_SUBGROUPS).to be_a(Array)
         end
 
         it "contains a list of defined strings" do
-            expect(MetricsCaching::CollegeReadinessConfig::REMEDIATION_SUBGROUPS).to match_array([
-              'Percent Needing Remediation for College',
-              'Percent Needing any Remediation for College',
-              'Graduates needing Reading remediation in college',
-              'Graduates needing Writing remediation in college',
-              'Graduates needing English remediation in college',
-              'Graduates needing Science remediation in college',
-              'Graduates needing Math remediation in college',
-              'Percent needing remediation in in-state public 2-year institutions',
-              'Percent needing any remediation in in-state public 2-year institutions',
-              'Graduates needing Reading remediation in 2-year college',
-              'Graduates needing Math remediation in 2-year college',
-              'Graduates needing English remediation in 2-year college',
-              'Graduates needing Science remediation in 2-year college',
-              'Graduates needing Writing remediation in 2-year college',
-              'Percent needing remediation in in-state public 4-year institutions',
-              'Percent needing any remediation in in-state public 4-year institutions',
-              'Graduates needing Reading remediation in 4-year college',
-              'Graduates needing Math remediation in 4-year college',
-              'Graduates needing English remediation in 4-year college',
-              'Graduates needing Science remediation in 4-year college',
-              'Graduates needing Writing remediation in 4-year college'
-            ])
+          expect(MetricsCaching::CollegeReadinessConfig::REMEDIATION_SUBGROUPS).to match_array([
+            'Percent Needing Remediation for College',
+            'Percent Needing any Remediation for College',
+            'Graduates needing Reading Remediation for College',
+            'Graduates needing Writing Remediation for College',
+            'Graduates needing English Remediation for College',
+            'Graduates needing Science Remediation for College',
+            'Graduates needing Math Remediation for College',
+            'Percent needing remediation in in-state public 2-year institutions',
+            'Percent needing any remediation in in-state public 2-year institutions',
+            'Graduates needing Reading remediation in 2-year college',
+            'Graduates needing Math remediation in 2-year college',
+            'Graduates needing English remediation in 2-year college',
+            'Graduates needing Science remediation in 2-year college',
+            'Graduates needing Writing remediation in 2-year college',
+            'Percent needing remediation in in-state public 4-year institutions',
+            'Percent needing any remediation in in-state public 4-year institutions',
+            'Graduates needing Reading remediation in 4-year college',
+            'Graduates needing Math remediation in 4-year college',
+            'Graduates needing English remediation in 4-year college',
+            'Graduates needing Science remediation in 4-year college',
+            'Graduates needing Writing remediation in 4-year college'
+          ])
         end
     end
 

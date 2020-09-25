@@ -41,40 +41,39 @@ describe 'StateCacheDataReader' do
       end
     end
 
-    describe '#metrics_data' do
+    describe '#decorated_metrics_datas' do
       let(:reader) { new_reader(state) }
       subject { reader.decorated_metrics_datas(:foo, :bar) }
-      context 'with missing sources' do
-        before do
-          allow(reader).to receive(:decorated_state).and_return(
-            OpenStruct.new(
-              metrics: {
-                foo: [
-                  {
-                    'source' => 'abc',
-                    'label' => 'foo label'
-                  },
-                  {
-                    'label' => 'foo label'
-                  }
-                ],
-                bar: [
-                  {
-                    'label' => 'foo label'
-                  },
-                  {
-                    'source' => 'abc',
-                    'label' => 'foo label'
-                  }
-                ]
-              }
-            )
+      before do
+        allow(reader).to receive(:decorated_state).and_return(
+          OpenStruct.new(
+            decorated_metrics: {
+              foo: [
+                MetricsCaching::Value.from_hash({
+                  'source' => 'abc',
+                  'label' => 'foo label'
+                }),
+                MetricsCaching::Value.from_hash({
+                  'label' => 'foo label'
+                })
+              ].extend(MetricsCaching::Value::CollectionMethods),
+              bar: [
+                MetricsCaching::Value.from_hash({
+                  'label' => 'foo label'
+                }),
+                MetricsCaching::Value.from_hash({
+                  'source' => 'abc',
+                  'label' => 'foo label'
+                })
+              ].extend(MetricsCaching::Value::CollectionMethods)
+            }
           )
-        end
-        it 'should extend values with MetricsCaching::Value::CollectionMethod' do
-          expect(subject[:foo]).to respond_to(:for_all_students)
-          expect(subject[:bar]).to respond_to(:having_most_recent_date)
-        end
+        )
+      end
+
+      it 'should include selected keys' do
+        expect(subject).to include(:foo)
+        expect(subject).to include(:bar)
       end
     end
 
