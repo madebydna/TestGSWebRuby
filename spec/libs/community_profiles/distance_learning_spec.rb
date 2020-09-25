@@ -12,6 +12,7 @@ describe CommunityProfiles::DistanceLearning do
     it 'return false if less than one datatype' do
       datatypes = ['LEARNING MODEL']
       expect(subject.show_more_link?(datatypes)).to eq(false)
+      expect(subject.show_more_link?([])).to eq(false)
     end
   end
 end
