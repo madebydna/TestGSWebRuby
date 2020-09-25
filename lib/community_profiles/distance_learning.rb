@@ -184,16 +184,16 @@ module CommunityProfiles
 
       overview_datatypes = [learning_model, remote_learning_plan, technology_and_wifi_access, noteworthy_practices].compact
       translated_overview_datatypes = overview_datatypes.map { |type| I18n.db_t(type, default: type) }
-
       str = ''      
       str << I18n.db_t(summary, default: summary) if summary.present?
-      str << overview_list(translated_overview_datatypes) if translated_overview_datatypes.present?
+      str << overview_list(translated_overview_datatypes)
       str
     end
 
     def overview_list(translated_overview_datatypes)
-      cta_link = fetch_value(URL) ? I18n.t('see_district_page_html', scope: 'community.distance_learning', url: fetch_value(URL)) : ""
+      return '' unless translated_overview_datatypes.present?
 
+      cta_link = fetch_value(URL) ? I18n.t('see_district_page_html', scope: 'community.distance_learning', url: fetch_value(URL)) : ""
       str = '<ul>'
       str << overview_list_items(translated_overview_datatypes)
       str << '</ul>'
