@@ -11,7 +11,7 @@ en:
       sources: Sources
       homes_sales:
         homes_nearby_html: <a href="https://www.zillow.com/%{query}?cbpartner=Great+Schools&utm_source=Great_Schools&utm_medium=referral&utm_campaign=districtpage_resources" target="_blank" rel="nofollow">Homes Nearby</a>
-        homes_body: Homes for rent & sale near this school
+        homes_body: Homes for rent & sale near this district
       xq:
         school_board_finder: School board finder
         school_board_finder_html: <a href="https://xqsuperschool.org/school-board-lookup?address=%{address}&utm_source=greatschools&utm_medium=search_tool&utm_campaign=school_board_thing" target="_blank" rel="nofollow">School board finder</a>

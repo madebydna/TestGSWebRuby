@@ -103,7 +103,7 @@ export default class NearbySchool extends React.Component {
           <div style={{ marginTop: "5px" }}>
             <a
               className="icon icon-house active"
-              href={`https://www.zillow.com/${this.props.state}-${this.props.schoolZipcode}?`}
+              target="_blank"
               href={addCampaignCode(
                 `https://www.zillow.com/${this.props.state}-${this.props.schoolZipcode}`,
                 "schoolprofiles_schoollistings"

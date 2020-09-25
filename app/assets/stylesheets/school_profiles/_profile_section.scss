@@ -68,9 +68,15 @@ $border-color: #dbe6eb;
         font-size: 18px;
         margin-bottom: 3px;
       }
+
+      hr {
+        margin-top: 10px;
+        margin-bottom: 10px;
+      }
   
       a {
-        font-size: $font-size-small;
+        font-family: 'opensans-semibold';
+        font-size: $font-size-medium;
       }
     }
 

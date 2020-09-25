@@ -14,7 +14,7 @@ es:
       homes_body: Casas en alquiler y venta cerca de esta escuela
       powered_by_zillow: Desarrollado por Zillow
     xq:
-      school_board_finder_html: <a href="https://xqsuperschool.org/school-board-lookup?address=%{address}&utm_source=greatschools&utm_medium=search_tool&utm_campaign=school_board_thing" target="_blank" rel="nofollow">Encuentra tu junta escolar</a>
+      school_board_finder_html: <a href="https://xqsuperschool.org/school-board-lookup?address=%{address}&utm_source=greatschools&utm_medium=search_tool&utm_campaign=school_board_thing" target="_blank" rel="nofollow">Encuentra Tu Junta Escolar</a>
       learn_more_school_board: Aprenda más sobre cómo involúcrate
       powered_by_xq: Desarrollado por XQ
       sources: >
@@ -23,5 +23,9 @@ es:
           <div>
             <h4>Encuentra tu junta escolar</h4>
             <p><span class="emphasis">Fuente&#58;</span> XQ</p>
+          </div>
+          <div>
+            <h4>Casas cercanas</h4>
+            <p><span class="emphasis">Fuente&#58;</span> Zillow</p>
           </div>
         </div>

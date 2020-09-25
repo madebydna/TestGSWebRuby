@@ -7,7 +7,7 @@ es:
       districts_header: Distritos escolares en %{city}
       homes_sales:
         homes_nearby_html: <a href="https://www.zillow.com/%{query}?cbpartner=Great+Schools&utm_source=Great_Schools&utm_medium=referral&utm_campaign=citypage_resources" target="_blank" rel="nofollow">Casas cercanas</a>
-        homes_body: Casas en alquiler y venta cerca de esta escuela
+        homes_body: Casas en alquiler y venta cerca de esta ciudad
         sources: >
           <div class="sourcing">
             <h1>Las fuentes de datos y información de los perfiles de distritos de GreatSchools</h1>
