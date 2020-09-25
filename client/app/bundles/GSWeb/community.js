@@ -82,9 +82,12 @@ $(() => {
     setBottom: true
   });
 
+  // TODO: only used on distance learning. In future, move functionality to the react component similar to recent reviews
   $('body').on('click', '.js-moreRevealLink', function() {
     $(this).hide();
-    $(this).siblings('.js-moreReveal').removeClass('more-reveal');
+    document.querySelector("#distance-learning").querySelectorAll('.js-moreReveal').forEach(element => {
+      element.classList.remove('more-reveal')
+    })
   });
 
   const tocLinks = document.querySelectorAll(".toc li");
