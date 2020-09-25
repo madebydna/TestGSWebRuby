@@ -200,6 +200,7 @@ module CommunityProfiles
       str << '<div class="js-moreReveal more-reveal">' if show_more_link?(translated_overview_datatypes)
       str << cta_link
       str << '</div>' if show_more_link?(translated_overview_datatypes)
+      str
     end
 
     def overview_list_items(overview_datatypes)
