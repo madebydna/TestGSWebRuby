@@ -81,6 +81,16 @@ describe CommunityProfiles::CollegeReadinessComponent do
         {
           "breakdown" => "All students",
           "created" => "2019-02-13T11:53:58-08:00",
+          "district_value" => 38.110000,
+          "source" => "AR Dept. of Education",
+          "state_average" => 61.800000,
+          "year" => 2017,
+          "subject" => "Any Subject",
+          "source_date_valid" => "2016-01-01T00:00:00-07:00"
+        },
+        {
+          "breakdown" => "All students",
+          "created" => "2019-02-13T11:53:58-08:00",
           "district_value" => 42.110000,
           "source" => "AR Dept. of Education",
           "state_average" => 70.800000,
@@ -131,12 +141,17 @@ describe CommunityProfiles::CollegeReadinessComponent do
     let(:metrics_data) { subject.metrics_data }
     it "changes college remediation data type to be subject-specific" do
       metric = metrics_data["Percent Needing Remediation for College"].last
-      expect(metric.data_type).to eq("Graduates needing Math remediation in college")
+      expect(metric.data_type).to eq("Graduates needing Math Remediation for College")
     end
 
-    it "maintains original data type for college remediation without a subject" do
+    it "maintains original data type for college remediation with Composite Subject" do
       metric = metrics_data["Percent Needing Remediation for College"].first
       expect(metric.data_type).to eq("Percent Needing Remediation for College")
+    end
+
+    it "changes college remediation data type for college remediation with Any Subject" do
+      metric = metrics_data["Percent Needing Remediation for College"][1]
+      expect(metric.data_type).to eq("Percent Needing any Remediation for College")
     end
 
     it "maintains original data type for non-college-remediation data" do

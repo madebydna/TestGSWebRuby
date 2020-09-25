@@ -417,7 +417,7 @@ describe 'CollegeSuccessComponent' do
     end
 
     it 'should have a well-formatted label' do
-      all_formatted = data_points.none? {|dp| dp.label.match(/Graduates needing (Math|English|Science|Reading) remediation in college/).nil?}
+      all_formatted = data_points.none? {|dp| dp.label.match(/Graduates needing (math|English|science|reading) remediation in college/).nil?}
       expect(all_formatted).to be_truthy
     end
   end

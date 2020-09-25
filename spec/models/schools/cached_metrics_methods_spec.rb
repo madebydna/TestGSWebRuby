@@ -204,6 +204,26 @@ describe CachedMetricsMethods do
             "state_average" => 19,
             "subject" => "Writing",
           }
+        ],
+        "Percent needing remediation in in-state public 2-year institutions" => [
+          {
+            "breakdown" => "All students",
+            "school_value" => 31.900000,
+            "subject" => "Composite Subject",
+            "state_average" => 31.100000
+          },
+          {
+            "breakdown" => "All students",
+            "school_value" => 23.400000,
+            "state_average" => 25.300000,
+            "subject" => "Any Subject",
+          },
+          {
+            "breakdown" => "All students",
+            "school_value" => 20.300000,
+            "state_average" => 19,
+            "subject" => "Science",
+          }
         ]
       }
     end
@@ -212,24 +232,37 @@ describe CachedMetricsMethods do
       subject.cache_data = { "metrics" => remediation_data }
     end
 
-    it '#graduates_remediation returns expected data type' do
-      expect(subject.graduates_remediation).to eq(remediation_data['Percent Needing Remediation for College'])
+    describe '#graduates_remediation' do
+      it 'returns a hash of arrays with decorated metrics values' do
+        data = subject.graduates_remediation
+        expect(data).to be_a(Hash)
+        expect(data["Percent Needing Remediation for College"]).to be_a(Array)
+        expect(data["Percent Needing Remediation for College"][0]).to be_a(MetricsCaching::Value)
+      end
+
+      it 'removes "Composite Subject" if "Any Subject" is present' do
+        data = subject.graduates_remediation["Percent needing remediation in in-state public 2-year institutions"]
+        expect(data.map(&:subject)).not_to include("Composite Subject")
+        expect(data.map(&:subject)).to include("Any Subject")
+      end
     end
 
-    it '#graduates_remediation_for_college_success_awards returns school_value and state_average for all students and remediation subjects' do
-      # remediation subjects defined in CachedMetricsMethods::REMEDIATION_SUBJECTS_FOR_CSA
-      expect(subject.graduates_remediation_for_college_success_awards).to eq([
-        {
-          "subject" => "Composite Subject",
-          "school_value" => "32%",
-          "state_average" => "31%"
-        },
-        {
-          "subject" => "Math",
-          "school_value" => "23%",
-          "state_average" => "25%"
-        }
-      ])
+    describe '#graduates_remediation_for_college_success_awards' do
+      it 'returns school_value and state_average for all subjects and remediation subjects' do
+        # remediation subjects defined in CachedMetricsMethods::REMEDIATION_SUBJECTS_FOR_CSA
+        expect(subject.graduates_remediation_for_college_success_awards).to eq([
+          {
+            "subject" => "All subjects",
+            "school_value" => "32%",
+            "state_average" => "31%"
+          },
+          {
+            "subject" => "Math",
+            "school_value" => "23%",
+            "state_average" => "25%"
+          }
+        ])
+      end
     end
   end
 

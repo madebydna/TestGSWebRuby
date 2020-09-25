@@ -20,8 +20,12 @@ module MetricsCaching::CollegeReadinessConfig
   NEW_SAT_YEAR = 2016
   NEW_SAT_RANGE = (400..1600)
   OLD_SAT_RANGE = (600..2400)
-  GRADUATES_REMEDIATION = 'Percent Needing Remediation for College'
-  GRADUATES_PERSISTENCE = 'Percent Enrolled in College and Returned for a Second Year'
+  GRADUATES_REMEDIATION = [
+    'Percent Needing Remediation for College', #413
+    'Percent needing remediation in in-state public 2-year institutions',
+    'Percent needing remediation in in-state public 4-year institutions'
+  ]
+  GRADUATES_PERSISTENCE = 'Percent Enrolled in College and Returned for a Second Year' #409
   IB_ENROLLMENT = 'Percentage of students enrolled in IB grades 9-12'
   DUAL_ENROLLMENT = 'Percentage of students enrolled in Dual Enrollment classes grade 9-12'
 
@@ -33,7 +37,7 @@ module MetricsCaching::CollegeReadinessConfig
     'Graduating seniors pursuing 2 year college/university',
     'Percent of students who will attend out-of-state colleges',
     'Percent of students who will attend in-state colleges',
-    'Percent enrolled in any public in-state postsecondary institution or intended to enroll in any out-of-state institution, or in-state private institution within 18 months after graduation',
+    'Percent enrolled in any public in-state postsecondary institution or intended to enroll in any out-of-state institution, or in-state private institution within 16 months after graduation',
     'Percent enrolled in any public in-state postsecondary institution within the immediate fall after graduation',
     'Percent Enrolled in College Immediately Following High School',
     'Percent enrolled in any institution of higher learning in the last 0-16 months',
@@ -51,18 +55,36 @@ module MetricsCaching::CollegeReadinessConfig
     'Percent enrolled in any in-state postsecondary institution within the immediate fall after graduation',
     'Percent enrolled in any out-of-state postsecondary institution within the immediate fall after graduation',
     'Percent enrolled in any postsecondary institution within 24 months after graduation',
-    'Percent enrolled in any postsecondary institution within 6 months after graduation'
+    'Percent enrolled in any postsecondary institution within 6 months after graduation',
+    'Percent enrolled in any public in-state postsecondary institution or intended to enroll in any out-of-state institution, or in-state private institution within 12 months after graduation',
+    'Percent enrolled in any public in-state institution within 16 months after graduation'
   ]
 
-  REMEDIATION_SUBGROUPS = [ GRADUATES_REMEDIATION,
-                            'Graduates needing Reading remediation in college',
-                            'Graduates needing Writing remediation in college',
-                            'Graduates needing English remediation in college',
-                            'Graduates needing Science remediation in college',
-                            'Graduates needing Math remediation in college']
+  REMEDIATION_SUBGROUPS = GRADUATES_REMEDIATION + [
+                            'Percent Needing any Remediation for College',
+                            'Graduates needing Reading Remediation for College',
+                            'Graduates needing Writing Remediation for College',
+                            'Graduates needing English Remediation for College',
+                            'Graduates needing Science Remediation for College',
+                            'Graduates needing Math Remediation for College',
+                            'Percent needing remediation in in-state public 2-year institutions',
+                            'Percent needing any remediation in in-state public 2-year institutions',
+                            'Graduates needing Reading remediation in 2-year college',
+                            'Graduates needing Math remediation in 2-year college',
+                            'Graduates needing English remediation in 2-year college',
+                            'Graduates needing Science remediation in 2-year college',
+                            'Graduates needing Writing remediation in 2-year college',
+                            'Percent needing remediation in in-state public 4-year institutions',
+                            'Percent needing any remediation in in-state public 4-year institutions',
+                            'Graduates needing Reading remediation in 4-year college',
+                            'Graduates needing Math remediation in 4-year college',
+                            'Graduates needing English remediation in 4-year college',
+                            'Graduates needing Science remediation in 4-year college',
+                            'Graduates needing Writing remediation in 4-year college'
+                          ]
   SECOND_YEAR = [ GRADUATES_PERSISTENCE,
-                  'Percent Enrolled in a public 4 year college and Returned for a Second Year',
-                  'Percent Enrolled in a public 2 year college and Returned for a Second Year']
+                  'Percent Enrolled in an in-state public 4 year college and Returned for a Second Year',
+                  'Percent Enrolled in an in-state public 2 year college and Returned for a Second Year']
 
 
 

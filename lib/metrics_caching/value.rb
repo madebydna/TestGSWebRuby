@@ -4,7 +4,7 @@ module MetricsCaching
 
     GRADE_ALL = ['All', 'NA']
     ALL_STUDENTS = 'All students'
-    ALL_SUBJECTS = ['Not Applicable', 'Composite Subject']
+    ALL_SUBJECTS = ['Not Applicable', 'Composite Subject', 'Any Subject']
 
     STUDENTS_WITH_DISABILITIES = 'Students with disabilities'
     STUDENTS_WITH_IDEA_CATEGORY_DISABILITIES = 'Students with IDEA catagory disabilities'
@@ -71,6 +71,12 @@ module MetricsCaching
 
       def no_subject_or_all_subjects
         select {|h| h.subject.blank? || h.all_subjects?}.extend(CollectionMethods)
+      end
+
+      def all_subjects_or_subjects_in(subjects)
+        select do |dv|
+          dv.all_subjects? || subjects.include?(dv.subject)
+        end.extend(CollectionMethods)
       end
 
       def having_all_students_or_breakdown_in(breakdowns)

@@ -14,7 +14,7 @@ describe MetricsCaching::CollegeReadinessConfig do
                 'Graduating seniors pursuing 2 year college/university',
                 'Percent of students who will attend out-of-state colleges',
                 'Percent of students who will attend in-state colleges',
-                'Percent enrolled in any public in-state postsecondary institution or intended to enroll in any out-of-state institution, or in-state private institution within 18 months after graduation',
+                'Percent enrolled in any public in-state postsecondary institution or intended to enroll in any out-of-state institution, or in-state private institution within 16 months after graduation',
                 'Percent enrolled in any public in-state postsecondary institution within the immediate fall after graduation',
                 'Percent Enrolled in College Immediately Following High School',
                 'Percent enrolled in any institution of higher learning in the last 0-16 months',
@@ -32,7 +32,10 @@ describe MetricsCaching::CollegeReadinessConfig do
                 'Percent enrolled in any in-state postsecondary institution within the immediate fall after graduation',
                 'Percent enrolled in any out-of-state postsecondary institution within the immediate fall after graduation',
                 'Percent enrolled in any postsecondary institution within 24 months after graduation',
-                'Percent enrolled in any postsecondary institution within 6 months after graduation'])
+                'Percent enrolled in any postsecondary institution within 6 months after graduation',
+                'Percent enrolled in any public in-state postsecondary institution or intended to enroll in any out-of-state institution, or in-state private institution within 12 months after graduation',
+                'Percent enrolled in any public in-state institution within 16 months after graduation'
+            ])
         end
 
         it "contains a list of unique strings" do
@@ -47,12 +50,28 @@ describe MetricsCaching::CollegeReadinessConfig do
 
         it "contains a list of defined strings" do
             expect(MetricsCaching::CollegeReadinessConfig::REMEDIATION_SUBGROUPS).to match_array([
-                'Percent Needing Remediation for College',
-                'Graduates needing Reading remediation in college',
-                'Graduates needing Writing remediation in college',
-                'Graduates needing English remediation in college',
-                'Graduates needing Science remediation in college',
-                'Graduates needing Math remediation in college'])
+              'Percent Needing Remediation for College',
+              'Percent Needing any Remediation for College',
+              'Graduates needing Reading remediation in college',
+              'Graduates needing Writing remediation in college',
+              'Graduates needing English remediation in college',
+              'Graduates needing Science remediation in college',
+              'Graduates needing Math remediation in college',
+              'Percent needing remediation in in-state public 2-year institutions',
+              'Percent needing any remediation in in-state public 2-year institutions',
+              'Graduates needing Reading remediation in 2-year college',
+              'Graduates needing Math remediation in 2-year college',
+              'Graduates needing English remediation in 2-year college',
+              'Graduates needing Science remediation in 2-year college',
+              'Graduates needing Writing remediation in 2-year college',
+              'Percent needing remediation in in-state public 4-year institutions',
+              'Percent needing any remediation in in-state public 4-year institutions',
+              'Graduates needing Reading remediation in 4-year college',
+              'Graduates needing Math remediation in 4-year college',
+              'Graduates needing English remediation in 4-year college',
+              'Graduates needing Science remediation in 4-year college',
+              'Graduates needing Writing remediation in 4-year college'
+            ])
         end
     end
 
@@ -64,8 +83,8 @@ describe MetricsCaching::CollegeReadinessConfig do
         it "contains a list of defined strings" do
             expect(MetricsCaching::CollegeReadinessConfig::SECOND_YEAR).to match_array([
                 'Percent Enrolled in College and Returned for a Second Year',
-                'Percent Enrolled in a public 4 year college and Returned for a Second Year',
-                'Percent Enrolled in a public 2 year college and Returned for a Second Year'])
+                'Percent Enrolled in an in-state public 4 year college and Returned for a Second Year',
+                'Percent Enrolled in an in-state public 2 year college and Returned for a Second Year'])
         end
     end
 

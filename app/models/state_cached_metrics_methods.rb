@@ -1,7 +1,5 @@
 module StateCachedMetricsMethods
-  def metrics
-    cache_data.fetch('metrics', {})
-  end
+  include MetricsCaching::CommonCachedMetricsMethods
 
   def ethnicity_data
     ethnicity_data = metrics.fetch('Ethnicity', [{}])

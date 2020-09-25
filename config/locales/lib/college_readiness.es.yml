@@ -51,20 +51,37 @@ es:
       'Percent enrolled in any postsecondary institution within 6 months after graduation': Graduados matriculados en la universidad o un programa vocacional
       'Percent enrolled in any public in-state postsecondary institution or intended to enroll in any out-of-state institution, or in-state private institution within 18 months after graduation': Graduados matriculados en la universidad o un programa vocacional
       'Percent enrolled in any public in-state postsecondary institution within the immediate fall after graduation': Graduados matriculados en una universidad pública del estado de o un programa vocacional
-      'Percent Enrolled in a public 4 year college and Returned for a Second Year': Graduados que regresaron a la universidad pública de 4 años por un segundo año
-      'Percent Enrolled in a public 2 year college and Returned for a Second Year': Graduados que regresaron a la universidad pública de 2 años por un segundo año
+      'Percent Enrolled in an in-state public 4 year college and Returned for a Second Year': Graduados que regresaron a la universidad pública de 4 años por un segundo año
+      'Percent Enrolled in an in-state public 2 year college and Returned for a Second Year': Graduados que regresaron a la universidad pública de 2 años por un segundo año
       'Percent Needing Remediation for College': Graduados que necesitan remediación en la universidad
-      'Graduates needing English remediation in college': Graduados que necesitan remediación en inglés en la universidad
-      'Graduates needing Math remediation in college': Graduados que necesitan remediación en matemáticas en la universidad
-      'Graduates needing Science remediation in college': Graduados que necesitan remediación en ciencia en la universidad
-      'Graduates needing Reading remediation in college': Graduados que necesitan remediación en lectura en la universidad
-      'Graduates needing Writing remediation in college': Graduados que necesitan remediación de escritura en la universidad
+      'Percent Needing any Remediation for College': Graduados que necesitan remediación en la universidad
+      'Graduates needing English Remediation for College': Graduados que necesitan remediación en inglés en la universidad
+      'Graduates needing Math Remediation for College': Graduados que necesitan remediación en matemáticas en la universidad
+      'Graduates needing Science Remediation for College': Graduados que necesitan remediación en ciencia en la universidad
+      'Graduates needing Reading Remediation for College': Graduados que necesitan remediación en lectura en la universidad
+      'Graduates needing Writing Remediation for College': Graduados que necesitan remediación de escritura en la universidad
+      'Percent needing remediation in in-state public 2-year institutions': 'Graduados que necesitan remediación en la universidad de 2 años'
+      'Percent needing any remediation in in-state public 2-year institutions': 'Graduados que necesitan remediación en la universidad de 2 años'
+      'Graduates needing Reading remediation in 2-year college': 'Graduados que necesitan remediación en lectura en la universidad de 2 años'
+      'Graduates needing Math remediation in 2-year college': 'Graduados que necesitan remediación en matemáticas en la universidad de 2 años '
+      'Graduates needing English remediation in 2-year college': 'Graduados que necesitan remediación de inglés en la universidad de 2 años'
+      'Graduates needing Science remediation in 2-year college': 'Graduados que necesitan remediación en ciencia en la universidad de 2 años'
+      'Graduates needing Writing remediation in 2-year college': 'Graduados que necesitan remediación en la escritura en la universidad de 2 años'
+      'Percent needing remediation in in-state public 4-year institutions': 'Graduados que necesitan remediación en la universidad de 4 años'
+      'Percent needing any remediation in in-state public 4-year institutions': 'Graduados que necesitan remediación en la universidad de 4 años'
+      'Graduates needing Reading remediation in 4-year college': 'Graduados que necesitan remediación en lectura en la universidad de 4 años'
+      'Graduates needing Math remediation in 4-year college': 'Graduados que necesitan remediación en matemáticas en la universidad de 4 años '
+      'Graduates needing English remediation in 4-year college': 'Graduados que necesitan remediación de inglés en la universidad de 4 años'
+      'Graduates needing Science remediation in 4-year college': 'Graduados que necesitan remediación en ciencia en la universidad de 4 años'
+      'Graduates needing Writing remediation in 4-year college': 'Graduados que necesitan remediación en la escritura en la universidad de 4 años'
       'Percent Enrolled in College and Returned for a Second Year': Graduados que regresaron a la universidad por un segundo año
       'Percent enrolled in any institution of higher learning in the last 0-16 months': Graduados matriculados en programas universitarios o vocacionales
       'Percent enrolled in a 2-year institution of higher learning in the last 0-16 months': Graduados explorando universidades de 2 años o un programa vocacional
       'Percent enrolled in a 4-year institution of higher learning in the last 0-16 months': Graduados explorando universidades de 4 años o un programa vocacional
       'Percent of students who will attend out-of-state colleges': Graduados asistiendo la universidad fuera del estado
       'Percent of students who will attend in-state colleges': Graduados asistiendo la universidad estatal
+      'Percent enrolled in any public in-state postsecondary institution or intended to enroll in any out-of-state institution, or in-state private institution within 12 months after graduation': 'Graduados matriculados en la universidad o un programa vocacional'
+      'Percent enrolled in any public in-state institution within 16 months after graduation': 'Graduados matriculados en una universidad pública del estado de o un programa vocacional'
       csa_badge_html: >
         Esta escuela ha ganado un <span style='font-family:opensans-semibold'>%{blurb} College Success Award</span> basado en su éxito en preparar a los estudiantes para la universidad y finalmente para su carrera. <a href=%{csa_state_link}>Ver más ganadores</a>.
       data_point_info_texts:
@@ -98,11 +115,26 @@ es:
         'Graduating seniors pursuing other college': 'Esto refleja el porcentaje de graduados de esta escuela secundaria que se inscribieron en programas universitarios distintos de una universidad de 2 o 4 años inmediatamente después de la escuela secundaria.'
         'Percent Enrolled in College Immediately Following High School': Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en la universidad inmediatamente después de la escuela secundaria.'
         'Percent Needing Remediation for College': Esto refleja el porcentaje de graduados de esta escuela que necesitaron tomar clases básicas o correctivas, que no cuentan para un título universitario.
-        'Graduates needing English remediation in college': Esto refleja el porcentaje de graduados de esta escuela que necesitaron tomar clases de inglés básicas o correctivas, que no cuentan para un título universitario.
-        'Graduates needing Math remediation in college': Esto refleja el porcentaje de graduados de esta escuela que necesitaron tomar clases de matemáticas básicas o correctivas, que no cuentan para un título universitario.
-        'Graduates needing Science remediation in college': Esto refleja el porcentaje de graduados de esta escuela que necesitaron tomar clases de ciencia básicas o correctivas, que no cuentan para un título universitario.
-        'Graduates needing Reading remediation in college': Esto refleja el porcentaje de graduados de esta escuela que necesitaron tomar clases de lectura básicas o correctivas, que no cuentan para un título universitario.
-        'Graduates needing Writing remediation in college': Esto refleja el porcentaje de graduados de esta escuela que necesitaron tomar clases de escritura básicas o correctivas, que no cuentan para un título universitario.
+        'Percent Needing any Remediation for College': Esto refleja el porcentaje de graduados de esta escuela que necesitaron tomar clases básicas o correctivas, que no cuentan para un título universitario.
+        'Graduates needing English Remediation for College': Esto refleja el porcentaje de graduados de esta escuela que necesitaron tomar clases de inglés básicas o correctivas, que no cuentan para un título universitario.
+        'Graduates needing Math Remediation for College': Esto refleja el porcentaje de graduados de esta escuela que necesitaron tomar clases de matemáticas básicas o correctivas, que no cuentan para un título universitario.
+        'Graduates needing Science Remediation for College': Esto refleja el porcentaje de graduados de esta escuela que necesitaron tomar clases de ciencia básicas o correctivas, que no cuentan para un título universitario.
+        'Graduates needing Reading Remediation for College': Esto refleja el porcentaje de graduados de esta escuela que necesitaron tomar clases de lectura básicas o correctivas, que no cuentan para un título universitario.
+        'Graduates needing Writing Remediation for College': Esto refleja el porcentaje de graduados de esta escuela que necesitaron tomar clases de escritura básicas o correctivas, que no cuentan para un título universitario.
+        'Percent needing remediation in in-state public 2-year institutions': 'Esto refleja el porcentaje de graduados de esta escuela que asisten a la universidad pública estatal de 2 años y necesitaban tomar más de una clase básica -o correctiva- en la universidad, que no cuentan para un título.'
+        'Percent needing any remediation in in-state public 2-year institutions': 'Esto refleja el porcentaje de graduados de esta escuela que asisten a la universidad pública estatal de 2 años y necesitaban tomar clases básicas -o correctivas- en la universidad, que no cuentan para un título.'
+        'Graduates needing Reading remediation in 2-year college': 'Esto refleja el porcentaje de graduados de esta escuela que asisten a la universidad pública estatal de 2 años y necesitaban tomar clases básicas -o correctivas- de lectura en la universidad, que no cuentan para un título.'
+        'Graduates needing Math remediation in 2-year college': 'Esto refleja el porcentaje de graduados de esta escuela que asisten a la universidad pública estatal de 2 años y necesitaban tomar clases básicas -o correctivas- de matemáticas en la universidad, que no cuentan para un título.'
+        'Graduates needing English remediation in 2-year college': 'Esto refleja el porcentaje de graduados de esta escuela que asisten a la universidad pública estatal de 2 años y necesitaban tomar clases básicas -o correctivas- de inglés en la universidad, que no cuentan para un título.'
+        'Graduates needing Science remediation in 2-year college': 'Esto refleja el porcentaje de graduados de esta escuela que asisten a la universidad pública estatal de 2 años y necesitaban tomar clases básicas -o correctivas- de ciencia en la universidad, que no cuentan para un título.'
+        'Graduates needing Writing remediation in 2-year college': 'Esto refleja el porcentaje de graduados de esta escuela que asisten a la universidad pública estatal de 2 años y necesitaban tomar clases básicas -o correctivas- de escritura en la universidad, que no cuentan para un título.'
+        'Percent needing remediation in in-state public 4-year institutions': 'Esto refleja el porcentaje de graduados de esta escuela que asisten a la universidad pública estatal de 4 años y necesitaban tomar más de una clase básica -o correctiva- en la universidad, que no cuentan para un título.'
+        'Percent needing any remediation in in-state public 4-year institutions': 'Esto refleja el porcentaje de graduados de esta escuela que asisten a la universidad pública estatal de 4 años y necesitaban tomar clases básicas -o correctivas- en la universidad, que no cuentan para un título.'
+        'Graduates needing Reading remediation in 4-year college': 'Esto refleja el porcentaje de graduados de esta escuela que asisten a la universidad pública estatal de 4 años y necesitaban tomar clases básicas -o correctivas- de lectura en la universidad, que no cuentan para un título.'
+        'Graduates needing Math remediation in 4-year college': 'Esto refleja el porcentaje de graduados de esta escuela que asisten a la universidad pública estatal de 4 años y necesitaban tomar clases básicas -o correctivas- de matemáticas en la universidad, que no cuentan para un título.'
+        'Graduates needing English remediation in 4-year college': 'Esto refleja el porcentaje de graduados de esta escuela que asisten a la universidad pública estatal de 4 años y necesitaban tomar clases básicas -o correctivas- de inglés en la universidad, que no cuentan para un título.'
+        'Graduates needing Science remediation in 4-year college': 'Esto refleja el porcentaje de graduados de esta escuela que asisten a la universidad pública estatal de 4 años y necesitaban tomar clases básicas -o correctivas- de ciencia en la universidad, que no cuentan para un título.'
+        'Graduates needing Writing remediation in 4-year college': 'Esto refleja el porcentaje de graduados de esta escuela que asisten a la universidad pública estatal de 4 años y necesitaban tomar clases básicas -o correctivas- de escritura en la universidad, que no cuentan para un título.'
         'Percent Enrolled in College and Returned for a Second Year': 'Esto refleja el porcentaje de graduados de esta escuela que completaron su primer año de universidad y regresaron por segundo año consecutivo.'
         'Percent enrolled in any institution of higher learning in the last 0-16 months': 'Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en cualquier institución de educación superior dentro de los 16 meses de haberse graduado.'
         'Percent enrolled in any public in-state postsecondary institution within 12 months after graduation': Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en cualquier institución pública de educación superior del estado dentro de los 12 meses de haberse graduado.
@@ -118,14 +150,16 @@ es:
         'Percent enrolled in any out-of-state postsecondary institution within the immediate fall after graduation': Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en cualquier institución pública fuera del estado de educación superior inmediatamente después de la escuela secundaria.
         'Percent enrolled in any postsecondary institution within 24 months after graduation': Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en cualquier institución de educación superior dentro de los 24 meses de haberse graduado.
         'Percent enrolled in any postsecondary institution within 6 months after graduation': Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en cualquier institución de educación superior dentro de los 6 meses de haberse graduado.
-        'Percent enrolled in any public in-state postsecondary institution or intended to enroll in any out-of-state institution, or in-state private institution within 18 months after graduation': Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en una institución pública de educación superior del estado, o que tienen la intención de inscribirse en una institución fuera del estado o una institución privada del estado dentro de los 18 meses de haberse graduado.
+        'Percent enrolled in any public in-state postsecondary institution or intended to enroll in any out-of-state institution, or in-state private institution within 18 months after graduation': Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en una institución pública de educación superior del estado, o que tienen la intención de inscribirse en una institución fuera del estado o una institución privada del estado dentro de los 16 meses de haberse graduado.
         'Percent enrolled in any public in-state postsecondary institution within the immediate fall after graduation': Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en cualquier institución pública del estado de educación superior inmediatamente después de la escuela secundaria.
-        'Percent Enrolled in a public 4 year college and Returned for a Second Year': Esto refleja el porcentaje de graduados de esta escuela que completaron su primer año en una universidad pública de 4 años y regresaron por un segundo año consecutivo.
-        'Percent Enrolled in a public 2 year college and Returned for a Second Year': Esto refleja el porcentaje de graduados de esta escuela que completaron su primer año en una universidad pública de 2 años y regresaron por un segundo año consecutivo.
+        'Percent Enrolled in an in-state public 4 year college and Returned for a Second Year': Esto refleja el porcentaje de graduados de esta escuela que completaron su primer año en una universidad pública de 4 años y regresaron por un segundo año consecutivo.
+        'Percent Enrolled in an in-state public 2 year college and Returned for a Second Year': Esto refleja el porcentaje de graduados de esta escuela que completaron su primer año en una universidad pública de 2 años y regresaron por un segundo año consecutivo.
         'Percent enrolled in a 2-year institution of higher learning in the last 0-16 months': 'Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en una institución de dos años de educación superior dentro de los 16 meses de haberse graduado.'
         'Percent enrolled in a 4-year institution of higher learning in the last 0-16 months': 'Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en una institución de 4 años de educación superior dentro de los 16 meses de haberse graduado.'
         'Percent of students who will attend out-of-state colleges': 'Esto refleja el porcentaje de graduados de esta escuela que están inscritos en colegios o universidades fuera del estado.'
         'Percent of students who will attend in-state colleges': 'Esto refleja el porcentaje de graduados de esta escuela que están inscritos en colegios o universidades estatales.'
+        'Percent enrolled in any public in-state postsecondary institution or intended to enroll in any out-of-state institution, or in-state private institution within 12 months after graduation': 'Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en una institución pública de educación superior del estado, o que tienen la intención de inscribirse en una institución fuera del estado o una institución privada del estado dentro de los 12 meses de haberse graduado.'
+        'Percent enrolled in any public in-state institution within 16 months after graduation': 'Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en cualquier institución pública de educación superior del estado dentro de los 16 meses de haberse graduado.'
       narration:
         college_success:
           average: <span class="emphasis">a la altura del promedio</span>
@@ -152,11 +186,12 @@ es:
           'Graduating seniors pursuing other college': de los índices de matriculación en otros programas universitarios
           'Percent Enrolled in College and Returned for a Second Year': de los índices de rendimiento para un segundo año de universidad
           'Percent Needing Remediation for College': porcentaje de estudiantes que deben tomar clases correctivas antes de comenzar cursos universitarios
-          'Graduates needing Reading remediation in college': porcentaje de estudiantes que deben tomar clases correctivas de lectura antes de comenzar cursos universitarios
-          'Graduates needing Writing remediation in college': porcentaje de estudiantes que deben tomar clases correctivas de escritura antes de comenzar cursos universitarios
-          'Graduates needing English remediation in college': porcentaje de estudiantes que deben tomar clases correctivas de inglés antes de comenzar cursos universitarios
-          'Graduates needing Science remediation in college': porcentaje de estudiantes que deben tomar clases correctivas de ciencias antes de comenzar cursos universitarios
-          'Graduates needing Math remediation in college': porcentaje de estudiantes que deben tomar clases correctivas de matemáticas antes de comenzar cursos universitarios
+          'Percent Needing any Remediation for College': porcentaje de estudiantes que deben tomar clases correctivas antes de comenzar cursos universitarios
+          'Graduates needing Reading Remediation for College': porcentaje de estudiantes que deben tomar clases correctivas de lectura antes de comenzar cursos universitarios
+          'Graduates needing Writing Remediation for College': porcentaje de estudiantes que deben tomar clases correctivas de escritura antes de comenzar cursos universitarios
+          'Graduates needing English Remediation for College': porcentaje de estudiantes que deben tomar clases correctivas de inglés antes de comenzar cursos universitarios
+          'Graduates needing Science Remediation for College': porcentaje de estudiantes que deben tomar clases correctivas de ciencias antes de comenzar cursos universitarios
+          'Graduates needing Math Remediation for College': porcentaje de estudiantes que deben tomar clases correctivas de matemáticas antes de comenzar cursos universitarios
         _1_html: >
           <div class="auto-narration">
           <h3 class="negative">Muy preocupante:</h3>

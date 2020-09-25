@@ -149,14 +149,18 @@ module MetricsCaching
     # 483: Percent enrolled in any out-of-state postsecondary institution within the immediate fall after graduation
     # 484: Percent enrolled in any postsecondary institution within 24 months after graduation
     # 485: Percent enrolled in any postsecondary institution within 6 months after graduation
+    # 486: Percent enrolled in any public in-state postsecondary institution or intended to enroll in any out-of-state institution, or in-state private institution within 16 months after graduation
     # 487: Percent enrolled in any public in-state postsecondary institution within the immediate fall after graduation
-    # 488: Percent Enrolled in a public 4 year college and Returned for a Second Year
-    # 489: Percent Enrolled in a public 2 year college and Returned for a Second Year
-    # 486: Percent enrolled in any public in-state postsecondary institution or intended to enroll in any out-of-state institution, or in-state private institution within 18 months after graduation
+    # 488: Percent Enrolled in an in-state public 4 year college and Returned for a Second Year
+    # 489: Percent Enrolled in an in-state public 2 year college and Returned for a Second Year
     # 385: Head official name
     # 386: Head official email address
     # 493: Student Growth - Elementary Level
     # 494: Student Growth - Middle Level
+    # 505: Percent enrolled in any public in-state postsecondary institution or intended to enroll in any out-of-state institution, or in-state private institution within 12 months after graduation
+    # 506: Percent enrolled in any public in-state institution within 16 months after graduation
+    # 508: Percent needing remediation in in-state public 2-year institutions
+    # 509: Percent needing remediation in in-state public 4-year institutions
 
     DATA_TYPE_IDS_WHITELIST = [
       23,  27,  35,  51,  55,  59,  63,  67,  71,  83,  91,  95,
@@ -171,7 +175,8 @@ module MetricsCaching
       448, 449, 450, 451, 452, 453, 454, 455, 456, 457, 458, 459,
       460, 461, 462, 463, 464, 465, 466, 467, 468, 469, 470, 471,
       472, 473, 474, 475, 476, 477, 478, 479, 480, 481, 482, 483,
-      484, 485, 487, 488, 489, 486, 385, 386, 493, 494
+      484, 485, 487, 488, 489, 486, 385, 386, 493, 494, 505, 506,
+      508, 509
     ]
 
     def self.listens_to?(data_type)

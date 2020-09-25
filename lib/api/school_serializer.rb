@@ -15,8 +15,6 @@ class Api::SchoolSerializer
     return nil
   end
 
-
-
   def to_hash
     rating = school.great_schools_rating if defined? school.great_schools_rating || school.respond_to?(:great_schools_rating)
     rating = rating && rating != 'NR' ? rating.to_i : nil
