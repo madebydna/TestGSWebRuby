@@ -26,6 +26,7 @@ const CsaTopSchools = ({ schools, renderTabsContainer, size, locality, community
         <CsaTopSchoolTableRow
           key={school.state + school.id}
           size={size}
+          community={community}
           {...school}
         />
       ))}
