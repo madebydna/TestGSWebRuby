@@ -12,7 +12,7 @@ es:
         homes_nearby_html: <a href="https://www.zillow.com/%{query}?cbpartner=Great+Schools&utm_source=Great_Schools&utm_medium=referral&utm_campaign=districtpage_resources" target="_blank" rel="nofollow">Casas cercanas</a>
         homes_body: Casas en alquiler y venta cerca de esta distrito
       xq:
-        school_board_finder_html: <a href="https://xqsuperschool.org/school-board-lookup?address=%{address}&utm_source=greatschools&utm_medium=search_tool&utm_campaign=school_board_thing" target="_blank" rel="nofollow">Encuentra tu junta escolar</a>
+        school_board_finder_html: <a href="https://xqsuperschool.org/school-board-lookup?address=%{address}&utm_source=greatschools&utm_medium=search_tool&utm_campaign=school_board_thing" target="_blank" rel="nofollow">Encuentra Tu Junta Escolar</a>
         learn_more_school_board: Aprenda más sobre cómo involúcrate
         sources: >
           <div class="sourcing">

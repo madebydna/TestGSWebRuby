@@ -52,6 +52,7 @@ const renderHomesAndRentals = (state, zipcode, community) => {
           `https://www.zillow.com/${state}-${zipcode}`,
           utmCampaign
         )}
+        target="_blank"
       >
         <span>&#32;{t("homes_for_sale")}</span>
       </a>
