@@ -6,33 +6,59 @@ import FiveStarRating from "../review/form/five_star_rating";
 import { SM, validSizes as validViewportSizes } from "util/viewport";
 import { t, capitalize } from "util/i18n";
 import { getDistrictHref } from 'util/school';
+import { addCampaignCode } from "api_clients/homes_and_rentals";
 
-const renderSchoolItem = ({ name, rating, links, districtName, districtCity, numReviews, parentRating, enrollment, gradeLevels, schoolType, address, state }) => {
+const renderSchoolItem = ({ name, rating, links, districtName, districtCity, numReviews, parentRating, enrollment, gradeLevels, schoolType, address, state, zipcode, community}) => {
   const content = <div dangerouslySetInnerHTML={{ __html: rating ? t("rating_description_html") : t("no_rating_description_html") }} />;
   const districtLink = getDistrictHref(state, districtCity, districtName);
 
-  return <React.Fragment>
-    <div className="content-container">
-      <div>
-        <Rating score={rating} size="medium" />
-        <div className="scale">
-          <ModalTooltip content={content}>
-            <span className="info-circle icon-info" />
-          </ModalTooltip>
+  return (
+    <React.Fragment>
+      <div className="content-container">
+        <div>
+          <Rating score={rating} size="medium" />
+          <div className="scale">
+            <ModalTooltip content={content}>
+              <span className="info-circle icon-info" />
+            </ModalTooltip>
+          </div>
+        </div>
+        <div className="school-info">
+          <a href={links.profile}>{name}</a>
+          {renderDistrictName(districtName, districtLink)}
+          <p className="students">
+            {capitalize(t(`school_types.${schoolType}`))}, {gradeLevels} |{" "}
+            {enrollment} {t("students")}
+          </p>
+          {renderReviews(numReviews, parentRating, links)}
+          {community !== 'state' && renderHomesAndRentals(state, zipcode, community)}
         </div>
       </div>
-      <div className="school-info">
-        <a href={links.profile}>
-          {name}
-        </a>
-        {renderDistrictName(districtName, districtLink)}
-        <p className="students">{capitalize(t(`school_types.${schoolType}`))}, {gradeLevels} | {enrollment} {t("students")}</p>
-        {renderReviews(numReviews, parentRating, links)}
-      </div>
-    </div>
-    <div className="blue-line" />
-  </React.Fragment>;
+      <div className="blue-line" />
+    </React.Fragment>
+  );
 }
+
+const renderHomesAndRentals = (state, zipcode, community) => {
+  const utmCampaign =
+    community === "district"
+      ? "districtpage_schoollistings"
+      : "citypage_sdlistings";
+  return (
+    <div style={{ marginTop: "5px" }}>
+      <a
+        className="icon icon-house active"
+        href={addCampaignCode(
+          `https://www.zillow.com/${state}-${zipcode}`,
+          utmCampaign
+        )}
+        target="_blank"
+      >
+        <span>&#32;{t("homes_for_sale")}</span>
+      </a>
+    </div>
+  );
+};
 
 const renderReviews = (numReviews, parentRating, links) => {
   const reviewCt = numReviews && numReviews > 0 ? <a href={links.reviews}>

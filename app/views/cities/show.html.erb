@@ -9,6 +9,7 @@
 
 <% slot_1 = "greatschools_citypagemobile_first" %>
 <% slot_2 = "greatschools_citypage_second" %>
+<% query = "#{@locality[:city]}-#{@locality[:stateShort]}" %>
 
 <div class="community-page">
   <div class="city-body">
@@ -87,6 +88,15 @@
         <%# Mobility %>
         <div id="mobility" class="module-section">
           <h3 class="modules-title"><%= I18n.t('title', scope: 'community.mobility') %> <%= @locality[:city] %></h3>
+          <div class="community_resource_module_container">
+            <div class="module-header community_resource_module">
+              <%= render 'community/nearby_homes_resources', query: query, community: 'city' %>
+            </div>
+
+            <div class="module-footer">
+              <%= render 'school_profiles/sources_link_to_modal', content: I18n.t('homes_sales.sources', scope: 'community.city') %>
+            </div>
+          </div>
           <%= react_component("Mobility", props: {
               locality: @locality,
               pageType: 'City'
