@@ -269,6 +269,7 @@ module GS
           row[:cohort_count] = 'NULL' if row[:cohort_count] == 'NA'
           row[:cohort_count] = 'NULL' if row[:cohort_count].include? '>'
           row[:cohort_count] = 'NULL' if row[:cohort_count].include? '<'
+          row[:cohort_count] = row[:cohort_count].gsub(',', '')
           row[:breakdown_id] = 0 if row[:breakdown_id].nil?
           row[:subject_id] = 0 if row[:subject_id].nil?
           if row[:grade].nil?
@@ -311,6 +312,7 @@ module GS
           row[:cohort_count] = 'NULL' if row[:cohort_count] == 'NA'
           row[:cohort_count] = 'NULL' if row[:cohort_count].include? '>'
           row[:cohort_count] = 'NULL' if row[:cohort_count].include? '<'
+          row[:cohort_count] = row[:cohort_count].gsub(',', '')
           row[:breakdown_id] = 0 if row[:breakdown_id].nil?
           row[:subject_id] = 0 if row[:subject_id].nil?
           if row[:grade].nil?
@@ -355,6 +357,7 @@ module GS
           row[:cohort_count] = 'NULL' if row[:cohort_count] == 'NA'
           row[:cohort_count] = 'NULL' if row[:cohort_count].include? '>'
           row[:cohort_count] = 'NULL' if row[:cohort_count].include? '<'
+          row[:cohort_count] = row[:cohort_count].gsub(',', '')
           row[:breakdown_id] = 0 if row[:breakdown_id].nil?
           row[:subject_id] = 0 if row[:subject_id].nil?
           if row[:grade].nil?
