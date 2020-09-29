@@ -22,12 +22,14 @@ class UserSignupController < ApplicationController
   end
 
   def district_signup
-    district = DistrictRecord.find_by(state: params[:state], district_id: params[:district_id])
+    redirect_to user_signup_path unless district_gbg.district.present?
+
+    @district = district_gbg
     @submit_path = district_signup_path
-    session[:district_id] = params[:district_id]
-    session[:district_state] = params[:state]
+    session[:district_id] = district_gbg.district&.district_id
+    session[:district_state] = district_gbg.district&.state
     show_all
-    @grades_hashes = grades_hashes(district.district_id, district.state)
+    @grades_hashes = grades_hashes(district_gbg.district&.district_id, district_gbg.district&.state)
   end
 
   def show_spanish
@@ -172,6 +174,10 @@ class UserSignupController < ApplicationController
       # if existing user logs in, they will be redirected to the email preferences page
       write_cookie :redirect_uri, user_preferences_url, { expires: 10.minutes.from_now }
     end
+  end
+
+  def district_gbg
+    @_district_gbg ||= Newsletter::DistrictGradeByGrade.new(params[:district_route])
   end
 end
 
