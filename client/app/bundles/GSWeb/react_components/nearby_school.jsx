@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { t } from "util/i18n";
+import { addCampaignCode } from 'api_clients/homes_and_rentals';
 
 export default class NearbySchool extends React.Component {
 
@@ -13,7 +15,8 @@ export default class NearbySchool extends React.Component {
     state: PropTypes.string,
     distance: PropTypes.number,
     schoolUrl: PropTypes.string,
-    nearbySchoolsType: PropTypes.string
+    nearbySchoolsType: PropTypes.string,
+    schoolZipcode: PropTypes.string
   }
 
   constructor(props) {
@@ -80,20 +83,37 @@ export default class NearbySchool extends React.Component {
       <div className="nearby-school">
         {this.renderRating()}
         <div>
-          <a className="js-gaClick" href={this.props.schoolUrl}
-            data-ga-click-category='Profile'
+          <a
+            className="js-gaClick"
+            href={this.props.schoolUrl}
+            data-ga-click-category="Profile"
             data-ga-click-action={this.props.nearbySchoolsType}
-            data-ga-click-label={this.props.schoolUrl}>
+            data-ga-click-label={this.props.schoolUrl}
+          >
             {this.props.schoolName}
           </a>
           <div className="school-info">
             <span>{this.props.schoolType}</span>
             <span>{this.props.gradeRange}</span>
-            <span>{this.props.city}, {this.props.state}</span>
+            <span>
+              {this.props.city}, {this.props.state}
+            </span>
           </div>
           <div>{this.distance()}</div>
+          <div style={{ marginTop: "5px" }}>
+            <a
+              className="icon icon-house active"
+              target="_blank"
+              href={addCampaignCode(
+                `https://www.zillow.com/${this.props.state}-${this.props.schoolZipcode}`,
+                "schoolprofiles_schoollistings"
+              )}
+            >
+              <span>&#32;{t('homes_for_sale')}</span>
+            </a>
+          </div>
         </div>
       </div>
-    )
+    );
   }
 }

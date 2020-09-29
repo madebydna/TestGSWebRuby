@@ -217,13 +217,6 @@
           }) %>
         </div>
 
-        <%# Zillow %>
-        <%= react_component("Zillow", props: {
-            locality: @locality,
-            utmCampaign: 'districtpage',
-            pageType: 'district'
-        }) %>
-
         <%# Reviews %>
         <% if @reviews.length > 0 %>
           <div id="reviews" class="module-section">

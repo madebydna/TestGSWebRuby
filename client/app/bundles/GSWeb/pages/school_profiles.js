@@ -36,7 +36,6 @@ import * as schoolProfileStickyCTAMobile from '../components/school_profile_stic
 import OspSchoolInfo from '../react_components/osp_school_info';
 import TopicalReviewSummary from '../react_components/topical_review_summary';
 import Toggle from '../components/toggle';
-import HomesAndRentals from '../react_components/homes_and_rentals';
 import StemCourses from '../react_components/school_profiles/stem_courses';
 import { signupAndFollowSchool, updateProfileHeart } from '../util/newsletters';
 import * as backToTop from '../components/back_to_top';
@@ -60,7 +59,6 @@ ReactOnRails.register({
   Reviews,
   NearestHighPerformingSchools,
   OspSchoolInfo,
-  HomesAndRentals,
   StemCourses,
   TopicalReviewSummary,
   SearchBoxWrapper,
