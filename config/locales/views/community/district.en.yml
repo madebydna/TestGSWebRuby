@@ -16,4 +16,4 @@ en:
       xq:
         school_board_finder_html: <a href="https://xqsuperschool.org/school-board-lookup?address=%{address}&utm_source=greatschools&utm_medium=search_tool&utm_campaign=school_board_thing" target="_blank" rel="nofollow">School Board Finder</a>
         learn_more_school_board: Learn more about how to get involved
-        powered_by_xq: Desarrollado por XQ
+        powered_by_xq: Powered by XQ
