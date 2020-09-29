@@ -1,0 +1,69 @@
+<div class="navigation tc">
+  <nav class="tc">
+    <ul class="menu menu_hide_mobile">
+
+      <li class="">
+        <!-- First Tier Drop Down -->
+        <label for="drop-1" class="toggle"><%= t('nav.header.navigation.parenting.title')%> <span style="font-size:10px;"></span></label>
+        <a href="/gk/" onclick="return false;"><%= t('nav.header.navigation.parenting.title')%> <span style="font-size:10px;"></span></a>
+        <input type="checkbox" id="drop-1"/>
+        <ul>
+          <% t('nav.header.navigation.parenting.menu').each_with_index do |item, idx| %>
+            <% menu_title = item.keys.first %>
+            <% menu_option = item[menu_title] %>
+            <% if menu_option.is_a?(Array) %>
+              <li>
+                <label for="drop-<%= idx+2 %>" class="toggle"><%= menu_title %></label>
+                <a href="/gk/" onclick="return false;"><%= menu_title %></a>
+                <input type="checkbox" id="drop-<%= idx+2 %>"/>
+                <ul>
+                  <% menu_option.each do |sub_item| %>
+                    <% submenu_title = sub_item.keys.first %>
+                    <% submenu_link = sub_item[submenu_title] %>
+                    <li><a class="nolang" href="<%= submenu_link %>"><%= submenu_title %></a></li>
+                  <% end %>
+                </ul>
+              </li>
+            <% else %>
+              <li><a class="nolang" href="<%= menu_option %>"><%= menu_title %></a></li>
+            <% end %>
+          <% end %>
+        </ul>
+      </li>
+      <li class="">
+        <a class="js-donate-link hidden-sm hidden-md" href="https://www.classy.org/checkout/donation?eid=147401" target="_blank"><%= t('nav.header.navigation.donate')%></a>
+      </li>
+      <% if params['controller'] == 'home' %>
+        <li class="hidden-md hidden-sm">
+          <%= link_to t('nav.header.navigation.about_us'), about_path %>
+        </li>
+      <% end %>
+      <li class="hidden-xs"><a class="jsChangeLanguageLink" href="#"><%= t('nav.header.navigation.language')%></a></li>
+<!--      <li>-->
+        <%#= render 'nav/header/my_saved_schools_icon' %>
+<!--      </li>-->
+      <li class="account_nav_out"><a class="js-no_ad" href="/gsr/login/"><%= t('nav.header.navigation.sign_in') %></a></li>
+      <li class="account_nav_in dn">
+        <label for="drop-7" class="toggle"><%= t('nav.header.navigation.my_account') %> </label>
+        <a href="#"><%= t('nav.header.navigation.my_account') %> </a>
+        <input type="checkbox" id="drop-7"/>
+        <ul>
+          <li><a class="js-no_ad" href="/account/"><%= t('nav.header.navigation.account_settings')%></a></li>
+          <li><a class="js-no_ad" href="/logout/"><%= t('nav.header.navigation.sign_out') %></a></li>
+        </ul>
+      </li>
+      <% if I18n.locale == :en %>
+        <li class="featured_visible_mobile featured">
+          <label for="drop-6" class="toggle"><span><%= t('nav.header.navigation.featured.title') %></span> </label>
+          <a href="#"><%= t('nav.header.navigation.featured.title') %> </a>
+          <input type="checkbox" id="drop-6"/>
+          <ul>
+            <%= render 'nav/header/featured_links' %>
+          </ul>
+        </li>
+      <% end %>
+    </ul>
+         <div class="hidden-sm hidden-md hidden-lg language_mobile_position"><a class="jsChangeLanguageLink" href="#"><%= t('nav.header.navigation.language')%></a></div>
+
+  </nav>
+</div>

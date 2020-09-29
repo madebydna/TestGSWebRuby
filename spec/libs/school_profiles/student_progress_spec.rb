@@ -67,7 +67,6 @@ describe SchoolProfiles::StudentProgress do
       allow(student_progress).to receive(:data_label).with(expected_description).and_return(expected_description)
       allow(student_progress).to receive(:data_label).with(expected_methodology).and_return(expected_methodology)
       expect(student_progress).to receive(:label).at_least(:once) { |arg| arg }
-      expect(school).to receive(:state_name).and_return('California')
       expect(student_progress).to receive(:rating_year).and_return('2017')
     end
 
@@ -79,7 +78,7 @@ describe SchoolProfiles::StudentProgress do
 
       it { should include expected_description }
       it { should include expected_methodology }
-      it { should include 'California Dept of Education, 2017' }
+      it { should include 'GreatSchools; source_calculation 2017' }
     end
 
     describe 'Handles just description' do
@@ -90,7 +89,7 @@ describe SchoolProfiles::StudentProgress do
 
       it { should include expected_description }
       it { should_not include expected_methodology }
-      it { should include 'California Dept of Education, 2017' }
+      it { should include 'GreatSchools; source_calculation 2017' }
     end
 
     describe 'Handles just methodology' do
@@ -101,7 +100,7 @@ describe SchoolProfiles::StudentProgress do
 
       it { should_not include expected_description }
       it { should include expected_methodology }
-      it { should include 'California Dept of Education, 2017' }
+      it { should include 'GreatSchools; source_calculation 2017' }
     end
 
     describe 'Handles neither description nor methodology' do
@@ -112,7 +111,7 @@ describe SchoolProfiles::StudentProgress do
 
       it { should_not include expected_description }
       it { should_not include expected_methodology }
-      it { should include 'California Dept of Education, 2017' }
+      it { should include 'GreatSchools; source_calculation 2017' }
     end
   end
 end

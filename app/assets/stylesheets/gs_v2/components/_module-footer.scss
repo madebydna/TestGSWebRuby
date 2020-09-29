@@ -1,0 +1,7 @@
+.module-footer {
+    @include clearfix;
+    @media (max-width: 767px) {
+      padding-right: 10px;
+      padding-left: 10px;
+    }
+}

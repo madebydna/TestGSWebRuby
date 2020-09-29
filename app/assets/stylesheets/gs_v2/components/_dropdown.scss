@@ -1,0 +1,37 @@
+.dropdown {
+  display: inline-block;
+  .selection {
+    padding: 8px 27px 7px 7px;
+    border: 1px solid #c1d2d9;
+    border-radius: 3px;
+    position: relative;
+    top: 1px;
+    background-image: linear-gradient(to bottom, #ffffff, #f4f5f7);
+    outline: none;
+  }
+  .icon-caret-down {
+    position: absolute;
+    right: 10px;
+    top: calc(50% - 9px);
+  }
+  .panel {
+    display: inline-block;
+    padding: 15px 15px 10px 15px;
+    border: 1px solid #c1d2d9;
+    border-radius: 3px;
+    background-color: $gray-light-blue;
+    position: absolute;
+    z-index: 1;
+    cursor: pointer;
+    > div + div {
+      margin-top: 5px;
+    }
+    @include media-breakpoint-down(sm) {
+      width: 220px;
+      height: 160px;
+      .checkbox-group > span {
+        height: 35px;
+      }
+    }
+  }
+}

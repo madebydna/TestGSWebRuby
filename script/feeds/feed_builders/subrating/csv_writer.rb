@@ -13,7 +13,6 @@ module Feeds
                         'Equity',
                         'Academic Progress',
                         'Student Growth',
-                        'Low Income',
                         'Attendance Flag',
                         'Discipline Flag']
 

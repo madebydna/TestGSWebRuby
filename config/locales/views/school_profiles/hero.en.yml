@@ -34,24 +34,24 @@ en:
           schools within a state based on standardized test scores and other data where available, like student
           academic progress and college readiness. State and national education agencies do not report some or all
           of this data for private schools like this one, so we are unable to provide a rating.</p>
-          <p><a href='/gk/ratings/' target="_blank">More about the GreatSchools Rating.</a></p>
+          <p><a href='/gk/ratings-in-nd/' target="_blank">More about the GreatSchools Rating.</a></p>
         unrated_public: >
           <p>GreatSchools is a national nonprofit organization. Our Summary Rating is a tool to help parents compare
           schools within a state based on standardized test scores and other data where available, like student
           academic progress and college readiness. For some schools, we do not have enough data from state or national
           education agencies to provide a rating.</p>
-          <p><a href='/gk/ratings/' target="_blank">More about the GreatSchools Rating.</a></p>
+          <p><a href='/gk/ratings-in-nd/' target="_blank">More about the GreatSchools Rating.</a></p>
         rated: >
           <p>GreatSchools is a national nonprofit organization. Our new Summary Rating provides a multi-measured 
           reflection of school quality based on the ratings components you see here.</p>
-          <p><a href='/gk/ratings/' target="_blank">Learn more about GreatSchools Ratings.</a></p>
+          <p><a href='/gk/ratings-in-nd/' target="_blank">Learn more about GreatSchools Ratings.</a></p>
       alt_new_summary_rating_info:
         unrated_private: >
-          <p>GreatSchools is a national nonprofit organization. Our Summary Rating helps parents compare schools within a state based on standardized test scores and other available data, including <a href='/gk/ratings-ca-mi/#studentprogressrating' target="_blank">student academic progress</a> and <a href='/gk/ratings-ca-mi/#collegereadinessrating' target="_blank">college readiness</a>. Few private schools publish results from standardized tests. Due to the lack of data, we are unable to provide a rating.</p>
-          <p><a href='/gk/ratings-ca-mi/' target="_blank">More about the GreatSchools Rating.</a></p>
+          <p>GreatSchools is a national nonprofit organization. Our Summary Rating helps parents compare schools within a state based on standardized test scores and other available data, including <a href='/gk/ratings/#studentprogressrating' target="_blank">student academic progress</a> and <a href='/gk/ratings/#collegereadinessrating' target="_blank">college readiness</a>. Few private schools publish results from standardized tests. Due to the lack of data, we are unable to provide a rating.</p>
+          <p><a href='/gk/ratings/' target="_blank">More about the GreatSchools Rating.</a></p>
         unrated_public: >
-          <p>GreatSchools is a national nonprofit organization. Our Summary Rating helps parents compare schools within a state based on standardized test scores and other available data, including <a href='/gk/ratings-ca-mi/#studentprogressrating' target="_blank">student academic progress</a> and <a href='/gk/ratings-ca-mi/#collegereadinessrating' target="_blank">college readiness</a>. For some schools, there is not enough data from state or national education agencies to calculate a rating.</p>
-          <p><a href='/gk/ratings-ca-mi/' target="_blank">More about the GreatSchools Rating.</a></p>
+          <p>GreatSchools is a national nonprofit organization. Our Summary Rating helps parents compare schools within a state based on standardized test scores and other available data, including <a href='/gk/ratings/#studentprogressrating' target="_blank">student academic progress</a> and <a href='/gk/ratings/#collegereadinessrating' target="_blank">college readiness</a>. For some schools, there is not enough data from state or national education agencies to calculate a rating.</p>
+          <p><a href='/gk/ratings/' target="_blank">More about the GreatSchools Rating.</a></p>
         rated: >
           <p>GreatSchools is a national nonprofit organization. Our new Summary Rating provides a multi-measured 
           reflection of school quality based on the ratings components you see here.</p>

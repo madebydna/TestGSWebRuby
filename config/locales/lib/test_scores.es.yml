@@ -12,7 +12,7 @@ es:
       'source': 'Fuente'
       note: Note
       Test scores: Resultados de exámenes
-      info_text: "<p>La calificación de los exámenes refleja los resultados de los exámenes anuales del estado para esta escuela en comparación con los puntajes a nivel estatal.</p><p><a href='/gk/como-clasificamos/?lang=es#testscorerating' target='_blank'>Infórmese más sobre esta calificación.</a></p>"
+      info_text: "<p>La calificación de los exámenes refleja los resultados de los exámenes anuales del estado para esta escuela en comparación con los puntajes a nivel estatal.</p><p><a href='/gk/ratings-in-nd/?lang=es#testscorerating' target='_blank'>Infórmese más sobre esta calificación.</a></p>"
       'Math': Matemáticas
       Science: Ciencia
       Source: Fuente
@@ -37,7 +37,7 @@ es:
           grado/materia si el número de estudiantes tomando el examen es demasiado bajo. Esto puede significar que
           algunos resultados de grados que son parte del resultado general no se pueden mostrar individualmente.</p>
           %{standardized_tests_note}
-          <p><a href="/gk/como-clasificamos/?lang=es#testscorerating" target="_blank">Infórmese más sobre esta calificación.</a></p>
+          <p><a href="/gk/ratings-in-nd/?lang=es#testscorerating" target="_blank">Infórmese más sobre esta calificación.</a></p>
           <p><a href="https://greatschools.zendesk.com/hc/en-us" target="_blank">Todavía tiene preguntas? Visite nuestra página de
           preguntas frecuentes.</a></p>
       narration:
@@ -237,7 +237,7 @@ es:
       'source': 'Fuente'
       note: Note
       Test scores: Resultados de exámenes
-      info_text: "<p>Las Calificaciones de los Resultados de Exámenes reflejan los resultados de los exámenes anuales del estado para esta escuela en comparación con los puntajes a nivel estatal.</p><p><a href='/gk/ratings-ca-mi/?lang=es#testscorerating' target='_blank'>Aprende más sobre esta calificación.</a></p>"
+      info_text: "<p>Las Calificaciones de los Resultados de Exámenes reflejan los resultados de los exámenes anuales del estado para esta escuela en comparación con los puntajes a nivel estatal.</p><p><a href='/gk/como-clasificamos/?lang=es#testscorerating' target='_blank'>Aprende más sobre esta calificación.</a></p>"
       'Math': Matemáticas
       Science: Ciencia
       Source: Fuente
@@ -259,7 +259,7 @@ es:
           estaba incluida en los datos que recibimos del DE.</p>
           <p>¿Por qué los resultados de los exámenes de grado a veces son distintos al resultado general en una materia? Es muy probable que esto se deba a la supresión. A los estados se les requiere que supriman información de grado/materia si el número de estudiantes tomando el examen es demasiado bajo. Esto ayuda a proteger la privacidad de los estudiantes, y puede significar que algunos resultados de grados que son parte del resultado general no se pueden mostrar individualmente.</p>
           %{standardized_tests_note}
-          <p><a href="/gk/ratings-ca-mi/?lang=es#testscorerating" target="_blank">Aprende más sobre esta calificación.</a></p>
+          <p><a href="/gk/como-clasificamos/?lang=es#testscorerating" target="_blank">Aprende más sobre esta calificación.</a></p>
           <p><a href="https://greatschools.zendesk.com/hc/en-us" target="_blank">Todavía tiene preguntas? Visita nuestra página de
           preguntas frecuentes.</a></p>
       narration:

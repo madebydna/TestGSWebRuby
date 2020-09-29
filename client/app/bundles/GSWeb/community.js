@@ -16,7 +16,6 @@ import Calendar from 'react_components/community/calendar';
 import DistanceLearning from 'react_components/community/distance_learning';
 import Finance from 'react_components/community/finance';
 import Mobility from 'react_components/community/mobility';
-import Zillow from 'react_components/community/zillow';
 import Ad from 'react_components/ad';
 import { scrollToElement } from 'util/scrolling';
 import { keepInViewport, isScrolledInViewport } from 'util/viewport';
@@ -47,7 +46,6 @@ ReactOnRails.register({
   Calendar,
   Finance,
   Mobility,
-  Zillow,
   AdWrapper,
   DistanceLearning
 });
@@ -130,7 +128,6 @@ $(() => {
     'calendar': '#calendar',
     'finance': '#finance .profile-module',
     'mobility': '#mobility',
-    'homes-and-rentals': '#homes-and-rentals',
     'reviews': '#reviews',
     'districts': '#districts .districts-in-community-module',
     'cities': '#cities .links-module',

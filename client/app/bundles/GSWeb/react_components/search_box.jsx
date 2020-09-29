@@ -94,7 +94,12 @@ const newSearchResultsPageUrl = newParams => {
   return `/search/search.page?${stringify(params)}`;
 };
 
-const zipcodeBrowsePageUrl = params => {
+const zipcodeBrowsePageUrl = newParams => {
+  const { lang } = parse(window.location.search);
+  const params = {
+    lang,
+    ...newParams
+  };
   return `/search/search.zipcode?${stringify(params)}`;
 }
 
@@ -489,7 +494,7 @@ export default class SearchBox extends React.Component {
             onClick={e => this.toggleSearchBoxModal(e, true)}
           >
             <button className="search_form_button">
-              <span style={{ fontSize: 22 }}>X</span>
+              <span>X</span>
             </button>
           </div>
         )}

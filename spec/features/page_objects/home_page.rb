@@ -11,7 +11,7 @@ class HomePage < SitePrism::Page
 
   set_url '/'
 
-  element :header, 'h1', text: 'Guide your child to a great future'
+  element :header, 'h1', text: 'Find a great school for your child.'
   element :school_search_button, 'form[name=schoolResultsSearchForm] button.search-btn'
   element :search_field, "input[name=locationSearchString]"
   element :gk_link, ".gk_article_dropdown"

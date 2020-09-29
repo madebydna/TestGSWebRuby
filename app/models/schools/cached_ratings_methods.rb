@@ -185,6 +185,21 @@ module CachedRatingsMethods
     rating_year_for_key('Equity Rating')
   end
 
+  def equity_overview_data
+    result = {}
+    ratings_by_type.slice(
+      'Equity Rating: State Test Percentile',
+      'Equity Rating: Growth Percentile',
+      'Equity Rating: Growth Proxy Percentile',
+      'Equity Rating: College Readiness Percentile'
+    ).each do |key, values|
+      result[key] = values
+        .having_most_recent_date
+        .having_school_value
+    end
+    result
+  end
+
   def courses_rating
     rating_for_key('Advanced Course Rating')
   end

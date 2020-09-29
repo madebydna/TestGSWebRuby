@@ -9,9 +9,12 @@
 @import "gs/print/*";
 $border-color: #dbe6eb;
 @import "variables/variables";
+@import "gs_v2/variables";
+@import "gs_v2/typography";
 @import "resources/bootstrap-grid/mixins/*";
 @import "mixins/*";
 @import "gs/mixins/*";
+@import "gs_v2/*";
 @import "components/*";
 @import "pages/search/search_page";
 

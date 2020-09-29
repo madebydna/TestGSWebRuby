@@ -17,7 +17,7 @@ RSpec.shared_examples "#ratings_link" do |extra_params|
       end
 
       it 'should have the new English ratings link' do
-        expect(subject.ratings_link).to eq('/gk/ratings-ca-mi/')
+        expect(subject.ratings_link).to eq('/gk/ratings/')
       end
     end
 
@@ -27,27 +27,27 @@ RSpec.shared_examples "#ratings_link" do |extra_params|
       end
 
       it 'should have the new Spanish ratings link' do
-        expect(subject.ratings_link).to eq('/gk/ratings-ca-mi/?lang=es')
+        expect(subject.ratings_link).to eq('/gk/como-clasificamos/?lang=es')
       end
     end
 
     context 'with traditional ratings state and English' do
       before do
-        get :show, { state: 'colorado' }.merge(extra_params)
+        get :show, { state: 'indiana' }.merge(extra_params)
       end
 
       it 'should have the old English ratings link' do
-        expect(subject.ratings_link).to eq('/gk/ratings/')
+        expect(subject.ratings_link).to eq('/gk/ratings-in-nd/')
       end
     end
 
     context 'with traditional ratings state and Spanish' do
       before do
-        get :show, { state: 'colorado', lang: 'es' }.merge(extra_params)
+        get :show, { state: 'indiana', lang: 'es' }.merge(extra_params)
       end
 
       it 'should have the old Spanish ratings link' do
-        expect(subject.ratings_link).to eq('/gk/como-clasificamos/?lang=es')
+        expect(subject.ratings_link).to eq('/gk/ratings-in-nd/?lang=es')
       end
     end
   end

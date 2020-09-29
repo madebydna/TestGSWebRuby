@@ -5,8 +5,9 @@ var initMobileMenuEvents = function() {
   var mobilenav = document.getElementsByClassName("menu-btn");
   mobilenav[0].addEventListener("click", toggleNav, false);
   var mobileNavSearch = document.getElementsByClassName("search_icon_image");
-  
-  mobileNavSearch[0].addEventListener("click", toggleSearch, false);
+  if (mobileNavSearch[0] != undefined) {
+    mobileNavSearch[0].addEventListener("click", toggleSearch, false);
+  }
 };
 
 var initDropdown = function() {
@@ -16,7 +17,7 @@ var initDropdown = function() {
     menuItems[i].onclick = function(e) {
       var item = e.target;
       toggleClass(item, 'open');
-    }
+    };
   }
 };
 
@@ -35,4 +36,4 @@ var init = function() {
   initSignInState();
 };
 
-export { init }
+export { init };

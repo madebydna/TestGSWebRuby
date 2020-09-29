@@ -16,7 +16,7 @@ const addFilteringEventListener = function(selector) {
 const runValidations = function(target) {
   clearValidationErrors(target);
   let validations_string = $(target).data(ASYNC_VALIDATIONS_DATA_ATTRIBUTE);
-  if(validations_string.length > 0) {
+  if (validations_string.length > 0) {
     let validations = validations_string.split(',');
     return handleAsyncValidations(target, validations);
   }
@@ -42,7 +42,7 @@ function renderValidationErrors(target, messages) {
   });
 
   messages.forEach((message) => {
-    // parsley class is just for syling
+    // parsley class is just for styling
     div.append($('<ul class="parsley-errors-list">' + message + '</ul>'));
   });
 

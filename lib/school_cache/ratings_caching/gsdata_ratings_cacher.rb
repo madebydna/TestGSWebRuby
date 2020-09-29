@@ -28,8 +28,13 @@ class RatingsCaching::GsdataRatingsCacher < GsdataCaching::GsdataCacher
   # 185	Equity Adjustment Factor
   # 186	Summary Rating Weight: Equity Adjustment Factor
   # 187	CSA Badge
+  # 500 Equity Rating: State Test Percentile
+  # 501 Equity Rating: Growth Percentile
+  # 502 Equity Rating: Growth Proxy Percentile
+  # 503 Equity Rating: College Readiness Percentile
 
-  WHITELISTED_DATA_TYPES = %w(151 155 156 157 158 159 160 175 176 177 178 179 180 181 182 183 184 185 186 187).freeze
+
+  WHITELISTED_DATA_TYPES = %w(151 155 156 157 158 159 160 175 176 177 178 179 180 181 182 183 184 185 186 187 500 501 502 503).freeze
 
   def self.listens_to?(data_type)
     :ratings == data_type

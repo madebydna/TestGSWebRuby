@@ -11,3 +11,4 @@ json.distance school[:distance]
 json.links(
   show: school[:links][:profile]
 )
+json.zipcode school[:zipcode]

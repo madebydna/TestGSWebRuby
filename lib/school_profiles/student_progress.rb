@@ -94,7 +94,7 @@ module SchoolProfiles
       description = data_label(description) if description
       methodology = rating_methodology
       methodology = data_label(methodology) if methodology
-      if ['ca', 'mi'].include?(@school.state.downcase)
+      if ['in', 'nd'].exclude?(@school.state.downcase)
         source = "GreatSchools; #{label('source_calculation')} #{rating_year}"
       else
         source = "#{@school.state_name.titleize} #{label('Dept of Education')}, #{rating_year}"
@@ -130,7 +130,7 @@ module SchoolProfiles
     end
 
     def path_to_yml
-      if ['ca', 'mi'].include?(@school.state.downcase)
+      if ['in', 'nd'].exclude?(@school.state.downcase)
         path = 'lib.student_progress_alt'
       else
         path = 'lib.student_progress'

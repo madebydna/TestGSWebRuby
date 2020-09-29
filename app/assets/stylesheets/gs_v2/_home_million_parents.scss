@@ -1,0 +1,122 @@
+.million-parents{
+  display: flex;
+  min-height: 350px;
+  padding: 2em 0;
+  @include media-breakpoint-down(sm){
+    padding-left: 0;
+    padding-right: 0; 
+  }
+
+  h2 {
+    margin-bottom: 35px;
+
+    @include media-breakpoint-only(sm){
+      margin-bottom: 25px;
+    }
+
+    @include media-breakpoint-only(xs){
+      margin-bottom: 20px;
+    }
+  }
+
+  > div:first-child{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: calc(50% - 10px);
+    max-width: calc(50% - 10px);
+    padding: 20px 40px 20px 100px;
+    background-color: $module-background;
+    @include media-breakpoint-down(md){
+      padding-left: 20px;
+    }
+    @include media-breakpoint-down(sm){
+      min-width: 100%;
+    }
+  }
+
+  .right-side-container{
+    @include media-breakpoint-down(sm){
+      display: none;
+    }
+  }
+
+  .image-container{
+    display: flex;
+    margin-right: 100px;
+
+    @include media-breakpoint-down(md){
+      margin-right: 25px;
+    }
+    .flute-container{
+      width: 50%;
+      @include media-breakpoint-down(md){
+        width: 100%;
+      }
+    }
+  }
+
+  .flute-image{
+    max-width: 100%;
+    border-top-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+    margin-left: 20px;
+    @include media-breakpoint-down(md){
+      max-width: 100%;
+    }
+    @include media-breakpoint-down(sm){
+      display: none;
+    }
+  }
+
+  .shape-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 0 4em;
+    @include media-breakpoint-down(md){
+      display: none;
+    }
+    .quarter-circle{
+      width: 145px;
+      height: 145px;
+      background: $quarter-orange;
+      border-radius: 0 0 145px 0;
+    }
+  
+    .circle-stack{
+      position: relative;
+      width: 145px;
+      height: 145px;
+      border-radius: 50%;
+      background-color: $midnight_blue;
+      .stacked-quarter-circle{
+        position: absolute;
+        width: 73px;
+        height: 73px;
+        background: #CDE9F5;
+        right: 0;
+        border-radius: 0 73px 0 0;
+      }
+    }
+  }
+
+  .solid-bar-container{
+    position: relative;
+    min-height: 80px;
+    margin: 25px 140px 0 20px;
+    background-color: $midnight_blue;
+    @include media-breakpoint-down(md){
+      display: none;
+    }
+
+    .blue-bar{
+      position: absolute;
+      min-height: 80px;
+      background-color: $primary-brand-blue;
+      width: 40%;
+    }
+  }
+
+
+}
