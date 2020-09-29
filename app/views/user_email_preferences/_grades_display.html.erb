@@ -34,24 +34,6 @@
           </div>
         <% end %>
       </div>
-      <% if false %>
-        <% available_grades.to_a.in_groups_of(7).each do |grade_group| %>
-          <div>
-            <% grade_group.compact.each do |grade, label| %>
-              <div class="pas js-greatkidsnews-grades-checkbox btn-checkbox fl js-disableTarget btn js-checkboxButton js-gradeCheckbox <%= 'active' if active_grades.include?(grade) %>"
-                  style="min-width:38px"
-                  data-grade="<%= grade %>"
-                  data-toggle="button"
-                  data-language="<%= language %>"
-                  data-district-id="<%= district_id %>"
-                  data-district-state="<%= district_state %>"
-              ><%= label %>
-              </div>
-            <% end %>
-          </div>
-          <div class="clearfix"></div>
-        <% end %>
-      <% end %>
     </div>
   </div>
 
