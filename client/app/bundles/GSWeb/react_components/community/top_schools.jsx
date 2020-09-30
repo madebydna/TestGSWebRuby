@@ -104,7 +104,6 @@ const assignDisplayType = (schools, levelCodes, size, community) => {
 
 const TopSchools = ({ schools, handleGradeLevel, renderTabsContainer, size, levelCodes, community, schoolLevels, locality, summaryType }) => {
   let name = regionName(locality, community);
-  let ratingsUrl = locality.ratingsUrl;
 
   let schoolList;
   const seeSchoolMap = {
@@ -123,7 +122,7 @@ const TopSchools = ({ schools, handleGradeLevel, renderTabsContainer, size, leve
         </section>;
   }
 
-  const ts_blurb = summaryType === 'Summary Rating' ? t('top_schools.top_schools_blurbs', { parameters: { name, ratingsUrl } }) : t('top_schools.top_schools_test_score_ratings_blurb', { parameters: { name, ratingsUrl } })
+  const ts_blurb = summaryType === 'Summary Rating' ? t('top_schools.top_schools_blurbs', { parameters: { name } }) : t('top_schools.top_schools_test_score_ratings_blurb', { parameters: { name } })
 
   return(
     <div id="TopSchools" className="top-school-module">

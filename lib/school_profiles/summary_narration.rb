@@ -8,10 +8,7 @@ module SchoolProfiles
 
     delegate :gs_rating, to: :school_cache_data_reader
 
-    SUMMARY_RATING_METHODS = %w(summary_rating test_scores_rating college_readiness_rating student_progress_rating sentence_ender discipline_and_attendence)
-
-    # JT-10739: Alt methods = revised order of narration elements for CA & MI schools
-    SUMMARY_RATING_METHODS_ALT = %w(summary_rating student_progress_rating college_readiness_rating equity_rating sentence_ender discipline_and_attendence)
+    SUMMARY_RATING_METHODS = %w(summary_rating student_progress_rating college_readiness_rating equity_rating sentence_ender discipline_and_attendence)
 
     SUMMARY_RATING_METHODS_TEST_SCORE_ONLY = %w(test_scores_only_before_more test_scores_only_after_more)
 
@@ -23,11 +20,7 @@ module SchoolProfiles
 
     def build_content
       if @src.present? && @school_cache_data_reader.gs_rating.present?
-        if ['in', 'nd'].exclude?(@school.state.downcase)
-          SUMMARY_RATING_METHODS_ALT.map { |method| send(method) }.compact.delete_if(&:empty?)
-        else
-          SUMMARY_RATING_METHODS.map { |method| send(method) }.compact.delete_if(&:empty?)
-        end
+        SUMMARY_RATING_METHODS.map { |method| send(method) }.compact.delete_if(&:empty?)
       end
     end
 
@@ -126,11 +119,7 @@ module SchoolProfiles
     end
 
     def sentence_ender
-      if ['in', 'nd'].exclude?(@school.state.downcase)
-        obj = @src.test_scores
-      else
-        obj = @src.equity_overview
-      end
+      obj = @src.test_scores
 
       if obj.present? && obj[:rating].present?
         standard_rating_by_obj(obj[:rating], obj[:title])
@@ -148,12 +137,7 @@ module SchoolProfiles
     end
 
     def path_to_yml
-      if ['in', 'nd'].exclude?(@school.state.downcase)
-        path = 'school_profiles.summary_narration_alt'
-      else
-        path = 'school_profiles.summary_narration'
-      end
-      path
+      'school_profiles.summary_narration'
     end
   end
 end
