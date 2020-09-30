@@ -4,12 +4,12 @@ import { translateWithDictionary } from 'util/i18n';
 
 const t = translateWithDictionary({
   en: {
-    banner_html: String.raw`<span class="title col-sm-offset-2 col-md-offset-3 col-lg-offset-2">We stand in solidarity with</span>
+    banner_html: String.raw`<span class="title">We stand in solidarity with</span>
       Black Lives Matter. <a class="banner-link" href = "https://blog.greatschools.org/2020/06/05/1220/">Here's what we're doing.
       </a><img src="${iconClose}" class="banner-cancel"/>`
   },
   es: {
-    banner_html: String.raw`<span class="title col-sm-offset-2 col-md-offset-3 col-lg-offset-2">Nos solidarizamos con </span>
+    banner_html: String.raw`<span class="title">Nos solidarizamos con </span>
       Black Lives Matter. <a class="banner-link" href = "https://blog.greatschools.org/2020/06/05/1220/">Esto es lo que estamos haciendo.
       </a><img src="${iconClose}" class="banner-cancel"/>`
   }
