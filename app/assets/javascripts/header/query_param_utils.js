@@ -35,9 +35,28 @@ GS.nav.queryParamsUtils = GS.nav.queryParamsUtils || (function() {
     return uri + hash;
   };
 
+  const updateQueryParams = (searchParams, key, value) => {
+    let query = new URLSearchParams(searchParams);
+
+    if (value) {
+      query.set(key, value);
+    } else {
+      query.delete(key);
+    }
+
+    query.sort();
+
+    if (query.toString().length > 0) {
+      return `?${query.toString()}`;
+    } else {
+      return "";
+    }
+  };
+
   return {
     getQueryParam: getQueryParam,
-    updateUrlParameter: updateUrlParameter
+    updateUrlParameter: updateUrlParameter,
+    updateQueryParams: updateQueryParams
   }
 
 })();

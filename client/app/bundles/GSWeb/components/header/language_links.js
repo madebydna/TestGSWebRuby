@@ -1,4 +1,8 @@
-import { getQueryParam, updateUrlParameter } from './query_param_utils';
+import {
+  getQueryParam,
+  updateUrlParameter,
+  updateLangParams,
+} from "./query_param_utils";
 
 const isSpanish = function() {
   let pathname = window.location.pathname;
@@ -40,9 +44,13 @@ const initLanguageLinkListener = function() {
     }
     locationLanguageLink = window.location.href;
     if(isSpanish()) {
-      changeLanguageLink[0].href = updateUrlParameter(locationLanguageLink, 'lang', '');
+      changeLanguageLink[0].href =
+        window.location.pathname +
+        updateQueryParams(window.location.search, "lang", "");
     } else {
-      changeLanguageLink[0].href = updateUrlParameter(locationLanguageLink, 'lang', 'es');
+      changeLanguageLink[0].href =
+        window.location.pathname +
+        updateQueryParams(window.location.search, "lang", "es");
     }
     return true;
   }

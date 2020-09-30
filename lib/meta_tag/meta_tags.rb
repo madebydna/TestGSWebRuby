@@ -46,14 +46,20 @@ module MetaTag
       'noindex' unless is_browse_url? && any_results?
     end
 
+    def params_to_remove
+      @_params_to_remove ||=begin
+        # JT-11147 Special case to remove entity types from meta tags if level codes exist
+        entity_types_params = level_code.present? ? school_type_param_name : nil
+        [view_param_name, sort_type_param_name, school_type_param_name]
+      end
+    end
+
     def prev_url
-      param_to_remove = view == default_view ? view_param_name : nil
-      prev_page_url(page_of_results, param_to_remove)
+      prev_page_url(page_of_results, params_to_remove)
     end
 
     def next_url
-      param_to_remove = view == default_view ? view_param_name : nil
-      next_page_url(page_of_results, param_to_remove)
+      next_page_url(page_of_results, params_to_remove)
     end
 
     def canonical_url
@@ -67,9 +73,8 @@ module MetaTag
     def params_for_canonical
       {}.tap do |key|
         key[grade_level_param_name] = level_codes if level_code.present?
+        key[school_type_param_name] = entity_types if entity_types.present? && !level_code.present? # JT-11147 Special case to remove entity types from meta tags if level codes exist
         key[page_param_name] = given_page if given_page.present?
-        key[school_type_param_name] = entity_types if entity_types.present?
-        key[view_param_name] = view if view.present? && view != default_view
         key[table_view_param_name] = tableView if tableView.present?
       end.compact
     end
