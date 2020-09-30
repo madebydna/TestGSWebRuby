@@ -8,7 +8,6 @@ class StatesController < ApplicationController
   include CommunityTabConcerns
   include PopularCitiesConcerns
   include CommunityConcerns
-  include RatingMethodologySelector
 
   before_action :set_city_state
   # before_action :set_hub
@@ -232,7 +231,6 @@ class StatesController < ApplicationController
           state_abbr: @state[:short],
           trailing_slash: true
         )
-        cp[:ratingsUrl] = ratings_link
         cp[:searchResultBrowseUrl] = search_state_browse_path(gs_legacy_url_encode(@state[:long]))
         cp[:stateCsaBrowseUrl] = state_college_success_awards_list_path(
           state: gs_legacy_url_encode(@state[:long]),
