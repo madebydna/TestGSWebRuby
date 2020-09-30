@@ -36,7 +36,7 @@ GS.nav.queryParamsUtils = GS.nav.queryParamsUtils || (function() {
   };
 
   var updateQueryParams = function(searchParams, key, value) {
-    let query = new URLSearchParams(searchParams);
+    var query = new URLSearchParams(searchParams);
 
     if (value) {
       query.set(key, value);
