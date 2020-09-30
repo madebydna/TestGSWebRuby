@@ -76,6 +76,7 @@ es:
       'Percent Enrolled in an in-state public 4 year college and Returned for a Second Year': Graduados que regresaron a la universidad pública de 4 años por un segundo año
       'Percent Enrolled in an in-state public 2 year college and Returned for a Second Year': Graduados que regresaron a la universidad pública de 2 años por un segundo año
       'Percent Needing Remediation for College': Graduados que necesitan remediación en la universidad
+      'Percent Needing any Remediation for College': Graduados que necesitan remediación en la universidad
       'Graduates needing English Remediation for College': Graduados que necesitan remediación en inglés en la universidad
       'Graduates needing Math Remediation for College': Graduados que necesitan remediación en matemáticas en la universidad
       'Graduates needing Science Remediation for College': Graduados que necesitan remediación en ciencia en la universidad
@@ -138,6 +139,7 @@ es:
         'Graduating seniors pursuing other college': 'Esto refleja el porcentaje de graduados de esta escuela secundaria que se inscribieron en programas universitarios distintos de una universidad de 2 o 4 años inmediatamente después de la escuela secundaria.'
         'Percent Enrolled in College Immediately Following High School': Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en la universidad inmediatamente después de la escuela secundaria.'
         'Percent Needing Remediation for College': Esto refleja el porcentaje de graduados de esta escuela que necesitaron tomar clases básicas o correctivas, que no cuentan para un título universitario.
+        'Percent Needing any Remediation for College': Esto refleja el porcentaje de graduados de esta escuela que necesitaron tomar al menos una clase básica o correctiva, que no cuenta para un título universitario.
         'Graduates needing English Remediation for College': Esto refleja el porcentaje de graduados de esta escuela que necesitaron tomar clases de inglés básicas o correctivas, que no cuentan para un título universitario.
         'Graduates needing Math Remediation for College': Esto refleja el porcentaje de graduados de esta escuela que necesitaron tomar clases de matemáticas básicas o correctivas, que no cuentan para un título universitario.
         'Graduates needing Science Remediation for College': Esto refleja el porcentaje de graduados de esta escuela que necesitaron tomar clases de ciencia básicas o correctivas, que no cuentan para un título universitario.
@@ -343,6 +345,7 @@ es:
       'Percent Enrolled in an in-state public 4 year college and Returned for a Second Year': Graduados que regresaron a la universidad pública de 4 años por un segundo año
       'Percent Enrolled in an in-state public 2 year college and Returned for a Second Year': Graduados que regresaron a la universidad pública de 2 años por un segundo año
       'Percent Needing Remediation for College': Graduados que necesitan remediación en la universidad
+      'Percent Needing any Remediation for College': Graduados que necesitan remediación en la universidad
       'Graduates needing English Remediation for College': Graduados que necesitan remediación en inglés en la universidad
       'Graduates needing Math Remediation for College': Graduados que necesitan remediación en matemáticas en la universidad
       'Graduates needing Science Remediation for College': Graduados que necesitan remediación en ciencia en la universidad
@@ -403,6 +406,7 @@ es:
         'Graduating seniors pursuing other college': 'Esto refleja el porcentaje de graduados de esta escuela secundaria que se inscribieron en programas universitarios distintos de una universidad de 2 o 4 años inmediatamente después de la escuela secundaria.'
         'Percent Enrolled in College Immediately Following High School': Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en la universidad inmediatamente después de la escuela secundaria.'
         'Percent Needing Remediation for College': Esto refleja el porcentaje de graduados de esta escuela que necesitaron tomar clases básicas o correctivas, que no cuentan para un título universitario.
+        'Percent Needing any Remediation for College': Esto refleja el porcentaje de graduados de esta escuela que necesitaron tomar al menos una clase básica o correctiva, que no cuenta para un título universitario.
         'Graduates needing English Remediation for College': Esto refleja el porcentaje de graduados de esta escuela que necesitaron tomar clases de inglés básicas o correctivas, que no cuentan para un título universitario.
         'Graduates needing Math Remediation for College': Esto refleja el porcentaje de graduados de esta escuela que necesitaron tomar clases de matemáticas básicas o correctivas, que no cuentan para un título universitario.
         'Graduates needing Science Remediation for College': Esto refleja el porcentaje de graduados de esta escuela que necesitaron tomar clases de ciencia básicas o correctivas, que no cuentan para un título universitario.
