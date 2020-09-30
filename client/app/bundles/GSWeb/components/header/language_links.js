@@ -1,7 +1,7 @@
 import {
   getQueryParam,
   updateUrlParameter,
-  updateLangParams,
+  updateQueryParams,
 } from "./query_param_utils";
 
 const isSpanish = function() {
