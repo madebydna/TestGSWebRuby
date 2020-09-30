@@ -30,7 +30,7 @@ module CommunityProfiles
                                  .first
 
       content = '<div class="sourcing">'
-      content << '<h1>' + I18n.t('source_title', scope: "lib.academic_progress.district_scope") + '</h1>'
+      content << '<h1>' + I18n.t('source_title', scope: path_to_yml) + '</h1>'
       content << rating_source(year: source_info["year"], label: I18n.t('Greatschools rating', scope: "lib.academic_progress"),
                                description: rating_db_label(source_info["description"]), methodology: nil,
                                more_anchor: 'academicprogressrating',
@@ -43,12 +43,12 @@ module CommunityProfiles
 
       {}.tap do |h|
         h['key'] = 'academic_progress'
-        h['title'] = I18n.t('title', scope: "lib.academic_progress.district_scope")
-        h['subtext'] = I18n.t('subtext', scope: "lib.academic_progress.district_scope")
+        h['title'] = I18n.t('title', scope: path_to_yml)
+        h['subtext'] = I18n.t('subtext', scope: path_to_yml)
         h['narration'] = I18n.t("#{ratings_narration.narration_logic}_html", scope: "lib.academic_progress.district_scope.narrative")
         h['tooltip'] = I18n.t("tooltip_html", scope: path_to_yml)
-        h['graphic_header'] = I18n.t("graphic_header", scope: "lib.academic_progress.district_scope")
-        h['graphic_header_tooltip'] = I18n.t("graphic_header_tooltip", scope: "lib.academic_progress.district_scope")
+        h['graphic_header'] = I18n.t("graphic_header", scope: path_to_yml)
+        h['graphic_header_tooltip'] = I18n.t("graphic_header_tooltip", scope: path_to_yml)
         h['data'] = data_points
         h['source'] = sources
       end
@@ -70,7 +70,7 @@ module CommunityProfiles
         {}.tap do |h|
           h['key'] = rating
           h['name'] = I18n.t(rating, scope: 'helpers.ratings_helpers')
-          h['value_label'] = I18n.t("data_point_label", scope: "lib.academic_progress.district_scope")
+          h['value_label'] = I18n.t("data_point_label", scope: path_to_yml)
           h['district_value'] = SchoolProfiles::DataPoint.new(percentage).apply_formatting([:round]).format
           h['state_value'] = SchoolProfiles::DataPoint.new(state_ratings_narration.ratings_percentage_hash[rating]).apply_formatting([:round]).format
           h['color'] = colors[rating]
