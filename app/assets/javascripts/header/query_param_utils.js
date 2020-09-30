@@ -46,7 +46,7 @@ GS.nav.queryParamsUtils = GS.nav.queryParamsUtils || (function() {
 
     query.sort();
     if (query.toString().length > 0) {
-      return `?${query.toString()}`;
+      return "?" + query.toString();
     } else {
       return "";
     }
