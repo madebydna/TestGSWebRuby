@@ -1,5 +1,5 @@
 import { readCookie } from './utils';
-import iconClose from 'icons/times-solid-white.svg';
+import iconClose from 'icons/times-solid-black.svg';
 import { translateWithDictionary } from 'util/i18n';
 
 const t = translateWithDictionary({
@@ -27,7 +27,7 @@ export const init = () => {
 
     banner.innerHTML = t('banner_html');
 
-    header.parentNode.insertBefore(banner, header.nextSibling);
+    header.parentNode.insertBefore(banner, header);
 
     if (window.innerWidth < 768) {
       const hero = document.querySelector('#home-page');
