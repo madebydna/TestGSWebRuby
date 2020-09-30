@@ -1,10 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Button from "../button";
 import CsaTopSchoolTableRow from './csa_top_school_table_row';
 import School from 'react_components/search/school';
 import { t } from "util/i18n";
-import { addQueryParamToUrl } from 'util/uri';
 import csaBadgeGenLg from 'school_profiles/csa_generic_badge_lg_icon.png';
 
 const regionName = (locality, community) => {

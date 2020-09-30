@@ -79,26 +79,28 @@ const assignDisplayType = (schools, levelCodes, size, community) => {
   )
 
   displayedSchools.push(
-    schools.middle.map(school => (
+    schools.middle.map((school) => (
       <TopSchoolTableRow
         key={school.state + school.id}
         {...school}
         size={size}
-        display={levelCodes === 'm' ? true : false}
+        community={community}
+        display={levelCodes === "m" ? true : false}
       />
     ))
-  )
+  );
 
   displayedSchools.push(
-    schools.high.map(school => (
+    schools.high.map((school) => (
       <TopSchoolTableRow
         key={school.state + school.id}
         {...school}
         size={size}
-        display={levelCodes === 'h' ? true : false}
+        community={community}
+        display={levelCodes === "h" ? true : false}
       />
     ))
-  )
+  );
   return displayedSchools;
 }
 
