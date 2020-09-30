@@ -66,17 +66,17 @@ es:
       twitter_description: 'Clasificaciones de escuelas y evaluaciones para escuelas públicas y privadas: GreatSchools'
       slideshows:
         headers:
-          0: Insights on College Success
-          1: Support learning at home during COVID-19
-          2: Finding the Data
-          3: College Success Awards
-          4: Searching for Opportunity
+          0: Perspectivas sobre el éxito universitario
+          1: Apoya el aprendizaje en casa durante COVID-19
+          2: Encontrando los Datos
+          3: Premios a la Preparación Universitaria (College Success Awards)
+          4: Buscando Oportunidades
         subtexts:
-          0: Nonselective high schools that help underserved students enroll and persist in college.
-          1: Exploring the experiences of our users at home during the COVID-19 crisis.
-          2: A state by state assessment of education data transparency
-          3: Celebrating high schools that prepare students to succeed in college
-          4: Examining racial gaps in access to quality schools in California and a list of Spotlight Schools
+          0: Escuelas secundarias que no son selectivas que ayudan a los estudiantes de grupos desfavorecidos a inscribirse y persistir en la universidad.
+          1: Explorando las experiencias de nuestros usuarios en casa durante COVID-19.
+          2: Una evaluación estatal de la transparencia de datos de educación.
+          3: Celebrando las escuelas secundarias que preparan a los estudiantes para tener éxito en la universidad.
+          4: Examinando las brechas raciales en el acceso a escuelas de alta calidad en California y una lista de Escuelas Destacadas.
         links:
           0: /gk/csa-report-success-without-selection/
           1: /gk/about/parent-insights/
