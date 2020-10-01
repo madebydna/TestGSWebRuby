@@ -5,6 +5,9 @@
   position: relative;
   font-family: "opensans-regular";
   padding: 20px;
+  @include media-breakpoint-up(lg) {
+    padding: 20px 0;
+  }
 
   @media (max-width: 768px) {
     text-align: left;
@@ -23,7 +26,7 @@
     @include media-breakpoint-up(lg) {
       max-width: 1440px;
       margin: 0 auto;
-      padding: 0 80px;
+      padding: 0 100px;
     }
   }
 
