@@ -1,16 +1,10 @@
 // Home Page banner
 #home-page-banner {
-  // background-color: rgba(0, 0, 0, 0.8);
-  // color: white;
-  background-color: white;
-  color: black;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
   position: relative;
   font-family: "opensans-regular";
   padding: 1.2em;
-
-  @include media-breakpoint-up(md) {
-    text-align: center;
-  }
 
   @media (max-width: 768px) {
     text-align: left;
@@ -33,13 +27,11 @@
   }
 
   .banner-link{
-    // color: white;
-    color: #333333;
+    color: white;
     text-decoration: underline;
 
     &:hover{
-      // color: #e1e1e1;
-      color: #474747;
+      color: #e1e1e1;
     }
 
     @media (max-width: 768px) {
