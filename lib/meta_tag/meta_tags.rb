@@ -50,7 +50,7 @@ module MetaTag
       @_params_to_remove ||=begin
         # JT-11147 Special case to remove entity types from meta tags if level codes exist
         entity_types_params = level_code.present? ? school_type_param_name : nil
-        [view_param_name, sort_type_param_name, school_type_param_name]
+        [view_param_name, sort_type_param_name, school_type_param_name].compact
       end
     end
 
