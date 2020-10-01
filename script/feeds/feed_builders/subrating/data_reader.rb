@@ -63,7 +63,6 @@ module Feeds
                   hash['Equity'] = school.equity_overview_rating_hash if school.equity_overview_rating_hash
                   hash['Academic Progress'] = school.academic_progress_rating_hash if school.academic_progress_rating_hash
                   hash['Student Growth'] = school.student_growth_rating_hash if school.student_growth_rating_hash
-                  hash['Low Income'] = school.low_income_rating_hash if school.low_income_rating_hash
                   hash['Discipline Flag'] = school.discipline_flag_hash if school.discipline_flag_hash
                   hash['Attendance Flag'] = school.absence_flag_hash if school.absence_flag_hash
                 end

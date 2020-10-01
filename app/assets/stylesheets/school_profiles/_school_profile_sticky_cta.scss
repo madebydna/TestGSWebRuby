@@ -85,9 +85,15 @@ $cta_font_color: $gray-mute;
       display:none;
     }
 
+    hr {
+      margin: 0 auto;
+      width: 95%;
+      text-align: center;
+    }
+
     >.content {
       padding: 10px;
-      background-color: #efefef;
+      background-color: white;
       color: #000000;
 
       .icon {
@@ -105,12 +111,13 @@ $cta_font_color: $gray-mute;
         a {
           font-family: $font-family-base-bold;
           color:#26abe2;
-          font-size: $font-size-small;
+          font-size: $font-size-medium;
         }
 
         .right-rail-module-header {
           font-family: $font-family-base-bold;
           font-size: $font-size-medium;
+          // color: $brand-primary-joyous;
         }
 
         .right-rail-module-text {

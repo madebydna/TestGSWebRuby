@@ -9,9 +9,13 @@ es:
     Take_a_quick_tour: Visite rápidamente el sitio
     Not_right_now: No en este momento
     We found 3 nearest high-performing schools_html: Vea las 3 escuelas más cercanas de alto rendimiento
+    homes_sales:
+      homes_nearby_html: <a href="https://www.zillow.com/%{query}?cbpartner=Great+Schools&utm_source=Great_Schools&utm_medium=referral&utm_campaign=schoolprofiles_rightrail" target="_blank" rel="nofollow">Casas cercanas</a>
+      homes_body: Casas en alquiler y venta cerca de esta escuela
+      powered_by_zillow: Desarrollado por Zillow
     xq:
-      school_board_finder: Encuentra tu junta escolar
-      learn_more_school_board_html: Obtén más información sobre la junta escolar de este distrito y sobre <a href="https://xqsuperschool.org/school-board-lookup?address=%{address}&utm_source=greatschools&utm_medium=search_tool&utm_campaign=school_board_thing" target="_blank" rel="nofollow">cómo puedes participar</a> (enlace en inglés).
+      school_board_finder_html: <a href="https://xqsuperschool.org/school-board-lookup?address=%{address}&utm_source=greatschools&utm_medium=search_tool&utm_campaign=school_board_thing" target="_blank" rel="nofollow">Encuentra Tu Junta Escolar</a>
+      learn_more_school_board: Aprenda más sobre cómo involúcrate
       powered_by_xq: Desarrollado por XQ
       sources: >
         <div class="sourcing">
@@ -19,5 +23,9 @@ es:
           <div>
             <h4>Encuentra tu junta escolar</h4>
             <p><span class="emphasis">Fuente&#58;</span> XQ</p>
+          </div>
+          <div>
+            <h4>Casas cercanas</h4>
+            <p><span class="emphasis">Fuente&#58;</span> Zillow</p>
           </div>
         </div>

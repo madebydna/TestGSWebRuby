@@ -167,13 +167,6 @@ describe 'School profiles page', remote: true do
       its(:text) { is_expected.to be_present }
     end
 
-    with_subject :homes_and_rentals do
-      its('title_bar') do
-        pending("Can't seem to find homes_and_rentals section")
-        is_expected.to have_text('Homes for sale near Alameda High School')
-      end
-    end
-
     with_subject :neighborhood do
       it { is_expected.to be_present }
       it { is_expected.to have_button('See this school\'s attendance zone') }

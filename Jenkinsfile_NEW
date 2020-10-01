@@ -149,6 +149,10 @@ pipeline {
       }
       steps {
         withEnv(['PATH+EXTRA=/home/admin/.rbenv/bin:/home/admin/.rbenv/shims:/home/admin/.rbenv/plugins/ruby-build/bin:/usr/local/sbin']) {
+          sh 'mkdir -p vendor/cache'
+          unstash 'bundle'
+          sh 'bundle install --local --without development'
+          sh 'rbenv rehash'
           sh 'rm -rf coverage'
           sh 'mkdir -p coverage/simplecov-resultset-{1,2,3,4}'
           dir("coverage/simplecov-resultset-1") {

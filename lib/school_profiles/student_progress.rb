@@ -94,11 +94,7 @@ module SchoolProfiles
       description = data_label(description) if description
       methodology = rating_methodology
       methodology = data_label(methodology) if methodology
-      if ['in', 'nd'].exclude?(@school.state.downcase)
-        source = "GreatSchools; #{label('source_calculation')} #{rating_year}"
-      else
-        source = "#{@school.state_name.titleize} #{label('Dept of Education')}, #{rating_year}"
-      end
+      source = "GreatSchools; #{label('source_calculation')} #{rating_year}"
 
       content = '<div class="sourcing">'
       content << '<h1>' + label('title') + '</h1>'
@@ -130,12 +126,7 @@ module SchoolProfiles
     end
 
     def path_to_yml
-      if ['in', 'nd'].exclude?(@school.state.downcase)
-        path = 'lib.student_progress_alt'
-      else
-        path = 'lib.student_progress'
-      end
-      path
+      'lib.student_progress'
     end
 
     def visible?

@@ -8,65 +8,9 @@ en:
       header:
         title: GreatSchools Summary Rating
         subtext_html: >
-          GreatSchools is a national nonprofit organization. Our new Summary Rating provides a multi-measured reflection
-          of school quality based on the ratings components you see here.
-        Learn more: Learn more about GreatSchools Ratings.
-        Last updated: Last updated
-      table_content:
-        Rating components: Rating components
-        Weight: Weight
-        rating_flag: 'Rating/flag'
-        Test Scores: Test Scores
-        Test Scores Description: >
-          The GreatSchools Test Score Rating reflects annual state test results for this school compared with
-          scores statewide.
-        Student Progress: Student Progress
-        Student Progress Description: >
-          The GreatSchools Student Progress Rating compares the academic progress over time for this school to all
-          schools in the state, using student growth data provided by the state Department of Education.
-        Academic Progress: Academic Progress
-        Academic Progress Description: >
-          The Academic Progress Rating helps measure how much students learn in a year, compared to their peers
-          across the state.
-        College Readiness: College Readiness
-        College Readiness Description: >
-          This rating shows how well students at this school are prepared for college compared to students at
-          other schools in this state, based on key measures, like graduation rates, college entrance tests and AP
-          coursework when available.
-        Advanced Courses: Advanced Courses
-        Advanced Courses Description: >
-          The Advanced Courses Rating reflects the number of advanced courses taken per student at this school in
-          English, STEM, social sciences, and foreign languages compared to the state average.
-        Equity Overview: Equity Overview
-        Equity Overview Description: >
-          The Equity Overview Rating looks at how well this school is serving the needs of its disadvantaged
-          students relative to all its students, compared to other schools in the state, based on test scores
-          provided from the state Department of Education.
-        Equity Adjustment Factor: Equity adjustment factor
-        Equity Adjustment Factor Description: >
-          Schools that do not have a large enough population of disadvantaged students to calculate an Equity
-          Rating (homogeneous schools) are given the average Equity Rating for schools with the same Test Score
-          Rating. This estimate, called the Equity adjustment factor, allows for the Summary Ratings of schools
-          with and without Equity Ratings to be more easily comparable.
-        Discipline Flag: Discipline flag
-        Discipline Flag Description: >
-          This flag signifies that there are big differences in suspension rates between different student groups
-          at this school, which is very concerning.
-        Attendance Flag: Attendance flag
-        Attendance Flag Description: >
-          This flag signifies that there are big differences in the levels of chronic absenteeism between different
-          student groups at this school, which is very concerning.
-    summary_rating_alt:
-      Top rated: Top rated
-      Above average: Above average
-      Average: Average
-      Below average: Below average
-      header:
-        title: GreatSchools Summary Rating
-        subtext_html: >
-          GreatSchools is a national nonprofit organization. Our Summary Rating provides a multi-measured reflection
-          of school quality based on the ratings components you see here.
-        Learn more: Learn more about GreatSchools Ratings.
+          GreatSchools is a national nonprofit organization. Our Summary Rating provides a snapshot of school quality based on the following measures.
+        learn_more_html: >
+          Learn more <a href="/gk/ratings/" target="_blank">about GreatSchools Ratings</a> and <a href="/gk/articles/why-we-changed-our-ratings/" target="_blank">why we changed them</a>.
         Last updated: Last updated
       table_content:
         Rating components: Rating components

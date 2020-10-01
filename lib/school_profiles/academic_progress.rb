@@ -128,12 +128,7 @@ module SchoolProfiles
     end
 
     def path_to_yml
-      if ['in', 'nd'].exclude?(@school.state.downcase)
-        path = 'lib.academic_progress_alt'
-      else
-        path = 'lib.academic_progress'
-      end
-      path
+      'lib.academic_progress'
     end
 
     protected

@@ -16,7 +16,6 @@ import Calendar from 'react_components/community/calendar';
 import DistanceLearning from 'react_components/community/distance_learning';
 import Finance from 'react_components/community/finance';
 import Mobility from 'react_components/community/mobility';
-import Zillow from 'react_components/community/zillow';
 import Ad from 'react_components/ad';
 import { scrollToElement } from 'util/scrolling';
 import { keepInViewport, isScrolledInViewport } from 'util/viewport';
@@ -47,7 +46,6 @@ ReactOnRails.register({
   Calendar,
   Finance,
   Mobility,
-  Zillow,
   AdWrapper,
   DistanceLearning
 });
@@ -82,9 +80,12 @@ $(() => {
     setBottom: true
   });
 
+  // TODO: only used on distance learning. In future, move functionality to the react component similar to recent reviews
   $('body').on('click', '.js-moreRevealLink', function() {
     $(this).hide();
-    $(this).siblings('.js-moreReveal').removeClass('more-reveal');
+    document.querySelector("#distance-learning").querySelectorAll('.js-moreReveal').forEach(element => {
+      element.classList.remove('more-reveal')
+    })
   });
 
   const tocLinks = document.querySelectorAll(".toc li");
@@ -130,7 +131,6 @@ $(() => {
     'calendar': '#calendar',
     'finance': '#finance .profile-module',
     'mobility': '#mobility',
-    'homes-and-rentals': '#homes-and-rentals',
     'reviews': '#reviews',
     'districts': '#districts .districts-in-community-module',
     'cities': '#cities .links-module',

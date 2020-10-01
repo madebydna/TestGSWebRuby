@@ -50,5 +50,11 @@ FactoryBot.define do
       name "Shelby County School District"
       state "al"
     end
+
+    factory :stockton_unified_school_district do
+      district_id 759
+      city 'Stockton'
+      name 'Stockton Unified School District'
+    end
   end
 end

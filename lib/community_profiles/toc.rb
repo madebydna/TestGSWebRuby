@@ -11,7 +11,6 @@ module CommunityProfiles
       community_resources: { label: 'community_resources', anchor: 'mobility' },
       distance_learning: { label: 'distance_learning', anchor: 'distance-learning' },
       finance: { label: 'district_finances', anchor: 'finance' },
-      nearby_homes_for_sale: { label: 'nearby_homes_for_sale_and_rent', anchor: 'homes-and-rentals' },
       neighboring_cities: { label: 'neighboring_cities', anchor: 'neighboring-cities' },
       reviews: { label: 'reviews', anchor: 'reviews' },
       school_districts: { label: 'districts', anchor: 'districts' },
@@ -42,13 +41,13 @@ module CommunityProfiles
     end
 
     def city_toc
-      toc_items = [:schools, :school_districts, :community_resources, :nearby_homes_for_sale, :reviews, :neighboring_cities]
+      toc_items = [:schools, :school_districts, :community_resources, :reviews, :neighboring_cities]
 
       generate_toc(toc_items)
     end
 
     def district_toc
-      toc_items = [:distance_learning, :schools, :academics, :academic_progress, :student_progress, :advanced_courses, :student_demographics, :teachers_staff, :calendar, :finance, :community_resources, :nearby_homes_for_sale, :reviews]
+      toc_items = [:distance_learning, :schools, :academics, :academic_progress, :student_progress, :advanced_courses, :student_demographics, :teachers_staff, :calendar, :finance, :community_resources, :reviews]
 
       generate_toc(toc_items)
     end

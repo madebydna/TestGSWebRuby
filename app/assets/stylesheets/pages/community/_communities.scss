@@ -451,6 +451,15 @@ svg {
             font-family: "opensans-semibold";
             color: $school-color;
           }
+          .icon-house {
+            color: $school-color;
+            padding-top: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            > span{
+              font-family: 'opensans-semibold';
+            }
+          }
         }
       }
     }
@@ -600,16 +609,25 @@ svg {
 #mobility{
   margin-bottom: 20px;
 
-  .xq_school_board_module_container {
+  .community_resource_module_container {
     margin-bottom: 30px;
 
-    .xq_school_board_module {
+    .community_resource_module {
       border: 1px solid $border-color;
       padding: 15px;
       margin: 5px 0;
 
       h3 {
         margin-bottom: 3px;
+        a{
+          font-size: 20px;
+          font-family: 'opensans-bold';
+        }
+      }
+
+      .powered {
+        font-family: 'opensans-italic';
+        color: darkgray;
       }
     }
   }

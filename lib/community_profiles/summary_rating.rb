@@ -36,12 +36,7 @@ module CommunityProfiles
     end
 
     def path_to_yml
-      if ['in', 'nd'].exclude?(@state_cache_data_reader.state.downcase)
-        path = 'lib.summary_rating.district_scope_alt'
-      else
-        path = 'lib.summary_rating.district_scope'
-      end
-      path
+      'lib.summary_rating.district_scope'
     end
 
     def data_values
@@ -49,12 +44,12 @@ module CommunityProfiles
 
       {}.tap do |h|
         h['key'] = 'summary_rating'
-        h['title'] = I18n.t('title', scope: "lib.summary_rating.district_scope")
-        h['subtext'] = I18n.t('subtext', scope: "lib.summary_rating.district_scope")
+        h['title'] = I18n.t('title', scope: path_to_yml)
+        h['subtext'] = I18n.t('subtext', scope: path_to_yml)
         h['narration'] = I18n.t("#{ratings_narration.narration_logic}_html", scope: "lib.summary_rating.district_scope.narrative")
         h['tooltip'] = I18n.t("tooltip_html", scope: path_to_yml)
-        h['graphic_header'] = I18n.t("graphic_header", scope: "lib.summary_rating.district_scope")
-        h['graphic_header_tooltip'] = I18n.t("graphic_header_tooltip", scope: "lib.summary_rating.district_scope")
+        h['graphic_header'] = I18n.t("graphic_header", scope: path_to_yml)
+        h['graphic_header_tooltip'] = I18n.t("graphic_header_tooltip", scope: path_to_yml)
         h['data'] = data_points
         h['source'] = I18n.t("source_html", scope: path_to_yml, date_in_words: valid_date_in_words)
       end

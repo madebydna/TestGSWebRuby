@@ -52,7 +52,7 @@ module CommunityProfiles::DistanceLearningConfig
   SUPPORT = "Support"
 
   # Policies Subtabs
-  LEARNING_MODEL = "Learning model"
+  LEARNING_MODEL_SUBTAB = "Learning model"
   ACADEMICS = "Academics"
   LEARNING_LOSS = "Learning loss"
 
@@ -150,7 +150,7 @@ module CommunityProfiles::DistanceLearningConfig
   POLICIES_TAB_ACCESSORS = [
     {
       tab: POLICIES,
-      subtab: LEARNING_MODEL,
+      subtab: LEARNING_MODEL_SUBTAB,
       data_types: POLICIES_LEARNING_MODEL_SUBTAB_ACCESSORS,
     },
     {

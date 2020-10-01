@@ -9,14 +9,11 @@ en:
       find_schools_in: Schools in
       district_calendar: Calendar
       sources: Sources
+      homes_sales:
+        homes_nearby_html: <a href="https://www.zillow.com/%{query}?cbpartner=Great+Schools&utm_source=Great_Schools&utm_medium=referral&utm_campaign=districtpage_resources" target="_blank" rel="nofollow">Homes Nearby</a>
+        homes_body: Homes for rent & sale near this district
+        powered_by_zillow: Powered by Zillow
       xq:
-        school_board_finder: School board finder
-        learn_more_school_board_html: Learn more about this district's school board and <a href="https://xqsuperschool.org/school-board-lookup?address=%{address}&utm_source=greatschools&utm_medium=search_tool&utm_campaign=school_board_thing" target="_blank" rel="nofollow">how you can get involved</a>.
-        sources: >
-          <div class="sourcing">
-            <h1>GreatSchools district data sources & information</h1>
-            <div>
-              <h4>School Board Finder</h4>
-              <p><span class="emphasis">Source&#58;</span> XQ</p>
-            </div>
-          </div>
+        school_board_finder_html: <a href="https://xqsuperschool.org/school-board-lookup?address=%{address}&utm_source=greatschools&utm_medium=search_tool&utm_campaign=school_board_thing" target="_blank" rel="nofollow">School Board Finder</a>
+        learn_more_school_board: Learn more about how to get involved
+        powered_by_xq: Powered by XQ

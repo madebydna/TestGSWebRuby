@@ -2,31 +2,30 @@
 <% city = @locality[:city] %>
 <% state_short = @locality[:stateShort] %>
 <% zip_code = @locality[:zipCode] %>
+<% query = "#{state_short}-#{zip_code}" %>
 
 <% address_string = "#{address}, #{city}, #{state_short} #{zip_code}" %>
 <% encoded_address = URI.escape(address_string, Regexp.new("[^#{URI::PATTERN::UNRESERVED}]")) %>
-<% sources = I18n.t('xq.sources', scope: 'community.district') %>
 
-<div class="xq_school_board_module_container">
-      <div class="module-header xq_school_board_module">
-        <div class="row">
-          <div class="col-xs-12">
-            <div class="circle-rating--equity-blue">
-              <span class="icon-high-performing-schools"></span>
-            </div>
-            <div class="title-container">
-              <div>
-                <h3 class="title">
-                  <%= I18n.t('xq.school_board_finder', scope: 'community.district') %>
-                </h3>
-              </div>
-              <span><%= t('xq.learn_more_school_board_html', scope: 'community.district', address: encoded_address) %></span>
-            </div>
+<div class="community_resource_module_container">
+  <div class="module-header community_resource_module">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="circle-rating--equity-blue">
+          <span class="icon-high-performing-schools"></span>
+        </div>
+        <div class="title-container">
+          <div>
+            <h3 class="title">
+              <%= t('xq.school_board_finder_html', address: encoded_address, scope: 'community.district') %>
+            </h3>
           </div>
+          <span><%= t('xq.learn_more_school_board', scope: 'community.district') %></span>
+          <div class="powered"><%= t('xq.powered_by_xq', scope: 'community.district') %></div>
         </div>
       </div>
-
-      <div class="module-footer">
-        <%= render 'school_profiles/sources_link_to_modal', content: sources %>
-      </div>
     </div>
+    <hr/>
+    <%= render 'community/nearby_homes_resources', query: query, community: 'district' %>
+  </div>
+</div>

@@ -63,7 +63,7 @@ const browseLink = (link, levelCodes, community, size) => {
   return addQueryParamToUrl("gradeLevels%5B%5D", levelCodes, searchLink);
 }
 
-const assignDisplayType = (schools, levelCodes, size) => {
+const assignDisplayType = (schools, levelCodes, size, community) => {
   let displayedSchools = [];
 
   displayedSchools.push(
@@ -72,38 +72,40 @@ const assignDisplayType = (schools, levelCodes, size) => {
         key={school.state + school.id}
         {...school}
         size={size}
+        community={community}
         display={levelCodes === 'e' ? true : false}
       />
     ))
   )
 
   displayedSchools.push(
-    schools.middle.map(school => (
+    schools.middle.map((school) => (
       <TopSchoolTableRow
         key={school.state + school.id}
         {...school}
         size={size}
-        display={levelCodes === 'm' ? true : false}
+        community={community}
+        display={levelCodes === "m" ? true : false}
       />
     ))
-  )
+  );
 
   displayedSchools.push(
-    schools.high.map(school => (
+    schools.high.map((school) => (
       <TopSchoolTableRow
         key={school.state + school.id}
         {...school}
         size={size}
-        display={levelCodes === 'h' ? true : false}
+        community={community}
+        display={levelCodes === "h" ? true : false}
       />
     ))
-  )
+  );
   return displayedSchools;
 }
 
 const TopSchools = ({ schools, handleGradeLevel, renderTabsContainer, size, levelCodes, community, schoolLevels, locality, summaryType }) => {
   let name = regionName(locality, community);
-  let ratingsUrl = locality.ratingsUrl;
 
   let schoolList;
   const seeSchoolMap = {
@@ -118,11 +120,11 @@ const TopSchools = ({ schools, handleGradeLevel, renderTabsContainer, size, leve
                   </section>;
   } else {
     schoolList = <section className="top-school-list">
-          {assignDisplayType(schools, levelCodes, size)}
+          {assignDisplayType(schools, levelCodes, size, community)}
         </section>;
   }
 
-  const ts_blurb = summaryType === 'Summary Rating' ? t('top_schools.top_schools_blurbs', { parameters: { name, ratingsUrl } }) : t('top_schools.top_schools_test_score_ratings_blurb', { parameters: { name, ratingsUrl } })
+  const ts_blurb = summaryType === 'Summary Rating' ? t('top_schools.top_schools_blurbs', { parameters: { name } }) : t('top_schools.top_schools_test_score_ratings_blurb', { parameters: { name } })
 
   return(
     <div id="TopSchools" className="top-school-module">
