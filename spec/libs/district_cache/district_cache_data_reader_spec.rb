@@ -37,29 +37,29 @@ describe 'DistrictCacheDataReader' do
     let(:metrics_data) do
       {
         '4-year high school district graduation rate' => [
-          {
+          MetricsCaching::Value.from_hash({
             "breakdown" => "All students",
             "district_value" => 68,
             "source" => "CA Department of Education"
-          },
-          {
+          }),
+          MetricsCaching::Value.from_hash({
             "breakdown" => "Hispanic",
             "district_value" => 64,
             "source" => "CA Department of Education"
-          }
-        ],
+          })
+        ].extend(MetricsCaching::Value::CollectionMethods),
         "Percentage of students enrolled in IB grades 9-12" => [
-          {
+          MetricsCaching::Value.from_hash({
             "breakdown" => "Native American",
             "district_value" => 19.047619,
             "source" => "Civil Rights Data Collection",
-          },
-          {
+          }),
+          MetricsCaching::Value.from_hash({
             "breakdown" => "Asian",
             "district_value" => 22.434368,
             "source" => "Civil Rights Data Collection",
-          }
-        ]
+          })
+        ].extend(MetricsCaching::Value::CollectionMethods)
       }
     end
 
@@ -67,7 +67,7 @@ describe 'DistrictCacheDataReader' do
       double("decorated district",
         district: district_record,
         cache_data: {},
-        metrics: metrics_data,
+        decorated_metrics: metrics_data,
         ethnicity_data: [
           {
             "breakdown" => "Hispanic",
@@ -82,7 +82,7 @@ describe 'DistrictCacheDataReader' do
     end
 
     it "#decorated_metrics_data selects decorated district's metrics data for given single key" do
-      expect(decorated_district).to receive(:metrics)
+      expect(decorated_district).to receive(:decorated_metrics)
       results = subject.decorated_metrics_data('4-year high school district graduation rate')
       expect(results.length).to eq(2)
       expect(results[0].breakdown).to eq("All students")
@@ -90,7 +90,7 @@ describe 'DistrictCacheDataReader' do
     end
 
     it "#decorated_metrics_datas selects decorated district's metrics data for multiple keys" do
-      expect(decorated_district).to receive(:metrics)
+      expect(decorated_district).to receive(:decorated_metrics)
       results = subject.decorated_metrics_datas('4-year high school district graduation rate', 'Percentage of students enrolled in IB grades 9-12')
       expect(results).to have_key('4-year high school district graduation rate')
       expect(results).to have_key('Percentage of students enrolled in IB grades 9-12')

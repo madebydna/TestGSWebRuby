@@ -1,16 +1,6 @@
 module SchoolProfiles
   class CollegeReadinessComponent < CollegeReadiness
 
-    module GraduatesRemediationValue
-      def data_type
-        if !all_subjects?
-          'Graduates needing ' + subject.capitalize + ' remediation in college'
-        else
-          @data_type
-        end
-      end
-    end
-
     attr_reader :tab
 
     def initialize(tab, school_cache_data_reader)
@@ -43,15 +33,12 @@ module SchoolProfiles
     end
 
     def metrics_data
-      array_of_hashes = @school_cache_data_reader.decorated_metrics_datas(*included_data_types(:metrics))
-      array_of_hashes.each_with_object({}) do |(data_type, array), accum|
+      hash_with_arrays = @school_cache_data_reader.decorated_metrics_datas(*(included_data_types(:metrics) - GRADUATES_REMEDIATION))
+      remediation_data = @school_cache_data_reader.remediation_data.each_with_object({}) do |(data_type, array), accum|
         accum[data_type] =
-          if data_type == GRADUATES_REMEDIATION
-            array.each { |dv| dv.extend(GraduatesRemediationValue) }
-          else
-            array
-          end
+          array.each { |dv| dv.extend(MetricsCaching::GraduatesRemediationValue) }
       end
+      hash_with_arrays.merge!(remediation_data)
     end
 
     def data_type_hashes

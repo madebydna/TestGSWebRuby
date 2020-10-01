@@ -179,19 +179,16 @@ module SchoolProfiles
     end
 
     def decorated_metrics_datas(*keys)
-      decorated_school.metrics.slice(*keys).each_with_object({}) do |(data_type, array), accum|
-        accum[data_type] =
-          array.map do |h|
-            MetricsCaching::Value.from_hash(h).tap {|dv| dv.data_type = data_type}
-          end.extend(MetricsCaching::Value::CollectionMethods)
-      end
+      decorated_school.decorated_metrics.slice(*keys)
     end
 
     def decorated_metrics_data(key)
-      Array.wrap(decorated_school.metrics.slice(key)[key])
-        .map do |h|
-        MetricsCaching::Value.from_hash(h).tap {|dv| dv.data_type = key }
-      end.extend(MetricsCaching::Value::CollectionMethods)
+      Array.wrap(decorated_school.decorated_metrics.slice(key)[key])
+        .extend(MetricsCaching::Value::CollectionMethods)
+    end
+
+    def remediation_data
+      decorated_school.graduates_remediation
     end
 
     def nearby_schools

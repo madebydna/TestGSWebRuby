@@ -1,8 +1,9 @@
 module CachedMetricsMethods
+  include MetricsCaching::CommonCachedMetricsMethods
 
   NO_DATA_SYMBOL = '?'
   NO_ETHNICITY_SYMBOL = 'n/a'
-  REMEDIATION_SUBJECTS_FOR_CSA = ['All subjects', 'Composite Subject', 'English', 'Math']
+  REMEDIATION_SUBJECTS_FOR_CSA = ['English', 'Math']
   COLLEGE_ENROLLMENT_DATA_TYPES = [
     "Percent Enrolled in College Immediately Following High School", # 178
     "Percent enrolled in any institution of higher learning in the last 0-16 months", # 262
@@ -14,10 +15,6 @@ module CachedMetricsMethods
     "Percent enrolled in any public in-state postsecondary institution within the immediate fall after graduation", # 459
     "Percent enrolled in any in-state postsecondary institution within 12 months after graduation", # 453
   ]
-
-  def metrics
-    cache_data['metrics'] || {}
-  end
 
   def students_enrolled(opts = {})
     opts.reverse_merge!(grade: 'All', number_value: true)
@@ -97,23 +94,21 @@ module CachedMetricsMethods
     end
   end
 
-  def graduates_remediation
-    @_graduates_remediation ||= metrics['Percent Needing Remediation for College'] || []
-  end
-
   def graduates_remediation_for_college_success_awards
     return [] unless graduates_remediation.present?
-    data = graduates_remediation.select { |item| item["breakdown"] == 'All students' && (item["subject"].nil? || REMEDIATION_SUBJECTS_FOR_CSA.include?(item["subject"])) }
+    data = graduates_remediation['Percent Needing Remediation for College']
+            .for_all_students
+            .all_subjects_or_subjects_in(REMEDIATION_SUBJECTS_FOR_CSA)
+            .having_school_value
     data.map do |datum|
       {}.tap do |hash|
-        next unless datum["school_value"]
-        if datum["subject"]
-          hash["subject"] = datum["subject"]
+        if REMEDIATION_SUBJECTS_FOR_CSA.include?(datum.subject)
+          hash["subject"] = datum.subject
         else
           hash["subject"] = "All subjects"
         end
-        hash["school_value"] = "#{style_school_value(datum['school_value'])}%"
-        hash["state_average"] = "#{style_school_value(datum['state_average'])}%" if datum["state_average"]
+        hash["school_value"] = "#{style_school_value(datum.school_value)}%"
+        hash["state_average"] = "#{style_school_value(datum.state_average)}%" if datum.state_average
       end
     end
   end

@@ -39,6 +39,7 @@ describe 'CollegeReadinessComponent' do
       allow(school).to receive(:state).and_return(:ca)
       allow(school).to receive(:id).and_return(1)
       allow(school_cache_data_reader).to receive(:decorated_metrics_datas).and_return({})
+      allow(school_cache_data_reader).to receive(:remediation_data).and_return({})
     end
 
     context 'With sample data' do
@@ -393,6 +394,7 @@ describe 'CollegeSuccessComponent' do
     allow(school).to receive(:id).and_return(1)
     allow(school_cache_data_reader).to receive(:decorated_metrics_datas).with("Graduating seniors pursuing other college", any_args).and_return(remediation_sample_data)
     allow(school_cache_data_reader).to receive(:decorated_metrics_datas).with(no_args).and_return({})
+    allow(school_cache_data_reader).to receive(:remediation_data).and_return(remediation_sample_data)
     allow(school_cache_data_reader).to receive(:college_readiness_rating).and_return(cr_rating)
   end
 
@@ -417,7 +419,7 @@ describe 'CollegeSuccessComponent' do
     end
 
     it 'should have a well-formatted label' do
-      all_formatted = data_points.none? {|dp| dp.label.match(/Graduates needing (Math|English|Science|Reading) remediation in college/).nil?}
+      all_formatted = data_points.none? {|dp| dp.label.match(/Graduates needing (math|English|science|reading) remediation in college/).nil?}
       expect(all_formatted).to be_truthy
     end
   end
