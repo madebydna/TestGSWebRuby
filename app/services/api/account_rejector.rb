@@ -8,8 +8,9 @@ module Api
       @subscription_id = subscription_id
     end
 
-    def reject
+    def process
       subscription.update(status: 'bizdev_rejected')
+      email_user
       subscription
     end
 
@@ -18,16 +19,9 @@ module Api
     end
 
     def email_user
-      p "emailing user"
+      p "emailing user - your request was rejected"
     end
 
-    def email_biz_dev
-      if stripe_subscription
-        p "emailing biz dev success"
-      else
-        p "emailing biz dev fail"
-      end
-    end
   end
 
 end
