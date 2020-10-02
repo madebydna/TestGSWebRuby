@@ -65,7 +65,8 @@ export const t = translateWithDictionary({
     Parenting: 'Crianza',
     'City, zip, address or school':
       'Ciudad, código postal, dirección o escuela',
-    'Articles, worksheets and more': 'Artículos, hoja de ejercicios y más'
+    'Articles, worksheets and more': 'Artículos, hoja de ejercicios y más',
+    Search: 'Buscar'
   }
 });
 const options = [
@@ -480,11 +481,12 @@ export default class SearchBox extends React.Component {
     }
   };
 
-  searchButton = () => (
+  searchButton = (renderSearchLabel = false) => (
     <React.Fragment>
       <div className="search_bar_button" onClick={this.geocodeAndSubmit}>
         <button type="submit" className="search_form_button">
           <span className="search_icon_image_white" />
+          {renderSearchLabel && <span className="search-label">{t('Search')}</span>}
         </button>
       </div>
       {this.state.displayMobileSearchModal &&
@@ -585,7 +587,7 @@ export default class SearchBox extends React.Component {
     );
   }
 
-  searchBoxElement(renderDropdown = true) {
+  searchBoxElement(renderDropdown = true, renderSearchLabel = false) {
     const searchBoxName =
       this.state.displayMobileSearchModal === true
         ? 'search-box search-mode-homepage'
@@ -623,20 +625,20 @@ export default class SearchBox extends React.Component {
                   )}
               </div>
             </CaptureOutsideClick>
-            {this.props.showSearchButton && this.searchButton()}
+            {this.props.showSearchButton && this.searchButton(renderSearchLabel)}
           </div>
         )}
       </OpenableCloseable>
     );
   }
 
-  renderSearchBox(element, renderDropdown = true) {
-    return createPortal(this.searchBoxElement(renderDropdown), element);
+  renderSearchBox(element, renderDropdown = true, renderSearchLabel = false) {
+    return createPortal(this.searchBoxElement(renderDropdown, renderSearchLabel), element);
   }
 
-  renderSearchBoxModal(element, renderDropdown = true) {
+  renderSearchBoxModal(element, renderDropdown = true, renderSearchLabel = false) {
     if (!this.state.displayMobileSearchModal) {
-      return this.renderSearchBox(element, false);
+      return this.renderSearchBox(element, false, renderSearchLabel);
     }
     return (
       <React.Fragment>
@@ -657,7 +659,7 @@ export default class SearchBox extends React.Component {
       if (this.props.size <= XS) {
         return this.renderSearchBoxModal(element, false);
       }
-      return this.renderSearchBox(element, false);
+      return this.renderSearchBox(element, false, true);
     }
 
     element = window.document.querySelector('.dt-desktop');
