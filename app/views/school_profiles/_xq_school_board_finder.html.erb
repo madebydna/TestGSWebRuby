@@ -1,5 +1,4 @@
 <% encoded_address = ERB::Util.url_encode(address) %>
-<% zillow_string = "#{@school.state}-#{@school.zipcode}" %>
 
 <div class="rr-xq-school-board">
   <div class="content">
@@ -13,14 +12,5 @@
     </div>
   </div>
   <hr/>
-  <div class="content">
-    <div class="icon">
-      <%= image_tag (asset_path('icons/home.png')) %>
-    </div>
-    <div class="text">
-      <div class="right-rail-module-header"><%= t("school_profiles.homes_sales.homes_nearby_html", query: zillow_string ) %></div>
-      <div class="right-rail-module-text"><%= t("school_profiles.homes_sales.homes_body") %></div>
-      <div class="right-rail-module-sponsor"><%= t("school_profiles.homes_sales.powered_by_zillow") %></div>
-    </div>
-  </div>
+  <%= render 'nearby_homes_right_rails' %>
 </div>
