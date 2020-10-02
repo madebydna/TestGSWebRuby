@@ -16,33 +16,69 @@ describe SearchTableConcerns do
     [
       {
         name: 'Growth Data State Rating School',
-        remediationData: [{
-          "subject" => "All subjects",
-          "state_average" => '77%'
-        }]
+        remediationData: {
+          "Overall" => [
+            {
+              "data_type" => "Percent Needing any Remediation for College",
+              "subject" => "Any Subject",
+              "state_average" => '77%'
+            }
+          ]
+        }
       },
       {
         name: 'Growth Proxy State Rating School That Shouldn\'t Be here',
-        remediationData: [{
-          "subject" => "All subjects",
-          "state_average" => '56%'
-        }]
+        remediationData:  {
+          "Overall" => [
+            {
+              "data_type" => "Percent Needing Remediation for College",
+              "subject" => "Composite Subject",
+              "state_average" => '56%'
+            }
+          ]
+        }
       },
       {
         name: 'Another Growth Data State School with Outlier Remediation Data',
-        remediationData: [{
-          "subject" => "English",
-          "state_average" => '76%'
-        }]
-      }
+        remediationData: {
+          "Overall" => [
+            {
+              "data_type" => "Graduates needing English Remediation for College",
+              "subject" => "English",
+              "state_average" => '56%'
+            }
+          ]
+        }
+      },
     ]
   }
+
+  let(:array_with_overall_and_two_year_college_remediation_data) {
+    array_of_growth_data_state_and_all_subjects_remediation_schools.push({
+      name: 'School with Different Remediation Data',
+      remediationData: {
+        "Overall" => [
+          {
+            "data_type" => "Percent Needing any Remediation for College",
+            "subject" => "Any Subject",
+            "state_average" => '77%'
+          }
+        ],
+        "Two-year" => [{
+          "data_type" => "Percent needing any remediation in in-state public 2-year institutions",
+          "subject" => "Any Subject",
+          "state_average" => '84%'
+        }]
+      }
+    })
+  }
+
   let(:array_of_growth_proxy_state_and_specific_subjects_remediation_schools) {
     [
       {
         name: 'Proxy Rating School',
-        remediationData: 
-          [
+        remediationData: {
+          "Overall" => [
             {
               "subject" => "English",
               "state_average" => '76%'
@@ -51,13 +87,14 @@ describe SearchTableConcerns do
               "subject" => "Math",
               "state_average" => '35%'
             }
-        ],
+          ]
+        },
         state: 'ca'
       },
       {
         name: 'New Proxy Rating School',
-        remediationData: 
-          [
+        remediationData: {
+          "Overall" => [
             {
               "subject" => "English",
               "state_average" => '33%'
@@ -66,15 +103,20 @@ describe SearchTableConcerns do
               "subject" => "Math",
               "state_average" => '32%'
             }
-        ],
+          ]
+        },
         state: 'ar'
       },
       {
         name: 'Cow\'s Slick County',
-        remediationData: [{
-          "subject" => "English",
-          "state_average" => '56%'
-        }],
+        remediationData: {
+          "Overall" => [
+            {
+              "subject" => "English",
+              "state_average" => '56%'
+            }
+          ]
+        },
         state: 'ca'
       }
     ]
@@ -91,7 +133,7 @@ describe SearchTableConcerns do
     it 'returns the overall remediation headers for tableview if overall data is present' do
       allow(dummy_controller).to receive(:serialized_schools).and_return(array_of_growth_data_state_and_all_subjects_remediation_schools)
       remediation_header = dummy_controller.generate_remediation_headers
-      expect(remediation_header.fetch(:key, nil)).to eq('percentCollegeRemediation')
+      expect(remediation_header.first.fetch(:key, nil)).to eq('percentCollegeRemediation')
     end
 
     it 'returns the english/math remediation headers for tableview if English/Math is present and not overall remediation data' do
@@ -101,10 +143,17 @@ describe SearchTableConcerns do
       expect(remediation_header.map {|x| x.fetch(:key, nil)}).to eq(['percentCollegeRemediationEnglish','percentCollegeRemediationMath'])
     end
 
-      it 'return nil if there isn\'t instance of overall, math, or english as a remediation subject' do
-      allow(dummy_controller).to receive(:serialized_schools).and_return(empty_array)
+    it 'return nil if there isn\'t instance of overall, math, or english as a remediation subject' do
+      allow(dummy_controller).to receive(:serialized_schools).and_return({})
       remediation_header = dummy_controller.generate_remediation_headers
       expect(remediation_header).to be_nil
+    end
+
+    it 'return overall and two or four year remediation data if available' do
+      allow(dummy_controller).to receive(:serialized_schools).and_return(array_with_overall_and_two_year_college_remediation_data)
+      remediation_header = dummy_controller.generate_remediation_headers
+      expect(remediation_header.length).to eq(2)
+      expect(remediation_header.map {|x| x.fetch(:key, nil)}).to eq(['percentCollegeRemediation','percentCollegeRemediationTwoYear'])
     end
   end
 
@@ -128,7 +177,7 @@ describe SearchTableConcerns do
     end
 
     context 'when a state is a data growth proxy state' do
-      before(:each) do 
+      before(:each) do
         allow(dummy_controller).to receive(:state).and_return('ca')
       end
 
@@ -146,7 +195,7 @@ describe SearchTableConcerns do
     end
 
     context 'when no state is established at the controller level' do
-      before(:each) do 
+      before(:each) do
         allow(dummy_controller).to receive(:serialized_schools).and_return(array_of_growth_proxy_state_and_specific_subjects_remediation_schools)
       end
 

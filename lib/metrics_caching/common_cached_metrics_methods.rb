@@ -20,6 +20,7 @@ module MetricsCaching
           if array.detect {|metric| metric.subject == "Any Subject" }
             array.reject! {|metric| metric.subject == "Composite Subject" }
           end
+          array.each {|dv| dv.extend(GraduatesRemediationValue)}
         end
         all
       end

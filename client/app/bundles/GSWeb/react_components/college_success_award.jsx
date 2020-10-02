@@ -53,7 +53,7 @@ class CollegeSuccessAward extends Search {
       }
     }).tipso('update', 'content', newContent)
   }
-  
+
   noResults() {
     return this.props.schools.length === 0 ? (
       <React.Fragment>

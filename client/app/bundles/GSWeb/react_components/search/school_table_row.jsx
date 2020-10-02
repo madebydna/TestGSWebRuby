@@ -163,17 +163,24 @@ const SchoolTableRow = ({
     }
   }
 
-  const renderRemediationValue = (remediationData, type) => {
-    const remedObj = remediationData.find(rd => rd.subject === type)
-    if (remedObj){
+  const renderRemediationValue = (remediationData, type, subject) => {
+    let remedObj;
+    if (remediationData[type] && subject) {
+      remedObj = remediationData[type].find(rd => rd.subject === subject);
+    } else if (remediationData[type]) {
+      remedObj = remediationData[type][0];
+    }
+    if (remedObj) {
       return <div>{remedObj.school_value}</div>
-    }else{
+    } else {
       return <div>N/A</div>
     }
   };
-  const percentCollegeRemediation = renderRemediationValue(remediationData, 'All subjects')
-  const percentCollegeRemediationEnglish = renderRemediationValue(remediationData, 'English')
-  const percentCollegeRemediationMath = renderRemediationValue(remediationData, 'Math')
+  const percentCollegeRemediation = renderRemediationValue(remediationData, 'Overall')
+  const percentCollegeRemediationEnglish = renderRemediationValue(remediationData, 'Overall', 'English')
+  const percentCollegeRemediationMath = renderRemediationValue(remediationData, 'Overall', 'Math')
+  const percentCollegeRemediationTwoYear = renderRemediationValue(remediationData, 'Two-year')
+  const percentCollegeRemediationFourYear = renderRemediationValue(remediationData, 'Four-year')
   const clarifiedSchoolType = <div>{capitalize(clarifySchoolType(schoolType))}</div>
   const percentCollegePersistent = <div>{Object.keys(collegePersistentData).length > 0 ? collegePersistentData.school_value : "N/A"}</div>
   const percentEnrolledInCollege = <div>{Object.keys(collegeEnrollmentData).length > 0 ? collegeEnrollmentData.school_value : "N/A"}</div>

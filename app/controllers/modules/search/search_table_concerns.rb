@@ -104,44 +104,76 @@ module SearchTableConcerns
 
   def generate_remediation_headers
     # Method that generate the correct table headers for the college success award page
-    # Shows overall remediation data if available. Otherwise will try to show Math and English subjects
+    # Shows overall remediation data for composite/any subject if available. Otherwise will try to show Math and English subjects
+    # Also shows data for two or four year colleges for all subjects
     # In absence of both, return nil and is removed from the array before sending to the frontend
-    remediation_data = serialized_schools.map {|x| x[:remediationData]}.flatten
-    remediation_data_overall = remediation_data&.select {|s| s["subject"] == 'All subjects'}
+    all_headers = []
 
-    if remediation_data_overall.present?
-      remediation_state_average = mode(remediation_data_overall&.map(&with_state_averages))
+    # This is a hash with the possible keys Overall, Two-year, Four-year
+    remediation_data = serialized_schools.map {|x| x[:remediationData]}
 
-      return {
+    overall = remediation_data.each_with_object([]) do |hash, accum|
+      next unless hash["Overall"]
+      accum << hash["Overall"]
+    end.flatten
+
+    all_headers += generate_overall_remediation_headers(overall)
+
+    %w(Two Four).each do |num|
+      array = remediation_data.each_with_object([]) do |hash, accum|
+        next unless hash["#{num}-year"]
+        accum << hash["#{num}-year"]
+      end.flatten
+
+      if array.present?
+        state_avg = mode(array&.map(&with_state_averages))
+        all_headers << {
+          key: "percentCollegeRemediation#{num}Year",
+          title: t("#{num} year Remediation", scope:'lib.college_success_award'),
+          tooltip: t(array.first["data_type"], scope:'lib.college_readiness.data_point_info_texts'),
+          footerNote: state_avg && "#{t("State average", scope: 'lib.college_success_award')}: #{state_avg}"
+        }
+      end
+    end
+
+    all_headers.presence
+  end
+
+
+  # This returns either one header for an aggregate subject (Any Subject or Composite Subject) or
+  # up to two headers for Math and English
+  def generate_overall_remediation_headers(overall_data)
+    return [] unless overall_data.present?
+
+    overall_all_subjects = overall_data.select do |s|
+      MetricsCaching::Value::ALL_SUBJECTS.include? s["subject"]
+    end
+
+    if overall_all_subjects.present?
+      state_avg = mode(overall_all_subjects&.map(&with_state_averages))
+      [{
         key: 'percentCollegeRemediation',
         title: t("Remediation", scope:'lib.college_success_award'),
         tooltip: t("Remediation", scope:'lib.college_success_award.tooltips'),
-        footerNote: remediation_state_average && "#{t("State average", scope: 'lib.college_success_award')}: #{remediation_state_average}"
-      }
+        footerNote: state_avg && "#{t("State average", scope: 'lib.college_success_award')}: #{state_avg}"
+      }]
+    else
+      %w(English Math).each_with_object([]) do |subject, accum|
+        subject_array = overall_data.select {|s| s["subject"] == subject }
+        if subject_array.present?
+          state_avg = mode(subject_array&.map(&with_state_averages))
+          subject = subject_array.first['subject']
+          accum << {
+            key: "percentCollegeRemediation#{subject}",
+            title: t("#{subject} remediation", scope:'lib.college_success_award'),
+            tooltip: t("#{subject_array.first['data_type']} remediation", scope:'lib.college_readiness.data_point_info_texts'),
+            footerNote: state_avg && "#{t("State average", scope: 'lib.college_success_award')}: #{state_avg}"
+          }
+        end
+      end
     end
-
-    remediation_data_english = remediation_data&.select {|s| s["subject"] == 'English'}
-    remediation_data_math = remediation_data&.select {|s| s["subject"] == 'Math'}
-
-    if (remediation_data_english.present? ||  remediation_data_math.present?)
-      remediation_eng_state_average = mode(remediation_data_english&.map(&with_state_averages))
-      remediation_math_state_average = mode(remediation_data_math&.map(&with_state_averages))
-
-      return [{
-                key: 'percentCollegeRemediationEnglish',
-                title: t("English remediation", scope:'lib.college_success_award'),
-                tooltip: t("English remediation", scope:'lib.college_success_award.tooltips'),
-                footerNote: remediation_eng_state_average && "#{t("State average", scope: 'lib.college_success_award')}: #{remediation_eng_state_average}"
-              },
-              {
-                key: 'percentCollegeRemediationMath',
-                title: t("Math remediation", scope:'lib.college_success_award'),
-                tooltip: t("Math remediation", scope:'lib.college_success_award.tooltips'),
-                footerNote: remediation_math_state_average && "#{t("State average", scope: 'lib.college_success_award')}: #{remediation_math_state_average}"
-              }]
-    end
-    nil
   end
+
 
   def college_success_award_header_arr
     persistence_data = serialized_schools.map {|x| x[:collegePersistentData]}.flatten

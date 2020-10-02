@@ -95,22 +95,38 @@ module CachedMetricsMethods
   end
 
   def graduates_remediation_for_college_success_awards
-    return [] unless graduates_remediation.present?
-    data = graduates_remediation['Percent Needing Remediation for College']
-            .for_all_students
-            .all_subjects_or_subjects_in(REMEDIATION_SUBJECTS_FOR_CSA)
-            .having_school_value
-    data.map do |datum|
-      {}.tap do |hash|
-        if REMEDIATION_SUBJECTS_FOR_CSA.include?(datum.subject)
-          hash["subject"] = datum.subject
-        else
-          hash["subject"] = "All subjects"
+    return {} unless graduates_remediation.present?
+    result = {}
+
+    if graduates_remediation['Percent Needing Remediation for College']
+      # The "Overall" remediation data type is the only one that we'd want to display English/Math
+      # data for if the aggregate subject (Any Subject or Composite Subject) is not available
+      overall_data = graduates_remediation['Percent Needing Remediation for College']
+              .for_all_students
+              .all_subjects_or_subjects_in(REMEDIATION_SUBJECTS_FOR_CSA)
+              .having_school_value
+      if overall_data.present?
+        result["Overall"] = overall_data.map do |datum|
+          remediation_hash(datum)
         end
-        hash["school_value"] = "#{style_school_value(datum.school_value)}%"
-        hash["state_average"] = "#{style_school_value(datum.state_average)}%" if datum.state_average
       end
     end
+
+    if (two_year_college_data = graduates_remediation['Percent needing remediation in in-state public 2-year institutions'])
+      datum = two_year_college_data.for_all_students
+        .no_subject_or_all_subjects
+        .having_school_value.first
+      result["Two-year"] = Array.wrap(remediation_hash(datum)) if datum
+    end
+
+    if (four_year_college_data = graduates_remediation['Percent needing remediation in in-state public 4-year institutions'])
+      datum = four_year_college_data.for_all_students
+                .no_subject_or_all_subjects
+                .having_school_value.first
+      result["Four-year"] = Array.wrap(remediation_hash(datum)) if datum
+    end
+
+    result
   end
 
   def style_school_value(value)
@@ -142,6 +158,17 @@ module CachedMetricsMethods
       true
     else
       false
+    end
+  end
+
+  private
+
+  def remediation_hash(datum)
+    {}.tap do |hash|
+      hash["data_type"] = datum.data_type
+      hash["subject"] = datum.subject
+      hash["school_value"] = "#{style_school_value(datum.school_value)}%"
+      hash["state_average"] = "#{style_school_value(datum.state_average)}%" if datum.state_average
     end
   end
 

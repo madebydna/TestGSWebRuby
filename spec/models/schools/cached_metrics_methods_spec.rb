@@ -245,23 +245,44 @@ describe CachedMetricsMethods do
         expect(data.map(&:subject)).not_to include("Composite Subject")
         expect(data.map(&:subject)).to include("Any Subject")
       end
+
+      it 'extends each data point with the GraduatesRemediationValue module' do
+        dt = subject.graduates_remediation["Percent Needing Remediation for College"].last.data_type
+        expect(dt).to eq("Graduates needing Writing Remediation for College")
+      end
     end
 
     describe '#graduates_remediation_for_college_success_awards' do
-      it 'returns school_value and state_average for all subjects and remediation subjects' do
-        # remediation subjects defined in CachedMetricsMethods::REMEDIATION_SUBJECTS_FOR_CSA
-        expect(subject.graduates_remediation_for_college_success_awards).to eq([
+      let(:csa_data) { subject.graduates_remediation_for_college_success_awards }
+
+      it 'for generic data type it returns data for all subjects and remediation subjects' do
+        expect(csa_data["Overall"]).to eq(
+          [
+            {
+              "data_type" => "Percent Needing Remediation for College",
+              "subject" => "Composite Subject",
+              "school_value" => "32%",
+              "state_average" => "31%"
+            },
+            {
+              "data_type" => "Graduates needing Math Remediation for College",
+              "subject" => "Math",
+              "school_value" => "23%",
+              "state_average" => "25%"
+            }
+          ]
+        )
+      end
+
+      it 'for two-year college data it only returns data for all subjects' do
+        expect(csa_data["Two-year"]).to eq(
           {
-            "subject" => "All subjects",
-            "school_value" => "32%",
-            "state_average" => "31%"
-          },
-          {
-            "subject" => "Math",
+            "data_type" => "Percent needing any remediation in in-state public 2-year institutions",
+            "subject" => "Any Subject",
             "school_value" => "23%",
             "state_average" => "25%"
           }
-        ])
+        )
       end
     end
   end
