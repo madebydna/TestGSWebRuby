@@ -353,7 +353,7 @@ describe 'CollegeSuccessComponent' do
           "state_average"=>35.7,
           "subject"=>"Math",
           "year"=>2015
-        }),
+        }).extend(MetricsCaching::GraduatesRemediationValue),
         MetricsCaching::Value.from_hash({
           "data_type" => "Percent Needing Remediation for College",
           "breakdown"=>"All students",
@@ -363,7 +363,7 @@ describe 'CollegeSuccessComponent' do
           "state_average"=>8.3,
           "subject"=>"Reading",
           "year"=>2015
-        }),
+        }).extend(MetricsCaching::GraduatesRemediationValue),
         MetricsCaching::Value.from_hash({
           "data_type" => "Percent Needing Remediation for College",
           "breakdown"=>"All students",
@@ -373,7 +373,7 @@ describe 'CollegeSuccessComponent' do
           "state_average"=>15.7,
           "subject"=>"English",
           "year"=>2015
-        }),
+        }).extend(MetricsCaching::GraduatesRemediationValue),
         MetricsCaching::Value.from_hash({
           "data_type" => "Percent Needing Remediation for College",
           "breakdown"=>"All students",
@@ -383,7 +383,7 @@ describe 'CollegeSuccessComponent' do
           "state_average"=>1.1,
           "subject"=>"Science",
           "year"=>2014
-        })
+        }).extend(MetricsCaching::GraduatesRemediationValue)
       ].extend(MetricsCaching::Value::CollectionMethods)
     }
   end
