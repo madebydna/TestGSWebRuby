@@ -20,13 +20,8 @@ module Api
       @subscription ||= Api::Subscription.find(subscription_id)
     end
 
-    def stripe_subscription
-      @stripe_subscription ||= Stripe::Subscription.create({ customer: subscription.user.stripe_customer_id,
-                                                             items: [{ price: subscription.plan.stripe_price_id }] })
-    end
-
     def deactivate_stripe_subscription
-      Stripe::Subscription.delete('sub_49ty4767H20z6a')
+      Stripe::Subscription.delete(subscription.stripe_id)
     end
 
     def email_user
@@ -34,7 +29,7 @@ module Api
     end
 
     def email_biz_dev
-      if stripe_subscription
+      if subscription.status == 'bizdev_deactivated'
         p "emailing biz dev success"
       else
         p "emailing biz dev fail"
