@@ -24,17 +24,17 @@ class Admin::Api::AccountsController < ApplicationController
   end
 
   def approve
-    @account = Api::AccountApprover.new(params[:id]).approve
+    @account = Api::AccountApprover.new(params[:id]).process
     redirect_to edit_admin_api_account_path(@account)
   end
 
   def reject
-    @account = Api::AccountApprover.new(params[:id]).approve
+    @account = Api::AccountRejector.new(params[:id]).process
     redirect_to edit_admin_api_account_path(@account)
   end
 
   def deactivate
-    @account = Api::AccountApprover.new(params[:id]).approve
+    @account = Api::AccountDeactivator.new(params[:id]).process
     redirect_to edit_admin_api_account_path(@account)
   end
 

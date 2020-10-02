@@ -8,7 +8,7 @@ module Api
       @subscription_id = subscription_id
     end
 
-    def approve
+    def process
       subscription.update(status: 'bizdev_approved')
       create_stripe_subscription
       email_biz_dev

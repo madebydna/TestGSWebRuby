@@ -1,6 +1,6 @@
 module Api
-  # This class handles the approval logic for a subscription
-  class AccountApprover
+  # This class handles the deactivation logic for a subscription
+  class AccountDeactivator
 
     attr_reader :subscription_id
 
@@ -8,8 +8,7 @@ module Api
       @subscription_id = subscription_id
     end
 
-    def deactivate
-      subscription.update(status: 'bizdev_deactivated')
+    def process
       deactivate_stripe_subscription
       email_biz_dev
       email_user
@@ -22,6 +21,9 @@ module Api
 
     def deactivate_stripe_subscription
       Stripe::Subscription.delete(subscription.stripe_id)
+      subscription.update(status: 'bizdev_deactivated')
+    rescue => e
+      subscription.update(status_message: e.message)
     end
 
     def email_user
