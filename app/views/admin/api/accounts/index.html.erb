@@ -31,7 +31,6 @@
 
 <% content_for :page_javascripts do %>
   <%= webpack_javascript_include_tag "commons", defer: true %>
-  <%= webpack_javascript_include_tag 'react-redux', defer: true %>
   <%= webpack_javascript_include_tag 'admin-tools', defer: true %>
 <% end %>
 
@@ -59,6 +58,16 @@
     </tr>
   <% end %>
   </tbody>
+  <tfoot>
+  <tr>
+    <th>Name</th>
+    <th>Organization</th>
+    <th>Email</th>
+    <th>Status</th>
+    <th>Active</th>
+    <th>Added</th>
+  </tr>
+  </tfoot>
 </table>
 
 
