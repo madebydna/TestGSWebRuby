@@ -38,11 +38,11 @@
       = f.label :intended_use_details
       = f.text_area :intended_use_details
     %div
-      = f.label :stripe_customer_id
-      = f.text_field :stripe_customer_id
+      = link_to 'Stripe user', "https://dashboard.stripe.com/test/customers/#{@account.user.stripe_customer_id}"
+
     %div
       = f.label :created_at
-      = f.text_field :created_at
+      = f.text_field :created_at, value: @account.user.created_at.to_date, disabled: true
 %br/
 %h3 Subscription Details
 %br/
@@ -59,15 +59,24 @@
       = f.text_area :status_message, disabled: true
     %div
       = f.label :created_at
-      = f.text_field :created_at, disabled: true
+      = f.text_field :created_at, value: @account.created_at.to_date, disabled: true
+    %div
+      = f.label :start_date
+      = f.text_field :start_date, value: @account.start_date.to_date, disabled: true
     %div
       = f.label :notes
       = f.text_area :notes
+
+  = form_for(@account.plan, url: '#') do |f|
+    %div
+      = f.label "plan name"
+      = f.text_field :name, disabled: true
+
     %div{:style => "text-align: center;margin-top: 40px;"}
-      = f.submit "Save", class: "btn btn-primary", style: "width: 150px; margin-right: 15px;"
+    = f.submit "Save", class: "btn btn-primary", style: "width: 150px; margin-right: 15px;"
 
   %div
-    = form_for(@account, url: approve_admin_api_account_path(@account), method: :get) do |f|
+    = form_for(@account.plan, url: approve_admin_api_account_path(@account), method: :get) do |f|
       - if @account.pending_approval?
         = f.submit "Approve request", class: "btn btn-danger"
   %div
