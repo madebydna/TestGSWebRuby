@@ -28,6 +28,16 @@ class Admin::Api::AccountsController < ApplicationController
     redirect_to edit_admin_api_account_path(@account)
   end
 
+  def reject
+    @account = Api::AccountApprover.new(params[:id]).approve
+    redirect_to edit_admin_api_account_path(@account)
+  end
+
+  def deactivate
+    @account = Api::AccountApprover.new(params[:id]).approve
+    redirect_to edit_admin_api_account_path(@account)
+  end
+
   def account_params
     params.require(:api_subscription).permit(:aws_api_key, :notes)
   end

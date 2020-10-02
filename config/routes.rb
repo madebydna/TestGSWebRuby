@@ -303,6 +303,8 @@ LocalizedProfiles::Application.routes.draw do
       resources :accounts do
         member do
           get 'approve'
+          get 'reject'
+          get 'deactivate'
         end
       end
     end

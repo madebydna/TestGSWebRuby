@@ -20,6 +20,7 @@ module Api
   # pending_approval -> Once user clicks 'place order' on the confirmation page
   # bizdev_rejected -> bizdev reject the request via the api admin panel
   # bizdev_approved -> bizdev approve the request via the api admin panel
+  # bizdev_deactivated -> bizdev deactivated the account via the admin panel
   # payment_succeeded -> once bizdev approve a request payment is attempted if it succeeds we update to this status
   # payment_failed -> once bizdev approve a request payment is attempted if it fails we update to this status
 
