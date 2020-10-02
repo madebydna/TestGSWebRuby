@@ -1,5 +1,4 @@
 class SchoolProfilesController < ApplicationController
-  include RatingMethodologySelector
   protect_from_forgery
   before_filter :require_school
   before_action :redirect_to_canonical_url

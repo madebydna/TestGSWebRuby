@@ -120,6 +120,10 @@ describe MetricsCaching::Value do
       subject.subject = "Composite Subject"
       expect(subject.all_subjects?).to be true
     end
+    it "should return true subject is 'Any Subject'" do
+      subject.subject = "Any Subject"
+      expect(subject.all_subjects?).to be true
+    end
     it "should return false if subject is a valid subject" do
       subject.subject = "Reading"
       expect(subject.all_subjects?).to be false
@@ -274,12 +278,26 @@ describe MetricsCaching::Value do
       data = [
         hash.merge({"subject" => "Composite Subject", "data_type" => "Enrollment"}),
         hash.merge({"subject" => "Composite Subject", "data_type" => "Percent Needing Remediation for College"}),
-        hash.merge({"subject" => "Math", "data_type" => "Graduates needing Writing remediation in college"}),
-        hash.merge({"subject" => "Math", "data_type" => "Enrollment"})
+        hash.merge({"subject" => "Math", "data_type" => "Graduates needing Writing Remediation for College"}),
+        hash.merge({"subject" => "Math", "data_type" => "Enrollment"}),
+        hash.merge({"subject" => "Any Subject", "data_type" => "Percent needing any remediation in in-state public 2-year institutions"})
       ]
 
       result = create_collection(data)
-      expect(result.no_subject_or_all_subjects_or_graduates_remediation).to contain_exactly(result[0], result[1], result[2])
+      expect(result.no_subject_or_all_subjects_or_graduates_remediation).to contain_exactly(result[0], result[1], result[2], result[4])
+    end
+
+    it "#all_subjects_or_subjects_in selects records with all subject or one in a list of specified subjects" do
+      data = [
+        hash.merge({"subject" => "Composite Subject"}),
+        hash.merge({"subject" => "Any Subject"}),
+        hash.merge({"subject" => "Math"}),
+        hash.merge({"subject" => "English"}),
+        hash.merge({"subject" => "Reading"})
+      ]
+
+      result = create_collection(data)
+      expect(result.all_subjects_or_subjects_in(%w(Math Reading))).to contain_exactly(result[0], result[1], result[2], result[4])
     end
 
     it "#having_ethnicity_breakdown filters for records with an ethnicity breakdown_tag" do

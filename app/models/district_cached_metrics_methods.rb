@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 module DistrictCachedMetricsMethods
-  def metrics
-    cache_data.fetch('metrics', {})
-  end
+  include MetricsCaching::CommonCachedMetricsMethods
 
   def enrollment
     enrollment_data = metrics.fetch('Enrollment', [{}])

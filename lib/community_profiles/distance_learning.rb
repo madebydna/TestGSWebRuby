@@ -181,40 +181,42 @@ module CommunityProfiles
       remote_learning_plan = fetch_value(REMOTE_LEARNING_PLAN)&.strip
       technology_and_wifi_access = fetch_value(TECHNOLOGY_AND_WIFI_ACCESS)&.strip
       noteworthy_practices = fetch_value(NOTEWORTHY_PRACTICES)&.strip
-      cta_link = fetch_value(URL) ? I18n.t('see_district_page_html', scope: 'community.distance_learning', url: fetch_value(URL)) : ""
 
       overview_datatypes = [learning_model, remote_learning_plan, technology_and_wifi_access, noteworthy_practices].compact
       translated_overview_datatypes = overview_datatypes.map { |type| I18n.db_t(type, default: type) }
-      translated_summary = I18n.db_t(summary, default: summary)
-      more = I18n.t('more', scope: 'community.distance_learning')
-
-      if translated_summary
-        str = translated_summary
-        str += '<a class="js-gaClick js-moreRevealLink more-reveal-link" href="javascript:void(0)">...'
-        str += more
-        str += '.</a>'
-        str += '<div class="js-moreReveal more-reveal">'
-        str += '<ul>'
-        translated_overview_datatypes.map do |data_type|
-          str += '<li class="overview-list">'
-          str += data_type
-          str += '</li>'
-        end
-        str += '</ul>'
-        str += cta_link
-        str += '</div>'
-      else
-        str = '<ul>'
-        translated_overview_datatypes.map do |data_type|
-          str += '<li class="overview-list">'
-          str += data_type
-          str += '</li>'
-        end
-        str += '</ul>'
-        str += cta_link
-      end
-
+      str = ''      
+      str << I18n.db_t(summary, default: summary) if summary.present?
+      str << overview_list(translated_overview_datatypes)
       str
+    end
+
+    def overview_list(translated_overview_datatypes)
+      return '' unless translated_overview_datatypes.present?
+
+      cta_link = fetch_value(URL) ? I18n.t('see_district_page_html', scope: 'community.distance_learning', url: fetch_value(URL)) : ""
+      str = '<ul>'
+      str << overview_list_items(translated_overview_datatypes)
+      str << '</ul>'
+      str << '<div class="js-moreReveal more-reveal">' if show_more_link?(translated_overview_datatypes)
+      str << cta_link
+      str << '</div>' if show_more_link?(translated_overview_datatypes)
+      str
+    end
+
+    def overview_list_items(overview_datatypes)
+      overview_datatypes.each_with_index.reduce('') do |accum, (datatype, idx)|
+        accum << '<div class="js-moreReveal more-reveal">' if idx == 1 #hide elements that need to be hidden, better to incorporate this in frontend in future
+        accum << '<li class="overview-list">'
+        accum << datatype
+        if idx == 0 && show_more_link?(overview_datatypes)
+          accum << '<a class="js-gaClick js-moreRevealLink more-reveal-link" style="display:inline-block;" href="javascript:void(0)">...'
+          accum << I18n.t('more', scope: 'community.distance_learning')
+          accum << '.</a>'
+        end
+        accum << '</li>'
+        accum << '</div>' if (idx == overview_datatypes.length - 1) && idx > 1
+        accum
+      end
     end
 
     def date_valid
@@ -226,6 +228,10 @@ module CommunityProfiles
         formatted_date = 'N/A'
       end
       formatted_date
+    end
+
+    def show_more_link?(datatypes)
+      datatypes.length > 1
     end
   end
 end

@@ -65,10 +65,14 @@ module MetricsCaching
     # 483: Percent enrolled in any out-of-state postsecondary institution within the immediate fall after graduation
     # 484: Percent enrolled in any postsecondary institution within 24 months after graduation
     # 485: Percent enrolled in any postsecondary institution within 6 months after graduation
-    # 486: Percent enrolled in any public in-state postsecondary institution or intended to enroll in any out-of-state institution, or in-state private institution within 18 months after graduation
+    # 486: Percent enrolled in any public in-state postsecondary institution or intended to enroll in any out-of-state institution, or in-state private institution within 16 months after graduation
     # 487: Percent enrolled in any public in-state postsecondary institution within the immediate fall after graduation
-    # 488: Percent Enrolled in a public 4 year college and Returned for a Second Year
-    # 489: Percent Enrolled in a public 2 year college and Returned for a Second Year
+    # 488: Percent Enrolled in an in-state public 4 year college and Returned for a Second Year
+    # 489: Percent Enrolled in an in-state public 2 year college and Returned for a Second Year
+    # 505: Percent enrolled in any public in-state postsecondary institution or intended to enroll in any out-of-state institution, or in-state private institution within 12 months after graduation
+    # 506: Percent enrolled in any public in-state institution within 16 months after graduation
+    # 508: Percent needing remediation in in-state public 2-year institutions
+    # 509: Percent needing remediation in in-state public 4-year institutions
 
     DATA_TYPE_IDS_WHITELIST = [
       23,  27,  35,  55,  59,  63,  71,  83,  91,  95,  99,  119,
@@ -76,7 +80,7 @@ module MetricsCaching
       373, 374, 376, 378, 380, 381, 382, 383, 385, 386, 396, 397,
       398, 399, 401, 402, 404, 413, 442, 443, 448, 454, 462, 464,
       473, 474, 476, 475, 477, 478, 479, 480, 481, 482, 483, 484,
-      485, 486, 487, 488, 489
+      485, 486, 487, 488, 489, 505, 506, 508, 509
     ]
 
     def self.listens_to?(data_type)

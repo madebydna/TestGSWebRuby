@@ -6,7 +6,7 @@ en:
         subtext: How well are the students in this district doing compared to their peers across the state?
         tooltip_html: >
           <p>GreatSchools’ Summary Rating provides an overall snapshot of school quality based on multiple measures, like academics, equity, and the school environment, compared to other public schools in the state. In this section you can see a summary of the percentage of schools in this district with above, below, or about average Summary Ratings.</p>
-          <a href="/gk/ratings-in-nd/">Learn more about GreatSchools Ratings.</a>
+          <a href="/gk/ratings/">Learn more about GreatSchools Ratings.</a>
         graphic_header: How does this district compare with the rest of the state?
         graphic_header_tooltip: This chart shows the percentage of schools in this district with Summary Ratings that are above average (7-10), average (5-6), or below average (1-4) compared to state averages.
         narrative:
@@ -22,17 +22,6 @@ en:
           even_distribution_html: >
             <span class="emphasis" style="color:#8a720a;">Worth a deeper look:</span>
             <p>This district has a <span class="emphasis">mixed record</span>. Look below to see what percentage of schools in this district are rated <span class="emphasis">above average</span>, <span class="emphasis">average</span> or <span class="emphasis">below average</span> in school quality.</p>
-        source_html: >
-          <div class="sourcing">
-            <h1>GreatSchools district data sources & information</h1>
-            <p>The GreatSchools Summary Rating provides a multi-measured reflection of school quality based on the ratings components available for each school. To see how the Summary Rating was calculated for a school in this district, visit the school’s profile and click on the tooltip question mark next to the Summary Rating at the top of the page.</p>
-            <p>Summary Ratings for schools in this district were last updated on %{date_in_words}.</p>
-            <a href="/gk/ratings-in-nd/">Learn more about GreatSchools Ratings.</a>
-          </div>
-      district_scope_alt:
-        tooltip_html: >
-          <p>GreatSchools’ Summary Rating provides an overall snapshot of school quality based on multiple measures, like academics, equity, and the school environment, compared to other public schools in the state. In this section you can see a summary of the percentage of schools in this district with above, below, or about average Summary Ratings.</p>
-          <a href="/gk/ratings/">Learn more about GreatSchools Ratings.</a>
         source_html: >
           <div class="sourcing">
             <h1>GreatSchools district data sources & information</h1>

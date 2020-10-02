@@ -405,10 +405,12 @@ applyStylingToIFrameAd('.js-Profiles_Second_Ad-wrapper', [300,250], 'margin-left
 
 // animations
 document.addEventListener('DOMContentLoaded', ()=>{
-  const labelContainer = document.querySelector('.label-container');
+  const labelContainer = document.querySelector(".rating-label-container");
   const classes = ['.line', '.coming-soon-container'];
 
-  setTimeout(() => {
-    initAnimation(labelContainer, classes)
-  }, 500)
+  if(labelContainer){
+    setTimeout(() => {
+      initAnimation(labelContainer, classes)
+    }, 500)
+  }
 })

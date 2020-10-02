@@ -1,7 +1,7 @@
 <% rating_table_rows = @school_profile.summary_rating.content %>
 <% summary_rating = @school_profile.summary_rating.gs_rating %>
 <% last_updated = @school_profile.summary_rating.last_updated %>
-<% path_to_yml = path_to_yaml('school_profiles.summary_rating') %>
+<% path_to_yml = 'school_profiles.summary_rating' %>
 
 <div class="summary_rating_tooltip">
   <%# tooltip header %>
@@ -13,7 +13,7 @@
     </div>
     <div class="header-text">
       <div><%= t(path_to_yml + '.header.title')%></div>
-      <div><%= t(path_to_yml + '.header.subtext_html')%><a href="<%= ratings_link %>"><%= t(path_to_yml + '.header.Learn more')%></a></div>
+      <div><%= t(path_to_yml + '.header.subtext_html')%><%= t(path_to_yml + '.header.learn_more_html')%></div>
     </div>
   </div>
 

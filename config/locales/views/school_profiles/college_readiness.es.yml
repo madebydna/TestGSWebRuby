@@ -5,246 +5,6 @@ es:
         Esta sección incluye información sobre los índices de graduación, los exámenes SAT/ACT y los cursos AP de esta escuela.
       title: Preparación universitaria
       tooltip_html: >
-        <p>Esta clasificación muestra que bien los estudiantes de esta escuela están preparados para la universidad
-        comparados a los estudiantes en otras escuelas en este estado, sobre medidas como los índices de graduación,
-        pruebas de ingreso universitario y los cursos avanzados cuando están disponibles.</p>
-        <p><a href="/gk/ratings-in-nd/?lang=es#collegereadinessrating" target="_blank">Infórmese más sobre esta calificación.</a></p>
-      subtitle_html: <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="Una clave cosa" href="/gk/videos/why-college-counseling-matters/" target="_blank">Una clave cosa</a> que todas las escuelas exitosas hacen para ayudar a los estudiantes a inscribirse en la universidad.
-      source: Fuente
-      sources: Fuentes
-      feedback_cta: ¿Encontraste la información sobre el éxito universitario útil? Qué podemos hacer mejor?
-      Answer: Responda
-      historical:
-        title: Clasificaciones anteriores de GreatSchools de la Preparación Universitaria
-        subtitle: Este gráfico muestra cómo la Calificación de GreatSchools de la Preparación Universitaria de esta escuela ha cambiado con el tiempo.
-      and: y
-      state: estado
-      district: distrito
-      info_text: "<p>Esta clasificación muestra que bien los estudiantes de esta escuela están preparados para la universidad comparados a los estudiantes en otras escuelas en este estado, sobre medidas como las tasas de graduación, pruebas de ingreso universitario y los cursos de AP cuando están disponibles.</p><p><a href='/gk/ratings-in-nd/?lang=es#collegereadinessrating' target='_blank'>Infórmese más sobre esta calificación.</a></p>"
-      sources_title: 'Las fuentes de datos y informacion de los perfiles de GreatSchools'
-      'GreatSchools Rating': 'Calificaciones de GreatSchools de la Preparación Universitaria'
-      'Rating text': 'Esta clasificación muestra que bien los estudiantes de esta escuela están preparados para la universidad comparados a los estudiantes en otras escuelas en este estado, sobre medidas como las tasas de graduación, pruebas de ingreso universitario y los cursos de AP cuando están disponibles.'
-      scoped_info_text: "<p style='font-family:opensans-semibold'>¿Los graduados de esta %{entity} están preparados para tener éxito en la universidad? Esta sección analiza los signos importantes de la preparación para la universidad.</p>
-      <p>Ve las escuelas en este estado que ganaron un <a href='/gk/csa-winners/' target='_blank'>College Success Award</a> por su excelencia en la preparación de estudiantes para la universidad.</p>"
-      # DATA TYPE LABELS
-      4-year high school graduation rate: 'Índice de graduación de escuelas preparatorias de 4 años'
-      Percent of students who meet UC/CSU entrance requirements: Porcentaje de alumnos que cumplen con los requisitos de elegibilidad para UC/CSU
-      Average SAT score: Calificación media de los SAT
-      SAT percent participation: 'Participación SAT'
-      Percentage SAT/ACT participation grades 11-12: 'Índice de participación en SAT/ACT'
-      Percent of Students who Participated in the SAT/ACT in grades 9-12: 'Índice de participación en SAT/ACT'
-      Average ACT score: Calificación media de ACT
-      ACT participation: 'Participación ACT'
-      SAT percent college ready: 'Clasificación para la preparación universitaria SAT Subject Test'
-      SAT percent college ready(11th Grade): 'Clasificación para la preparación universitaria SAT Subject Test 11.°grado'
-      SAT percent college ready(12th Grade): 'Clasificación para la preparación universitaria SAT Subject Test 12.°grado'
-      ACT percent college ready: 'Clasificación para la preparación universitaria ACT'
-      Percentage AP enrolled grades 9-12: 'Participación en cursos AP'
-      Percentage of students passing 1 or more AP exams grades 9-12: 'El porcentaje de estudiantes que pasaron uno o más exámenes AP grados 9°-12°'
-      Percentage of students enrolled in Dual Enrollment classes grade 9-12: 'El porcentaje de estudiantes matriculados en cursos de Inscripción Doble en los grados 9.° y 12.°'
-      Percentage of students enrolled in IB grades 9-12: 'El porcentaje de estudiantes matriculados en IB en los grados 9.° y 12.°'
-      faq:
-        cta: ¿Notas que algo falta o confunde?
-        content_html: >
-          <p>Información de la preparación universitaria procede de agencias del estado o nacionales de educación (haz clic en el enlace "Fuentes" para más detalles).</p>
-          <p>Cuando falta información en nuestros perfiles, probablemente es porque esta escuela no ofreció un curso AP,
-          clases de bachillerato internacional (IB) o inscripción doble, o participó en uno de los dos exámenes de preparación
-          universitaria, el ACT o SAT (algunos estados determinan que exámenes de preparación universitaria las escuelas pueden utilizar).
-          También es posible que los datos que faltan no estaban incluidos en los datos que recibimos del estado.</p>
-          <p>¿Ha encontrado la información de la preparación universitaria útil? ¿Qué podemos hacer mejor? <a href="https://s.qualaroo.com/45194/34aea707-ec71-4130-b6bb-2864e0528c64" target="_blank">Comparte tus comentarios.</a></p>
-          <p><a href="/gk/ratings-in-nd/?lang=es#collegereadinessrating" target="_blank">Infórmese más sobre esta calificación.</a></p>
-          <p>Todavía tiene preguntas? <a href="https://greatschools.zendesk.com/hc/en-us" target="_blank">Visite nuestra página de preguntas frecuentes.</a></p>
-      'Graduating seniors pursuing 4 year college/university': Estudiantes de último año que buscan una universidad de 4 años
-      'Graduating seniors pursuing 2 year college/university': Estudiantes de último año que buscan una universidad de 2 años
-      'Graduating seniors pursuing other college': Graduados matriculados en otros programas universitarios
-      'Percent Enrolled in College Immediately Following High School': Graduados matriculados en la universidad
-      'Percent enrolled in any public in-state postsecondary institution within 12 months after graduation': Graduados matriculados en una universidad pública o un programa vocacional
-      'Percent enrolled in any postsecondary institution within 12 months after graduation': Graduados matriculados en la universidad o un programa vocacional
-      'Percent enrolled in any 2 year postsecondary institution within 6 months after graduation': Graduados matriculados en una universidad de 2 años o un programa vocacional
-      'Percent enrolled in any 2 year postsecondary institution within the immediate fall after graduation': Graduados matriculados en una universidad de 2 años o un programa vocacional
-      'Percent enrolled in any 2 year public in-state postsecondary institution within the immediate fall after graduation': Graduados matriculados en una universidad pública de 2 años o un programa vocacional
-      'Percent enrolled in any 4 year postsecondary institution within 6 months after graduation': Graduados matriculados en una universidad de 4  años o un programa vocacional
-      'Percent enrolled in any 4 year postsecondary institution within the immediate fall after graduation': Graduados matriculados en una universidad de 4  años o un programa vocacional
-      'Percent enrolled in any 4 year public in-state postsecondary institution within the immediate fall after graduation': Graduados matriculados en una universidad pública de 4  años o un programa vocacional
-      'Percent enrolled in any in-state postsecondary institution within 12 months after graduation': Graduados matriculados en una universidad pública del estado de o un programa vocacional
-      'Percent enrolled in any in-state postsecondary institution within the immediate fall after graduation': Graduados matriculados en una universidad pública del estado de o un programa vocacional
-      'Percent enrolled in any out-of-state postsecondary institution within the immediate fall after graduation': Graduados matriculados en una universidad pública del estado de o un programa vocacional
-      'Percent enrolled in any postsecondary institution within 24 months after graduation': Graduados matriculados en la universidad o un programa vocacional
-      'Percent enrolled in any postsecondary institution within 6 months after graduation': Graduados matriculados en la universidad o un programa vocacional
-      'Percent enrolled in any public in-state postsecondary institution or intended to enroll in any out-of-state institution, or in-state private institution within 18 months after graduation': Graduados matriculados en la universidad o un programa vocacional
-      'Percent enrolled in any public in-state postsecondary institution within the immediate fall after graduation': Graduados matriculados en una universidad pública del estado de o un programa vocacional
-      'Percent Enrolled in a public 4 year college and Returned for a Second Year': Graduados que regresaron a la universidad pública de 4 años por un segundo año
-      'Percent Enrolled in a public 2 year college and Returned for a Second Year': Graduados que regresaron a la universidad pública de 2 años por un segundo año
-      'Percent Needing Remediation for College': Graduados que necesitan remediación en la universidad
-      'Graduates needing English remediation in college': Graduados que necesitan remediación en inglés en la universidad
-      'Graduates needing Math remediation in college': Graduados que necesitan remediación en matemáticas en la universidad
-      'Graduates needing Science remediation in college': Graduados que necesitan remediación en ciencia en la universidad
-      'Graduates needing Reading remediation in college': Graduados que necesitan remediación en lectura en la universidad
-      'Graduates needing Writing remediation in college': Graduados que necesitan remediación de escritura en la universidad
-      'Percent Enrolled in College and Returned for a Second Year': Graduados que regresaron a la universidad por un segundo año
-      'Percent enrolled in any institution of higher learning in the last 0-16 months': Graduados matriculados en programas universitarios o vocacionales
-      'Percent enrolled in a 2-year institution of higher learning in the last 0-16 months': Graduados explorando universidades de 2 años o un programa vocacional
-      'Percent enrolled in a 4-year institution of higher learning in the last 0-16 months': Graduados explorando universidades de 4 años o un programa vocacional
-      'Percent of students who will attend out-of-state colleges': Graduados asistiendo la universidad fuera del estado
-      'Percent of students who will attend in-state colleges': Graduados asistiendo la universidad estatal
-      csa_badge_html: >
-        Esta escuela ha ganado un <span style='font-family:opensans-semibold'>%{blurb} College Success Award</span> basado en su éxito en preparar a los estudiantes para la universidad y finalmente para su carrera. <a href=%{csa_state_link}>Ver más ganadores</a>.
-      data_point_info_texts:
-        '4-year high school graduation rate': 'Los índices de graduación reflejan cuántos estudiantes se gradúan de esta escuela a tiempo.'
-        Percent of students who meet UC/CSU entrance requirements: >
-          Este es el porcentaje de estudiantes graduados de esta escuela que recibieron una "C" o superior en los cursos
-          A-G requeridos para ser elegibles para atender a alguna de las escuelas de la
-          Universidad de California y Universidad del Estado de California.
-          <a href="/gk/articles/dont-miss-these-requirements-to-get-into-college/" target="_blank">Obtén más información</a>.
-        Average SAT score: 'El SAT es una prueba de admisión universitaria, que en 2015 tenía un total de 2400 puntos posibles. Esta calificación refleja el puntaje promedio en el SAT entre los estudiantes de esta escuela. En 2016, el SAT cambió a una escala de 1600 puntos. Regrese pronto para obtener información actualizada para esta escuela.'
-        Average SAT score_new: 'El SAT es una examen de admisión universitaria, cuyo puntaje más alto es de 1600 puntos. Esta calificación refleja el puntaje promedio en el SAT entre los estudiantes de esta escuela.'
-        SAT percent participation: 'El índice de participación en el SAT refleja el porcentaje de estudiantes elegibles de esta escuela que tomaron el SAT.'
-        Percentage SAT/ACT participation grades 11-12: 'El índice de participación en SAT/ACT refleja el porcentaje de estudiantes elegibles en los grados 11.° y 12.° de esta escuela que tomaron el SAT o ACT.'
-        Percent of Students who Participated in the SAT/ACT in grades 9-12: 'El índice de participación en SAT/ACT refleja el porcentaje de estudiantes elegibles de esta escuela que tomaron el SAT o ACT.'
-        Average ACT score: 'El ACT es un examen de admisión universitaria, cuyo puntaje más alto es de 36 puntos. Esta calificación refleja el puntaje promedio de las calificaciones en el ACT entre los estudiantes de esta escuela.'
-        ACT participation: 'El índice de participación en el ACT refleja el porcentaje de estudiantes elegibles de esta escuela que tomaron el ACT.'
-        SAT percent college ready: 'La clasificación para la preparación universitaria SAT refleja el puntaje mínimo en un SAT subject test necesario para indicar aproximadamente un 75 por ciento de posibilidad de obtener una "C" o más en un curso correspondiente con crédito universitario. Los puntos de referencia se establecen en los datos a nivel nacional.'
-        SAT percent college ready(11th Grade): 'La clasificación para la preparación universitaria SAT para estudiantes de 11.° o 12.°  grado refleja el puntaje mínimo en un examen SAT necesario para indicar aproximadamente un 75 por ciento de posibilidad de obtener una "C" o más en un curso correspondiente con crédito universitario. Los puntos de referencia se establecen en los datos a nivel nacional.'
-        SAT percent college ready(12th Grade): 'La clasificación para la preparación universitaria SAT para estudiantes de 11.° o 12.°  grado refleja el puntaje mínimo en un examen SAT necesario para indicar aproximadamente un 75 por ciento de posibilidad de obtener una "C" o más en un curso correspondiente con crédito universitario. Los puntos de referencia se establecen en los datos a nivel nacional.'
-        ACT percent college ready: 'La clasificación para la preparación universitaria ACT refleja el puntaje mínimo de las pruebas de materia temáticas de ACT necesario para indicar aproximadamente un 75 por ciento de posibilidad de obtener una "C" o más en un curso correspondiente con crédito universitario. Los puntos de referencia se establecen en los datos a nivel nacional.'
-        Percentage AP enrolled grades 9-12: 'Los cursos de AP (cursos avanzados) son clases de nivel universitario que los estudiantes pueden tomar en la escuela secundaria. El porcentaje de estudiantes que toman cursos AP puede reflejar si la cultura escolar se centra en la preparación universitaria.'
-        AP Course Participation: 'Los cursos de AP (cursos avanzados) son clases de nivel universitario que los estudiantes pueden tomar en la escuela secundaria. El porcentaje de estudiantes que toman cursos AP puede reflejar si la cultura escolar se centra en la preparación universitaria.'
-        Percentage of students passing 1 or more AP exams grades 9-12: 'El índice de aprobación de los exámenes de AP (cursos avanzados) refleja cuántos estudiantes obtuvieron un puntaje mínimo en al menos uno de estos exámenes. Estudiantes que tienen éxito en los exámenes AP (con un resultado de un 3, 4 o 5) puedan recibir crédito universitario.'
-        Percentage of students enrolled in Dual Enrollment classes grade 9-12: 'La Clasificación para la Participación de Inscripción Doble refleja el porcentaje de estudiantes en esta escuela que toman cursos universitarios mientras están en la escuela secundaria. Los créditos para estos cursos se aplican a los requisitos para un diploma de la escuela secundaria y los requisitos de para graduación universitaria.'
-        Percentage of students enrolled in IB grades 9-12: >
-          El Bachillerato Internacional (IB) es un programa de alto nivel reconocido internacionalmente que enfatiza
-          el pensamiento creativo y crítico. Una escuela secundaria puede tener clases específicas de IB que
-          los estudiantes pueden tomar, o un programa IB para toda la escuela que afecta a todas las clases.
-          Algunas universidades dan créditos universitarios para los cursos del IB.
-          <a href='/gk/articles/que-es-el-bachillerato-internacional-escuela-de-ib/?lang=es' target="_blank">Más acerca de IB</a>
-        'Graduating seniors pursuing 4 year college/university': 'Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en un colegio o universidad de 4 años inmediatamente después de la escuela secundaria.'
-        'Graduating seniors pursuing 2 year college/university': 'Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en un colegio o universidad de 2 años inmediatamente después de la escuela secundaria.'
-        'Graduating seniors pursuing other college': 'Esto refleja el porcentaje de graduados de esta escuela secundaria que se inscribieron en programas universitarios distintos de una universidad de 2 o 4 años inmediatamente después de la escuela secundaria.'
-        'Percent Enrolled in College Immediately Following High School': Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en la universidad inmediatamente después de la escuela secundaria.'
-        'Percent Needing Remediation for College': Esto refleja el porcentaje de graduados de esta escuela que necesitaron tomar clases básicas o correctivas, que no cuentan para un título universitario.
-        'Graduates needing English remediation in college': Esto refleja el porcentaje de graduados de esta escuela que necesitaron tomar clases de inglés básicas o correctivas, que no cuentan para un título universitario.
-        'Graduates needing Math remediation in college': Esto refleja el porcentaje de graduados de esta escuela que necesitaron tomar clases de matemáticas básicas o correctivas, que no cuentan para un título universitario.
-        'Graduates needing Science remediation in college': Esto refleja el porcentaje de graduados de esta escuela que necesitaron tomar clases de ciencia básicas o correctivas, que no cuentan para un título universitario.
-        'Graduates needing Reading remediation in college': Esto refleja el porcentaje de graduados de esta escuela que necesitaron tomar clases de lectura básicas o correctivas, que no cuentan para un título universitario.
-        'Graduates needing Writing remediation in college': Esto refleja el porcentaje de graduados de esta escuela que necesitaron tomar clases de escritura básicas o correctivas, que no cuentan para un título universitario.
-        'Percent Enrolled in College and Returned for a Second Year': 'Esto refleja el porcentaje de graduados de esta escuela que completaron su primer año de universidad y regresaron por segundo año consecutivo.'
-        'Percent enrolled in any institution of higher learning in the last 0-16 months': 'Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en cualquier institución de educación superior dentro de los 16 meses de haberse graduado.'
-        'Percent enrolled in any public in-state postsecondary institution within 12 months after graduation': Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en cualquier institución pública de educación superior del estado dentro de los 12 meses de haberse graduado.
-        'Percent enrolled in any postsecondary institution within 12 months after graduation': Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en cualquier institución de educación superior dentro de los 12 meses de haberse graduado.
-        'Percent enrolled in any 2 year postsecondary institution within 6 months after graduation': Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en cualquier institución de educación superior de 2 años dentro de los 6 meses de haberse graduado
-        'Percent enrolled in any 2 year postsecondary institution within the immediate fall after graduation': Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en cualquier institución de educación superior de 2 años inmediatamente después de la escuela secundaria.
-        'Percent enrolled in any 2 year public in-state postsecondary institution within the immediate fall after graduation': Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en cualquier institución pública del estado de educación superior de 2 años inmediatamente después de la escuela secundaria.
-        'Percent enrolled in any 4 year postsecondary institution within 6 months after graduation': Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en una institución de educación superior de 4 años dentro de los 6 meses de haberse graduado
-        'Percent enrolled in any 4 year postsecondary institution within the immediate fall after graduation': Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en una institución de educación superior de 4 años inmediatamente después de la escuela secundaria.
-        'Percent enrolled in any 4 year public in-state postsecondary institution within the immediate fall after graduation': Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en una institución pública del estado de educación superior de 4 años inmediatamente después de la escuela secundaria.
-        'Percent enrolled in any in-state postsecondary institution within 12 months after graduation': Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en cualquier institución pública del estado de educación superior dentro de los 12 meses de haberse graduado.
-        'Percent enrolled in any in-state postsecondary institution within the immediate fall after graduation': Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en cualquier institución pública del estado de educación superior inmediatamente después de la escuela secundaria.
-        'Percent enrolled in any out-of-state postsecondary institution within the immediate fall after graduation': Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en cualquier institución pública fuera del estado de educación superior inmediatamente después de la escuela secundaria.
-        'Percent enrolled in any postsecondary institution within 24 months after graduation': Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en cualquier institución de educación superior dentro de los 24 meses de haberse graduado.
-        'Percent enrolled in any postsecondary institution within 6 months after graduation': Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en cualquier institución de educación superior dentro de los 6 meses de haberse graduado.
-        'Percent enrolled in any public in-state postsecondary institution or intended to enroll in any out-of-state institution, or in-state private institution within 18 months after graduation': Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en una institución pública de educación superior del estado, o que tienen la intención de inscribirse en una institución fuera del estado o una institución privada del estado dentro de los 18 meses de haberse graduado.
-        'Percent enrolled in any public in-state postsecondary institution within the immediate fall after graduation': Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en cualquier institución pública del estado de educación superior inmediatamente después de la escuela secundaria.
-        'Percent Enrolled in a public 4 year college and Returned for a Second Year': Esto refleja el porcentaje de graduados de esta escuela que completaron su primer año en una universidad pública de 4 años y regresaron por un segundo año consecutivo.
-        'Percent Enrolled in a public 2 year college and Returned for a Second Year': Esto refleja el porcentaje de graduados de esta escuela que completaron su primer año en una universidad pública de 2 años y regresaron por un segundo año consecutivo.
-        'Percent enrolled in a 2-year institution of higher learning in the last 0-16 months': 'Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en una institución de dos años de educación superior dentro de los 16 meses de haberse graduado.'
-        'Percent enrolled in a 4-year institution of higher learning in the last 0-16 months': 'Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en una institución de 4 años de educación superior dentro de los 16 meses de haberse graduado.'
-        'Percent of students who will attend out-of-state colleges': 'Esto refleja el porcentaje de graduados de esta escuela que están inscritos en colegios o universidades fuera del estado.'
-        'Percent of students who will attend in-state colleges': 'Esto refleja el porcentaje de graduados de esta escuela que están inscritos en colegios o universidades estatales.'
-      narration:
-        college_success:
-          average: <span class="emphasis">a la altura del promedio</span>
-          above_average: <span class="emphasis">por encima del promedio</span>
-          below_average: <span class="emphasis">por debajo del promedio</span>
-          about: <span class="emphasis">a la altura del promedio</span>
-          higher: <span class="emphasis">por encima</span>
-          lower: <span class="emphasis">por debajo</span>
-          intro: >
-            <div class="auto-narration"><span class="content">En comparación con los promedios estatales, los estudiantes que se gradúan de esta escuela tienen: </span>
-            <ul>
-          district_intro: >
-            <div class="auto-narration"><span class="content">En comparación con los promedios estatales, los estudiantes que se gradúan de esta distrito tienen: </span>
-            <ul>
-          outro: </ul>%{end_more}</div>
-          'Percent Enrolled in College Immediately Following High School': de los índices de matriculación universitaria
-          'Percent enrolled in any institution of higher learning in the last 0-16 months': de los índices de matriculación universitaria
-          'Percent enrolled in a 4-year institution of higher learning in the last 0-16 months': de los índices de matriculación en la universidad de 4 años
-          'Graduating seniors pursuing 4 year college/university': de los índices de matriculación en la universidad de 4 años
-          'Percent of students who will attend out-of-state colleges': en matriculación en la universidad fuera del estado
-          'Percent of students who will attend in-state colleges': en matriculación en la universidad dentro del estado
-          'Percent enrolled in a 2-year institution of higher learning in the last 0-16 months': de los índices de matriculación en la universidad de 2 años
-          'Graduating seniors pursuing 2 year college/university': de los índices de matriculación en la universidad de 2 años
-          'Graduating seniors pursuing other college': de los índices de matriculación en otros programas universitarios
-          'Percent Enrolled in College and Returned for a Second Year': de los índices de rendimiento para un segundo año de universidad
-          'Percent Needing Remediation for College': porcentaje de estudiantes que deben tomar clases correctivas antes de comenzar cursos universitarios
-          'Graduates needing Reading remediation in college': porcentaje de estudiantes que deben tomar clases correctivas de lectura antes de comenzar cursos universitarios
-          'Graduates needing Writing remediation in college': porcentaje de estudiantes que deben tomar clases correctivas de escritura antes de comenzar cursos universitarios
-          'Graduates needing English remediation in college': porcentaje de estudiantes que deben tomar clases correctivas de inglés antes de comenzar cursos universitarios
-          'Graduates needing Science remediation in college': porcentaje de estudiantes que deben tomar clases correctivas de ciencias antes de comenzar cursos universitarios
-          'Graduates needing Math remediation in college': porcentaje de estudiantes que deben tomar clases correctivas de matemáticas antes de comenzar cursos universitarios
-        _1_html: >
-          <div class="auto-narration">
-          <h3 class="negative">Muy preocupante:</h3>
-          <p>Esta escuela está muy por debajo del promedio estatal en medidas de preparación universitario y de la preparación (o carrera) profesional</p>
-          <p>(Recuerde: <span class="emphasis">altas índices de graduación no significan mucho</span> si los estudiantes se gradúan sin los cursos y las calificaciones de los exámenes que necesitan para tener éxito.)</p>
-          <hr />
-          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
-          <p class="footnote">Las mejores escuelas secundarias <a href="/gk/videos/advanced-classes-academics-for-everyone/" target="_blank">ofrecen cursos avanzados a todos los estudiantes</a>, no solo a unos pocos.</p>
-          </div>
-        _2_html: >
-          <div class="auto-narration">
-          <h3 class="negative">Un signo preocupante:</h3>
-          <p>Esta escuela está <span class="emphasis">por debajo</span> del promedio estatal en medidas de preparación universitario y de la preparación (o carrera) profesional</p>
-          <p>(Recuerde: <span class="emphasis">altas índices de graduación no significan mucho</span> si los estudiantes se gradúan sin los cursos y las calificaciones de los exámenes que necesitan para tener éxito.)</p>
-          <hr />
-          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
-          <p class="footnote">Las mejores escuelas secundarias <a href="/gk/videos/advanced-classes-academics-for-everyone/" target="_blank">ofrecen cursos avanzados a todos los estudiantes</a>, no solo a unos pocos.</p>
-          </div>
-        _3_html: >
-          <div class="auto-narration">
-          <h3 class="neutral">Vale la pena una mirada más profunda:</h3>
-          <p>Esta escuela está <span class="emphasis">comparable</span> al promedio estatal en medidas de preparación universitario y de la preparación (o carrera) profesional, pero dependiendo del estado, promedio puede significar que sólo una minoría de los estudiantes están preparados para la universidad y la carrera.</p>
-          <p>(Recuerde: <span class="emphasis">altas índices de graduación no significan mucho</span> si los estudiantes se gradúan sin los cursos y las calificaciones de los exámenes que necesitan para tener éxito.)</p>
-          <hr />
-          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
-          <p class="footnote">Las mejores escuelas secundarias <a href="/gk/videos/advanced-classes-academics-for-everyone/" target="_blank">ofrecen cursos avanzados a todos los estudiantes</a>, no solo a unos pocos.</p>
-          </div>
-        _4_html: >
-          <div class="auto-narration">
-          <h3 class="positive">Un signo prometedor:</h3>
-          <p>Esta escuela está <span class="emphasis">por encima</span> del promedio estatal en medidas de preparación universitario y de la preparación (o carrera) profesional</p>
-          <hr />
-          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
-          <p class="footnote">Las mejores escuelas secundarias <a href="/gk/videos/advanced-classes-academics-for-everyone/" target="_blank">ofrecen cursos avanzados a todos los estudiantes</a>, no solo a unos pocos.</p>
-          </div>
-        _5_html: >
-          <div class="auto-narration">
-          <h3 class="positive">¡Buenas noticias!:</h3>
-          <p>Esta escuela está <span class="emphasis">muy por encima</span> del promedio estatal en medidas de
-          preparación universitario y de la preparación (o carrera) profesional</p>
-          <hr />
-          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
-          <p class="footnote">Las mejores escuelas secundarias <a href="/gk/videos/advanced-classes-academics-for-everyone/" target="_blank">ofrecen cursos avanzados a todos los estudiantes</a>, no solo a unos pocos.</p>
-          </div>
-        _college_success: >
-          <div class="auto-narration">
-          <p>¿Los graduados de esta escuela están preparados para triunfar en la universidad? Esta sección analiza los signos importantes de la preparación universitaria.</p>
-          <hr />
-          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
-          <p class="footnote">Los estudiantes que no están preparados para el material de nivel universitario pueden encontrarse en
-          <a href="/gk/articles/por-que-tantos-estudiantes-destacados-terminan-en-clases-de-recuperacion/?lang=es" target="_blank">clases costosas de recuperación</a> y es más probable que <a href="/gk/articles/por-que-tantos-estudiantes-universitarios-abandonar-la-universidad/?lang=es" target="_blank">abandonen la universidad</a>. Las escuelas secundarias exitosas <a href="/gk/videos/the-importance-of-real-life-learning-career-pathways/" target="_blank">ayudan a los niños a encontrar sus pasiones</a> y tener éxito después de graduarse.</p>
-          </div>
-        _parent_tip_html: >
-          <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
-          <p class="footnote">Las mejores escuelas secundarias <a href="/gk/videos/advanced-classes-academics-for-everyone/" target="_blank">ofrecen cursos avanzados a todos los estudiantes</a>, no solo a unos pocos.</p>
-    college_success:
-      title: Éxito universitario
-      subtitle_html: >
-        ¿Qué se necesita para que una escuela secundaria se destaque en términos de ayudar a todos los estudiantes a que tengan éxito en la universidad? Aprenda sobre <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="las mejores prácticas de escuelas premiadas" href="/gk/csa-winners/" target="_blank">las mejores prácticas de escuelas premiadas.</a>
-    college_readiness_alt:
-      no_data: >
-        Esta sección incluye información sobre los índices de graduación, los exámenes SAT/ACT y los cursos AP de esta escuela.
-      title: Preparación universitaria
-      tooltip_html: >
         <p>Esta calificación muestra lo bien que los estudiantes de esta escuela están preparados para la universidad en comparación con los estudiantes de otras escuelas en este estado, basados en medidas como los índices de graduación, las pruebas de ingreso a la universidad y otros datos disponibles como cursos avanzados.</p>
         <p><a href='/gk/como-clasificamos/?lang=es#collegereadinessrating' target="_blank">Aprende más sobre esta calificación.</a></p>
       subtitle_html: <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="Una clave cosa" href="/gk/videos/why-college-counseling-matters/" target="_blank">Una clave cosa</a> que todas las escuelas exitosas hacen para ayudar a los estudiantes a inscribirse en la universidad.
@@ -308,14 +68,29 @@ es:
       'Percent enrolled in any postsecondary institution within 6 months after graduation': Graduados matriculados en la universidad o un programa vocacional
       'Percent enrolled in any public in-state postsecondary institution or intended to enroll in any out-of-state institution, or in-state private institution within 18 months after graduation': Graduados matriculados en la universidad o un programa vocacional
       'Percent enrolled in any public in-state postsecondary institution within the immediate fall after graduation': Graduados matriculados en una universidad pública del estado de o un programa vocacional
-      'Percent Enrolled in a public 4 year college and Returned for a Second Year': Graduados que regresaron a la universidad pública de 4 años por un segundo año
-      'Percent Enrolled in a public 2 year college and Returned for a Second Year': Graduados que regresaron a la universidad pública de 2 años por un segundo año
+      'Percent Enrolled in an in-state public 4 year college and Returned for a Second Year': Graduados que regresaron a la universidad pública de 4 años por un segundo año
+      'Percent Enrolled in an in-state public 2 year college and Returned for a Second Year': Graduados que regresaron a la universidad pública de 2 años por un segundo año
       'Percent Needing Remediation for College': Graduados que necesitan remediación en la universidad
-      'Graduates needing English remediation in college': Graduados que necesitan remediación en inglés en la universidad
-      'Graduates needing Math remediation in college': Graduados que necesitan remediación en matemáticas en la universidad
-      'Graduates needing Science remediation in college': Graduados que necesitan remediación en ciencia en la universidad
-      'Graduates needing Reading remediation in college': Graduados que necesitan remediación en lectura en la universidad
-      'Graduates needing Writing remediation in college': Graduados que necesitan remediación de escritura en la universidad
+      'Percent Needing any Remediation for College': Graduados que necesitan remediación en la universidad
+      'Graduates needing English Remediation for College': Graduados que necesitan remediación en inglés en la universidad
+      'Graduates needing Math Remediation for College': Graduados que necesitan remediación en matemáticas en la universidad
+      'Graduates needing Science Remediation for College': Graduados que necesitan remediación en ciencia en la universidad
+      'Graduates needing Reading Remediation for College': Graduados que necesitan remediación en lectura en la universidad
+      'Graduates needing Writing Remediation for College': Graduados que necesitan remediación de escritura en la universidad
+      'Percent needing remediation in in-state public 2-year institutions': 'Graduados que necesitan remediación en la universidad de 2 años'
+      'Percent needing any remediation in in-state public 2-year institutions': 'Graduados que necesitan remediación en la universidad de 2 años'
+      'Graduates needing Reading remediation in 2-year college': 'Graduados que necesitan remediación en lectura en la universidad de 2 años'
+      'Graduates needing Math remediation in 2-year college': 'Graduados que necesitan remediación en matemáticas en la universidad de 2 años '
+      'Graduates needing English remediation in 2-year college': 'Graduados que necesitan remediación de inglés en la universidad de 2 años'
+      'Graduates needing Science remediation in 2-year college': 'Graduados que necesitan remediación en ciencia en la universidad de 2 años'
+      'Graduates needing Writing remediation in 2-year college': 'Graduados que necesitan remediación en la escritura en la universidad de 2 años'
+      'Percent needing remediation in in-state public 4-year institutions': 'Graduados que necesitan remediación en la universidad de 4 años'
+      'Percent needing any remediation in in-state public 4-year institutions': 'Graduados que necesitan remediación en la universidad de 4 años'
+      'Graduates needing Reading remediation in 4-year college': 'Graduados que necesitan remediación en lectura en la universidad de 4 años'
+      'Graduates needing Math remediation in 4-year college': 'Graduados que necesitan remediación en matemáticas en la universidad de 4 años '
+      'Graduates needing English remediation in 4-year college': 'Graduados que necesitan remediación de inglés en la universidad de 4 años'
+      'Graduates needing Science remediation in 4-year college': 'Graduados que necesitan remediación en ciencia en la universidad de 4 años'
+      'Graduates needing Writing remediation in 4-year college': 'Graduados que necesitan remediación en la escritura en la universidad de 4 años'
       'Percent Enrolled in College and Returned for a Second Year': Graduados que regresaron a la universidad por un segundo año
       'Percent enrolled in any institution of higher learning in the last 0-16 months': Graduados matriculados en programas universitarios o vocacionales
       'Percent enrolled in a 2-year institution of higher learning in the last 0-16 months': Graduados explorando universidades de 2 años o un programa vocacional
@@ -357,11 +132,26 @@ es:
         'Graduating seniors pursuing other college': 'Esto refleja el porcentaje de graduados de esta escuela secundaria que se inscribieron en programas universitarios distintos de una universidad de 2 o 4 años inmediatamente después de la escuela secundaria.'
         'Percent Enrolled in College Immediately Following High School': Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en la universidad inmediatamente después de la escuela secundaria.'
         'Percent Needing Remediation for College': Esto refleja el porcentaje de graduados de esta escuela que necesitaron tomar clases básicas o correctivas, que no cuentan para un título universitario.
-        'Graduates needing English remediation in college': Esto refleja el porcentaje de graduados de esta escuela que necesitaron tomar clases de inglés básicas o correctivas, que no cuentan para un título universitario.
-        'Graduates needing Math remediation in college': Esto refleja el porcentaje de graduados de esta escuela que necesitaron tomar clases de matemáticas básicas o correctivas, que no cuentan para un título universitario.
-        'Graduates needing Science remediation in college': Esto refleja el porcentaje de graduados de esta escuela que necesitaron tomar clases de ciencia básicas o correctivas, que no cuentan para un título universitario.
-        'Graduates needing Reading remediation in college': Esto refleja el porcentaje de graduados de esta escuela que necesitaron tomar clases de lectura básicas o correctivas, que no cuentan para un título universitario.
-        'Graduates needing Writing remediation in college': Esto refleja el porcentaje de graduados de esta escuela que necesitaron tomar clases de escritura básicas o correctivas, que no cuentan para un título universitario.
+        'Percent Needing any Remediation for College': Esto refleja el porcentaje de graduados de esta escuela que necesitaron tomar al menos una clase básica o correctiva, que no cuenta para un título universitario.
+        'Graduates needing English Remediation for College': Esto refleja el porcentaje de graduados de esta escuela que necesitaron tomar clases de inglés básicas o correctivas, que no cuentan para un título universitario.
+        'Graduates needing Math Remediation for College': Esto refleja el porcentaje de graduados de esta escuela que necesitaron tomar clases de matemáticas básicas o correctivas, que no cuentan para un título universitario.
+        'Graduates needing Science Remediation for College': Esto refleja el porcentaje de graduados de esta escuela que necesitaron tomar clases de ciencia básicas o correctivas, que no cuentan para un título universitario.
+        'Graduates needing Reading Remediation for College': Esto refleja el porcentaje de graduados de esta escuela que necesitaron tomar clases de lectura básicas o correctivas, que no cuentan para un título universitario.
+        'Graduates needing Writing Remediation for College': Esto refleja el porcentaje de graduados de esta escuela que necesitaron tomar clases de escritura básicas o correctivas, que no cuentan para un título universitario.
+        'Percent needing remediation in in-state public 2-year institutions': 'Esto refleja el porcentaje de graduados de esta escuela que asisten a la universidad pública estatal de 2 años y necesitaban tomar más de una clase básica -o correctiva- en la universidad, que no cuentan para un título.'
+        'Percent needing any remediation in in-state public 2-year institutions': 'Esto refleja el porcentaje de graduados de esta escuela que asisten a la universidad pública estatal de 2 años y necesitaban tomar clases básicas -o correctivas- en la universidad, que no cuentan para un título.'
+        'Graduates needing Reading remediation in 2-year college': 'Esto refleja el porcentaje de graduados de esta escuela que asisten a la universidad pública estatal de 2 años y necesitaban tomar clases básicas -o correctivas- de lectura en la universidad, que no cuentan para un título.'
+        'Graduates needing Math remediation in 2-year college': 'Esto refleja el porcentaje de graduados de esta escuela que asisten a la universidad pública estatal de 2 años y necesitaban tomar clases básicas -o correctivas- de matemáticas en la universidad, que no cuentan para un título.'
+        'Graduates needing English remediation in 2-year college': 'Esto refleja el porcentaje de graduados de esta escuela que asisten a la universidad pública estatal de 2 años y necesitaban tomar clases básicas -o correctivas- de inglés en la universidad, que no cuentan para un título.'
+        'Graduates needing Science remediation in 2-year college': 'Esto refleja el porcentaje de graduados de esta escuela que asisten a la universidad pública estatal de 2 años y necesitaban tomar clases básicas -o correctivas- de ciencia en la universidad, que no cuentan para un título.'
+        'Graduates needing Writing remediation in 2-year college': 'Esto refleja el porcentaje de graduados de esta escuela que asisten a la universidad pública estatal de 2 años y necesitaban tomar clases básicas -o correctivas- de escritura en la universidad, que no cuentan para un título.'
+        'Percent needing remediation in in-state public 4-year institutions': 'Esto refleja el porcentaje de graduados de esta escuela que asisten a la universidad pública estatal de 4 años y necesitaban tomar más de una clase básica -o correctiva- en la universidad, que no cuentan para un título.'
+        'Percent needing any remediation in in-state public 4-year institutions': 'Esto refleja el porcentaje de graduados de esta escuela que asisten a la universidad pública estatal de 4 años y necesitaban tomar clases básicas -o correctivas- en la universidad, que no cuentan para un título.'
+        'Graduates needing Reading remediation in 4-year college': 'Esto refleja el porcentaje de graduados de esta escuela que asisten a la universidad pública estatal de 4 años y necesitaban tomar clases básicas -o correctivas- de lectura en la universidad, que no cuentan para un título.'
+        'Graduates needing Math remediation in 4-year college': 'Esto refleja el porcentaje de graduados de esta escuela que asisten a la universidad pública estatal de 4 años y necesitaban tomar clases básicas -o correctivas- de matemáticas en la universidad, que no cuentan para un título.'
+        'Graduates needing English remediation in 4-year college': 'Esto refleja el porcentaje de graduados de esta escuela que asisten a la universidad pública estatal de 4 años y necesitaban tomar clases básicas -o correctivas- de inglés en la universidad, que no cuentan para un título.'
+        'Graduates needing Science remediation in 4-year college': 'Esto refleja el porcentaje de graduados de esta escuela que asisten a la universidad pública estatal de 4 años y necesitaban tomar clases básicas -o correctivas- de ciencia en la universidad, que no cuentan para un título.'
+        'Graduates needing Writing remediation in 4-year college': 'Esto refleja el porcentaje de graduados de esta escuela que asisten a la universidad pública estatal de 4 años y necesitaban tomar clases básicas -o correctivas- de escritura en la universidad, que no cuentan para un título.'
         'Percent Enrolled in College and Returned for a Second Year': 'Esto refleja el porcentaje de graduados de esta escuela que completaron su primer año de universidad y regresaron por segundo año consecutivo.'
         'Percent enrolled in any institution of higher learning in the last 0-16 months': 'Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en cualquier institución de educación superior dentro de los 16 meses de haberse graduado.'
         'Percent enrolled in any public in-state postsecondary institution within 12 months after graduation': Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en cualquier institución pública de educación superior del estado dentro de los 12 meses de haberse graduado.
@@ -377,10 +167,10 @@ es:
         'Percent enrolled in any out-of-state postsecondary institution within the immediate fall after graduation': Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en cualquier institución pública fuera del estado de educación superior inmediatamente después de la escuela secundaria.
         'Percent enrolled in any postsecondary institution within 24 months after graduation': Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en cualquier institución de educación superior dentro de los 24 meses de haberse graduado.
         'Percent enrolled in any postsecondary institution within 6 months after graduation': Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en cualquier institución de educación superior dentro de los 6 meses de haberse graduado.
-        'Percent enrolled in any public in-state postsecondary institution or intended to enroll in any out-of-state institution, or in-state private institution within 18 months after graduation': Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en una institución pública de educación superior del estado, o que tienen la intención de inscribirse en una institución fuera del estado o una institución privada del estado dentro de los 18 meses de haberse graduado.
+        'Percent enrolled in any public in-state postsecondary institution or intended to enroll in any out-of-state institution, or in-state private institution within 18 months after graduation': Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en una institución pública de educación superior del estado, o que tienen la intención de inscribirse en una institución fuera del estado o una institución privada del estado dentro de los 16 meses de haberse graduado.
         'Percent enrolled in any public in-state postsecondary institution within the immediate fall after graduation': Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en cualquier institución pública del estado de educación superior inmediatamente después de la escuela secundaria.
-        'Percent Enrolled in a public 4 year college and Returned for a Second Year': Esto refleja el porcentaje de graduados de esta escuela que completaron su primer año en una universidad pública de 4 años y regresaron por un segundo año consecutivo.
-        'Percent Enrolled in a public 2 year college and Returned for a Second Year': Esto refleja el porcentaje de graduados de esta escuela que completaron su primer año en una universidad pública de 2 años y regresaron por un segundo año consecutivo.
+        'Percent Enrolled in an in-state public 4 year college and Returned for a Second Year': Esto refleja el porcentaje de graduados de esta escuela que completaron su primer año en una universidad pública de 4 años y regresaron por un segundo año consecutivo.
+        'Percent Enrolled in an in-state public 2 year college and Returned for a Second Year': Esto refleja el porcentaje de graduados de esta escuela que completaron su primer año en una universidad pública de 2 años y regresaron por un segundo año consecutivo.
         'Percent enrolled in a 2-year institution of higher learning in the last 0-16 months': 'Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en una institución de dos años de educación superior dentro de los 16 meses de haberse graduado.'
         'Percent enrolled in a 4-year institution of higher learning in the last 0-16 months': 'Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en una institución de 4 años de educación superior dentro de los 16 meses de haberse graduado.'
         'Percent of students who will attend out-of-state colleges': 'Esto refleja el porcentaje de graduados de esta escuela que están inscritos en colegios o universidades fuera del estado.'
@@ -411,11 +201,11 @@ es:
           'Graduating seniors pursuing other college': de los índices de matriculación en otros programas universitarios
           'Percent Enrolled in College and Returned for a Second Year': de los índices de rendimiento para un segundo año de universidad
           'Percent Needing Remediation for College': porcentaje de estudiantes que deben tomar clases correctivas antes de comenzar cursos universitarios
-          'Graduates needing Reading remediation in college': porcentaje de estudiantes que deben tomar clases correctivas de lectura antes de comenzar cursos universitarios
-          'Graduates needing Writing remediation in college': porcentaje de estudiantes que deben tomar clases correctivas de escritura antes de comenzar cursos universitarios
-          'Graduates needing English remediation in college': porcentaje de estudiantes que deben tomar clases correctivas de inglés antes de comenzar cursos universitarios
-          'Graduates needing Science remediation in college': porcentaje de estudiantes que deben tomar clases correctivas de ciencias antes de comenzar cursos universitarios
-          'Graduates needing Math remediation in college': porcentaje de estudiantes que deben tomar clases correctivas de matemáticas antes de comenzar cursos universitarios
+          'Graduates needing Reading Remediation for College': porcentaje de estudiantes que deben tomar clases correctivas de lectura antes de comenzar cursos universitarios
+          'Graduates needing Writing Remediation for College': porcentaje de estudiantes que deben tomar clases correctivas de escritura antes de comenzar cursos universitarios
+          'Graduates needing English Remediation for College': porcentaje de estudiantes que deben tomar clases correctivas de inglés antes de comenzar cursos universitarios
+          'Graduates needing Science Remediation for College': porcentaje de estudiantes que deben tomar clases correctivas de ciencias antes de comenzar cursos universitarios
+          'Graduates needing Math Remediation for College': porcentaje de estudiantes que deben tomar clases correctivas de matemáticas antes de comenzar cursos universitarios
         _1_html: >
           <div class="auto-narration">
           <h3 class="negative">Muy preocupante:</h3>
@@ -471,7 +261,7 @@ es:
         _parent_tip_html: >
           <p class="parent-tip"><img src='/assets/school_profiles/brown-owl.svg' alt="" /><span class="speech-bubble left">Consejos para padres</span></p>
           <p class="footnote">Las mejores escuelas secundarias <a href="/gk/videos/advanced-classes-academics-for-everyone/" target="_blank">ofrecen cursos avanzados a todos los estudiantes</a>, no solo a unos pocos.</p>
-    college_success_alt:
+    college_success:
       title: Éxito universitario
       subtitle_html: >
         ¿Qué se necesita para que una escuela secundaria se destaque en términos de ayudar a todos los estudiantes a que tengan éxito en la universidad? Aprenda sobre <a class="js-gaClick" data-ga-click-category="Profile" data-ga-click-action="Internal Link" data-ga-click-label="las mejores prácticas de escuelas premiadas" href="/gk/csa-winners/" target="_blank">las mejores prácticas de escuelas premiadas.</a>

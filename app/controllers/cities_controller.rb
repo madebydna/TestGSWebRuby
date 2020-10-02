@@ -3,7 +3,6 @@ class CitiesController < ApplicationController
   include AdvertisingConcerns
   include PageAnalytics
   include CommunityConcerns
-  include RatingMethodologySelector
 
   layout 'application'
   before_filter :redirect_unless_valid_city
@@ -160,7 +159,6 @@ class CitiesController < ApplicationController
         cp[:stateLong] = state_name.gs_capitalize_words
         cp[:stateShort] = state.upcase
         cp[:county] = county_record&.name
-        cp[:ratingsUrl] = ratings_link
         cp[:searchResultBrowseUrl] = search_city_browse_path(city_params(state, city))
         cp[:stateCsaBrowseUrl] = state_college_success_awards_list_path(state_params(state_name)) if csa_state_solr_query.present?
         cp[:mobilityURL] = ENV_GLOBAL['mobility_url']

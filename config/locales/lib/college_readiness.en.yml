@@ -35,11 +35,26 @@ en:
       'Graduating seniors pursuing other college': 'Graduates pursuing other college programs'
       'Percent Enrolled in College Immediately Following High School': 'Graduates pursuing college'
       'Percent Needing Remediation for College': 'Graduates needing remediation in college'
-      'Graduates needing English remediation in college': 'Graduates needing English remediation in college'
-      'Graduates needing Math remediation in college': 'Graduates needing Math remediation in college'
-      'Graduates needing Science remediation in college': 'Graduates needing Science remediation in college'
-      'Graduates needing Reading remediation in college': 'Graduates needing Reading remediation in college'
-      'Graduates needing Writing remediation in college': 'Graduates needing Writing remediation in college'
+      'Percent Needing any Remediation for College': 'Graduates needing remediation in college'
+      'Graduates needing English Remediation for College': 'Graduates needing English remediation in college'
+      'Graduates needing Math Remediation for College': 'Graduates needing math remediation in college'
+      'Graduates needing Science Remediation for College': 'Graduates needing science remediation in college'
+      'Graduates needing Reading Remediation for College': 'Graduates needing reading remediation in college'
+      'Graduates needing Writing Remediation for College': 'Graduates needing writing remediation in college'
+      'Percent needing remediation in in-state public 2-year institutions': 'Graduates needing remediation in 2-year college'
+      'Percent needing any remediation in in-state public 2-year institutions': 'Graduates needing remediation in 2-year college'
+      'Graduates needing Reading remediation in 2-year college': 'Graduates needing reading remediation in 2-year college'
+      'Graduates needing Math remediation in 2-year college': 'Graduates needing math remediation in 2-year college'
+      'Graduates needing English remediation in 2-year college': 'Graduates needing English remediation in 2-year college'
+      'Graduates needing Science remediation in 2-year college': 'Graduates needing science remediation in 2-year college'
+      'Graduates needing Writing remediation in 2-year college': 'Graduates needing writing remediation in 2-year college'
+      'Percent needing remediation in in-state public 4-year institutions': 'Graduates needing remediation in 4-year college'
+      'Percent needing any remediation in in-state public 4-year institutions': 'Graduates needing remediation in 4-year college'
+      'Graduates needing Reading remediation in 4-year college': 'Graduates needing reading remediation in 4-year college'
+      'Graduates needing Math remediation in 4-year college': 'Graduates needing math remediation in 4-year college'
+      'Graduates needing English remediation in 4-year college': 'Graduates needing English remediation in 4-year college'
+      'Graduates needing Science remediation in 4-year college': 'Graduates needing science remediation in 4-year college'
+      'Graduates needing Writing remediation in 4-year college': 'Graduates needing writing remediation in 4-year college'
       'Percent Enrolled in College and Returned for a Second Year': 'Graduates who returned to college for a second year'
       'Percent enrolled in any institution of higher learning in the last 0-16 months': 'Graduates pursuing college or vocational program'
       'Percent enrolled in any public in-state postsecondary institution within 12 months after graduation': Graduates pursuing public college or vocational program
@@ -57,12 +72,14 @@ en:
       'Percent enrolled in any postsecondary institution within 6 months after graduation': Graduates pursuing college or vocational program
       'Percent enrolled in any public in-state postsecondary institution or intended to enroll in any out-of-state institution, or in-state private institution within 18 months after graduation': Graduates pursuing college or vocational program
       'Percent enrolled in any public in-state postsecondary institution within the immediate fall after graduation': Graduates pursuing in-state public college or vocational program
-      'Percent Enrolled in a public 4 year college and Returned for a Second Year': Graduates who returned to public 4-year college for a second year
-      'Percent Enrolled in a public 2 year college and Returned for a Second Year': Graduates who returned to public 2-year college for a second year
+      'Percent Enrolled in an in-state public 4 year college and Returned for a Second Year': Graduates who returned to public 4-year college for a second year
+      'Percent Enrolled in an in-state public 2 year college and Returned for a Second Year': Graduates who returned to public 2-year college for a second year
       'Percent enrolled in a 2-year institution of higher learning in the last 0-16 months': 'Graduates pursuing 2-year college or vocational program'
       'Percent enrolled in a 4-year institution of higher learning in the last 0-16 months': 'Graduates pursuing 4-year college or vocational program'
       'Percent of students who will attend out-of-state colleges': 'Graduates pursuing out-of-state college'
       'Percent of students who will attend in-state colleges': 'Graduates pursuing in-state college'
+      'Percent enrolled in any public in-state postsecondary institution or intended to enroll in any out-of-state institution, or in-state private institution within 12 months after graduation': 'Graduates pursuing college or vocational program'
+      'Percent enrolled in any public in-state institution within 16 months after graduation': 'Graduates pursuing in-state public college or vocational program'
       csa_badge_html: >
         This school has earned a <span style='font-family:opensans-semibold'>%{blurb} College Success Award</span> based on its success in preparing students for college and ultimately career. <a href=%{csa_state_link}>See more winners</a>.
       data_point_info_texts:
@@ -89,16 +106,31 @@ en:
           <a href="/gk/articles/dont-miss-these-requirements-to-get-into-college/">Find out more</a>.
         'Percentage of students passing 1 or more AP exams grades 9-12': 'The AP exam pass rate reflects how many students at this school earned a passing score on at least one AP exam. Students who do well on AP exams (passing with a score of 3, 4, or 5) may receive college credit.'
         'Percentage AP enrolled grades 9-12': 'Advanced Placement classes are rigorous classes with a final exam. The percentage of students taking AP exams may reflect whether the school culture is focused on college.'
-        'Graduating seniors pursuing 4 year college/university': 'This reflects the percentage of  graduates from this school who enrolled in a 4-year college or university immediately following high school.'
+        'Graduating seniors pursuing 4 year college/university': 'This reflects the percentage of graduates from this school who enrolled in a 4-year college or university immediately following high school.'
         'Graduating seniors pursuing 2 year college/university': 'This reflects the percentage of graduates from this school who enrolled in a 2-year college or university immediately following high school.'
         'Graduating seniors pursuing other college': 'This reflects the percentage of graduates from this high school who enrolled in college programs other than a 2-or-4-year college or university immediately following high school.'
         'Percent Enrolled in College Immediately Following High School': 'This reflects the percentage of graduates from this school who enrolled in college immediately following high school.'
-        'Percent Needing Remediation for College': 'This reflects the percentage of graduates from this school who needed to take basic - or remedial - classes, which do not count towards a degree, in college.'
-        'Graduates needing English remediation in college': 'This reflects the percentage of graduates from this school who needed to take basic - or remedial - English classes in college, which do not count towards a degree.'
-        'Graduates needing Math remediation in college': 'This reflects the percentage of graduates from this school who needed to take basic - or remedial - Math classes in college, which do not count towards a degree.'
-        'Graduates needing Science remediation in college': 'This reflects the percentage of graduates from this school who needed to take basic - or remedial - Science classes in college, which do not count towards a degree.'
-        'Graduates needing Reading remediation in college': 'This reflects the percentage of graduates from this school who needed to take basic - or remedial - Reading classes in college, which do not count towards a degree.'
-        'Graduates needing Writing remediation in college': 'This reflects the percentage of graduates from this school who needed to take basic - or remedial - Writing classes in college, which do not count towards a degree.'
+        'Percent Needing Remediation for College': 'This reflects the percentage of graduates from this school who needed to take more than one basic - or remedial - class, which does not count towards a degree, in college.'
+        'Percent Needing any Remediation for College': 'This reflects the percentage of graduates from this school who needed to take at least one basic - or remedial - class, which does not count towards a degree, in college.'
+        'Graduates needing English Remediation for College': 'This reflects the percentage of graduates from this school who needed to take basic - or remedial - English classes in college, which do not count towards a degree.'
+        'Graduates needing Math Remediation for College': 'This reflects the percentage of graduates from this school who needed to take basic - or remedial - Math classes in college, which do not count towards a degree.'
+        'Graduates needing Science Remediation for College': 'This reflects the percentage of graduates from this school who needed to take basic - or remedial - Science classes in college, which do not count towards a degree.'
+        'Graduates needing Reading Remediation for College': 'This reflects the percentage of graduates from this school who needed to take basic - or remedial - Reading classes in college, which do not count towards a degree.'
+        'Graduates needing Writing Remediation for College': 'This reflects the percentage of graduates from this school who needed to take basic - or remedial - Writing classes in college, which do not count towards a degree.'
+        'Percent needing remediation in in-state public 2-year institutions': 'This reflects the percentage of graduates from this school who attend in-state public 2-year college and needed to take more than one basic - or remedial - class, which does not count towards a degree, in college.'
+        'Percent needing any remediation in in-state public 2-year institutions': 'This reflects the percentage of graduates from this school who attend in-state public 2-year college and needed to take basic - or remedial - classes in college, which do not count towards a degree.'
+        'Graduates needing Reading remediation in 2-year college': 'This reflects the percentage of graduates from this school who attend in-state public 2-year college and needed to take basic - or remedial - reading classes in college, which do not count towards a degree.'
+        'Graduates needing Math remediation in 2-year college': 'This reflects the percentage of graduates from this school who attend in-state public 2-year college and needed to take basic - or remedial - math classes in college, which do not count towards a degree.'
+        'Graduates needing English remediation in 2-year college': 'This reflects the percentage of graduates from this school who attend in-state public 2-year college and needed to take basic - or remedial - English classes in college, which do not count towards a degree.'
+        'Graduates needing Science remediation in 2-year college': 'This reflects the percentage of graduates from this school who attend in-state public 2-year college and needed to take basic - or remedial - science classes in college, which do not count towards a degree.'
+        'Graduates needing Writing remediation in 2-year college': 'This reflects the percentage of graduates from this school who attend in-state public 2-year college and needed to take basic - or remedial - writing classes in college, which do not count towards a degree.'
+        'Percent needing remediation in in-state public 4-year institutions': 'This reflects the percentage of graduates from this school who attend in-state public 4-year college and needed to take more than one basic - or remedial - class, which does not count towards a degree, in college.'
+        'Percent needing any remediation in in-state public 4-year institutions': 'This reflects the percentage of graduates from this school who attend in-state public 4-year college and needed to take basic - or remedial - classes in college, which do not count towards a degree.'
+        'Graduates needing Reading remediation in 4-year college': 'This reflects the percentage of graduates from this school who attend in-state public 4-year college and needed to take basic - or remedial - reading classes in college, which do not count towards a degree.'
+        'Graduates needing Math remediation in 4-year college': 'This reflects the percentage of graduates from this school who attend in-state public 4-year college and needed to take basic - or remedial - math classes in college, which do not count towards a degree.'
+        'Graduates needing English remediation in 4-year college': 'This reflects the percentage of graduates from this school who attend in-state public 4-year college and needed to take basic - or remedial - English classes in college, which do not count towards a degree.'
+        'Graduates needing Science remediation in 4-year college': 'This reflects the percentage of graduates from this school who attend in-state public 4-year college and needed to take basic - or remedial - science classes in college, which do not count towards a degree.'
+        'Graduates needing Writing remediation in 4-year college': 'This reflects the percentage of graduates from this school who attend in-state public 4-year college and needed to take basic - or remedial - writing classes in college, which do not count towards a degree.'
         'Percent Enrolled in College and Returned for a Second Year': 'This reflects the percentage of graduates from this school who completed their first year of college and returned for a second year.'
         'Percent enrolled in any institution of higher learning in the last 0-16 months': 'This reflects the percentage of graduates from this school who enrolled in any institution of higher learning within 16 months of graduation.'
         'Percent enrolled in any public in-state postsecondary institution within 12 months after graduation': This reflects the percentage of graduates from this school who enrolled in any in-state public institution of higher learning within 12 months of graduation.
@@ -114,14 +146,16 @@ en:
         'Percent enrolled in any out-of-state postsecondary institution within the immediate fall after graduation': This reflects the percentage of graduates from this school who enrolled in any out-of-state institution of higher learning immediately following high school.
         'Percent enrolled in any postsecondary institution within 24 months after graduation': This reflects the percentage of graduates from this school who enrolled in any institution of higher learning within 24 months of graduation.
         'Percent enrolled in any postsecondary institution within 6 months after graduation': This reflects the percentage of graduates from this school who enrolled in any institution of higher learning within 6 months of graduation.
-        'Percent enrolled in any public in-state postsecondary institution or intended to enroll in any out-of-state institution, or in-state private institution within 18 months after graduation': This reflects the percentage of graduates from this school who enrolled in any in-state public institution of higher learning, or who intend to enroll in any out-of-state institution or in-state private institution within 18 months of graduation.
+        'Percent enrolled in any public in-state postsecondary institution or intended to enroll in any out-of-state institution, or in-state private institution within 18 months after graduation': This reflects the percentage of graduates from this school who enrolled in any in-state public institution of higher learning, or who intend to enroll in any out-of-state institution or in-state private institution within 16 months of graduation.
         'Percent enrolled in any public in-state postsecondary institution within the immediate fall after graduation': This reflects the percentage of graduates from this school who enrolled in any in-state public institution of higher learning immediately following high school.
-        'Percent Enrolled in a public 4 year college and Returned for a Second Year': This reflects the percentage of graduates from this school who completed their first year in a public 4-year college and returned for a second year.
-        'Percent Enrolled in a public 2 year college and Returned for a Second Year': This reflects the percentage of graduates from this school who completed their first year in a public 2-year college and returned for a second year.
+        'Percent Enrolled in an in-state public 4 year college and Returned for a Second Year': This reflects the percentage of graduates from this school who completed their first year in a public 4-year college and returned for a second year.
+        'Percent Enrolled in an in-state public 2 year college and Returned for a Second Year': This reflects the percentage of graduates from this school who completed their first year in a public 2-year college and returned for a second year.
         'Percent enrolled in a 2-year institution of higher learning in the last 0-16 months': 'This reflects the percentage of graduates from this school who enrolled in a 2-year institution of higher learning within 16 months of graduation.'
         'Percent enrolled in a 4-year institution of higher learning in the last 0-16 months': 'This reflects the percentage of graduates from this school who enrolled in a 4-year institution of higher learning within 16 months of graduation.'
         'Percent of students who will attend out-of-state colleges': 'This reflects the percentage of graduates from this school who are enrolled in out-of-state colleges or universities.'
         'Percent of students who will attend in-state colleges': 'This reflects the percentage of graduates from this school who are enrolled in in-state colleges or universities.'
+        'Percent enrolled in any public in-state postsecondary institution or intended to enroll in any out-of-state institution, or in-state private institution within 12 months after graduation': 'This reflects the percentage of graduates from this school who enrolled in any in-state public institution of higher learning, or who intend to enroll in any out-of-state institution or in-state private institution within 12 months of graduation.'
+        'Percent enrolled in any public in-state institution within 16 months after graduation': 'This reflects the percentage of graduates from this school who enrolled in any in-state public institution of higher learning within 16 months of graduation.'
       narration:
         college_success:
           average: <span class="emphasis">about average</span>
@@ -148,11 +182,11 @@ en:
           'Graduating seniors pursuing other college': enrollment rates in other college programs
           'Percent Enrolled in College and Returned for a Second Year': rates of return for a second year of college
           'Percent Needing Remediation for College': percentages of students who must take remedial classes before starting college coursework
-          'Graduates needing Reading remediation in college': percentages of students who must take remedial reading classes before starting college coursework
-          'Graduates needing Writing remediation in college': percentages of students who must take remedial writing classes before starting college coursework
-          'Graduates needing English remediation in college': percentages of students who must take remedial English classes before starting college coursework
-          'Graduates needing Science remediation in college': percentages of students who must take remedial science classes before starting college coursework
-          'Graduates needing Math remediation in college': percentages of students who must take remedial math classes before starting college coursework
+          'Graduates needing Reading Remediation for College': percentages of students who must take remedial reading classes before starting college coursework
+          'Graduates needing Writing Remediation for College': percentages of students who must take remedial writing classes before starting college coursework
+          'Graduates needing English Remediation for College': percentages of students who must take remedial English classes before starting college coursework
+          'Graduates needing Science Remediation for College': percentages of students who must take remedial science classes before starting college coursework
+          'Graduates needing Math Remediation for College': percentages of students who must take remedial math classes before starting college coursework
         _1_html: >
           <div class="auto-narration">
           <h3 class="negative">Very concerning:</h3>

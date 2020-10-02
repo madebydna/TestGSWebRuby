@@ -1,7 +1,11 @@
 import { expect } from 'chai';
 import { describe, it } from 'mocha';
 import { equal } from 'assert';
-import { getQueryParam, updateUrlParameter } from 'components/header/query_param_utils';
+import {
+  getQueryParam,
+  updateUrlParameter,
+  updateQueryParams,
+} from "components/header/query_param_utils";
 
 // client/app/bundles/GSWeb/components/header/query_param_utils.js
 describe('QueryParamUtils', ()=> {
@@ -132,4 +136,17 @@ describe('QueryParamUtils', ()=> {
     })
 
   })
+
+  // context("#updateQueryParams", () => {
+  //   let key = 'state';
+  //   let value = 'ca';
+
+  //   context("With no query params", ()=>{
+  //     let searchParams = "";
+  //     let answer = "?state=ca"
+  //     it('should return the correct search params', ()=> {
+  //       expect(updateQueryParams(searchParams, key, value).to.equal(answer));
+  //     })
+  //   });
+  // });
 })

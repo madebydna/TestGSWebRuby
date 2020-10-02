@@ -19,19 +19,16 @@ class DistrictCacheDataReader
   end
 
   def decorated_metrics_datas(*keys)
-    decorated_district.metrics.slice(*keys).each_with_object({}) do |(data_type, array), accum|
-      accum[data_type] =
-        array.map do |h|
-          MetricsCaching::Value.from_hash(h).tap {|dv| dv.data_type = data_type}
-        end.extend(MetricsCaching::Value::CollectionMethods)
-    end
+    decorated_district.decorated_metrics.slice(*keys)
   end
 
   def decorated_metrics_data(key)
-    Array.wrap(decorated_district.metrics.slice(key)[key])
-      .map do |h|
-      MetricsCaching::Value.from_hash(h).tap {|dv| dv.data_type = key }
-    end.extend(MetricsCaching::Value::CollectionMethods)
+    Array.wrap(decorated_district.decorated_metrics.slice(key)[key])
+    .extend(MetricsCaching::Value::CollectionMethods)
+  end
+
+  def remediation_data
+    decorated_district.graduates_remediation
   end
 
   def test_scores

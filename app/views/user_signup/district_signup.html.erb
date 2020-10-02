@@ -26,10 +26,10 @@
       </div>
       <div class="subtitle-container">
         <div>
-          <%= image_tag 'susd-logo.png', alt: 'logo', height: '80px' %>
+          <%= image_tag @district.logo, alt: 'logo', height: '80px' %>
         </div>
         <div>
-          <%= t('lib.user_signup.heading_stockton_html') %>
+          <%= t("lib.user_signup.#{params[:district_route]}_html") %>
           <br/>
           <br/>
           <div class="subheading">

@@ -10,7 +10,7 @@ module SearchTableConcerns
   def academic_header_names
     ['Test Scores Rating', growth_progress_rating_header, 'College Readiness Rating', 'Equity Overview Rating']
   end
-  
+
   def academic_header_hash
     academic_header_names.map do |title|
       tooltip = title.gsub('Rating', 'Description')
