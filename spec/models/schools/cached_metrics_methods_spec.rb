@@ -276,12 +276,12 @@ describe CachedMetricsMethods do
 
       it 'for two-year college data it only returns data for all subjects' do
         expect(csa_data["Two-year"]).to eq(
-          {
+          [{
             "data_type" => "Percent needing any remediation in in-state public 2-year institutions",
             "subject" => "Any Subject",
             "school_value" => "23%",
             "state_average" => "25%"
-          }
+          }]
         )
       end
     end
