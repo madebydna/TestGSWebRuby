@@ -35,4 +35,22 @@ const updateUrlParameter = function (uri, key, value) {
   return uri + hash;
 };
 
-export { getQueryParam, updateUrlParameter }
+const updateQueryParams = (searchParams, key, value) => {
+  let query = new URLSearchParams(searchParams);
+  
+  if(value){
+    query.set(key, value);
+  }else{
+    query.delete(key);
+  }
+
+  query.sort();
+
+  if(query.toString().length > 0){
+    return `?${query.toString()}`;
+  }else{
+    return ''
+  }
+}
+
+export { getQueryParam, updateUrlParameter, updateQueryParams };

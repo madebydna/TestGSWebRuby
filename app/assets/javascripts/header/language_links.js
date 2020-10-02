@@ -25,9 +25,21 @@ GS.nav.language = GS.nav.language || (function(){
 
     changeLanguageLink.onclick = function(e) {
       if (isSpanish()) {
-        changeLanguageLink.href = GS.nav.queryParamsUtils.updateUrlParameter(locationLanguageLink, 'lang', '');
+        changeLanguageLink.href =
+          window.location.pathname +
+          GS.nav.queryParamsUtils.updateQueryParams(
+            window.location.search,
+            "lang",
+            ""
+          );
       } else {
-        changeLanguageLink.href = GS.nav.queryParamsUtils.updateUrlParameter(locationLanguageLink, 'lang', 'es');
+        changeLanguageLink.href =
+          window.location.pathname +
+          GS.nav.queryParamsUtils.updateQueryParams(
+            window.location.search,
+            "lang",
+            "es"
+          );
       }
       return true;
     }

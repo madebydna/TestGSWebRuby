@@ -281,6 +281,10 @@ module SearchRequestParams
     'st'
   end
 
+
+  def sort_type_param_name
+    'sort'
+  end
   # to be overridden by controller
   def default_extras
     []
