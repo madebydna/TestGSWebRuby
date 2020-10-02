@@ -48,22 +48,6 @@ const tableHeaders = (headerArray = [], tableView, sort, onSortChanged, sortOpti
   );
 };
 
-const filterHeadersOnRemediationSubjects = (schools, arrayOfObjects) => {
-  let subjects = schools.map(s => s.remediationData)
-                        .flat()
-                        .map(r => r.subject)
-  subjects = uniqBy(subjects, function (e) {
-    return e;
-  });
-  if (subjects.length === 0){
-    return arrayOfObjects.filter(obj => obj.key !== 'percentCollegeRemediationEnglish' && obj.key !== 'percentCollegeRemediationMath' && obj.key !== 'percentCollegeRemediation');
-  }else if( subjects.includes('All subjects') ){
-    return arrayOfObjects.filter(obj => obj.key !== 'percentCollegeRemediationEnglish' && obj.key !== 'percentCollegeRemediationMath');
-  } else {
-    return arrayOfObjects.filter(obj => obj.key !== 'percentCollegeRemediation');
-  }
-}
-
 const SchoolTable = ({
   schools,
   isLoading,

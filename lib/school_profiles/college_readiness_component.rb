@@ -34,10 +34,7 @@ module SchoolProfiles
 
     def metrics_data
       hash_with_arrays = @school_cache_data_reader.decorated_metrics_datas(*(included_data_types(:metrics) - GRADUATES_REMEDIATION))
-      remediation_data = @school_cache_data_reader.remediation_data.each_with_object({}) do |(data_type, array), accum|
-        accum[data_type] =
-          array.each { |dv| dv.extend(MetricsCaching::GraduatesRemediationValue) }
-      end
+      remediation_data = @school_cache_data_reader.remediation_data
       hash_with_arrays.merge!(remediation_data)
     end
 

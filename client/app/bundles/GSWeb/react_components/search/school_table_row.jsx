@@ -176,6 +176,8 @@ const SchoolTableRow = ({
       return <div>N/A</div>
     }
   };
+
+  // These values are eval'ed as the columns get mapped. Column keys need to match the const variable names
   const percentCollegeRemediation = renderRemediationValue(remediationData, 'Overall')
   const percentCollegeRemediationEnglish = renderRemediationValue(remediationData, 'Overall', 'English')
   const percentCollegeRemediationMath = renderRemediationValue(remediationData, 'Overall', 'Math')
