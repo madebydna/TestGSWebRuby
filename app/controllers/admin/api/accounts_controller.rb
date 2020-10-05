@@ -39,7 +39,7 @@ class Admin::Api::AccountsController < ApplicationController
   end
 
   def account_params
-    params.require(:api_subscription).permit(:aws_api_key, :notes)
+    params.require(:api_subscription).permit(:aws_api_key, :notes, :end_date)
   end
 
 end
