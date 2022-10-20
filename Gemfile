@@ -95,7 +95,7 @@ gem 'protected_attributes'
 # USED: Only by script/feeds/feed_scripts/validate_feed_files as far as I can tell
 # This was added back in the early days though
 # TODO: Verify not used outside of development environment and move there
-gem 'nokogiri', '= 1.8.1'
+gem 'nokogiri', '1.13.9'
 
 # SOAP client
 # USED: To communicate with ExactTarget. See exact_target.rb
